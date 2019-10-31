@@ -1,6 +1,6 @@
 ﻿namespace NWN.FinalFantasy.Core.NWScript.Enumerations
 {
-    public enum ItemProperty
+    public enum ItemPropertyType
     {
         Ability_Bonus = 0,
         Ac_Bonus = 1,

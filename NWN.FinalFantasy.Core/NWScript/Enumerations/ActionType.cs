@@ -1,6 +1,6 @@
 ﻿namespace NWN.FinalFantasy.Core.NWScript.Enumerations
 {
-    public enum Action
+    public enum ActionType
     {
         MoveToPoint = 0,
         PickUpItem = 1,

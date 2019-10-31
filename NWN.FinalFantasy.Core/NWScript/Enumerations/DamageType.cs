@@ -14,6 +14,7 @@
         Negative = 512,
         Positive = 1024,
         Sonic = 2048,
-        BaseWeapon = 4096
-    }
+        BaseWeapon = 4096,
+        ACVsDamageTypeAll = 4103
+}
 }

@@ -43,7 +43,7 @@
   <ItemGroup>
     <Compile Include="NWScript\Enumerations\Ability.cs" />
     <Compile Include="NWScript\Enumerations\AC.cs" />
-    <Compile Include="NWScript\Enumerations\Action.cs" />
+    <Compile Include="NWScript\Enumerations\ActionType.cs" />
     <Compile Include="NWScript\Enumerations\ActionMode.cs" />
     <Compile Include="NWScript\Enumerations\AILevel.cs" />
     <Compile Include="NWScript\Enumerations\Alignment.cs" />
@@ -64,6 +64,7 @@
     <Compile Include="NWScript\Enumerations\BodyNode.cs" />
     <Compile Include="NWScript\Enumerations\CameraMode.cs" />
     <Compile Include="NWScript\Enumerations\CameraTransitionType.cs" />
+    <Compile Include="NWScript\Enumerations\ClassPosition.cs" />
     <Compile Include="NWScript\Enumerations\ClassType.cs" />
     <Compile Include="NWScript\Enumerations\ColorChannel.cs" />
     <Compile Include="NWScript\Enumerations\CombatMode.cs" />
@@ -113,11 +114,12 @@
     <Compile Include="NWScript\Enumerations\ItemApprType.cs" />
     <Compile Include="NWScript\Enumerations\ItemApprWeaponColor.cs" />
     <Compile Include="NWScript\Enumerations\ItemApprWeaponModel.cs" />
-    <Compile Include="NWScript\Enumerations\ItemProperty.cs" />
+    <Compile Include="NWScript\Enumerations\ItemPropertyType.cs" />
     <Compile Include="NWScript\Enumerations\ItemVisual.cs" />
     <Compile Include="NWScript\Enumerations\MetaMagic.cs" />
     <Compile Include="NWScript\Enumerations\MissChanceType.cs" />
     <Compile Include="NWScript\Enumerations\Name.cs" />
+    <Compile Include="NWScript\Enumerations\NWNConstants.cs" />
     <Compile Include="NWScript\Enumerations\ObjectType.cs" />
     <Compile Include="NWScript\Enumerations\ObjectVisualTransform.cs" />
     <Compile Include="NWScript\Enumerations\Package.cs" />

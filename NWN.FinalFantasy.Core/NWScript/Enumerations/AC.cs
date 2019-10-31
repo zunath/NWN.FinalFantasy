@@ -1,0 +1,11 @@
+﻿namespace NWN.FinalFantasy.Core.NWScript.Enumerations
+{
+    public enum AC
+    {
+        DodgeBonus = 0,
+        NaturalBonus = 1,
+        ArmorEnchantmentBonus = 2,
+        ShieldEnchantmentBonus = 3,
+        DeflectionBonus = 4
+    }
+}

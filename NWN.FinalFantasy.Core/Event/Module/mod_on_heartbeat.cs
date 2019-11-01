@@ -1,6 +1,4 @@
-﻿
-using System;
-using NWN.FinalFantasy.Core.Event;
+﻿using NWN.FinalFantasy.Core.Event;
 
 // ReSharper disable once CheckNamespace
 namespace NWN.Scripts

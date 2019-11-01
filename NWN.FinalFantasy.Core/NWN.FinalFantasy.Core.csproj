@@ -44,7 +44,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Event\mod_on_heartbeat.cs" />
+    <Compile Include="Event\Module\mod_on_acquire.cs" />
+    <Compile Include="Event\Module\mod_on_activate.cs" />
+    <Compile Include="Event\Module\mod_on_chat.cs" />
+    <Compile Include="Event\Module\mod_on_csabort.cs" />
+    <Compile Include="Event\Module\mod_on_death.cs" />
+    <Compile Include="Event\Module\mod_on_dying.cs" />
+    <Compile Include="Event\Module\mod_on_enter.cs" />
+    <Compile Include="Event\Module\mod_on_equip.cs" />
+    <Compile Include="Event\Module\mod_on_heartbeat.cs" />
+    <Compile Include="Event\Module\mod_on_leave.cs" />
+    <Compile Include="Event\Module\mod_on_levelup.cs" />
+    <Compile Include="Event\Module\mod_on_respawn.cs" />
+    <Compile Include="Event\Module\mod_on_rest.cs" />
+    <Compile Include="Event\Module\mod_on_unacquire.cs" />
+    <Compile Include="Event\Module\mod_on_unequip.cs" />
+    <Compile Include="Event\Module\mod_on_user.cs" />
     <Compile Include="Event\preload.cs" />
     <Compile Include="Event\ScriptRunner.cs" />
     <Compile Include="GlobalSuppressions.cs" />
@@ -216,8 +231,6 @@
     <Compile Include="NWScript\NWScript.cs" />
     <Compile Include="NWScript\NWScriptTypes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Testing\Heartbeat1.cs" />
-    <Compile Include="Testing\Heartbeat2.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

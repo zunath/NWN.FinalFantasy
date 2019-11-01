@@ -10,7 +10,7 @@
         OnDisturbed = 5005,
         OnEndCombatRound = 5006,
         OnDialogue = 5007,
-        OnSpawn_In = 5008,
+        OnSpawnIn = 5008,
         OnRested = 5009,
         OnDeath = 5010,
         OnUserDefinedEvent = 5011,

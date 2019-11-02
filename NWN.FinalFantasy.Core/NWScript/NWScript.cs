@@ -1,4 +1,6 @@
 ﻿using System;
+using NWN.FinalFantasy.Core.Message;
+using NWN.FinalFantasy.Core.Messaging;
 using NWN.FinalFantasy.Core.NWScript.Enumerations;
 
 // ReSharper disable once CheckNamespace
@@ -2395,7 +2397,11 @@ namespace NWN
             Internal.StackPushString(sTemplate);
             Internal.StackPushInteger((int)nObjectType);
             Internal.CallBuiltIn(243);
-            return Internal.StackPopObject();
+            var result = Internal.StackPopObject();
+
+            MessageHub.Instance.Publish(new ObjectCreated(nObjectType, result));
+
+            return result;
         }
 
         //  Create an event which triggers the "SpellCastAt" script
@@ -5805,7 +5811,12 @@ namespace NWN
             Internal.StackPushLocation(locLocation);
             Internal.StackPushObject(oSource, false);
             Internal.CallBuiltIn(600);
-            return Internal.StackPopObject();
+            var result = Internal.StackPopObject();
+            var objectType = GetObjectType(result);
+
+            MessageHub.Instance.Publish(new ObjectCreated(objectType, result));
+
+            return result;
         }
 
         //  Returns an effect that is guaranteed to dominate a creature
@@ -9059,7 +9070,11 @@ namespace NWN
             Internal.StackPushString(sNewTag);
             Internal.StackPushString(sResRef);
             Internal.CallBuiltIn(858);
-            return Internal.StackPopObject();
+            var result = Internal.StackPopObject();
+
+            MessageHub.Instance.Publish(new AreaCreated(result));
+
+            return result;
         }
 
         //  Destroys the given area object and everything in it.
@@ -9086,7 +9101,11 @@ namespace NWN
         {
             Internal.StackPushObject(oArea, false);
             Internal.CallBuiltIn(860);
-            return Internal.StackPopObject();
+            var result = Internal.StackPopObject();
+
+            MessageHub.Instance.Publish(new AreaCreated(result));
+
+            return result;
         }
 
         //  Returns the first area in the module.

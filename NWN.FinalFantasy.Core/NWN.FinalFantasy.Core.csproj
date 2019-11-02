@@ -128,6 +128,8 @@
     <Compile Include="Event\Trigger\trig_on_hb.cs" />
     <Compile Include="Event\Trigger\trig_on_trap.cs" />
     <Compile Include="Event\Trigger\trig_on_userdef.cs" />
+    <Compile Include="Message\AreaCreated.cs" />
+    <Compile Include="Message\ObjectCreated.cs" />
     <Compile Include="ScriptRunner.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Messaging\Contracts\IMessageHub.cs" />
@@ -306,8 +308,6 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Message\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,4 +1,6 @@
-﻿using NWN.FinalFantasy.Core.NWScript.Enumerations;
+﻿using NWN.FinalFantasy.Core.Message;
+using NWN.FinalFantasy.Core.Messaging;
+using NWN.FinalFantasy.Core.NWScript.Enumerations;
 using static NWN._;
 
 namespace NWN.FinalFantasy.Core
@@ -10,6 +12,17 @@ namespace NWN.FinalFantasy.Core
             RegisterModuleEvents();
             RegisterAreaEvents();
             RegisterObjectEvents();
+
+            SubscribeEvents();
+        }
+
+        /// <summary>
+        /// Subscribes to events published by the message hub.
+        /// </summary>
+        private static void SubscribeEvents()
+        {
+            MessageHub.Instance.Subscribe<ObjectCreated>(@event => RegisterObjectEvent(@event.GameObject));
+            MessageHub.Instance.Subscribe<AreaCreated>(@event => RegisterAreaEvent(@event.Area));
         }
 
         /// <summary>
@@ -43,11 +56,7 @@ namespace NWN.FinalFantasy.Core
             var area = GetFirstArea();
             while (GetIsObjectValid(area))
             {
-                SetEventScript(area, EventScriptArea.OnEnter, "area_on_enter");
-                SetEventScript(area, EventScriptArea.OnEnter, "area_on_exit");
-                SetEventScript(area, EventScriptArea.OnEnter, "area_on_hb");
-                SetEventScript(area, EventScriptArea.OnEnter, "area_on_user");
-
+                RegisterAreaEvent(area);
                 area = GetNextArea();
             }
         }
@@ -63,38 +72,58 @@ namespace NWN.FinalFantasy.Core
                 var obj = GetFirstObjectInArea(area);
                 while (GetIsObjectValid(obj))
                 {
-                    var type = GetObjectType(obj);
-
-                    switch (type)
-                    {
-                        case ObjectType.Creature:
-                            RegisterCreatureEvents(obj);
-                            break;
-                        case ObjectType.Trigger:
-                            RegisterTriggerEvents(obj);
-                            break;
-                        case ObjectType.Door:
-                            RegisterDoorEvents(obj);
-                            break;
-                        case ObjectType.AreaOfEffect:
-                            RegisterAreaOfEffectEvents(obj);
-                            break;
-                        case ObjectType.Placeable:
-                            RegisterPlaceableEvents(obj);
-                            break;
-                        case ObjectType.Store:
-                            RegisterStoreEvents(obj);
-                            break;
-                        case ObjectType.Encounter:
-                            RegisterEncounterEvents(obj);
-                            break;
-                    }
-
+                    RegisterObjectEvent(obj);
                     obj = GetNextObjectInArea(area);
                 }
 
                 area = GetNextArea();
             }
+        }
+
+        /// <summary>
+        /// Registers the events of a specific object.
+        /// </summary>
+        /// <param name="obj">The objects whose scripts are being adjusted</param>
+        private static void RegisterObjectEvent(NWGameObject obj)
+        {
+            var type = GetObjectType(obj);
+
+            switch (type)
+            {
+                case ObjectType.Creature:
+                    RegisterCreatureEvents(obj);
+                    break;
+                case ObjectType.Trigger:
+                    RegisterTriggerEvents(obj);
+                    break;
+                case ObjectType.Door:
+                    RegisterDoorEvents(obj);
+                    break;
+                case ObjectType.AreaOfEffect:
+                    RegisterAreaOfEffectEvents(obj);
+                    break;
+                case ObjectType.Placeable:
+                    RegisterPlaceableEvents(obj);
+                    break;
+                case ObjectType.Store:
+                    RegisterStoreEvents(obj);
+                    break;
+                case ObjectType.Encounter:
+                    RegisterEncounterEvents(obj);
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Registers the events of an area.
+        /// </summary>
+        /// <param name="area"></param>
+        private static void RegisterAreaEvent(NWGameObject area)
+        {
+            SetEventScript(area, EventScriptArea.OnEnter, "area_on_enter");
+            SetEventScript(area, EventScriptArea.OnExit, "area_on_exit");
+            SetEventScript(area, EventScriptArea.OnHeartbeat, "area_on_hb");
+            SetEventScript(area, EventScriptArea.OnUserDefinedEvent, "area_on_user");
         }
 
         /// <summary>

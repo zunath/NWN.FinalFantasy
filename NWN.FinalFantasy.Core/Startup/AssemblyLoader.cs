@@ -18,7 +18,7 @@ namespace NWN.FinalFantasy.Core.Startup
         /// </summary>
         public static void LoadAssemblies()
         {
-            var settings = ApplicationSettings.Instance;
+            var settings = new ApplicationSettings();
 
             var assemblyName = Assembly.GetExecutingAssembly().GetName().Name;
             var files = Directory.GetFiles(settings.DllDirectory, settings.DllSearchPattern);

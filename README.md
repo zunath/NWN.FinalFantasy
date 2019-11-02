@@ -5,7 +5,7 @@ Game: Neverwinter Nights: Enhanced Edition
 
 Website: TBD
 
-Discord: TBD
+Discord: https://discord.gg/b8QYAvw
 
 # Project Description
 
@@ -19,7 +19,7 @@ Refer to the quick start guide below and be sure to post any issues on our forum
 
 1.) Install Git from here: https://git-scm.com/downloads
 
-2.) Install Visual Studio Community Edition 2017 from here: https://www.visualstudio.com/downloads/
+2.) Install Visual Studio Community Edition 2019 from here: https://www.visualstudio.com/downloads/
 
 3.) Start up Visual Studio.
 
@@ -39,6 +39,6 @@ Please refer to this guide for hosting a server: https://github.com/zunath/SWLOR
 
 # Getting Help
 
-If you need help with anything related to Final Fantasy Online please feel free to contact us on our Discord here: https://discord.gg/MyQAM6m
+If you need help with anything related to Final Fantasy Online please feel free to contact us on our Discord here: https://discord.gg/b8QYAvw
 
-For NWNX and Docker related issues please look for help in the NWNX Discord channel here: TBD
+For NWNX and Docker related issues please look for help in the NWNX Discord channel here: https://discord.gg/m2hJPDE

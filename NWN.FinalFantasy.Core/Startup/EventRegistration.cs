@@ -11,6 +11,9 @@ using NWN.FinalFantasy.Core.NWScript.Enumerations;
 
 namespace NWN.FinalFantasy.Core.Startup
 {
+    /// <summary>
+    /// Responsible for registering NWN script events to objects on initialization as well as any time a new object is created.
+    /// </summary>
     internal static class EventRegistration
     {
         internal static void Register()

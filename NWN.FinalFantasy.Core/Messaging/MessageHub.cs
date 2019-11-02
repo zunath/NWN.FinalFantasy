@@ -53,7 +53,7 @@ namespace NWN.FinalFantasy.Core.Messaging
         /// </summary>
         /// <param name="message">The message to published</param>
         /// <param name="useProfiler"></param>
-        public void Publish<T>(T message, bool useProfiler = true)
+        public void Publish<T>(T message)
         {
             var localSubscriptions = _subscriptions.GetTheLatestSubscriptions();
 
@@ -76,11 +76,7 @@ namespace NWN.FinalFantasy.Core.Messaging
 #endif
                 try
                 {
-                    if (useProfiler)
-                    {
-                        subscription.Handle(message);
-                    }
-                    else subscription.Handle(message);
+                    subscription.Handle(message);
                 }
                 catch (Exception e)
                 {

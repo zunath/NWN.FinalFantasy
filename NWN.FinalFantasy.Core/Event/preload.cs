@@ -1,5 +1,4 @@
-﻿using NWN.FinalFantasy.Core;
-using NWN.FinalFantasy.Core.Startup;
+﻿using NWN.FinalFantasy.Core.Startup;
 using Serilog;
 
 // ReSharper disable once CheckNamespace

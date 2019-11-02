@@ -9,10 +9,10 @@
         public const string OnCutsceneAbort = "ON_CUTSCENE_ABORT_";
         public const string OnPlayerDeath = "ON_PLAYER_DEATH_";
         public const string OnPlayerDying = "ON_PLAYER_DYING_";
-        public const string OnPlayerEnter = "ON_CLIENT_ENTER_";
+        public const string OnPlayerEnter = "ON_PLAYER_ENTER_";
         public const string OnEquipItem = "ON_EQUIP_ITEM_";
         public const string OnHeartbeat = "ON_HEARTBEAT_";
-        public const string OnPlayerLeave = "ON_CLIENT_EXIT_";
+        public const string OnPlayerLeave = "ON_PLAYER_EXIT_";
         public const string OnPlayerLevelUp = "ON_LEVEL_UP_";
         public const string OnPlayerRespawn = "ON_PLAYER_RESPAWN_";
         public const string OnPlayerRest = "ON_PLAYER_REST_";

@@ -12,7 +12,7 @@ namespace NWN.FinalFantasy.Data
         /// <typeparam name="T">The type of data to store.</typeparam>
         /// <param name="entity">The data to store</param>
         public static void Set<T>(T entity)
-            where T: Entity
+            where T: EntityBase
         {
             var @namespace = typeof(T).FullName;
             var id = entity.ID.ToString();
@@ -29,7 +29,7 @@ namespace NWN.FinalFantasy.Data
         /// <param name="id">The ID of the entity</param>
         /// <returns></returns>
         public static T Get<T>(Guid id)
-            where T: Entity
+            where T: EntityBase
         {
             var @namespace = typeof(T).FullName;
             var key = @namespace + ":" + id;

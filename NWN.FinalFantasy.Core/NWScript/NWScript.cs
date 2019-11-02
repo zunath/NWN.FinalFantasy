@@ -9611,5 +9611,49 @@ namespace NWN
             Internal.ClosureActionDoCommand(NWGameObject.OBJECT_SELF, aActionToDelay);
         }
 
+        /// <summary>
+        /// Returns true if obj is a player. If obj is a DM, DM-possessed, or any other type of object it will return false.
+        /// </summary>
+        /// <param name="obj">The object to check</param>
+        /// <returns>true if player, false otherwise</returns>
+        public static bool GetIsPlayer(NWGameObject obj)
+        {
+            return _.GetIsPC(obj) && !_.GetIsDM(obj) && !_.GetIsDMPossessed(obj);
+        }
+
+        /// <summary>
+        /// Returns true if obj is a DM or DM-possessed. Players or any other type of object will return false.
+        /// </summary>
+        /// <param name="obj">The object to check</param>
+        /// <returns>true if DM or DM-possessed, false otherwise</returns>
+        public static bool GetIsDungeonMaster(NWGameObject obj)
+        {
+            return GetIsDM(obj) || GetIsDMPossessed(obj);
+        }
+
+        /// <summary>
+        /// Retrieves a unique ID for a given object. Throws an exception if the object has not been assigned an ID yet.
+        /// </summary>
+        /// <param name="obj">The object to retrieve the ID from</param>
+        /// <returns>The ID of the object</returns>
+        public static Guid GetGlobalID(NWGameObject obj)
+        {
+            if (GetIsPC(obj) && !GetIsDM(obj) && !GetIsDMPossessed(obj))
+            {
+                string tag = GetTag(obj);
+                if (string.IsNullOrWhiteSpace(tag))
+                    throw new Exception($"Player has not been assigned an ID yet. Player Name: {GetName(obj)}");
+
+                return new Guid(tag);
+            }
+            else
+            {
+                var id = GetLocalString(obj, "GLOBAL_ID");
+                if(string.IsNullOrWhiteSpace(id))
+                    throw new Exception($"Object has not been assigned an ID yet. Object Name: {GetName(obj)}");
+
+                return new Guid(id);
+            } 
+        }
     }
 }

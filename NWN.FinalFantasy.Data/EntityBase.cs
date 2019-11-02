@@ -2,11 +2,11 @@
 
 namespace NWN.FinalFantasy.Data
 {
-    public abstract class Entity
+    public abstract class EntityBase
     {
         public Guid ID { get; set; }
 
-        protected Entity()
+        protected EntityBase()
         {
             ID = Guid.NewGuid();
         }

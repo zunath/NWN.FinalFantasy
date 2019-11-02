@@ -76,7 +76,7 @@ namespace NWN.FinalFantasy.Core.NWNX
 
         /// <summary>
         /// Set the text of the current node for given language/gender
-        /// This will only work in a starting conditional script (action take comes after the text is displayed)
+        /// This will only work in a starting conditional script (action taken comes after the text is displayed)
         /// </summary>
         /// <param name="text">The text for the node.</param>
         /// <param name="language">The language of the text.</param>

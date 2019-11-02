@@ -328,6 +328,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Docker\docker-compose.yml" />
     <None Include="Docker\ffo.cmd" />
     <None Include="Docker\ffo.env" />
     <None Include="packages.config" />

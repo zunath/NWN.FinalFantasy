@@ -49,10 +49,13 @@
     <Compile Include="Event\AreaOfEffect\aoe_on_exit.cs" />
     <Compile Include="Event\AreaOfEffect\aoe_on_hb.cs" />
     <Compile Include="Event\AreaOfEffect\aoe_on_userdef.cs" />
+    <Compile Include="Event\AreaOfEffect\AreaOfEffectPrefix.cs" />
+    <Compile Include="Event\Area\AreaScriptPrefix.cs" />
     <Compile Include="Event\Area\area_on_enter.cs" />
     <Compile Include="Event\Area\area_on_exit.cs" />
     <Compile Include="Event\Area\area_on_hb.cs" />
     <Compile Include="Event\Area\area_on_user.cs" />
+    <Compile Include="Event\Creature\CreaturePrefix.cs" />
     <Compile Include="Event\Creature\crea_on_attacked.cs" />
     <Compile Include="Event\Creature\crea_on_blocked.cs" />
     <Compile Include="Event\Creature\crea_on_convo.cs" />
@@ -66,6 +69,7 @@
     <Compile Include="Event\Creature\crea_on_spawn.cs" />
     <Compile Include="Event\Creature\crea_on_splcast.cs" />
     <Compile Include="Event\Creature\crea_on_userdef.cs" />
+    <Compile Include="Event\Door\DoorPrefix.cs" />
     <Compile Include="Event\Door\door_on_attacked.cs" />
     <Compile Include="Event\Door\door_on_click.cs" />
     <Compile Include="Event\Door\door_on_close.cs" />
@@ -81,11 +85,13 @@
     <Compile Include="Event\Door\door_on_trap.cs" />
     <Compile Include="Event\Door\door_on_unlock.cs" />
     <Compile Include="Event\Door\door_on_userdef.cs" />
+    <Compile Include="Event\Encounter\EncounterPrefix.cs" />
     <Compile Include="Event\Encounter\enc_on_enter.cs" />
     <Compile Include="Event\Encounter\enc_on_exhaust.cs" />
     <Compile Include="Event\Encounter\enc_on_exit.cs" />
     <Compile Include="Event\Encounter\enc_on_hb.cs" />
     <Compile Include="Event\Encounter\enc_on_userdef.cs" />
+    <Compile Include="Event\Module\ModulePrefix.cs" />
     <Compile Include="Event\Module\mod_on_acquire.cs" />
     <Compile Include="Event\Module\mod_on_activate.cs" />
     <Compile Include="Event\Module\mod_on_chat.cs" />
@@ -102,6 +108,7 @@
     <Compile Include="Event\Module\mod_on_unacquire.cs" />
     <Compile Include="Event\Module\mod_on_unequip.cs" />
     <Compile Include="Event\Module\mod_on_user.cs" />
+    <Compile Include="Event\Placeable\PlaceablePrefix.cs" />
     <Compile Include="Event\Placeable\plc_on_attack.cs" />
     <Compile Include="Event\Placeable\plc_on_click.cs" />
     <Compile Include="Event\Placeable\plc_on_close.cs" />
@@ -119,8 +126,10 @@
     <Compile Include="Event\Placeable\plc_on_used.cs" />
     <Compile Include="Event\Placeable\plc_on_userdef.cs" />
     <Compile Include="Event\preload.cs" />
+    <Compile Include="Event\Store\StorePrefix.cs" />
     <Compile Include="Event\Store\store_on_close.cs" />
     <Compile Include="Event\Store\store_on_open.cs" />
+    <Compile Include="Event\Trigger\TriggerPrefix.cs" />
     <Compile Include="Event\Trigger\trig_on_click.cs" />
     <Compile Include="Event\Trigger\trig_on_disarm.cs" />
     <Compile Include="Event\Trigger\trig_on_enter.cs" />

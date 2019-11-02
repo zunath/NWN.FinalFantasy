@@ -34,7 +34,7 @@ namespace NWN.FinalFantasy.Core
         /// <param name="target">The object to pull variables from</param>
         /// <param name="prefix">The prefix to look for</param>
         /// <returns>A list of scripts to run, ordered from lowest to highest</returns>
-        private static List<string> GetMatchingVariables(NWGameObject target, string prefix)
+        internal static IEnumerable<string> GetMatchingVariables(NWGameObject target, string prefix)
         {
             var variableCount = NWNXObject.GetLocalVariableCount(target);
             var variableList = new SortedList<int, string>();

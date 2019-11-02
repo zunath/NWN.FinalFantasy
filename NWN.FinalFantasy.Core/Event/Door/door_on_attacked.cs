@@ -1,4 +1,5 @@
 ﻿using NWN.FinalFantasy.Core;
+using NWN.FinalFantasy.Core.Event.Door;
 
 // ReSharper disable once CheckNamespace
 namespace NWN.Scripts
@@ -7,7 +8,7 @@ namespace NWN.Scripts
     {
         internal static void Main()
         {
-            ScriptRunner.RunScriptEvents(NWGameObject.OBJECT_SELF, "ON_ATTACKED_");
+            ScriptRunner.RunScriptEvents(NWGameObject.OBJECT_SELF, DoorPrefix.OnAttacked);
         }
     }
 }

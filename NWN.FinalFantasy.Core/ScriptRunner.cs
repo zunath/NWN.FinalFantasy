@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using NWN.FinalFantasy.Core.NWNX;
 using NWN.FinalFantasy.Core.NWScript.Enumerations;
+using NWN.FinalFantasy.Core.Startup;
 using Serilog;
 
 namespace NWN.FinalFantasy.Core
@@ -79,14 +80,20 @@ namespace NWN.FinalFantasy.Core
         {
             if (!_cachedScripts.ContainsKey(script))
             {
-                var rootNamespace = Assembly.GetExecutingAssembly().GetName().Name;
-                var scriptNamespace = rootNamespace + "." + script;
+                var settings = ApplicationSettings.Instance;
+                var scriptNamespace = settings.NamespaceRoot + "." + script;
 
                 var type = Type.GetType(scriptNamespace);
                 if (type == null)
                 {
-                    Log.Warning($"Could not locate script: " + script);
-                    return;
+                    // Check the loaded assemblies for the type.
+                    type = AssemblyLoader.FindType(scriptNamespace);
+
+                    if (type == null)
+                    {
+                        Log.Warning($"Could not locate script: " + scriptNamespace);
+                        return;
+                    }
                 }
 
                 var method = type.GetMethod("Main", BindingFlags.Static | BindingFlags.Public);

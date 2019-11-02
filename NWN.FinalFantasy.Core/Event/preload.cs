@@ -1,4 +1,5 @@
 ﻿using NWN.FinalFantasy.Core;
+using NWN.FinalFantasy.Core.Startup;
 using Serilog;
 
 // ReSharper disable once CheckNamespace
@@ -10,6 +11,7 @@ namespace NWN.Scripts
         {
             ConfigureLogger();
             EventRegistration.Register();
+            AssemblyLoader.LoadAssemblies();
         }
 
         private static void ConfigureLogger()

@@ -33,6 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="Serilog, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
       <HintPath>..\packages\Serilog.2.9.0\lib\net46\Serilog.dll</HintPath>
     </Reference>
@@ -49,7 +52,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EventRegistration.cs" />
+    <Compile Include="ApplicationSettings.cs" />
+    <Compile Include="Startup\AssemblyLoader.cs" />
+    <Compile Include="Startup\EventRegistration.cs" />
     <Compile Include="Event\AreaOfEffect\aoe_on_enter.cs" />
     <Compile Include="Event\AreaOfEffect\aoe_on_exit.cs" />
     <Compile Include="Event\AreaOfEffect\aoe_on_hb.cs" />
@@ -320,6 +325,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="AppSettings.json" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />

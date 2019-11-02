@@ -2399,7 +2399,7 @@ namespace NWN
             Internal.CallBuiltIn(243);
             var result = Internal.StackPopObject();
 
-            MessageHub.Instance.Publish(new ObjectCreated(nObjectType, result));
+            MessageHub.Instance.Publish(new ObjectCreated(result));
 
             return result;
         }
@@ -5814,7 +5814,7 @@ namespace NWN
             var result = Internal.StackPopObject();
             var objectType = GetObjectType(result);
 
-            MessageHub.Instance.Publish(new ObjectCreated(objectType, result));
+            MessageHub.Instance.Publish(new ObjectCreated(result));
 
             return result;
         }

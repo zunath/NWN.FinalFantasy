@@ -1,4 +1,11 @@
-﻿using NWN.FinalFantasy.Core.Message;
+﻿using System.Linq;
+using NWN.FinalFantasy.Core.Event.AreaOfEffect;
+using NWN.FinalFantasy.Core.Event.Door;
+using NWN.FinalFantasy.Core.Event.Encounter;
+using NWN.FinalFantasy.Core.Event.Placeable;
+using NWN.FinalFantasy.Core.Event.Store;
+using NWN.FinalFantasy.Core.Event.Trigger;
+using NWN.FinalFantasy.Core.Message;
 using NWN.FinalFantasy.Core.Messaging;
 using NWN.FinalFantasy.Core.NWScript.Enumerations;
 using static NWN._;
@@ -151,13 +158,34 @@ namespace NWN.FinalFantasy.Core
         /// </summary>
         private static void RegisterTriggerEvents(NWGameObject trigger)
         {
-            SetEventScript(trigger, EventScriptTrigger.OnHeartbeat, "trig_on_hb");
-            SetEventScript(trigger, EventScriptTrigger.OnClicked, "trig_on_click");
-            SetEventScript(trigger, EventScriptTrigger.OnDisarmed, "trig_on_disarm");
-            SetEventScript(trigger, EventScriptTrigger.OnObjectEnter, "trig_on_enter");
-            SetEventScript(trigger, EventScriptTrigger.OnObjectExit, "trig_on_exit");
-            SetEventScript(trigger, EventScriptTrigger.OnTrapTriggered, "trig_on_trap");
-            SetEventScript(trigger, EventScriptTrigger.OnUserDefinedEvent, "trig_on_userdef");
+            SetEventScript(trigger, EventScriptTrigger.OnHeartbeat, string.Empty);
+            SetEventScript(trigger, EventScriptTrigger.OnClicked, string.Empty);
+            SetEventScript(trigger, EventScriptTrigger.OnDisarmed, string.Empty);
+            SetEventScript(trigger, EventScriptTrigger.OnObjectEnter, string.Empty);
+            SetEventScript(trigger, EventScriptTrigger.OnObjectExit, string.Empty);
+            SetEventScript(trigger, EventScriptTrigger.OnTrapTriggered, string.Empty);
+            SetEventScript(trigger, EventScriptTrigger.OnUserDefinedEvent, string.Empty);
+
+            if (ScriptRunner.GetMatchingVariables(trigger, TriggerPrefix.OnHeartbeat).Any())
+                SetEventScript(trigger, EventScriptTrigger.OnHeartbeat, "trig_on_hb");
+
+            if (ScriptRunner.GetMatchingVariables(trigger, TriggerPrefix.OnClicked).Any())
+                SetEventScript(trigger, EventScriptTrigger.OnClicked, "trig_on_click");
+
+            if (ScriptRunner.GetMatchingVariables(trigger, TriggerPrefix.OnDisarmed).Any())
+                SetEventScript(trigger, EventScriptTrigger.OnDisarmed, "trig_on_disarm");
+
+            if (ScriptRunner.GetMatchingVariables(trigger, TriggerPrefix.OnEnter).Any())
+                SetEventScript(trigger, EventScriptTrigger.OnObjectEnter, "trig_on_enter");
+
+            if (ScriptRunner.GetMatchingVariables(trigger, TriggerPrefix.OnExit).Any())
+                SetEventScript(trigger, EventScriptTrigger.OnObjectExit, "trig_on_exit");
+
+            if (ScriptRunner.GetMatchingVariables(trigger, TriggerPrefix.OnTriggerTrap).Any())
+                SetEventScript(trigger, EventScriptTrigger.OnTrapTriggered, "trig_on_trap");
+
+            if (ScriptRunner.GetMatchingVariables(trigger, TriggerPrefix.OnUserDefined).Any())
+                SetEventScript(trigger, EventScriptTrigger.OnUserDefinedEvent, "trig_on_userdef");
         }
 
         /// <summary>
@@ -165,21 +193,66 @@ namespace NWN.FinalFantasy.Core
         /// </summary>
         private static void RegisterDoorEvents(NWGameObject door)
         {
-            SetEventScript(door, EventScriptDoor.OnMeleeAttacked, "door_on_attacked");
-            SetEventScript(door, EventScriptDoor.OnClicked, "door_on_click");
-            SetEventScript(door, EventScriptDoor.OnClose, "door_on_close");
-            SetEventScript(door, EventScriptDoor.OnDialogue, "door_on_convo");
-            SetEventScript(door, EventScriptDoor.OnDamage, "door_on_damage");
-            SetEventScript(door, EventScriptDoor.OnDeath, "door_on_death");
-            SetEventScript(door, EventScriptDoor.OnDisarm, "door_on_disarm");
-            SetEventScript(door, EventScriptDoor.OnFailToOpen, "door_on_fail");
-            SetEventScript(door, EventScriptDoor.OnHeartbeat, "door_on_hb");
-            SetEventScript(door, EventScriptDoor.OnLock, "door_on_lock");
-            SetEventScript(door, EventScriptDoor.OnOpen, "door_on_open");
-            SetEventScript(door, EventScriptDoor.OnSpellCastAt, "door_on_splcast");
-            SetEventScript(door, EventScriptDoor.OnTrapTriggered, "door_on_trap");
-            SetEventScript(door, EventScriptDoor.OnUnlock, "door_on_unlock");
-            SetEventScript(door, EventScriptDoor.OnUserDefined, "door_on_userdef");
+            SetEventScript(door, EventScriptDoor.OnMeleeAttacked, string.Empty);
+            SetEventScript(door, EventScriptDoor.OnClicked, string.Empty);
+            SetEventScript(door, EventScriptDoor.OnClose, string.Empty);
+            SetEventScript(door, EventScriptDoor.OnDialogue, string.Empty);
+            SetEventScript(door, EventScriptDoor.OnDamage, string.Empty);
+            SetEventScript(door, EventScriptDoor.OnDeath, string.Empty);
+            SetEventScript(door, EventScriptDoor.OnDisarm, string.Empty);
+            SetEventScript(door, EventScriptDoor.OnFailToOpen, string.Empty);
+            SetEventScript(door, EventScriptDoor.OnHeartbeat, string.Empty);
+            SetEventScript(door, EventScriptDoor.OnLock, string.Empty);
+            SetEventScript(door, EventScriptDoor.OnOpen, string.Empty);
+            SetEventScript(door, EventScriptDoor.OnSpellCastAt, string.Empty);
+            SetEventScript(door, EventScriptDoor.OnTrapTriggered, string.Empty);
+            SetEventScript(door, EventScriptDoor.OnUnlock, string.Empty);
+            SetEventScript(door, EventScriptDoor.OnUserDefined, string.Empty);
+
+            if (ScriptRunner.GetMatchingVariables(door, DoorPrefix.OnAttacked).Any())
+                SetEventScript(door, EventScriptDoor.OnMeleeAttacked, "door_on_attacked");
+
+            if (ScriptRunner.GetMatchingVariables(door, DoorPrefix.OnClicked).Any())
+                SetEventScript(door, EventScriptDoor.OnClicked, "door_on_click");
+
+            if (ScriptRunner.GetMatchingVariables(door, DoorPrefix.OnClosed).Any())
+                SetEventScript(door, EventScriptDoor.OnClose, "door_on_close");
+
+            if (ScriptRunner.GetMatchingVariables(door, DoorPrefix.OnConversation).Any())
+                SetEventScript(door, EventScriptDoor.OnDialogue, "door_on_convo");
+
+            if (ScriptRunner.GetMatchingVariables(door, DoorPrefix.OnDamaged).Any())
+                SetEventScript(door, EventScriptDoor.OnDamage, "door_on_damage");
+
+            if (ScriptRunner.GetMatchingVariables(door, DoorPrefix.OnDeath).Any())
+                SetEventScript(door, EventScriptDoor.OnDeath, "door_on_death");
+
+            if (ScriptRunner.GetMatchingVariables(door, DoorPrefix.OnDisarmed).Any())
+                SetEventScript(door, EventScriptDoor.OnDisarm, "door_on_disarm");
+
+            if (ScriptRunner.GetMatchingVariables(door, DoorPrefix.OnFailToOpen).Any())
+                SetEventScript(door, EventScriptDoor.OnFailToOpen, "door_on_fail");
+
+            if (ScriptRunner.GetMatchingVariables(door, DoorPrefix.OnHeartbeat).Any())
+                SetEventScript(door, EventScriptDoor.OnHeartbeat, "door_on_hb");
+
+            if (ScriptRunner.GetMatchingVariables(door, DoorPrefix.OnLocked).Any())
+                SetEventScript(door, EventScriptDoor.OnLock, "door_on_lock");
+
+            if (ScriptRunner.GetMatchingVariables(door, DoorPrefix.OnOpened).Any())
+                SetEventScript(door, EventScriptDoor.OnOpen, "door_on_open");
+
+            if (ScriptRunner.GetMatchingVariables(door, DoorPrefix.OnSpellCastAt).Any())
+                SetEventScript(door, EventScriptDoor.OnSpellCastAt, "door_on_splcast");
+
+            if (ScriptRunner.GetMatchingVariables(door, DoorPrefix.OnTriggerTrap).Any())
+                SetEventScript(door, EventScriptDoor.OnTrapTriggered, "door_on_trap");
+
+            if (ScriptRunner.GetMatchingVariables(door, DoorPrefix.OnUnlock).Any())
+                SetEventScript(door, EventScriptDoor.OnUnlock, "door_on_unlock");
+
+            if (ScriptRunner.GetMatchingVariables(door, DoorPrefix.OnUserDefined).Any())
+                SetEventScript(door, EventScriptDoor.OnUserDefined, "door_on_userdef");
         }
 
         /// <summary>
@@ -187,10 +260,22 @@ namespace NWN.FinalFantasy.Core
         /// </summary>
         private static void RegisterAreaOfEffectEvents(NWGameObject aoe)
         {
-            SetEventScript(aoe, EventScriptAreaOfEffect.OnHeartbeat, "aoe_on_hb");
-            SetEventScript(aoe, EventScriptAreaOfEffect.OnUserDefinedEvent, "aoe_on_userdef");
-            SetEventScript(aoe, EventScriptAreaOfEffect.OnObjectEnter, "aoe_on_enter");
-            SetEventScript(aoe, EventScriptAreaOfEffect.OnObjectExit, "aoe_on_exit");
+            SetEventScript(aoe, EventScriptAreaOfEffect.OnHeartbeat, string.Empty);
+            SetEventScript(aoe, EventScriptAreaOfEffect.OnUserDefinedEvent, string.Empty);
+            SetEventScript(aoe, EventScriptAreaOfEffect.OnObjectEnter, string.Empty);
+            SetEventScript(aoe, EventScriptAreaOfEffect.OnObjectExit, string.Empty);
+
+            if (ScriptRunner.GetMatchingVariables(aoe, AreaOfEffectPrefix.OnHeartbeat).Any())
+                SetEventScript(aoe, EventScriptAreaOfEffect.OnHeartbeat, "aoe_on_hb");
+
+            if (ScriptRunner.GetMatchingVariables(aoe, AreaOfEffectPrefix.OnUserDefined).Any())
+                SetEventScript(aoe, EventScriptAreaOfEffect.OnUserDefinedEvent, "aoe_on_userdef");
+
+            if (ScriptRunner.GetMatchingVariables(aoe, AreaOfEffectPrefix.OnEnter).Any())
+                SetEventScript(aoe, EventScriptAreaOfEffect.OnObjectEnter, "aoe_on_enter");
+
+            if (ScriptRunner.GetMatchingVariables(aoe, AreaOfEffectPrefix.OnExit).Any())
+                SetEventScript(aoe, EventScriptAreaOfEffect.OnObjectExit, "aoe_on_exit");
         }
 
         /// <summary>
@@ -198,22 +283,70 @@ namespace NWN.FinalFantasy.Core
         /// </summary>
         private static void RegisterPlaceableEvents(NWGameObject placeable)
         {
-            SetEventScript(placeable, EventScriptPlaceable.OnMeleeAttacked, "plc_on_attack");
-            SetEventScript(placeable, EventScriptPlaceable.OnLeftClick, "plc_on_click");
-            SetEventScript(placeable, EventScriptPlaceable.OnClosed, "plc_on_close");
-            SetEventScript(placeable, EventScriptPlaceable.OnDialogue, "plc_on_convo");
-            SetEventScript(placeable, EventScriptPlaceable.OnDamaged, "plc_on_damage");
-            SetEventScript(placeable, EventScriptPlaceable.OnDeath, "plc_on_death");
-            SetEventScript(placeable, EventScriptPlaceable.OnDisarm, "plc_on_disarm");
-            SetEventScript(placeable, EventScriptPlaceable.OnInventoryDisturbed, "plc_on_disturb");
-            SetEventScript(placeable, EventScriptPlaceable.OnHeartbeat, "plc_on_hb");
-            SetEventScript(placeable, EventScriptPlaceable.OnLock, "plc_on_lock");
-            SetEventScript(placeable, EventScriptPlaceable.OnOpen, "plc_on_open");
-            SetEventScript(placeable, EventScriptPlaceable.OnSpellCastAt, "plc_on_splcast");
-            SetEventScript(placeable, EventScriptPlaceable.OnTrapTriggered, "plc_on_trap");
-            SetEventScript(placeable, EventScriptPlaceable.OnUnlock, "plc_on_unlock");
-            SetEventScript(placeable, EventScriptPlaceable.OnUsed, "plc_on_used");
-            SetEventScript(placeable, EventScriptPlaceable.OnUserDefinedEvent, "plc_on_userdef");
+            SetEventScript(placeable, EventScriptPlaceable.OnMeleeAttacked, string.Empty);
+            SetEventScript(placeable, EventScriptPlaceable.OnLeftClick, string.Empty);
+            SetEventScript(placeable, EventScriptPlaceable.OnClosed, string.Empty);
+            SetEventScript(placeable, EventScriptPlaceable.OnDialogue, string.Empty);
+            SetEventScript(placeable, EventScriptPlaceable.OnDamaged, string.Empty);
+            SetEventScript(placeable, EventScriptPlaceable.OnDeath, string.Empty);
+            SetEventScript(placeable, EventScriptPlaceable.OnDisarm, string.Empty);
+            SetEventScript(placeable, EventScriptPlaceable.OnInventoryDisturbed, string.Empty);
+            SetEventScript(placeable, EventScriptPlaceable.OnHeartbeat, string.Empty);
+            SetEventScript(placeable, EventScriptPlaceable.OnLock, string.Empty);
+            SetEventScript(placeable, EventScriptPlaceable.OnOpen, string.Empty);
+            SetEventScript(placeable, EventScriptPlaceable.OnSpellCastAt, string.Empty);
+            SetEventScript(placeable, EventScriptPlaceable.OnTrapTriggered, string.Empty);
+            SetEventScript(placeable, EventScriptPlaceable.OnUnlock, string.Empty);
+            SetEventScript(placeable, EventScriptPlaceable.OnUsed, string.Empty);
+            SetEventScript(placeable, EventScriptPlaceable.OnUserDefinedEvent, string.Empty);
+
+            if (ScriptRunner.GetMatchingVariables(placeable, PlaceablePrefix.OnAttacked).Any())
+                SetEventScript(placeable, EventScriptPlaceable.OnMeleeAttacked, "plc_on_attack");
+
+            if (ScriptRunner.GetMatchingVariables(placeable, PlaceablePrefix.OnClicked).Any())
+                SetEventScript(placeable, EventScriptPlaceable.OnLeftClick, "plc_on_click");
+
+            if (ScriptRunner.GetMatchingVariables(placeable, PlaceablePrefix.OnClosed).Any())
+                SetEventScript(placeable, EventScriptPlaceable.OnClosed, "plc_on_close");
+
+            if (ScriptRunner.GetMatchingVariables(placeable, PlaceablePrefix.OnConversation).Any())
+                SetEventScript(placeable, EventScriptPlaceable.OnDialogue, "plc_on_convo");
+
+            if (ScriptRunner.GetMatchingVariables(placeable, PlaceablePrefix.OnDamaged).Any())
+                SetEventScript(placeable, EventScriptPlaceable.OnDamaged, "plc_on_damage");
+
+            if (ScriptRunner.GetMatchingVariables(placeable, PlaceablePrefix.OnDeath).Any())
+                SetEventScript(placeable, EventScriptPlaceable.OnDeath, "plc_on_death");
+
+            if (ScriptRunner.GetMatchingVariables(placeable, PlaceablePrefix.OnDisarmed).Any())
+                SetEventScript(placeable, EventScriptPlaceable.OnDisarm, "plc_on_disarm");
+
+            if (ScriptRunner.GetMatchingVariables(placeable, PlaceablePrefix.OnDisturbed).Any())
+                SetEventScript(placeable, EventScriptPlaceable.OnInventoryDisturbed, "plc_on_disturb");
+
+            if (ScriptRunner.GetMatchingVariables(placeable, PlaceablePrefix.OnHeartbeat).Any())
+                SetEventScript(placeable, EventScriptPlaceable.OnHeartbeat, "plc_on_hb");
+
+            if (ScriptRunner.GetMatchingVariables(placeable, PlaceablePrefix.OnLocked).Any())
+                SetEventScript(placeable, EventScriptPlaceable.OnLock, "plc_on_lock");
+
+            if (ScriptRunner.GetMatchingVariables(placeable, PlaceablePrefix.OnOpened).Any())
+                SetEventScript(placeable, EventScriptPlaceable.OnOpen, "plc_on_open");
+
+            if (ScriptRunner.GetMatchingVariables(placeable, PlaceablePrefix.OnSpellCastAt).Any())
+                SetEventScript(placeable, EventScriptPlaceable.OnSpellCastAt, "plc_on_splcast");
+
+            if (ScriptRunner.GetMatchingVariables(placeable, PlaceablePrefix.OnTriggerTrap).Any())
+                SetEventScript(placeable, EventScriptPlaceable.OnTrapTriggered, "plc_on_trap");
+
+            if (ScriptRunner.GetMatchingVariables(placeable, PlaceablePrefix.OnUnlocked).Any())
+                SetEventScript(placeable, EventScriptPlaceable.OnUnlock, "plc_on_unlock");
+
+            if (ScriptRunner.GetMatchingVariables(placeable, PlaceablePrefix.OnUsed).Any())
+                SetEventScript(placeable, EventScriptPlaceable.OnUsed, "plc_on_used");
+
+            if (ScriptRunner.GetMatchingVariables(placeable, PlaceablePrefix.OnUserDefined).Any())
+                SetEventScript(placeable, EventScriptPlaceable.OnUserDefinedEvent, "plc_on_userdef");
         }
 
         /// <summary>
@@ -221,8 +354,14 @@ namespace NWN.FinalFantasy.Core
         /// </summary>
         private static void RegisterStoreEvents(NWGameObject store)
         {
-            SetEventScript(store, EventScriptStore.OnOpen, "store_on_open");
-            SetEventScript(store, EventScriptStore.OnClose, "store_on_close");
+            SetEventScript(store, EventScriptStore.OnOpen, string.Empty);
+            SetEventScript(store, EventScriptStore.OnClose, string.Empty);
+
+            if (ScriptRunner.GetMatchingVariables(store, StorePrefix.OnOpen).Any())
+                SetEventScript(store, EventScriptStore.OnOpen, "store_on_open");
+
+            if (ScriptRunner.GetMatchingVariables(store, StorePrefix.OnClose).Any())
+                SetEventScript(store, EventScriptStore.OnClose, "store_on_close");
         }
 
         /// <summary>
@@ -230,11 +369,26 @@ namespace NWN.FinalFantasy.Core
         /// </summary>
         private static void RegisterEncounterEvents(NWGameObject encounter)
         {
-            SetEventScript(encounter, EventScriptEncounter.OnObjectEnter, "enc_on_enter");
-            SetEventScript(encounter, EventScriptEncounter.OnObjectExit, "enc_on_exit");
-            SetEventScript(encounter, EventScriptEncounter.OnHeartbeat, "enc_on_hb");
-            SetEventScript(encounter, EventScriptEncounter.OnEncounterExhausted, "enc_on_exhaust");
-            SetEventScript(encounter, EventScriptEncounter.OnUserDefinedEvent, "enc_on_userdef");
+            SetEventScript(encounter, EventScriptEncounter.OnObjectEnter, string.Empty);
+            SetEventScript(encounter, EventScriptEncounter.OnObjectExit, string.Empty);
+            SetEventScript(encounter, EventScriptEncounter.OnHeartbeat, string.Empty);
+            SetEventScript(encounter, EventScriptEncounter.OnEncounterExhausted, string.Empty);
+            SetEventScript(encounter, EventScriptEncounter.OnUserDefinedEvent, string.Empty);
+
+            if (ScriptRunner.GetMatchingVariables(encounter, EncounterPrefix.OnEnter).Any())
+                SetEventScript(encounter, EventScriptEncounter.OnObjectEnter, "enc_on_enter");
+
+            if (ScriptRunner.GetMatchingVariables(encounter, EncounterPrefix.OnExit).Any())
+                SetEventScript(encounter, EventScriptEncounter.OnObjectExit, "enc_on_exit");
+
+            if (ScriptRunner.GetMatchingVariables(encounter, EncounterPrefix.OnHeartbeat).Any())
+                SetEventScript(encounter, EventScriptEncounter.OnHeartbeat, "enc_on_hb");
+
+            if (ScriptRunner.GetMatchingVariables(encounter, EncounterPrefix.OnExhausted).Any())
+                SetEventScript(encounter, EventScriptEncounter.OnEncounterExhausted, "enc_on_exhaust");
+
+            if (ScriptRunner.GetMatchingVariables(encounter, EncounterPrefix.OnUserDefined).Any())
+                SetEventScript(encounter, EventScriptEncounter.OnUserDefinedEvent, "enc_on_userdef");
         }
     }
 }

@@ -6,9 +6,9 @@ using NWN.FinalFantasy.Core.NWNX;
 using NWN.FinalFantasy.Core.NWScript.Enumerations;
 using Serilog;
 
-namespace NWN.FinalFantasy.Core.Event
+namespace NWN.FinalFantasy.Core
 {
-    public static class ScriptRunner
+    internal static class ScriptRunner
     {
         private static readonly Dictionary<string, MethodInfo> _cachedScripts = new Dictionary<string, MethodInfo>();
 
@@ -17,7 +17,7 @@ namespace NWN.FinalFantasy.Core.Event
         /// </summary>
         /// <param name="target">The object whose scripts we're checking</param>
         /// <param name="scriptPrefix">The prefix to look for.</param>
-        public static void RunScriptEvents(NWGameObject target, string scriptPrefix)
+        internal static void RunScriptEvents(NWGameObject target, string scriptPrefix)
         {
             var scripts = GetMatchingVariables(target, scriptPrefix);
 

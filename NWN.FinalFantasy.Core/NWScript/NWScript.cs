@@ -903,16 +903,23 @@ namespace NWN
             return Internal.StackPopInteger();
         }
 
-        //  Does a Reflex Save check for the given DC
-        //  - oCreature
-        //  - nDC: Difficulty check
-        //  - nSaveType: SAVING_THROW_TYPE_*
-        //  - oSaveVersus
-        //  Returns: 0 if the saving throw roll failed
-        //  Returns: 1 if the saving throw roll succeeded
-        //  Returns: 2 if the target was immune to the save type specified
-        //  Note: If used within an Area of Effect Object Script (On Enter, OnExit, OnHeartbeat), you MUST pass
-        //  GetAreaOfEffectCreator() into oSaveVersus!!
+        /// <summary>
+        ///   Does a Reflex Save check for the given DC
+        ///  - oCreature
+        ///  - nDC: Difficulty check
+        ///  - nSaveType: SAVING_THROW_TYPE_*
+        ///  - oSaveVersus
+        ///  Returns: 0 if the saving throw roll failed
+        ///  Returns: 1 if the saving throw roll succeeded
+        ///  Returns: 2 if the target was immune to the save type specified
+        ///  Note: If used within an Area of Effect Object Script (On Enter, OnExit, OnHeartbeat), you MUST pass
+        ///  GetAreaOfEffectCreator() into oSaveVersus!!
+        /// </summary>
+        /// <param name="oCreature">The creature being checked</param>
+        /// <param name="nDC">The difficulty check</param>
+        /// <param name="nSaveType">The type of saving throw</param>
+        /// <param name="oSaveVersus">The creature being used for the check</param>
+        /// <returns>A reflex result containing the status of the call</returns>
         public static int ReflexSave(NWGameObject oCreature, int nDC, SavingThrowType nSaveType = SavingThrowType.None, NWGameObject oSaveVersus = null)
         {
             Internal.StackPushObject(oSaveVersus, false);

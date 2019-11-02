@@ -16,7 +16,7 @@ namespace NWN.FinalFantasy.Core.Startup
         /// <summary>
         /// Loads all DLL assemblies in the path configured in the app settings file.
         /// </summary>
-        public static void LoadAssemblies()
+        internal static void LoadAssemblies()
         {
             var settings = new ApplicationSettings();
 
@@ -55,7 +55,7 @@ namespace NWN.FinalFantasy.Core.Startup
         /// </summary>
         /// <param name="namespace">The assembly to look for</param>
         /// <returns></returns>
-        public static Type FindType(string @namespace)
+        internal static Type FindType(string @namespace)
         {
             foreach (var assembly in _assemblies)
             {
@@ -67,7 +67,7 @@ namespace NWN.FinalFantasy.Core.Startup
                 return matching;
             }
 
-            throw new Exception($"Could not find script with namespace {@namespace}");
+            return null;
         }
     }
 }

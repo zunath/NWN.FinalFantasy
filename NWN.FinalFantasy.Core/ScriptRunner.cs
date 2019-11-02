@@ -6,6 +6,7 @@ using NWN.FinalFantasy.Core.NWNX;
 using NWN.FinalFantasy.Core.NWScript.Enumerations;
 using NWN.FinalFantasy.Core.Startup;
 using Serilog;
+using static NWN._;
 
 namespace NWN.FinalFantasy.Core
 {
@@ -16,15 +17,15 @@ namespace NWN.FinalFantasy.Core
         /// <summary>
         /// Runs all scripts matching a given prefix, in the order they are found.
         /// </summary>
-        /// <param name="target">The object whose scripts we're checking</param>
+        /// <param name="caller">The object whose scripts we're checking</param>
         /// <param name="scriptPrefix">The prefix to look for.</param>
-        internal static void RunScriptEvents(NWGameObject target, string scriptPrefix)
+        internal static void RunScriptEvents(NWGameObject caller, string scriptPrefix)
         {
-            var scripts = GetMatchingVariables(target, scriptPrefix);
+            var scripts = GetMatchingVariables(caller, scriptPrefix);
 
             foreach (var script in scripts)
             {
-                RunScript(script);
+                RunScript(script, caller);
             }
         }
 
@@ -64,7 +65,7 @@ namespace NWN.FinalFantasy.Core
                     }
 
                     // Add the script to the list.
-                    var value = _.GetLocalString(target, variable.Key);
+                    var value = GetLocalString(target, variable.Key);
                     variableList.Add(order, value);
                 }
             }
@@ -76,7 +77,8 @@ namespace NWN.FinalFantasy.Core
         /// Runs a C# script's Main() method.
         /// </summary>
         /// <param name="script">Name of the script's namespace</param>
-        private static void RunScript(string script)
+        /// <param name="caller">The caller of this script</param>
+        private static void RunScript(string script, NWGameObject caller)
         {
             if (!_cachedScripts.ContainsKey(script))
             {
@@ -91,7 +93,7 @@ namespace NWN.FinalFantasy.Core
 
                     if (type == null)
                     {
-                        Log.Warning($"Could not locate script: " + scriptNamespace);
+                        Log.Warning($"Could not locate script: {scriptNamespace} from caller {GetName(caller)}");
                         return;
                     }
                 }

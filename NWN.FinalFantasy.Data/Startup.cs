@@ -6,7 +6,8 @@ namespace NWN.FinalFantasy.Data
     {
         public static void Main()
         {
-            Console.WriteLine("Running startup in data project");
+            Console.WriteLine("starting in data project");
+            
         }
     }
 }

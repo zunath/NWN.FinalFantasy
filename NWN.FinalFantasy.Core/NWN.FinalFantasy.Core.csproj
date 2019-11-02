@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationSettings.cs" />
+    <Compile Include="NWNX\NWNXRedis.cs" />
     <Compile Include="Startup\AssemblyLoader.cs" />
     <Compile Include="Startup\EventRegistration.cs" />
     <Compile Include="Event\AreaOfEffect\aoe_on_enter.cs" />
@@ -322,6 +323,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Docker\ffo.cmd" />
+    <None Include="Docker\ffo.env" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />

@@ -2,6 +2,7 @@
 {
     internal class ModulePrefix
     {
+        // Regular NWN events
         public const string OnAcquireItem = "ON_ACQUIRE_ITEM_";
         public const string OnActivateItem = "ON_ACTIVATE_ITEM_";
         public const string OnPlayerChat = "ON_PLAYER_CHAT_";
@@ -18,5 +19,11 @@
         public const string OnUnacquireItem = "ON_UNACQUIRE_ITEM_";
         public const string OnUnequipItem = "ON_UNEQUIP_ITEM_";
         public const string OnUserDefined = "ON_USER_DEFINED_";
+
+        // Expanded NWNX events
+        public const string OnAttack = "ON_ATTACK_";
+        public const string OnExamine = "ON_EXAMINE_";
+        public const string OnUseFeat = "ON_USE_FEAT_";
+        public const string OnUseItem = "ON_USE_ITEM_";
     }
 }

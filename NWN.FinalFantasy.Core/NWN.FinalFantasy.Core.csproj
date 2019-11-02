@@ -50,6 +50,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationSettings.cs" />
+    <Compile Include="Event\Module\mod_on_attack.cs" />
+    <Compile Include="Event\Module\mod_on_examine.cs" />
+    <Compile Include="Event\Module\mod_on_usefeat.cs" />
+    <Compile Include="Event\Module\mod_on_useitem.cs" />
+    <Compile Include="NWNX\NWNXEventType.cs" />
     <Compile Include="NWNX\NWNXRedis.cs" />
     <Compile Include="Startup\AssemblyLoader.cs" />
     <Compile Include="Startup\EventRegistration.cs" />

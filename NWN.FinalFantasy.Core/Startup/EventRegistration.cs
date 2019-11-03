@@ -27,6 +27,7 @@ namespace NWN.FinalFantasy.Core.Startup
             RegisterNWNXEvents();
             RegisterAreaEvents();
             RegisterObjectEvents();
+            RegisterDMEvents();
         }
 
         /// <summary>
@@ -413,6 +414,44 @@ namespace NWN.FinalFantasy.Core.Startup
 
             if (ScriptRunner.GetMatchingVariables(encounter, EncounterPrefix.OnUserDefined).Any())
                 SetEventScript(encounter, EventScriptEncounter.OnUserDefinedEvent, "enc_on_userdef");
+        }
+
+        private static void RegisterDMEvents()
+        {
+
+            NWNXEvents.SubscribeEvent(NWNXEventType.DMAppearBefore, "dm_appear");
+            NWNXEvents.SubscribeEvent(NWNXEventType.DMChangeDifficultyBefore, "dm_change_diff");
+            NWNXEvents.SubscribeEvent(NWNXEventType.DMDisableTrapBefore, "dm_disab_trap");
+            NWNXEvents.SubscribeEvent(NWNXEventType.DMDisappearBefore, "dm_disappear");
+            NWNXEvents.SubscribeEvent(NWNXEventType.DMForceRestBefore, "dm_force_rest");
+            NWNXEvents.SubscribeEvent(NWNXEventType.DMGetVariableBefore, "dm_get_var");
+            NWNXEvents.SubscribeEvent(NWNXEventType.DMGiveGoldBefore, "dm_give_gold");
+            NWNXEvents.SubscribeEvent(NWNXEventType.DMGiveItemBefore, "dm_give_item");
+            NWNXEvents.SubscribeEvent(NWNXEventType.DMGiveLevelBefore, "dm_give_level");
+            NWNXEvents.SubscribeEvent(NWNXEventType.DMGiveXPBefore, "dm_give_xp");
+            NWNXEvents.SubscribeEvent(NWNXEventType.DMHealBefore, "dm_heal");
+            NWNXEvents.SubscribeEvent(NWNXEventType.DMJumpBefore, "dm_jump");
+            NWNXEvents.SubscribeEvent(NWNXEventType.DMJumpAllPlayersToPointBefore, "dm_jump_all");
+            NWNXEvents.SubscribeEvent(NWNXEventType.DMJumpTargetToPointBefore, "dm_jump_target");
+            NWNXEvents.SubscribeEvent(NWNXEventType.DMKillBefore, "dm_kill");
+            NWNXEvents.SubscribeEvent(NWNXEventType.DMLimboBefore, "dm_limbo");
+            NWNXEvents.SubscribeEvent(NWNXEventType.DMPossessBefore, "dm_possess");
+            NWNXEvents.SubscribeEvent(NWNXEventType.DMSetDateBefore, "dm_set_date");
+            NWNXEvents.SubscribeEvent(NWNXEventType.DMSetStatBefore, "dm_set_stat");
+            NWNXEvents.SubscribeEvent(NWNXEventType.DMSetTimeBefore, "dm_set_time");
+            NWNXEvents.SubscribeEvent(NWNXEventType.DMSetVariableBefore, "dm_set_var");
+            NWNXEvents.SubscribeEvent(NWNXEventType.DMSpawnCreatureAfter, "dm_spawn_crea");
+            NWNXEvents.SubscribeEvent(NWNXEventType.DMSpawnEncounterAfter, "dm_spawn_enco");
+            NWNXEvents.SubscribeEvent(NWNXEventType.DMSpawnItemAfter, "dm_spawn_item");
+            NWNXEvents.SubscribeEvent(NWNXEventType.DMSpawnPlaceableAfter, "dm_spawn_plac");
+            NWNXEvents.SubscribeEvent(NWNXEventType.DMSpawnPortalAfter, "dm_spawn_port");
+            NWNXEvents.SubscribeEvent(NWNXEventType.DMSpawnTrapOnObjectAfter, "dm_spawn_trap");
+            NWNXEvents.SubscribeEvent(NWNXEventType.DMSpawnTriggerAfter, "dm_spawn_trigg");
+            NWNXEvents.SubscribeEvent(NWNXEventType.DMSpawnWaypointAfter, "dm_spawn_wayp");
+            NWNXEvents.SubscribeEvent(NWNXEventType.DMTakeItemBefore, "dm_take_item");
+            NWNXEvents.SubscribeEvent(NWNXEventType.DMToggleImmortalBefore, "dm_togg_immo");
+            NWNXEvents.SubscribeEvent(NWNXEventType.DMToggleAIBefore, "dm_toggle_ai");
+            NWNXEvents.SubscribeEvent(NWNXEventType.DMToggleLockBefore, "dm_toggle_lock");
         }
     }
 }

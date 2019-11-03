@@ -55,11 +55,12 @@
   <ItemGroup>
     <Compile Include="DB.cs" />
     <Compile Include="EntityBase.cs" />
-    <Compile Include="EntityList.cs" />
+    <Compile Include="Entity\EntityList.cs" />
     <Compile Include="Entity\BugReport.cs" />
     <Compile Include="Entity\DM.cs" />
     <Compile Include="Entity\MapPin.cs" />
     <Compile Include="Entity\Player.cs" />
+    <Compile Include="Entity\ServerConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -1,11 +1,30 @@
 ﻿using System;
+using System.Collections.Generic;
 using Newtonsoft.Json;
 using NWN.FinalFantasy.Core.NWNX;
+using NWN.FinalFantasy.Data.Entity;
 
 namespace NWN.FinalFantasy.Data
 {
     public static class DB
     {
+        private static string BuildKey(Guid guid, Type type)
+        {
+            // If we've got a list, get the underlying type of list
+            // for use when building the key.
+            if (type.GetGenericArguments().Length > 0)
+            {
+                Console.WriteLine("got a list");
+                type = type.GetGenericArguments()[0];
+            }
+
+            var id = guid.ToString();
+            var @namespace = type.Namespace + "." + type.Name;
+            var key = @namespace + ":" + id;
+
+            return key;
+        }
+
         /// <summary>
         /// Stores a specific object in the database by its ID.
         /// </summary>
@@ -14,9 +33,7 @@ namespace NWN.FinalFantasy.Data
         public static void Set<T>(T entity)
             where T: EntityBase
         {
-            var @namespace = typeof(T).FullName;
-            var id = entity.ID.ToString();
-            var key = @namespace + ":" + id;
+            var key = BuildKey(entity.ID, typeof(T));
             var data = JsonConvert.SerializeObject(entity);
 
             NWNXRedis.Set(key, data);
@@ -31,9 +48,7 @@ namespace NWN.FinalFantasy.Data
         public static T Get<T>(Guid id)
             where T: EntityBase
         {
-            var @namespace = typeof(T).FullName;
-            var key = @namespace + ":" + id;
-
+            var key = BuildKey(id, typeof(T));
             var json = NWNXRedis.Get(key);
             return JsonConvert.DeserializeObject<T>(json);
         }
@@ -47,9 +62,7 @@ namespace NWN.FinalFantasy.Data
         public static EntityList<T> GetList<T>(Guid id)
             where T: EntityBase
         {
-            var @namespace = typeof(T).FullName;
-            var key = @namespace + ":" + id;
-
+            var key = BuildKey(id, typeof(T));
             var json = NWNXRedis.Get(key);
             return JsonConvert.DeserializeObject<EntityList<T>>(json);
         }
@@ -60,12 +73,10 @@ namespace NWN.FinalFantasy.Data
         /// </summary>
         /// <typeparam name="T">The type of data to check the existence of</typeparam>
         /// <param name="id">The ID of the entity</param>
-        /// <returns></returns>
+        /// <returns>true if found, false otherwise</returns>
         public static bool Exists<T>(Guid id)
         {
-            var @namespace = typeof(T).FullName;
-            var key = @namespace + ":" + id;
-
+            var key = BuildKey(id, typeof(T));
             return NWNXRedis.Exists(key);
         }
     }

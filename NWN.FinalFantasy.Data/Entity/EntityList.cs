@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace NWN.FinalFantasy.Data
+namespace NWN.FinalFantasy.Data.Entity
 {
     public class EntityList<T>: EntityBase
         where T: EntityBase

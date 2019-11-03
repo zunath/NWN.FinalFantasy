@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using NWN.FinalFantasy.Core.NWScript.Enumerations;
 
 namespace NWN.FinalFantasy.Core.NWNX
@@ -304,7 +305,7 @@ namespace NWN.FinalFantasy.Core.NWNX
 
         public static int OnDMGiveLevels_GetAmount()
         {
-            return GetEventDataInt("NUM_LEVELS");
+            return GetEventDataInt("AMOUNT");
         }
 
         public static NWGameObject OnDMGiveLevels_GetTarget()
@@ -363,5 +364,65 @@ namespace NWN.FinalFantasy.Core.NWNX
         {
             return GetEventDataFloat("POS_Z");
         }
+
+        public static GameDifficulty OnDMChangeDifficulty_GetDifficultySetting()
+        {
+            return (GameDifficulty) GetEventDataInt("DIFFICULTY_SETTING");
+        }
+
+        public static NWGameObject OnDMDisableTrap_GetTrap()
+        {
+            return GetEventDataObject("TARGET");
+        }
+
+        public static List<NWGameObject> DMEvents_GetTargetList(string tagPrefix = "TARGET_")
+        {
+            var targetCount = GetEventDataInt("NUM_TARGETS");
+            var result = new List<NWGameObject>();
+
+            for (int x = 1; x <= targetCount; x++)
+            {
+                var target = GetEventDataObject(tagPrefix + x);
+                result.Add(target);
+            }
+
+            return result;
+        }
+
+        public static NWGameObject OnDMGiveItem_GetTarget()
+        {
+            return GetEventDataObject("TARGET");
+        }
+
+        public static NWGameObject OnDMGiveItem_GetItem()
+        {
+            return GetEventDataObject("ITEM");
+        }
+
+        public static NWGameObject OnDMJumpToPoint_GetArea()
+        {
+            return GetEventDataObject("TARGET_AREA");
+        }
+
+        public static float OnDMJumpToPoint_GetX()
+        {
+            return GetEventDataFloat("POS_X");
+        }
+
+        public static float OnDMJumpToPoint_GetY()
+        {
+            return GetEventDataFloat("POS_Y");
+        }
+
+        public static float OnDMJumpToPoint_GetZ()
+        {
+            return GetEventDataFloat("POS_Z");
+        }
+
+        public static NWGameObject OnDMPossess_GetTarget()
+        {
+            return GetEventDataObject("TARGET");
+        }
+        
     }
 }

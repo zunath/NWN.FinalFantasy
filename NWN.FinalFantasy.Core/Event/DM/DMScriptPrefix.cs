@@ -23,16 +23,10 @@
         public const string OnSetStat = "DM_ON_SET_STAT_";
         public const string OnSetTime = "DM_ON_SET_TIME_";
         public const string OnSetVariable = "DM_ON_SET_VARIABLE_";
-        public const string OnSpawnCreature = "DM_ON_SPAWN_CREATURE_";
-        public const string OnSpawnEncounter = "DM_ON_SPAWN_ENCOUNTER_";
-        public const string OnSpawnItem = "DM_ON_SPAWN_ITEM_";
-        public const string OnSpawnPlaceable = "DM_ON_SPAWN_PLACEABLE_";
-        public const string OnSpawnPortal = "DM_ON_SPAWN_PORTAL_";
-        public const string OnSpawnTrap = "DM_ON_SPAWN_TRAP_";
-        public const string OnSpawnTrigger = "DM_ON_SPAWN_TRIGGER_";
-        public const string OnSpawnWaypoint = "DM_ON_SPAWN_WAYPOINT_";
+        public const string OnSpawnObject = "DM_ON_SPAWN_OBJECT_";
         public const string OnTakeItem = "DM_ON_TAKE_ITEM_";
         public const string OnToggleImmortality = "DM_ON_TOGGLE_IMMORTALITY_";
+        public const string OnToggleInvulnerability = "DM_ON_TOGGLE_INVULNERABILITY_";
         public const string OnToggleAI = "DM_ON_TOGGLE_AI_";
         public const string OnToggleLock = "DM_ON_TOGGLE_LOCK_";
     }

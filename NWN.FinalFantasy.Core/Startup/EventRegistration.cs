@@ -426,7 +426,7 @@ namespace NWN.FinalFantasy.Core.Startup
             NWNXEvents.SubscribeEvent(NWNXEventType.DMForceRestBefore, "dm_force_rest");
             NWNXEvents.SubscribeEvent(NWNXEventType.DMGetVariableBefore, "dm_get_var");
             NWNXEvents.SubscribeEvent(NWNXEventType.DMGiveGoldBefore, "dm_give_gold");
-            NWNXEvents.SubscribeEvent(NWNXEventType.DMGiveItemBefore, "dm_give_item");
+            NWNXEvents.SubscribeEvent(NWNXEventType.DMGiveItemAfter, "dm_give_item");
             NWNXEvents.SubscribeEvent(NWNXEventType.DMGiveLevelBefore, "dm_give_level");
             NWNXEvents.SubscribeEvent(NWNXEventType.DMGiveXPBefore, "dm_give_xp");
             NWNXEvents.SubscribeEvent(NWNXEventType.DMHealBefore, "dm_heal");
@@ -440,16 +440,10 @@ namespace NWN.FinalFantasy.Core.Startup
             NWNXEvents.SubscribeEvent(NWNXEventType.DMSetStatBefore, "dm_set_stat");
             NWNXEvents.SubscribeEvent(NWNXEventType.DMSetTimeBefore, "dm_set_time");
             NWNXEvents.SubscribeEvent(NWNXEventType.DMSetVariableBefore, "dm_set_var");
-            NWNXEvents.SubscribeEvent(NWNXEventType.DMSpawnCreatureAfter, "dm_spawn_crea");
-            NWNXEvents.SubscribeEvent(NWNXEventType.DMSpawnEncounterAfter, "dm_spawn_enco");
-            NWNXEvents.SubscribeEvent(NWNXEventType.DMSpawnItemAfter, "dm_spawn_item");
-            NWNXEvents.SubscribeEvent(NWNXEventType.DMSpawnPlaceableAfter, "dm_spawn_plac");
-            NWNXEvents.SubscribeEvent(NWNXEventType.DMSpawnPortalAfter, "dm_spawn_port");
-            NWNXEvents.SubscribeEvent(NWNXEventType.DMSpawnTrapOnObjectAfter, "dm_spawn_trap");
-            NWNXEvents.SubscribeEvent(NWNXEventType.DMSpawnTriggerAfter, "dm_spawn_trigg");
-            NWNXEvents.SubscribeEvent(NWNXEventType.DMSpawnWaypointAfter, "dm_spawn_wayp");
+            NWNXEvents.SubscribeEvent(NWNXEventType.DMSpawnObjectAfter, "dm_spawn");
             NWNXEvents.SubscribeEvent(NWNXEventType.DMTakeItemBefore, "dm_take_item");
             NWNXEvents.SubscribeEvent(NWNXEventType.DMToggleImmortalBefore, "dm_togg_immo");
+            NWNXEvents.SubscribeEvent(NWNXEventType.DMToggleInvulnerabilityBefore, "dm_togg_invuln");
             NWNXEvents.SubscribeEvent(NWNXEventType.DMToggleAIBefore, "dm_toggle_ai");
             NWNXEvents.SubscribeEvent(NWNXEventType.DMToggleLockBefore, "dm_toggle_lock");
         }

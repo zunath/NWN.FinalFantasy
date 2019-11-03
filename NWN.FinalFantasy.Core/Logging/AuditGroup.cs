@@ -4,6 +4,7 @@
     {
         Connection,
         Error,
-        Chat
+        Chat,
+        DM
     }
 }

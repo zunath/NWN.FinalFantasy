@@ -1,4 +1,6 @@
-﻿namespace NWN.FinalFantasy.Core.NWNX
+﻿using NWN.FinalFantasy.Core.NWScript.Enumerations;
+
+namespace NWN.FinalFantasy.Core.NWNX
 {
     public static class NWNXPlayerQuickBarSlot
     {
@@ -100,11 +102,11 @@
         /// </summary>
         /// <param name="nFeat"></param>
         /// <returns></returns>
-        public static QuickBarSlot UseFeat(int nFeat)
+        public static QuickBarSlot UseFeat(Feat nFeat)
         {
             QuickBarSlot qbs = Empty(QuickBarSlotType.Feat);
 
-            qbs.INTParam1 = nFeat;
+            qbs.INTParam1 = (int)nFeat;
 
             return qbs;
         }

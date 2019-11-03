@@ -15,6 +15,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWN.FinalFantasy.Persistenc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWN.FinalFantasy.Auditing", "NWN.FinalFantasy.Auditing\NWN.FinalFantasy.Auditing.csproj", "{E308B987-7BB1-4BEA-BB6B-859F37854A55}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWN.FinalFantasy.Chat", "NWN.FinalFantasy.Chat\NWN.FinalFantasy.Chat.csproj", "{33B1FF67-54CC-4459-9F31-531CB47AA296}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWN.FinalFantasy.Authorization", "NWN.FinalFantasy.Authorization\NWN.FinalFantasy.Authorization.csproj", "{F097FA98-36AF-4281-8B65-70D0F53A83D5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +49,14 @@ Global
 		{E308B987-7BB1-4BEA-BB6B-859F37854A55}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E308B987-7BB1-4BEA-BB6B-859F37854A55}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E308B987-7BB1-4BEA-BB6B-859F37854A55}.Release|Any CPU.Build.0 = Release|Any CPU
+		{33B1FF67-54CC-4459-9F31-531CB47AA296}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33B1FF67-54CC-4459-9F31-531CB47AA296}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33B1FF67-54CC-4459-9F31-531CB47AA296}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33B1FF67-54CC-4459-9F31-531CB47AA296}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F097FA98-36AF-4281-8B65-70D0F53A83D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F097FA98-36AF-4281-8B65-70D0F53A83D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F097FA98-36AF-4281-8B65-70D0F53A83D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F097FA98-36AF-4281-8B65-70D0F53A83D5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

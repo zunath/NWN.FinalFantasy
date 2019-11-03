@@ -64,6 +64,7 @@
     <Compile Include="Dialog\DialogResponse.cs" />
     <Compile Include="Dialog\IConversation.cs" />
     <Compile Include="Dialog\PlayerDialog.cs" />
+    <Compile Include="Enumerations\AuthorizationLevel.cs" />
     <Compile Include="Event\Dialog\dialog_action.cs" />
     <Compile Include="Event\Dialog\dialog_appears.cs" />
     <Compile Include="Event\Dialog\dialog_end.cs" />
@@ -383,6 +384,7 @@
     <Compile Include="NWScript\NWScript.cs" />
     <Compile Include="NWScript\NWScriptTypes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utility\ColorToken.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Docker\docker-compose.yml" />

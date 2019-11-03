@@ -27,12 +27,12 @@ namespace NWN.FinalFantasy.Core.NWNX
         /// <param name="creature"></param>
         /// <param name="feat"></param>
         /// <param name="level"></param>
-        public static void AddFeatByLevel(NWGameObject creature, int feat, int level)
+        public static void AddFeatByLevel(NWGameObject creature, Feat feat, int level)
         {
             string sFunc = "AddFeatByLevel";
 
             NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, level);
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, feat);
+            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, (int)feat);
             NWNXCore.NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
 
             NWNXCore.NWNX_CallFunction(NWNX_Creature, sFunc);

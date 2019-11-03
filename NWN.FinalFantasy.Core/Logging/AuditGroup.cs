@@ -5,6 +5,7 @@
         Connection,
         Error,
         Chat,
-        DM
+        DM,
+        DMAuthorization
     }
 }

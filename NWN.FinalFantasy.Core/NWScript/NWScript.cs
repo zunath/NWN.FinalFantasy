@@ -402,12 +402,36 @@ namespace NWN
             Internal.CallBuiltIn(39);
         }
 
-        //  Cause the action subject to play an animation
-        //  - nAnimation: ANIMATION_*
-        //  - fSpeed: Speed of the animation
-        //  - fDurationSeconds: Duration of the animation (this is not used for Fire and
-        //    Forget animations)
-        public static void ActionPlayAnimation(Animation nAnimation, float fSpeed = 1.0f, float fDurationSeconds = 0.0f)
+        /// <summary>
+        /// Cause the action subject to play an animation
+        ///  - nAnimation: ANIMATION_*
+        ///  - fSpeed: Speed of the animation
+        ///  - fDurationSeconds: Duration of the animation (this is not used for Fire and
+        ///    Forget animations)
+        /// </summary>
+        /// <param name="nAnimation"></param>
+        /// <param name="fSpeed"></param>
+        public static void ActionPlayAnimation(AnimationFireForget nAnimation, float fSpeed = 1.0f)
+        {
+            ActionPlayAnimation((int)nAnimation, fSpeed, 0.0f);
+        }
+
+        /// <summary>
+        /// Cause the action subject to play an animation
+        ///  - nAnimation: ANIMATION_*
+        ///  - fSpeed: Speed of the animation
+        ///  - fDurationSeconds: Duration of the animation (this is not used for Fire and
+        ///    Forget animations)
+        /// </summary>
+        /// <param name="nAnimation"></param>
+        /// <param name="fSpeed"></param>
+        /// <param name="fDurationSeconds"></param>
+        public static void ActionPlayAnimation(AnimationLooping nAnimation, float fSpeed = 1.0f, float fDurationSeconds = 0.0f)
+        {
+            ActionPlayAnimation((int)nAnimation, fSpeed, fDurationSeconds);
+        }
+
+        private static void ActionPlayAnimation(int nAnimation, float fSpeed = 1.0f, float fDurationSeconds = 0.0f)
         {
             Internal.StackPushFloat(fDurationSeconds);
             Internal.StackPushFloat(fSpeed);
@@ -5201,8 +5225,9 @@ namespace NWN
         //  - bBroadcastToFaction: If this is TRUE then only creatures in the same faction
         //    as oCreatureToFloatAbove
         //    will see the floaty text, and only if they are within range (30 metres).
-        public static void FloatingTextStringOnCreature(string sStringToDisplay, NWGameObject oCreatureToFloatAbove, bool bBroadcastToFaction = true)
+        public static void FloatingTextStringOnCreature(NWGameObject oCreatureToFloatAbove, string sStringToDisplay, bool bBroadcastToFaction = false)
         {
+            // Note: this method's parameters have been moved around to make the API easier to use. The order in which they are pushed to NWN have not been modified.
             Internal.StackPushInteger(Convert.ToInt32(bBroadcastToFaction));
             Internal.StackPushObject(oCreatureToFloatAbove, false);
             Internal.StackPushString(sStringToDisplay);

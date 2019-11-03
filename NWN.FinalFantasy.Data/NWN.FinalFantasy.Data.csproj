@@ -56,6 +56,7 @@
     <Compile Include="DB.cs" />
     <Compile Include="EntityBase.cs" />
     <Compile Include="EntityListBase.cs" />
+    <Compile Include="Entity\BugReport.cs" />
     <Compile Include="Entity\DM.cs" />
     <Compile Include="Entity\DMList.cs" />
     <Compile Include="Entity\Player.cs" />

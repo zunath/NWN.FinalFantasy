@@ -17,7 +17,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -50,7 +50,59 @@
     <Compile Include="ChatCommandRegistry.cs" />
     <Compile Include="CommandDetailsAttribute.cs" />
     <Compile Include="CommandPermissionType.cs" />
+    <Compile Include="Command\Bored.cs" />
+    <Compile Include="Command\Bow.cs" />
+    <Compile Include="Command\Bug.cs" />
+    <Compile Include="Command\CDKey.cs" />
+    <Compile Include="Command\Coord.cs" />
+    <Compile Include="Command\CopyItem.cs" />
+    <Compile Include="Command\Day.cs" />
+    <Compile Include="Command\DeadBack.cs" />
+    <Compile Include="Command\DeadFront.cs" />
+    <Compile Include="Command\Delete.cs" />
+    <Compile Include="Command\Dice.cs" />
+    <Compile Include="Command\Drink.cs" />
+    <Compile Include="Command\Drunk.cs" />
+    <Compile Include="Command\Duck.cs" />
+    <Compile Include="Command\GetLocalFloat.cs" />
+    <Compile Include="Command\GetLocalInt.cs" />
+    <Compile Include="Command\GetLocalString.cs" />
+    <Compile Include="Command\GetPlot.cs" />
+    <Compile Include="Command\Greet.cs" />
+    <Compile Include="Command\Help.cs" />
     <Compile Include="Command\IChatCommand.cs" />
+    <Compile Include="Command\Interact.cs" />
+    <Compile Include="Command\Kill.cs" />
+    <Compile Include="Command\Laughing.cs" />
+    <Compile Include="Command\Listen.cs" />
+    <Compile Include="Command\Look.cs" />
+    <Compile Include="Command\LoopingAnimationCommand.cs" />
+    <Compile Include="Command\Name.cs" />
+    <Compile Include="Command\Night.cs" />
+    <Compile Include="Command\PickUp.cs" />
+    <Compile Include="Command\Pos.cs" />
+    <Compile Include="Command\Read.cs" />
+    <Compile Include="Command\Rest.cs" />
+    <Compile Include="Command\Rez.cs" />
+    <Compile Include="Command\Salute.cs" />
+    <Compile Include="Command\Save.cs" />
+    <Compile Include="Command\ScratchHead.cs" />
+    <Compile Include="Command\SetLocalFloat.cs" />
+    <Compile Include="Command\SetLocalInt.cs" />
+    <Compile Include="Command\SetLocalString.cs" />
+    <Compile Include="Command\SetPortrait.cs" />
+    <Compile Include="Command\SideStep.cs" />
+    <Compile Include="Command\Sit.cs" />
+    <Compile Include="Command\Spasm.cs" />
+    <Compile Include="Command\SpawnGold.cs" />
+    <Compile Include="Command\SpawnItem.cs" />
+    <Compile Include="Command\Taunt.cs" />
+    <Compile Include="Command\Time.cs" />
+    <Compile Include="Command\Tired.cs" />
+    <Compile Include="Command\TpWp.cs" />
+    <Compile Include="Command\Victory1.cs" />
+    <Compile Include="Command\Victory2.cs" />
+    <Compile Include="Command\Victory3.cs" />
     <Compile Include="OnNWNXChat.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -63,6 +115,10 @@
     <ProjectReference Include="..\NWN.FinalFantasy.Core\NWN.FinalFantasy.Core.csproj">
       <Project>{3385d63b-0d64-4f15-8cc3-c2bd17f672e7}</Project>
       <Name>NWN.FinalFantasy.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NWN.FinalFantasy.Data\NWN.FinalFantasy.Data.csproj">
+      <Project>{e94c10ba-6cdf-48cb-9473-d242db9d82c9}</Project>
+      <Name>NWN.FinalFantasy.Data</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

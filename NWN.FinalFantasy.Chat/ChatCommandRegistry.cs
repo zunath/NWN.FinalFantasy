@@ -3,14 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using NWN.FinalFantasy.Chat.Command;
+using NWN.FinalFantasy.Core.Utility;
 
 namespace NWN.FinalFantasy.Chat
 {
     internal class ChatCommandRegistry
     {
         private static readonly Dictionary<string, IChatCommand> _chatCommands = new Dictionary<string, IChatCommand>();
+        public static string HelpTextPlayer { get; private set; }
+        public static string HelpTextDM { get; private set; }
+        public static string HelpTextAdmin { get; private set; }
 
-        public static void Register()
+        public static void Initialize()
+        {
+            Register();
+            BuildHelpText();
+        }
+
+        private static void Register()
         {
             // Use reflection to get all of IChatCommand handler implementations.
             var classes = Assembly.GetCallingAssembly().GetTypes()
@@ -29,6 +39,32 @@ namespace NWN.FinalFantasy.Chat
                 _chatCommands.Add(key, instance);
             }
         }
+
+        private static void BuildHelpText()
+        {
+            foreach (var command in _chatCommands.Values)
+            {
+                var type = command.GetType();
+                var attribute = type.GetCustomAttribute<CommandDetailsAttribute>();
+                if (attribute == null) continue;
+
+                if (attribute.Permissions.HasFlag(CommandPermissionType.Player))
+                {
+                    HelpTextPlayer += ColorToken.Green("/" + type.Name.ToLower()) + ColorToken.White(": " + attribute.Description) + "\n";
+                }
+
+                if (attribute.Permissions.HasFlag(CommandPermissionType.DM))
+                {
+                    HelpTextDM += ColorToken.Green("/" + type.Name.ToLower()) + ColorToken.White(": " + attribute.Description) + "\n";
+                }
+
+                if (attribute.Permissions.HasFlag(CommandPermissionType.Admin))
+                {
+                    HelpTextAdmin += ColorToken.Green("/" + type.Name.ToLower() + ColorToken.White(": " + attribute.Description) + "\n");
+                }
+            }
+        }
+
 
         public static bool IsRegistered(string commandName)
         {

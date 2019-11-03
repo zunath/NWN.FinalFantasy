@@ -14,5 +14,6 @@
         public float RespawnLocationY { get; set; }
         public float RespawnLocationZ { get; set; }
         public float RespawnLocationOrientation { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

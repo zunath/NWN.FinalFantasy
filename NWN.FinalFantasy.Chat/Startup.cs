@@ -4,7 +4,7 @@
     {
         public static void Main()
         {
-            ChatCommandRegistry.Register();
+            ChatCommandRegistry.Initialize();
         }
     }
 }

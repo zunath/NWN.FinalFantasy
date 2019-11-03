@@ -37,5 +37,20 @@ namespace NWN.FinalFantasy.Data
             var json = NWNXRedis.Get(key);
             return JsonConvert.DeserializeObject<T>(json);
         }
+
+        /// <summary>
+        /// Returns true if an entry with the specified ID exists.
+        /// Returns false if not.
+        /// </summary>
+        /// <typeparam name="T">The type of data to check the existence of</typeparam>
+        /// <param name="id">The ID of the entity</param>
+        /// <returns></returns>
+        public static bool Exists<T>(Guid id)
+        {
+            var @namespace = typeof(T).FullName;
+            var key = @namespace + ":" + id;
+
+            return NWNXRedis.Exists(key);
+        }
     }
 }

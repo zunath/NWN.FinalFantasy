@@ -3498,11 +3498,11 @@ namespace NWN
         }
 
         //  Get the gender of oCreature.
-        public static int GetGender(NWGameObject oCreature)
+        public static Gender GetGender(NWGameObject oCreature)
         {
             Internal.StackPushObject(oCreature, false);
             Internal.CallBuiltIn(358);
-            return Internal.StackPopInteger();
+            return (Gender)Internal.StackPopInteger();
         }
 
         //  * Returns TRUE if tTalent is valid.

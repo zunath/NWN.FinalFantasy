@@ -22,7 +22,7 @@ namespace NWN.FinalFantasy.Core.Messaging
         /// <summary>
         /// Returns a single instance of the <see cref="MessageHub"/>
         /// </summary>
-        internal static MessageHub Instance { get; } = new MessageHub();
+        public static MessageHub Instance { get; } = new MessageHub();
 
         /// <summary>
         /// Registers a callback which is invoked on every message published by the <see cref="MessageHub"/>.

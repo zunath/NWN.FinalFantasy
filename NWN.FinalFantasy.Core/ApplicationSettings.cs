@@ -2,13 +2,22 @@
 
 namespace NWN.FinalFantasy.Core
 {
-    internal class ApplicationSettings
+    public class ApplicationSettings
     {
-        public string DllSearchPattern { get; set; }
-        public string DllDirectory { get; set; }
-        public string NamespaceRoot { get; set; }
+        public string DllSearchPattern { get; }
+        public string DllDirectory { get; }
+        public string NamespaceRoot { get; }
 
-        public ApplicationSettings()
+        private static ApplicationSettings _settings;
+        public static ApplicationSettings Get()
+        {
+            if(_settings == null)
+                _settings = new ApplicationSettings();
+
+            return _settings;
+        }
+
+        private ApplicationSettings()
         {
             DllSearchPattern = Environment.GetEnvironmentVariable("FF_CORE_DLL_SEARCH_PATTERN");
             DllDirectory = Environment.GetEnvironmentVariable("FF_CORE_DLL_DIRECTORY");

@@ -30,16 +30,17 @@ namespace NWN.FinalFantasy.Migration
             {
                 var id = Guid.NewGuid();
                 _.SetTag(player, id.ToString());
-                var entity = new Player
-                {
-                    ID = id,
-                    Version = 0
-                };
-
-                DB.Set(entity);
+                SetNewPlayerEntity(id);
             }
 
             var pcID = _.GetGlobalID(player);
+
+            // Player has an ID but somehow there's no entry in the database. Treat them as a new character.
+            if(!DB.Exists<Player>(pcID))
+            {
+                SetNewPlayerEntity(pcID);
+            }
+
             var pcEntity = DB.Get<Player>(pcID);
             // Iterate over the registered migrations. If player is below the migration version, that migration will be executed upon them.
             // If player is at or above that version, nothing will happen and they will move to the next migration in the list.
@@ -60,6 +61,17 @@ namespace NWN.FinalFantasy.Migration
                 }
             }
 
+        }
+
+        private static void SetNewPlayerEntity(Guid id)
+        {
+            var entity = new Player
+            {
+                ID = id,
+                Version = 0
+            };
+
+            DB.Set(entity);
         }
     }
 }

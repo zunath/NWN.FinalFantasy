@@ -82,7 +82,7 @@ namespace NWN.FinalFantasy.Core
         {
             if (!_cachedScripts.ContainsKey(script))
             {
-                var settings = new ApplicationSettings();
+                var settings = ApplicationSettings.Get();
                 var scriptNamespace = settings.NamespaceRoot + "." + script;
 
                 var type = Type.GetType(scriptNamespace);

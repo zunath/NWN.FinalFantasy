@@ -1,18 +1,19 @@
-﻿using static NWN.FinalFantasy.Core.NWNX.NWNXCore;
+﻿using System;
+using static NWN.FinalFantasy.Core.NWNX.NWNXCore;
 
 namespace NWN.FinalFantasy.Core.NWNX
 {
     public static class NWNXRedis
     {
-        public struct NWNX_Redis_PubSubMessageData
+        public struct PubSubMessageData
         {
             public string channel;
             public string message;
         };
 
-        public static NWNX_Redis_PubSubMessageData NWNX_Redis_GetPubSubMessageData()
+        public static PubSubMessageData GetPubSubMessageData()
         {
-            NWNX_Redis_PubSubMessageData ret;
+            PubSubMessageData ret;
             NWNX_CallFunction("NWNX_Redis", "GetPubSubData");
             ret.message = NWNX_GetReturnValueString("NWNX_Redis", "GetPubSubData");
             ret.channel = NWNX_GetReturnValueString("NWNX_Redis", "GetPubSubData");
@@ -56,5 +57,14 @@ namespace NWN.FinalFantasy.Core.NWNX
             NWNX_CallFunction("NWNX_Redis", "Deferred");
             return NWNX_GetReturnValueInt("NWNX_Redis", "Deferred");
         }
+
+        public static bool Exists(string key)
+        {
+            NWNX_PushArgumentString("NWNX_Redis", "Deferred", "EXISTS");
+            NWNX_PushArgumentString("NWNX_Redis", "Deferred", key);
+            NWNX_CallFunction("NWNX_Redis", "Deferred");
+            return Convert.ToBoolean(NWNX_GetReturnValueInt("NWNX_Redis", "Deferred"));
+        }
+
     }
 }

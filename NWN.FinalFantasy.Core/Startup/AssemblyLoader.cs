@@ -7,9 +7,9 @@ using System.Reflection;
 namespace NWN.FinalFantasy.Core.Startup
 {
     /// <summary>
-    /// Responsible for loading associated assemblies in the location configured in the AppSettings.json file.
+    /// Responsible for loading associated assemblies in the location configured via environment variables.
     /// </summary>
-    internal class AssemblyLoader
+    public class AssemblyLoader
     {
         private static readonly List<Assembly> _assemblies = new List<Assembly>();
 
@@ -18,7 +18,7 @@ namespace NWN.FinalFantasy.Core.Startup
         /// </summary>
         internal static void LoadAssemblies()
         {
-            var settings = new ApplicationSettings();
+            var settings = ApplicationSettings.Get();
 
             var assemblyName = Assembly.GetExecutingAssembly().GetName().Name;
             var files = Directory.GetFiles(settings.DllDirectory, settings.DllSearchPattern);
@@ -55,7 +55,7 @@ namespace NWN.FinalFantasy.Core.Startup
         /// </summary>
         /// <param name="namespace">The assembly to look for</param>
         /// <returns></returns>
-        internal static Type FindType(string @namespace)
+        public static Type FindType(string @namespace)
         {
             foreach (var assembly in _assemblies)
             {

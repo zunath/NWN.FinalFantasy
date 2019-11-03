@@ -50,6 +50,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationSettings.cs" />
+    <Compile Include="Dialog\Conversation.cs" />
+    <Compile Include="Dialog\ConversationBase.cs" />
+    <Compile Include="Dialog\DialogConstants.cs" />
+    <Compile Include="Dialog\DialogNavigation.cs" />
+    <Compile Include="Dialog\DialogPage.cs" />
+    <Compile Include="Dialog\DialogResponse.cs" />
+    <Compile Include="Dialog\IConversation.cs" />
+    <Compile Include="Dialog\PlayerDialog.cs" />
+    <Compile Include="Event\Dialog\dialog_action.cs" />
+    <Compile Include="Event\Dialog\dialog_appears.cs" />
+    <Compile Include="Event\Dialog\dialog_end.cs" />
+    <Compile Include="Event\Dialog\dialog_start.cs" />
     <Compile Include="Event\Module\mod_on_attack.cs" />
     <Compile Include="Event\Module\mod_on_examine.cs" />
     <Compile Include="Event\Module\mod_on_usefeat.cs" />

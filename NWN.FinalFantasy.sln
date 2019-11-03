@@ -7,9 +7,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWN.FinalFantasy.Core", "NW
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWN.FinalFantasy.Data", "NWN.FinalFantasy.Data\NWN.FinalFantasy.Data.csproj", "{E94C10BA-6CDF-48CB-9473-D242DB9D82C9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWN.FinalFantasy.Dialog", "NWN.FinalFantasy.Dialog\NWN.FinalFantasy.Dialog.csproj", "{18556FB7-CEBF-4A87-95D1-EA2785888F75}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWN.FinalFantasy.Migration", "NWN.FinalFantasy.Migration\NWN.FinalFantasy.Migration.csproj", "{CDDF2E53-2FCA-4F26-A8FC-C8B430EC001C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWN.FinalFantasy.Menu", "NWN.FinalFantasy.Menu\NWN.FinalFantasy.Menu.csproj", "{80452E61-40CB-4D81-9BA3-AB80F47F9BDD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,14 +25,14 @@ Global
 		{E94C10BA-6CDF-48CB-9473-D242DB9D82C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E94C10BA-6CDF-48CB-9473-D242DB9D82C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E94C10BA-6CDF-48CB-9473-D242DB9D82C9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{18556FB7-CEBF-4A87-95D1-EA2785888F75}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{18556FB7-CEBF-4A87-95D1-EA2785888F75}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{18556FB7-CEBF-4A87-95D1-EA2785888F75}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{18556FB7-CEBF-4A87-95D1-EA2785888F75}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CDDF2E53-2FCA-4F26-A8FC-C8B430EC001C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{CDDF2E53-2FCA-4F26-A8FC-C8B430EC001C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CDDF2E53-2FCA-4F26-A8FC-C8B430EC001C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CDDF2E53-2FCA-4F26-A8FC-C8B430EC001C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{80452E61-40CB-4D81-9BA3-AB80F47F9BDD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{80452E61-40CB-4D81-9BA3-AB80F47F9BDD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{80452E61-40CB-4D81-9BA3-AB80F47F9BDD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{80452E61-40CB-4D81-9BA3-AB80F47F9BDD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

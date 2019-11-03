@@ -28,7 +28,7 @@ namespace NWN.FinalFantasy.Core
             {
                 try
                 {
-                    RunScript(script, caller);
+                    RunScript(caller, script);
                 }
                 catch(Exception ex)
                 {
@@ -83,10 +83,13 @@ namespace NWN.FinalFantasy.Core
 
         /// <summary>
         /// Runs a C# script's Main() method.
+        /// "script" should be specified with the project name.
+        /// Example: 'Death.OnPlayerDeath' is valid. Just 'OnPlayerDeath' is not.
+        /// Exclude the root namespace when specifying script.
         /// </summary>
         /// <param name="script">Name of the script's namespace</param>
         /// <param name="caller">The caller of this script</param>
-        private static void RunScript(string script, NWGameObject caller)
+        private static void RunScript(NWGameObject caller, string script)
         {
             if (!_cachedScripts.ContainsKey(script))
             {

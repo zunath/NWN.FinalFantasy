@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWN.FinalFantasy.Chat", "NW
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWN.FinalFantasy.Authorization", "NWN.FinalFantasy.Authorization\NWN.FinalFantasy.Authorization.csproj", "{F097FA98-36AF-4281-8B65-70D0F53A83D5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWN.FinalFantasy.Death", "NWN.FinalFantasy.Death\NWN.FinalFantasy.Death.csproj", "{55BA0E62-E991-4994-B63E-ECB3F2035BF1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,6 +59,10 @@ Global
 		{F097FA98-36AF-4281-8B65-70D0F53A83D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F097FA98-36AF-4281-8B65-70D0F53A83D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F097FA98-36AF-4281-8B65-70D0F53A83D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55BA0E62-E991-4994-B63E-ECB3F2035BF1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55BA0E62-E991-4994-B63E-ECB3F2035BF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55BA0E62-E991-4994-B63E-ECB3F2035BF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55BA0E62-E991-4994-B63E-ECB3F2035BF1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

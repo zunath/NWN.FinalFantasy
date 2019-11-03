@@ -3380,6 +3380,19 @@ namespace NWN
             return Internal.StackPopInteger();
         }
 
+        /// <summary>
+        /// Returns the total level of a creature by adding up to three of their classes together.
+        /// Returns 0 if there's an error.
+        /// </summary>
+        /// <param name="creature">The creature to sum levels up for</param>
+        /// <returns></returns>
+        public static int GetTotalLevel(NWGameObject creature)
+        {
+            return GetLevelByPosition(ClassPosition.First, creature) +
+                GetLevelByPosition(ClassPosition.Second, creature) +
+                GetLevelByPosition(ClassPosition.Third, creature);
+        }
+
         //  Determine the levels that oCreature holds in nClassType.
         //  - nClassType: CLASS_TYPE_*
         //  - oCreature

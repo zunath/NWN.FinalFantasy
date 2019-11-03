@@ -6,6 +6,7 @@
         Error,
         Chat,
         DM,
-        DMAuthorization
+        DMAuthorization,
+        Death
     }
 }

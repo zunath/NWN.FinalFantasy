@@ -65,9 +65,9 @@ namespace NWN.FinalFantasy.Core.NWNX
         {
             string sFunc = "SetPosition";
 
-            NWNXCore.NWNX_PushArgumentFloat(NWNX_Object, sFunc, pos.m_X);
-            NWNXCore.NWNX_PushArgumentFloat(NWNX_Object, sFunc, pos.m_Y);
-            NWNXCore.NWNX_PushArgumentFloat(NWNX_Object, sFunc, pos.m_Z);
+            NWNXCore.NWNX_PushArgumentFloat(NWNX_Object, sFunc, pos.X);
+            NWNXCore.NWNX_PushArgumentFloat(NWNX_Object, sFunc, pos.Y);
+            NWNXCore.NWNX_PushArgumentFloat(NWNX_Object, sFunc, pos.Z);
             NWNXCore.NWNX_PushArgumentObject(NWNX_Object, sFunc, obj);
             NWNXCore.NWNX_CallFunction(NWNX_Object, sFunc);
 
@@ -260,9 +260,9 @@ namespace NWN.FinalFantasy.Core.NWNX
         {
             string sFunc = "AddToArea";
 
-            NWNXCore.NWNX_PushArgumentFloat(NWNX_Object, sFunc, pos.m_Z);
-            NWNXCore.NWNX_PushArgumentFloat(NWNX_Object, sFunc, pos.m_Y);
-            NWNXCore.NWNX_PushArgumentFloat(NWNX_Object, sFunc, pos.m_X);
+            NWNXCore.NWNX_PushArgumentFloat(NWNX_Object, sFunc, pos.Z);
+            NWNXCore.NWNX_PushArgumentFloat(NWNX_Object, sFunc, pos.Y);
+            NWNXCore.NWNX_PushArgumentFloat(NWNX_Object, sFunc, pos.X);
             NWNXCore.NWNX_PushArgumentObject(NWNX_Object, sFunc, area);
             NWNXCore.NWNX_PushArgumentObject(NWNX_Object, sFunc, obj);
             NWNXCore.NWNX_CallFunction(NWNX_Object, sFunc);

@@ -12,7 +12,7 @@
         public const string OnPlayerEnter = "ON_PLAYER_ENTER_";
         public const string OnEquipItem = "ON_EQUIP_ITEM_";
         public const string OnHeartbeat = "ON_HEARTBEAT_";
-        public const string OnPlayerLeave = "ON_PLAYER_EXIT_";
+        public const string OnPlayerLeave = "ON_PLAYER_LEAVE_";
         public const string OnPlayerLevelUp = "ON_LEVEL_UP_";
         public const string OnPlayerRespawn = "ON_PLAYER_RESPAWN_";
         public const string OnPlayerRest = "ON_PLAYER_REST_";

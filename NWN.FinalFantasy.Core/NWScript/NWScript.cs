@@ -2136,7 +2136,7 @@ namespace NWN
         }
 
         //  * Returns TRUE if oCreature is a Player Controlled character.
-        public static bool GetIsPC(NWGameObject oCreature)
+        private static bool GetIsPC(NWGameObject oCreature)
         {
             Internal.StackPushObject(oCreature, false);
             Internal.CallBuiltIn(217);
@@ -4109,7 +4109,7 @@ namespace NWN
         //  * Returns TRUE if oCreature is the Dungeon Master.
         //  Note: This will return FALSE if oCreature is a DM Possessed creature.
         //  To determine if oCreature is a DM Possessed creature, use GetIsDMPossessed()
-        public static bool GetIsDM(NWGameObject oCreature)
+        private static bool GetIsDM(NWGameObject oCreature)
         {
             Internal.StackPushObject(oCreature, false);
             Internal.CallBuiltIn(420);
@@ -5812,7 +5812,6 @@ namespace NWN
             Internal.StackPushObject(oSource, false);
             Internal.CallBuiltIn(600);
             var result = Internal.StackPopObject();
-            var objectType = GetObjectType(result);
 
             MessageHub.Instance.Publish(new ObjectCreated(result));
 
@@ -9654,6 +9653,26 @@ namespace NWN
 
                 return new Guid(id);
             } 
+        }
+
+        /// <summary>
+        /// Gets an area by its resref. Returns OBJECT_INVALID if no area with the given resref can be found.
+        /// </summary>
+        /// <param name="resRef">The resref to search for.</param>
+        /// <returns>An area with the matching resref, or OBJECT_INVALID if no area could be found.</returns>
+        public static NWGameObject GetAreaByResRef(string resRef)
+        {
+            NWGameObject area = GetFirstArea();
+
+            while(GetIsObjectValid(area))
+            {
+                if (GetResRef(area) == resRef)
+                    return area;
+
+                area = GetNextArea();
+            }
+
+            return NWGameObject.OBJECT_INVALID;
         }
     }
 }

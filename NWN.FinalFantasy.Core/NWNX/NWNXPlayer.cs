@@ -210,9 +210,9 @@
         public static void ShowVisualEffect(NWGameObject player, int effectId, Vector position)
         {
             string sFunc = "ShowVisualEffect";
-            NWNXCore.NWNX_PushArgumentFloat(NWNX_Player, sFunc, position.m_X);
-            NWNXCore.NWNX_PushArgumentFloat(NWNX_Player, sFunc, position.m_Y);
-            NWNXCore.NWNX_PushArgumentFloat(NWNX_Player, sFunc, position.m_Z);
+            NWNXCore.NWNX_PushArgumentFloat(NWNX_Player, sFunc, position.X);
+            NWNXCore.NWNX_PushArgumentFloat(NWNX_Player, sFunc, position.Y);
+            NWNXCore.NWNX_PushArgumentFloat(NWNX_Player, sFunc, position.Z);
             NWNXCore.NWNX_PushArgumentInt(NWNX_Player, sFunc, effectId);
             NWNXCore.NWNX_PushArgumentObject(NWNX_Player, sFunc, player);
 

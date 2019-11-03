@@ -11,6 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWN.FinalFantasy.Migration"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWN.FinalFantasy.Menu", "NWN.FinalFantasy.Menu\NWN.FinalFantasy.Menu.csproj", "{80452E61-40CB-4D81-9BA3-AB80F47F9BDD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWN.FinalFantasy.Audit", "NWN.FinalFantasy.Audit\NWN.FinalFantasy.Audit.csproj", "{580081DC-A989-40C0-AB5C-6C9848620BAA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWN.FinalFantasy.Persistence", "NWN.FinalFantasy.Persistence\NWN.FinalFantasy.Persistence.csproj", "{FD684E92-9739-4F91-ACE1-ED851C341D0F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +37,14 @@ Global
 		{80452E61-40CB-4D81-9BA3-AB80F47F9BDD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{80452E61-40CB-4D81-9BA3-AB80F47F9BDD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{80452E61-40CB-4D81-9BA3-AB80F47F9BDD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{580081DC-A989-40C0-AB5C-6C9848620BAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{580081DC-A989-40C0-AB5C-6C9848620BAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{580081DC-A989-40C0-AB5C-6C9848620BAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{580081DC-A989-40C0-AB5C-6C9848620BAA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD684E92-9739-4F91-ACE1-ED851C341D0F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD684E92-9739-4F91-ACE1-ED851C341D0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD684E92-9739-4F91-ACE1-ED851C341D0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD684E92-9739-4F91-ACE1-ED851C341D0F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

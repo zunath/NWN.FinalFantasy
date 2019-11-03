@@ -11,6 +11,7 @@ namespace NWN.Scripts
             ConfigureLogger();
             EventRegistration.Register();
             AssemblyLoader.LoadAssemblies();
+            AreaScriptRegistration.Register();
         }
 
         private static void ConfigureLogger()

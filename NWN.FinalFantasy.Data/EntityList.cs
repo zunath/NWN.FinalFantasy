@@ -1,14 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace NWN.FinalFantasy.Data
 {
-    public abstract class EntityListBase<T>: EntityBase
+    public class EntityList<T>: EntityBase
         where T: EntityBase
     {
         public List<T> Entities { get; set; }
 
-        protected EntityListBase()
+        public EntityList(Guid id)
         {
+            ID = id;
             Entities = new List<T>();
         }
     }

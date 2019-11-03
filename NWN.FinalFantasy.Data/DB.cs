@@ -27,7 +27,7 @@ namespace NWN.FinalFantasy.Data
         /// </summary>
         /// <typeparam name="T">The type of data to retrieve</typeparam>
         /// <param name="id">The ID of the entity</param>
-        /// <returns></returns>
+        /// <returns>An entity matching that ID</returns>
         public static T Get<T>(Guid id)
             where T: EntityBase
         {
@@ -36,6 +36,22 @@ namespace NWN.FinalFantasy.Data
 
             var json = NWNXRedis.Get(key);
             return JsonConvert.DeserializeObject<T>(json);
+        }
+
+        /// <summary>
+        /// Retrieves a list of objects stored under the same ID from the database.
+        /// </summary>
+        /// <typeparam name="T">The type of data to retrieve</typeparam>
+        /// <param name="id">The ID of the entity list</param>
+        /// <returns>An entity list matching that ID</returns>
+        public static EntityList<T> GetList<T>(Guid id)
+            where T: EntityBase
+        {
+            var @namespace = typeof(T).FullName;
+            var key = @namespace + ":" + id;
+
+            var json = NWNXRedis.Get(key);
+            return JsonConvert.DeserializeObject<EntityList<T>>(json);
         }
 
         /// <summary>

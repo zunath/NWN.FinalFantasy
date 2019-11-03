@@ -32,19 +32,19 @@ namespace NWN.FinalFantasy.Authorization
         /// Retrieves the DM list or creates it if it doesn't yet exist.
         /// </summary>
         /// <returns>A DM list</returns>
-        private static DMList GetDMList()
+        private static EntityList<DM> GetDMList()
         {
             // DM list doesn't exist in Redis. Create a new entry and push it up.
             if (!NWNXRedis.Exists(RegistrationKey))
             {
-                var dmList = new DMList();
+                var dmList = new EntityList<DM>(Guid.NewGuid());
                 
                 NWNXRedis.Set(RegistrationKey, dmList.ID.ToString());
                 DB.Set(dmList);
             }
 
             var key = new Guid(NWNXRedis.Get(RegistrationKey));
-            return DB.Get<DMList>(key);
+            return DB.GetList<DM>(key);
         }
     }
 }

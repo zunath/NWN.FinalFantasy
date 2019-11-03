@@ -50,7 +50,7 @@ namespace NWN.FinalFantasy.Migration
                 {
                     try
                     {
-                        migration.RunMigration();
+                        migration.RunMigration(player);
                         pcEntity.Version = migration.Version;
                         DB.Set(pcEntity);
                     }

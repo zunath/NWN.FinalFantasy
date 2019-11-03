@@ -3,5 +3,6 @@
     public enum AuditGroup
     {
         Connection,
+        Error,
     }
 }

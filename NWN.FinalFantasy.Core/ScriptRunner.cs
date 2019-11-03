@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using NWN.FinalFantasy.Core.Logging;
 using NWN.FinalFantasy.Core.NWNX;
 using NWN.FinalFantasy.Core.NWScript.Enumerations;
 using NWN.FinalFantasy.Core.Startup;
@@ -25,7 +26,14 @@ namespace NWN.FinalFantasy.Core
 
             foreach (var script in scripts)
             {
-                RunScript(script, caller);
+                try
+                {
+                    RunScript(script, caller);
+                }
+                catch(Exception ex)
+                {
+                    Audit.Write(AuditGroup.Error, ex.ToMessageAndCompleteStacktrace());
+                }
             }
         }
 

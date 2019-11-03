@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace NWN.FinalFantasy.Data.Entity
+﻿namespace NWN.FinalFantasy.Data.Entity
 {
     public class Player: EntityBase
     {
@@ -16,6 +14,5 @@ namespace NWN.FinalFantasy.Data.Entity
         public float RespawnLocationY { get; set; }
         public float RespawnLocationZ { get; set; }
         public float RespawnLocationOrientation { get; set; }
-        public DateTime DateCreated { get; set; }
     }
 }

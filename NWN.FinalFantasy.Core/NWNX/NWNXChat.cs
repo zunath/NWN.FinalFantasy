@@ -2,20 +2,6 @@
 {
     public static class NWNXChat
     {
-        public const int NWNX_CHAT_CHANNEL_PLAYER_TALK = 1;
-        public const int NWNX_CHAT_CHANNEL_PLAYER_SHOUT = 2;
-        public const int NWNX_CHAT_CHANNEL_PLAYER_WHISPER = 3;
-        public const int NWNX_CHAT_CHANNEL_PLAYER_TELL = 4;
-        public const int NWNX_CHAT_CHANNEL_SERVER_MSG = 5;
-        public const int NWNX_CHAT_CHANNEL_PLAYER_PARTY = 6;
-        public const int NWNX_CHAT_CHANNEL_PLAYER_DM = 14;
-        public const int NWNX_CHAT_CHANNEL_DM_TALK = 17;
-        public const int NWNX_CHAT_CHANNEL_DM_SHOUT = 18;
-        public const int NWNX_CHAT_CHANNEL_DM_WHISPER = 19;
-        public const int NWNX_CHAT_CHANNEL_DM_TELL = 20;
-        public const int NWNX_CHAT_CHANNEL_DM_PARTY = 22;
-        public const int NWNX_CHAT_CHANNEL_DM_DM = 30;
-
         // Sends a chat message. Channel is a NWNX_* constant.
         // If no target is provided, then it broadcasts to all eligible targets.
         // Returns TRUE if successful, FALSE otherwise.
@@ -46,10 +32,10 @@
 
         // Gets the channel. Channel is a NWNX_* constant.
         // Must be called from an chat or system script handler.
-        public static int GetChannel()
+        public static NWNXChatChannel GetChannel()
         {
             NWNXCore.NWNX_CallFunction("NWNX_Chat", "GET_CHANNEL");
-            return NWNXCore.NWNX_GetReturnValueInt("NWNX_Chat", "GET_CHANNEL");
+            return (NWNXChatChannel)NWNXCore.NWNX_GetReturnValueInt("NWNX_Chat", "GET_CHANNEL");
         }
 
         // Gets the message.

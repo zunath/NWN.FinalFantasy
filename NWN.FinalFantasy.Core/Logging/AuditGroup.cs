@@ -4,5 +4,6 @@
     {
         Connection,
         Error,
+        Chat
     }
 }

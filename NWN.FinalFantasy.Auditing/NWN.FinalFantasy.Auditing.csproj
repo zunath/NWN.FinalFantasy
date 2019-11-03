@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="OnModuleEnter.cs" />
     <Compile Include="OnModuleLeave.cs" />
+    <Compile Include="OnNWNXChat.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

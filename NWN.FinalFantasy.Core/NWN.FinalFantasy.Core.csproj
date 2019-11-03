@@ -80,6 +80,7 @@
     <Compile Include="NWNX\DialogLanguage.cs" />
     <Compile Include="NWNX\DialogNodeType.cs" />
     <Compile Include="NWNX\DialogScriptType.cs" />
+    <Compile Include="NWNX\NWNXChatChannel.cs" />
     <Compile Include="NWNX\NWNXDialog.cs" />
     <Compile Include="NWNX\NWNXEventType.cs" />
     <Compile Include="NWNX\NWNXRedis.cs" />

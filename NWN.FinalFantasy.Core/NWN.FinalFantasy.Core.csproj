@@ -36,8 +36,14 @@
     <Reference Include="Serilog, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
       <HintPath>..\packages\Serilog.2.9.0\lib\net46\Serilog.dll</HintPath>
     </Reference>
+    <Reference Include="Serilog.Sinks.Async, Version=1.4.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <HintPath>..\packages\Serilog.Sinks.Async.1.4.0\lib\net461\Serilog.Sinks.Async.dll</HintPath>
+    </Reference>
     <Reference Include="Serilog.Sinks.Console, Version=3.1.1.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
       <HintPath>..\packages\Serilog.Sinks.Console.3.1.1\lib\net45\Serilog.Sinks.Console.dll</HintPath>
+    </Reference>
+    <Reference Include="Serilog.Sinks.File, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <HintPath>..\packages\Serilog.Sinks.File.4.1.0\lib\net45\Serilog.Sinks.File.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -64,8 +70,12 @@
     <Compile Include="Event\Dialog\dialog_start.cs" />
     <Compile Include="Event\Module\mod_on_attack.cs" />
     <Compile Include="Event\Module\mod_on_examine.cs" />
+    <Compile Include="Event\Module\mod_on_nwnxchat.cs" />
     <Compile Include="Event\Module\mod_on_usefeat.cs" />
     <Compile Include="Event\Module\mod_on_useitem.cs" />
+    <Compile Include="Logging\Audit.cs" />
+    <Compile Include="Logging\AuditGroup.cs" />
+    <Compile Include="Message\ServerStopped.cs" />
     <Compile Include="NWNX\DialogLanguage.cs" />
     <Compile Include="NWNX\DialogNodeType.cs" />
     <Compile Include="NWNX\DialogScriptType.cs" />
@@ -155,7 +165,7 @@
     <Compile Include="Event\Placeable\plc_on_unlock.cs" />
     <Compile Include="Event\Placeable\plc_on_used.cs" />
     <Compile Include="Event\Placeable\plc_on_userdef.cs" />
-    <Compile Include="Event\preload.cs" />
+    <Compile Include="Startup\startup.cs" />
     <Compile Include="Event\Store\StorePrefix.cs" />
     <Compile Include="Event\Store\store_on_close.cs" />
     <Compile Include="Event\Store\store_on_open.cs" />
@@ -346,7 +356,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Docker\docker-compose.yml" />
-    <None Include="Docker\ffo.cmd" />
     <None Include="Docker\ffo.env" />
     <None Include="packages.config" />
   </ItemGroup>

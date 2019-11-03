@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("NWN.FinalFantasy.Audit")]
+[assembly: AssemblyTitle("NWN.FinalFantasy.Auditing")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("NWN.FinalFantasy.Audit")]
+[assembly: AssemblyProduct("NWN.FinalFantasy.Auditing")]
 [assembly: AssemblyCopyright("Copyright ©  2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("580081dc-a989-40c0-ab5c-6c9848620baa")]
+[assembly: Guid("e308b987-7bb1-4bea-bb6b-859f37854a55")]
 
 // Version information for an assembly consists of the following four values:
 //

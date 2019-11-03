@@ -25,5 +25,6 @@
         public const string OnExamine = "ON_EXAMINE_";
         public const string OnUseFeat = "ON_USE_FEAT_";
         public const string OnUseItem = "ON_USE_ITEM_";
+        public const string OnNWNXChat = "ON_NWNX_CHAT_";
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using NWN.FinalFantasy.Core.Event.AreaOfEffect;
 using NWN.FinalFantasy.Core.Event.Door;
 using NWN.FinalFantasy.Core.Event.Encounter;
@@ -20,12 +21,12 @@ namespace NWN.FinalFantasy.Core.Startup
     {
         internal static void Register()
         {
+            SubscribeEvents();
+
             RegisterModuleEvents();
             RegisterNWNXEvents();
             RegisterAreaEvents();
             RegisterObjectEvents();
-
-            SubscribeEvents();
         }
 
         /// <summary>
@@ -33,6 +34,11 @@ namespace NWN.FinalFantasy.Core.Startup
         /// </summary>
         private static void SubscribeEvents()
         {
+            AppDomain.CurrentDomain.ProcessExit += (sender, args) =>
+            {
+                MessageHub.Instance.Publish(new ServerStopped());
+            };
+
             MessageHub.Instance.Subscribe<ObjectCreated>(@event => RegisterObjectEvent(@event.GameObject));
             MessageHub.Instance.Subscribe<AreaCreated>(@event => RegisterAreaEvent(@event.Area));
         }
@@ -69,6 +75,8 @@ namespace NWN.FinalFantasy.Core.Startup
             NWNXEvents.SubscribeEvent(NWNXEventType.StartCombatRoundBefore, "mod_on_examine");
             NWNXEvents.SubscribeEvent(NWNXEventType.StartCombatRoundBefore, "mod_on_usefeat");
             NWNXEvents.SubscribeEvent(NWNXEventType.StartCombatRoundBefore, "mod_on_useitem");
+
+            NWNXChat.RegisterChatScript("mod_on_nwnxchat");
         }
 
         /// <summary>

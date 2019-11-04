@@ -11,8 +11,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWN.FinalFantasy.Migration"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWN.FinalFantasy.Menu", "NWN.FinalFantasy.Menu\NWN.FinalFantasy.Menu.csproj", "{80452E61-40CB-4D81-9BA3-AB80F47F9BDD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWN.FinalFantasy.Persistence", "NWN.FinalFantasy.Persistence\NWN.FinalFantasy.Persistence.csproj", "{FD684E92-9739-4F91-ACE1-ED851C341D0F}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWN.FinalFantasy.Auditing", "NWN.FinalFantasy.Auditing\NWN.FinalFantasy.Auditing.csproj", "{E308B987-7BB1-4BEA-BB6B-859F37854A55}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWN.FinalFantasy.Chat", "NWN.FinalFantasy.Chat\NWN.FinalFantasy.Chat.csproj", "{33B1FF67-54CC-4459-9F31-531CB47AA296}"
@@ -22,6 +20,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWN.FinalFantasy.Death", "NWN.FinalFantasy.Death\NWN.FinalFantasy.Death.csproj", "{55BA0E62-E991-4994-B63E-ECB3F2035BF1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWN.FinalFantasy.Map", "NWN.FinalFantasy.Map\NWN.FinalFantasy.Map.csproj", "{905954EF-B561-484D-B439-7BC1F48AC9B6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWN.FinalFantasy.Location", "NWN.FinalFantasy.Location\NWN.FinalFantasy.Location.csproj", "{09369318-DD8F-430E-B0B6-ECD532E6938E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,10 +45,6 @@ Global
 		{80452E61-40CB-4D81-9BA3-AB80F47F9BDD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{80452E61-40CB-4D81-9BA3-AB80F47F9BDD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{80452E61-40CB-4D81-9BA3-AB80F47F9BDD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FD684E92-9739-4F91-ACE1-ED851C341D0F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FD684E92-9739-4F91-ACE1-ED851C341D0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FD684E92-9739-4F91-ACE1-ED851C341D0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FD684E92-9739-4F91-ACE1-ED851C341D0F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E308B987-7BB1-4BEA-BB6B-859F37854A55}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E308B987-7BB1-4BEA-BB6B-859F37854A55}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E308B987-7BB1-4BEA-BB6B-859F37854A55}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -69,6 +65,10 @@ Global
 		{905954EF-B561-484D-B439-7BC1F48AC9B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{905954EF-B561-484D-B439-7BC1F48AC9B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{905954EF-B561-484D-B439-7BC1F48AC9B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{09369318-DD8F-430E-B0B6-ECD532E6938E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09369318-DD8F-430E-B0B6-ECD532E6938E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09369318-DD8F-430E-B0B6-ECD532E6938E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09369318-DD8F-430E-B0B6-ECD532E6938E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

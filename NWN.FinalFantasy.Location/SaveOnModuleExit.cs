@@ -1,4 +1,4 @@
-﻿namespace NWN.FinalFantasy.Persistence.PlayerLocation
+﻿namespace NWN.FinalFantasy.Location
 {
     public class SaveOnModuleExit: SavePlayerLocation
     {

@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("NWN.FinalFantasy.Persistence")]
+[assembly: AssemblyTitle("NWN.FinalFantasy.Location")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("NWN.FinalFantasy.Persistence")]
+[assembly: AssemblyProduct("NWN.FinalFantasy.Location")]
 [assembly: AssemblyCopyright("Copyright ©  2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("fd684e92-9739-4f91-ace1-ed851c341d0f")]
+[assembly: Guid("09369318-dd8f-430e-b0b6-ecd532e6938e")]
 
 // Version information for an assembly consists of the following four values:
 //

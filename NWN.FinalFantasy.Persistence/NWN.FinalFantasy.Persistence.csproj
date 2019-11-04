@@ -46,7 +46,6 @@
     <Compile Include="PlayerLocation\SaveOnModuleExit.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PlayerLocation\SavePlayerLocation.cs" />
-    <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NWN.FinalFantasy.Core\NWN.FinalFantasy.Core.csproj">

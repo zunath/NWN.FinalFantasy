@@ -20,6 +20,7 @@ namespace NWN.FinalFantasy.Core.Startup
         internal static void Register()
         {
             SubscribeEvents();
+            LoadAreaScripts();
             AssignScripts();
         }
 
@@ -29,6 +30,15 @@ namespace NWN.FinalFantasy.Core.Startup
         private static void SubscribeEvents()
         {
             MessageHub.Instance.Subscribe<AreaCreated>((msg) => AssignScripts(msg.Area));
+        }
+
+        private static void LoadAreaScripts()
+        {
+            NWGameObject module = GetModule();
+            _onEnterScripts.AddRange(ScriptRunner.GetMatchingVariables(module, $"AREA_{AreaScriptPrefix.OnEnter}"));
+            _onExitScripts.AddRange(ScriptRunner.GetMatchingVariables(module, $"AREA_{AreaScriptPrefix.OnExit}"));
+            _onHeartbeatScripts.AddRange(ScriptRunner.GetMatchingVariables(module, $"AREA_{AreaScriptPrefix.OnHeartbeat}"));
+            _onUserDefinedScripts.AddRange(ScriptRunner.GetMatchingVariables(module, $"AREA_{AreaScriptPrefix.OnUserDefined}"));
         }
 
         /// <summary>
@@ -97,42 +107,5 @@ namespace NWN.FinalFantasy.Core.Startup
 
             return id;
         }
-
-        /// <summary>
-        /// Registers a new OnEnter script to all areas in the module.
-        /// </summary>
-        /// <param name="script">The name of the C# script, excluding the base namespace.</param>
-        public static void RegisterOnEnterScript(string script)
-        {
-            _onEnterScripts.Add(script);
-        }
-
-        /// <summary>
-        /// Registers a new OnExit script to all areas in the module.
-        /// </summary>
-        /// <param name="script">The name of the C# script, excluding the base namespace.</param>
-        public static void RegisterOnExitScript(string script)
-        {
-            _onExitScripts.Add(script);
-        }
-
-        /// <summary>
-        /// Registers a new OnHeartbeat script to all areas in the module.
-        /// </summary>
-        /// <param name="script">The name of the C# script, excluding the base namespace.</param>
-        public static void RegisterOnHeartbeatScript(string script)
-        {
-            _onHeartbeatScripts.Add(script);
-        }
-
-        /// <summary>
-        /// Registers a new OnUserDefined script to all areas in the module.
-        /// </summary>
-        /// <param name="script">The name of the C# script, excluding the base namespace.</param>
-        public static void RegisterOnUserDefinedScript(string script)
-        {
-            _onUserDefinedScripts.Add(script);
-        }
-
     }
 }

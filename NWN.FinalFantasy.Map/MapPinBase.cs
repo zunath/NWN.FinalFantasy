@@ -1,4 +1,5 @@
-﻿using static NWN._;
+﻿using System;
+using static NWN._;
 
 namespace NWN.FinalFantasy.Map
 {
@@ -14,6 +15,11 @@ namespace NWN.FinalFantasy.Map
             public string Tag { get; set; }
             public NWGameObject Player { get; set; }
             public int Index { get; set; }
+        }
+
+        protected static string BuildKey(Guid playerID, string areaResref)
+        {
+            return $"MapPin:{playerID}:{areaResref}";
         }
 
         protected static int GetNumberOfMapPins(NWGameObject player)

@@ -16,15 +16,15 @@ namespace NWN.FinalFantasy.Authorization
             if (authorizationLevel != AuthorizationLevel.DM &&
                 authorizationLevel != AuthorizationLevel.Admin)
             {
-                LogDMAuthorization(dm, false);
+                LogDMAuthorization(false);
                 BootPC(dm, "You are not authorized to log in as a DM. Please contact the server administrator if this is incorrect.");
                 return;
             }
 
-            LogDMAuthorization(dm, true);
+            LogDMAuthorization(true);
         }
 
-        private static void LogDMAuthorization(NWGameObject dm, bool success)
+        private static void LogDMAuthorization(bool success)
         {
             var player = GetEnteringObject();
             string ipAddress = GetPCIPAddress(player);

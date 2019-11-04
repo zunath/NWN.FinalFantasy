@@ -1,6 +1,7 @@
 ﻿using System;
 using NWN.FinalFantasy.Data;
 using NWN.FinalFantasy.Data.Entity;
+using NWN.FinalFantasy.Data.Repository;
 using static NWN._;
 
 namespace NWN.FinalFantasy.Chat.Command
@@ -41,7 +42,7 @@ namespace NWN.FinalFantasy.Chat.Command
                 SenderLocationOrientation = orientation
             };
 
-            DB.Set(report);
+            BugReportRepo.Set(report);
             SendMessageToPC(user, "Bug report submitted! Thank you for your report.");
         }
 

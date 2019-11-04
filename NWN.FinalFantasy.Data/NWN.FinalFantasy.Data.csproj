@@ -64,6 +64,12 @@
     <Compile Include="Entity\ServerConfiguration.cs" />
     <Compile Include="Keys.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\BugReportRepo.cs" />
+    <Compile Include="Repository\DMRepo.cs" />
+    <Compile Include="Repository\MapPinRepo.cs" />
+    <Compile Include="Repository\MapProgressionRepo.cs" />
+    <Compile Include="Repository\PlayerRepo.cs" />
+    <Compile Include="Repository\ServerConfigurationRepo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NWN.FinalFantasy.Core\NWN.FinalFantasy.Core.csproj">
@@ -75,5 +81,6 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

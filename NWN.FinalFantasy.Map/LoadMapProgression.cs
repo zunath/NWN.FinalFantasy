@@ -1,11 +1,10 @@
 ﻿using NWN.FinalFantasy.Core.NWNX;
-using NWN.FinalFantasy.Data;
-using NWN.FinalFantasy.Data.Entity;
+using NWN.FinalFantasy.Data.Repository;
 using static NWN._;
 
 namespace NWN.FinalFantasy.Map
 {
-    public class LoadMapProgression: MapProgressionBase
+    public class LoadMapProgression
     {
         public static void Main()
         {
@@ -16,13 +15,10 @@ namespace NWN.FinalFantasy.Map
             var area = GetArea(player);
             var areaResref = GetResRef(area);
             var playerID = GetGlobalID(player);
-            var key = BuildKey(playerID, areaResref);
+            var progression = MapProgressionRepo.Get(playerID, areaResref);
 
-            if (DB.Exists(key))
-            {
-                var progression = DB.Get<MapProgression>(key);
+            if(!string.IsNullOrWhiteSpace(progression.Progression))
                 NWNXPlayer.SetAreaExplorationState(player, area, progression.Progression);
-            }
         }
     }
 }

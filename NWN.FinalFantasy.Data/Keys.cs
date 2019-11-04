@@ -2,7 +2,7 @@
 {
     public class Keys
     {
-        public const string ServerConfiguration = "Singleton:ServerConfiguration";
-        public const string DMList = "Singleton:DMList";
+        internal const string ServerConfiguration = "Singleton:ServerConfiguration";
+        internal const string DMList = "Singleton:DMList";
     }
 }

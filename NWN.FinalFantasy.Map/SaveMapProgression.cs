@@ -2,11 +2,12 @@
 using NWN.FinalFantasy.Core.NWNX;
 using NWN.FinalFantasy.Data;
 using NWN.FinalFantasy.Data.Entity;
+using NWN.FinalFantasy.Data.Repository;
 using static NWN._;
 
 namespace NWN.FinalFantasy.Map
 {
-    public class SaveMapProgression: MapProgressionBase
+    public class SaveMapProgression
     {
         public static void Main()
         {
@@ -21,24 +22,11 @@ namespace NWN.FinalFantasy.Map
 
             var areaResref = GetResRef(area);
 
-            var key = BuildKey(playerID, areaResref);
             var progress = NWNXPlayer.GetAreaExplorationState(player, area);
 
-            if (DB.Exists(key))
-            {
-                var progression = DB.Get<MapProgression>(key);
-                progression.Progression = progress;
-                DB.Set(key, progression);
-            }
-            else
-            {
-                var progression = new MapProgression
-                {
-                    AreaResref = areaResref,
-                    Progression = progress
-                };
-                DB.Set(key, progression);
-            }
+            var progression = MapProgressionRepo.Get(playerID, areaResref);
+            progression.Progression = progress;
+            MapProgressionRepo.Set(playerID, progression);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using NWN.FinalFantasy.Data;
 using NWN.FinalFantasy.Data.Entity;
+using NWN.FinalFantasy.Data.Repository;
 using static NWN._;
 
 namespace NWN.FinalFantasy.Map
@@ -14,7 +15,7 @@ namespace NWN.FinalFantasy.Map
             if (GetLocalInt(oPC, "MAP_PINS_LOADED") == 1) return;
 
             var playerID = GetGlobalID(oPC);
-            var pins = DB.GetList<MapPin>(playerID);
+            var pins = MapPinRepo.Get(playerID);
 
             foreach (var pin in pins.Entities)
             {

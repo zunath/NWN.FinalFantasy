@@ -3,6 +3,7 @@ using System.Globalization;
 using NWN.FinalFantasy.Core.NWNX;
 using NWN.FinalFantasy.Data;
 using NWN.FinalFantasy.Data.Entity;
+using NWN.FinalFantasy.Data.Repository;
 using static NWN._;
 
 namespace NWN.FinalFantasy.Chat.Command
@@ -44,9 +45,9 @@ namespace NWN.FinalFantasy.Chat.Command
             else
             {
                 var playerID = GetGlobalID(user);
-                var entity = DB.Get<Player>(playerID);
+                var entity = PlayerRepo.Get(playerID);
                 entity.IsDeleted = true;
-                DB.Set(entity);
+                PlayerRepo.Set(entity);
 
                 BootPC(user, "Your character has been deleted.");
                 NWNXAdmin.DeletePlayerCharacter(user, true);

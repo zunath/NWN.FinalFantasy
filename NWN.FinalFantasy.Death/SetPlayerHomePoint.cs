@@ -1,5 +1,6 @@
 ﻿using NWN.FinalFantasy.Data;
 using NWN.FinalFantasy.Data.Entity;
+using NWN.FinalFantasy.Data.Repository;
 using static NWN._;
 
 namespace NWN.FinalFantasy.Death
@@ -17,7 +18,7 @@ namespace NWN.FinalFantasy.Death
             var areaResref = GetResRef(area);
 
             var playerID = GetGlobalID(player);
-            var entity = DB.Get<Player>(playerID);
+            var entity = PlayerRepo.Get(playerID);
 
             entity.RespawnAreaResref = areaResref;
             entity.RespawnLocationOrientation = orientation;
@@ -25,8 +26,7 @@ namespace NWN.FinalFantasy.Death
             entity.RespawnLocationY = position.Y;
             entity.RespawnLocationZ = position.Z;
 
-            DB.Set(entity);
-
+            PlayerRepo.Set(entity);
             SendMessageToPC(player, "Your home point has been set to this location.");
         }
     }

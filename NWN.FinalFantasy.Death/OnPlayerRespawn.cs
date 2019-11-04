@@ -3,6 +3,7 @@ using NWN.FinalFantasy.Core.Logging;
 using NWN.FinalFantasy.Core.NWScript.Enumerations;
 using NWN.FinalFantasy.Data;
 using NWN.FinalFantasy.Data.Entity;
+using NWN.FinalFantasy.Data.Repository;
 using static NWN._;
 
 namespace NWN.FinalFantasy.Death
@@ -36,7 +37,7 @@ namespace NWN.FinalFantasy.Death
         private static void SendToHomePoint(NWGameObject player)
         {
             var playerID = GetGlobalID(player);
-            var entity = DB.Get<Player>(playerID);
+            var entity = PlayerRepo.Get(playerID);
             var area = GetAreaByResRef(entity.RespawnAreaResref);
             var position = Vector(
                 entity.RespawnLocationX,

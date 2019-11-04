@@ -1,5 +1,6 @@
 ﻿using NWN.FinalFantasy.Data;
 using NWN.FinalFantasy.Data.Entity;
+using NWN.FinalFantasy.Data.Repository;
 using static NWN._;
 
 namespace NWN.FinalFantasy.Persistence.PlayerLocation
@@ -16,7 +17,7 @@ namespace NWN.FinalFantasy.Persistence.PlayerLocation
             if (!GetIsPlayer(player) || areaTag != "ooc_area") return;
 
             var playerID = GetGlobalID(player);
-            var entity = DB.Get<Player>(playerID);
+            var entity = PlayerRepo.Get(playerID);
             var locationArea = GetAreaByResRef(entity.LocationAreaResref);
             var position = Vector(entity.LocationX, entity.LocationY, entity.LocationZ);
 

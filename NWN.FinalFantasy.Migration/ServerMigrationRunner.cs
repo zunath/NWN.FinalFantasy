@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using NWN.FinalFantasy.Core.NWNX;
-using NWN.FinalFantasy.Data;
-using NWN.FinalFantasy.Data.Entity;
+﻿using System.Collections.Generic;
+using NWN.FinalFantasy.Data.Repository;
 using NWN.FinalFantasy.Migration.Server;
 
 namespace NWN.FinalFantasy.Migration
@@ -18,14 +15,7 @@ namespace NWN.FinalFantasy.Migration
 
         public static void Run()
         {
-            if (!DB.Exists(Keys.ServerConfiguration))
-            {
-                var config = new ServerConfiguration();
-
-                DB.Set(Keys.ServerConfiguration, config);
-            }
-
-            var serverConfig = DB.Get<ServerConfiguration>(Keys.ServerConfiguration);
+            var serverConfig = ServerConfigurationRepo.Get();
 
             // Iterate over the registered migrations. If server is below the migration version, that migration will be executed.
             // If server is at or above that version, nothing will happen and they will move to the next migration in the list.
@@ -35,7 +25,7 @@ namespace NWN.FinalFantasy.Migration
                 {
                     migration.RunMigration();
                     serverConfig.Version = migration.Version;
-                    DB.Set(Keys.ServerConfiguration, serverConfig);
+                    ServerConfigurationRepo.Set(serverConfig);
                 }
             }
         }

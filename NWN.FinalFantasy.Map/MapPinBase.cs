@@ -17,11 +17,6 @@ namespace NWN.FinalFantasy.Map
             public int Index { get; set; }
         }
 
-        protected static string BuildKey(Guid playerID, string areaResref)
-        {
-            return $"MapPin:{playerID}:{areaResref}";
-        }
-
         protected static int GetNumberOfMapPins(NWGameObject player)
         {
             return GetLocalInt(player, "NW_TOTAL_MAP_PINS");

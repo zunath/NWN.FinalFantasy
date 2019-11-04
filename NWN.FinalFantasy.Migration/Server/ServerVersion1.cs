@@ -1,6 +1,7 @@
 ﻿using System;
 using NWN.FinalFantasy.Data;
 using NWN.FinalFantasy.Data.Entity;
+using NWN.FinalFantasy.Data.Repository;
 
 namespace NWN.FinalFantasy.Migration.Server
 {
@@ -21,7 +22,8 @@ namespace NWN.FinalFantasy.Migration.Server
         private static void SetDMList()
         {
             var dmList = new EntityList<DM>(Guid.NewGuid());
-            DB.Set(Keys.DMList, dmList);
+            
+            DMRepo.Set(dmList);
         }
     }
 }

@@ -1,6 +1,4 @@
-﻿using System;
-using NWN.FinalFantasy.Data;
-using NWN.FinalFantasy.Data.Entity;
+﻿using NWN.FinalFantasy.Data.Repository;
 using static NWN._;
 
 namespace NWN.FinalFantasy.Persistence.PlayerLocation
@@ -15,7 +13,7 @@ namespace NWN.FinalFantasy.Persistence.PlayerLocation
             var position = GetPosition(player);
             var orientation = GetFacing(player);
             var playerID = GetGlobalID(player);
-            var entity = DB.Get<Player>(playerID);
+            var entity = PlayerRepo.Get(playerID);
 
             entity.LocationX = position.X;
             entity.LocationY = position.Y;
@@ -23,7 +21,7 @@ namespace NWN.FinalFantasy.Persistence.PlayerLocation
             entity.LocationOrientation = orientation;
             entity.LocationAreaResref = GetResRef(area);
 
-            DB.Set(entity);
+            PlayerRepo.Set(entity);
         }
     }
 }

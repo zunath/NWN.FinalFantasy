@@ -1,9 +1,6 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using NWN.FinalFantasy.Core.Enumerations;
-using NWN.FinalFantasy.Core.NWNX;
-using NWN.FinalFantasy.Data;
-using NWN.FinalFantasy.Data.Entity;
+using NWN.FinalFantasy.Data.Repository;
 
 namespace NWN.FinalFantasy.Authorization
 {
@@ -16,7 +13,7 @@ namespace NWN.FinalFantasy.Authorization
         /// <returns>The authorization level (player, DM, or admin)</returns>
         public static AuthorizationLevel GetAuthorizationLevel(NWGameObject player)
         {
-            var dmList = DB.GetList<DM>(Keys.DMList);
+            var dmList = DMRepo.Get();
             var cdKey = _.GetPCPublicCDKey(player);
 
             var existing = dmList.Entities.FirstOrDefault(x => x.CDKey == cdKey);

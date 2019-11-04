@@ -46,7 +46,6 @@
     <Compile Include="LoadMapPins.cs" />
     <Compile Include="LoadMapProgression.cs" />
     <Compile Include="MapPinBase.cs" />
-    <Compile Include="MapProgressionBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SaveMapPins.cs" />
     <Compile Include="SaveMapProgression.cs" />

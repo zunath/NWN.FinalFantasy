@@ -1,6 +1,5 @@
-﻿using System;
-using NWN.FinalFantasy.Data;
-using NWN.FinalFantasy.Data.Entity;
+﻿using NWN.FinalFantasy.Data.Repository;
+using static NWN._;
 
 namespace NWN.FinalFantasy.Migration.PC
 {
@@ -15,6 +14,10 @@ namespace NWN.FinalFantasy.Migration.PC
 
         public void RunMigration(NWGameObject player)
         {
+            var playerID = GetGlobalID(player);
+            var entity = PlayerRepo.Get(playerID);
+            entity.Name = GetName(player);
+            PlayerRepo.Set(entity);
         }
     }
 }

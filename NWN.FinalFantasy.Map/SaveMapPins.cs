@@ -1,5 +1,5 @@
-﻿using NWN.FinalFantasy.Data;
-using NWN.FinalFantasy.Data.Entity;
+﻿using NWN.FinalFantasy.Data.Entity;
+using NWN.FinalFantasy.Data.Repository;
 using static NWN._;
 
 namespace NWN.FinalFantasy.Map
@@ -12,7 +12,7 @@ namespace NWN.FinalFantasy.Map
             if (!GetIsPlayer(player)) return;
 
             var playerID = GetGlobalID(player);
-            var mapPins = DB.GetList<MapPin>(playerID);
+            var mapPins = MapPinRepo.Get(playerID);
 
             mapPins.Entities.Clear();
 
@@ -34,7 +34,7 @@ namespace NWN.FinalFantasy.Map
                 mapPins.Entities.Add(mapPin);
             }
 
-            DB.Set(mapPins);
+            MapPinRepo.Set(playerID, mapPins);
         }
     }
 }

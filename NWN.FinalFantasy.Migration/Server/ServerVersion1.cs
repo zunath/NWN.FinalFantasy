@@ -20,8 +20,8 @@ namespace NWN.FinalFantasy.Migration.Server
 
         private static void SetDMList()
         {
-            var dmList = new EntityList<DM>(Guid.Empty);
-            DB.Set(dmList);
+            var dmList = new EntityList<DM>(Guid.NewGuid());
+            DB.Set(Keys.DMList, dmList);
         }
     }
 }

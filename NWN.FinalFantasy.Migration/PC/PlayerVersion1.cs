@@ -15,14 +15,6 @@ namespace NWN.FinalFantasy.Migration.PC
 
         public void RunMigration(NWGameObject player)
         {
-            var playerID = _.GetGlobalID(player);
-            CreateMapPins(playerID);
-        }
-
-        private static void CreateMapPins(Guid playerID)
-        {
-            var mapPins = new EntityList<MapPin>(playerID);
-            DB.Set(mapPins);
         }
     }
 }

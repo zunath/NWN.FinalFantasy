@@ -41,10 +41,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AutoExploreArea.cs" />
+    <Compile Include="HideMap.cs" />
     <Compile Include="LoadMapPins.cs" />
+    <Compile Include="LoadMapProgression.cs" />
     <Compile Include="MapPinBase.cs" />
+    <Compile Include="MapProgressionBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SaveMapPins.cs" />
+    <Compile Include="SaveMapProgression.cs" />
+    <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NWN.FinalFantasy.Core\NWN.FinalFantasy.Core.csproj">

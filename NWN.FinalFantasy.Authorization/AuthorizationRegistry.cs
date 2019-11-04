@@ -16,7 +16,7 @@ namespace NWN.FinalFantasy.Authorization
         /// <returns>The authorization level (player, DM, or admin)</returns>
         public static AuthorizationLevel GetAuthorizationLevel(NWGameObject player)
         {
-            var dmList = DB.GetList<DM>(Guid.Empty);
+            var dmList = DB.GetList<DM>(Keys.DMList);
             var cdKey = _.GetPCPublicCDKey(player);
 
             var existing = dmList.Entities.FirstOrDefault(x => x.CDKey == cdKey);

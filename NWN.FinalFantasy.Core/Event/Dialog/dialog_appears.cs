@@ -64,7 +64,6 @@ namespace NWN.Scripts
 
                     if (response != null)
                     {
-                        Console.WriteLine("appears: marking active and text ( " + responseID + ")");
                         newNodeText = response.Text;
                         displayNode = response.IsActive;
                     }

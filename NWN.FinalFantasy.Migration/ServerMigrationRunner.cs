@@ -18,17 +18,14 @@ namespace NWN.FinalFantasy.Migration
 
         public static void Run()
         {
-            if (!DB.Exists<ServerConfiguration>(Guid.Empty))
+            if (!DB.Exists(Keys.ServerConfiguration))
             {
-                var config = new ServerConfiguration
-                {
-                    ID = Guid.Empty
-                };
+                var config = new ServerConfiguration();
 
-                DB.Set(config);
+                DB.Set(Keys.ServerConfiguration, config);
             }
 
-            var serverConfig = DB.Get<ServerConfiguration>(Guid.Empty);
+            var serverConfig = DB.Get<ServerConfiguration>(Keys.ServerConfiguration);
 
             // Iterate over the registered migrations. If server is below the migration version, that migration will be executed.
             // If server is at or above that version, nothing will happen and they will move to the next migration in the list.
@@ -38,7 +35,7 @@ namespace NWN.FinalFantasy.Migration
                 {
                     migration.RunMigration();
                     serverConfig.Version = migration.Version;
-                    DB.Set(serverConfig);
+                    DB.Set(Keys.ServerConfiguration, serverConfig);
                 }
             }
         }

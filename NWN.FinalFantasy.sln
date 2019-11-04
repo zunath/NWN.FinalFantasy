@@ -25,6 +25,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWN.FinalFantasy.Location",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWN.FinalFantasy.Module", "NWN.FinalFantasy.Module\NWN.FinalFantasy.Module.csproj", "{B617678D-5B90-4618-AB9D-E4858846C8B7}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{92FEB66D-B035-4A44-A1E4-609770AA5A89}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWN.FinalFantasy.Tool.ModulePacker", "NWN.FinalFantasy.Tool.ModulePacker\NWN.FinalFantasy.Tool.ModulePacker.csproj", "{E8FA17B2-E1CA-4A8E-BCD6-DBD84E254EC9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -75,9 +79,16 @@ Global
 		{B617678D-5B90-4618-AB9D-E4858846C8B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B617678D-5B90-4618-AB9D-E4858846C8B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B617678D-5B90-4618-AB9D-E4858846C8B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E8FA17B2-E1CA-4A8E-BCD6-DBD84E254EC9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E8FA17B2-E1CA-4A8E-BCD6-DBD84E254EC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E8FA17B2-E1CA-4A8E-BCD6-DBD84E254EC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E8FA17B2-E1CA-4A8E-BCD6-DBD84E254EC9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E8FA17B2-E1CA-4A8E-BCD6-DBD84E254EC9} = {92FEB66D-B035-4A44-A1E4-609770AA5A89}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E22D87B0-729D-415B-8E3B-E4CBBA384E58}

@@ -4,16 +4,17 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{B617678D-5B90-4618-AB9D-E4858846C8B7}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NWN.FinalFantasy.Module</RootNamespace>
-    <AssemblyName>NWN.FinalFantasy.Module</AssemblyName>
+    <ProjectGuid>{E8FA17B2-E1CA-4A8E-BCD6-DBD84E254EC9}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>NWN.FinalFantasy.Tool.ModulePacker</RootNamespace>
+    <AssemblyName>NWN.FinalFantasy.Tool.ModulePacker</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -23,6 +24,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -41,50 +43,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Final Fantasy Online.mod" />
-    <Content Include="NWN.FinalFantasy.Tool.ModulePacker.exe" />
-    <Content Include="NWN.FinalFantasy.Tool.ModulePacker.pdb" />
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="nwn_erf.exe" />
     <Content Include="nwn_gff.exe" />
     <Content Include="pcre64.dll" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="jrl\" />
-    <Folder Include="ncs\" />
-    <Folder Include="nss\" />
-    <Folder Include="utc\" />
-    <Folder Include="utd\" />
-    <Folder Include="ute\" />
-    <Folder Include="uti\" />
-    <Folder Include="utm\" />
-    <Folder Include="uts\" />
-    <Folder Include="utt\" />
-    <Folder Include="utw\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="are\area001.are.json" />
-    <None Include="are\ooc_area.are.json" />
-    <None Include="dlg\dialog.dlg.json" />
-    <None Include="fac\Repute.fac.json" />
-    <None Include="gic\area001.gic.json" />
-    <None Include="gic\ooc_area.gic.json" />
-    <None Include="git\area001.git.json" />
-    <None Include="git\ooc_area.git.json" />
-    <None Include="ifo\module.ifo.json" />
-    <None Include="itp\creaturepalcus.itp.json" />
-    <None Include="itp\doorpalcus.itp.json" />
-    <None Include="itp\encounterpalcus.itp.json" />
-    <None Include="itp\itempalcus.itp.json" />
-    <None Include="itp\placeablepalcus.itp.json" />
-    <None Include="itp\soundpalcus.itp.json" />
-    <None Include="itp\storepalcus.itp.json" />
-    <None Include="itp\triggerpalcus.itp.json" />
-    <None Include="itp\waypointpalcus.itp.json" />
-    <None Include="NWN.FinalFantasy.Tool.ModulePacker.exe.config" />
-    <None Include="utp\home_point.utp.json" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

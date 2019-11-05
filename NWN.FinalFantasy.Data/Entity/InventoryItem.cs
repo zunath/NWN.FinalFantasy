@@ -1,8 +1,4 @@
-﻿using Newtonsoft.Json;
-using NWN.FinalFantasy.Core.NWNX;
-using NWN.FinalFantasy.Data.JsonConverters;
-
-namespace NWN.FinalFantasy.Data.Entity
+﻿namespace NWN.FinalFantasy.Data.Entity
 {
     public class InventoryItem: EntityBase
     {

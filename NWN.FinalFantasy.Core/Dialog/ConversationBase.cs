@@ -23,13 +23,13 @@ namespace NWN.FinalFantasy.Core.Dialog
             return dialog.DialogTarget;
         }
 
-        protected object GetDialogModel()
+        protected T GetDialogModel<T>()
         {
             PlayerDialog dialog = Conversation.GetActivePlayerDialog(GetPlayerID());
-            return dialog.Data;
+            return (T)dialog.Data;
         }
 
-        protected void SetDialogModel(object value)
+        protected void SetDialogModel<T>(T value)
         {
             PlayerDialog dialog = Conversation.GetActivePlayerDialog(GetPlayerID());
             dialog.Data = value;

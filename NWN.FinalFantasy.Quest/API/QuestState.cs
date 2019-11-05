@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using NWN.FinalFantasy.Quest.API.Contracts;
+using NWN.FinalFantasy.Quest.API.Objective;
 
 namespace NWN.FinalFantasy.Quest.API
 {
@@ -18,7 +19,7 @@ namespace NWN.FinalFantasy.Quest.API
             return Objectives.Values;
         }
 
-        public bool IsComplete(NWGameObject player, int questID)
+        public bool IsComplete(NWGameObject player, string questID)
         {
             foreach (var objective in Objectives)
             {
@@ -29,6 +30,18 @@ namespace NWN.FinalFantasy.Quest.API
             }
 
             return true;
+        }
+
+        public QuestState AddObjectiveKillTarget(string group, int amount)
+        {
+            AddObjective(new KillTargetObjective(group, amount));
+            return this;
+        }
+
+        public QuestState AddObjectiveCollectItem(string resref, int amount)
+        {
+            AddObjective(new CollectItemObjective(resref, amount));
+            return this;
         }
     }
 }

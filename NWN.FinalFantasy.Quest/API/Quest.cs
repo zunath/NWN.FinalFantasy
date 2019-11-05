@@ -4,9 +4,9 @@ using System.Linq;
 using NWN.FinalFantasy.Core.Dialog;
 using NWN.FinalFantasy.Core.Message;
 using NWN.FinalFantasy.Core.Messaging;
-using NWN.FinalFantasy.Core.NWNX;
 using NWN.FinalFantasy.Data.Repository;
 using NWN.FinalFantasy.Quest.API.Contracts;
+using NWN.FinalFantasy.Quest.API.Prerequisite;
 using static NWN._;
 
 namespace NWN.FinalFantasy.Quest.API
@@ -16,16 +16,16 @@ namespace NWN.FinalFantasy.Quest.API
         public string QuestID { get; protected set; }
         public string Name { get; protected set; }
         public string JournalTag { get; protected set; }
-        public bool IsRepeatable { get; protected set; }
-        public bool AllowRewardSelection { get; protected set; }
+        public bool IsRepeatable { get; private set; }
+        public bool AllowRewardSelection { get; private set; }
 
         private List<IQuestReward> Rewards { get; } = new List<IQuestReward>();
         private List<IQuestPrerequisite> Prerequisites { get; } = new List<IQuestPrerequisite>();
 
-        public Dictionary<int, QuestState> States { get; } = new Dictionary<int, QuestState>();
-        private List<Action<NWGameObject, NWGameObject>> _onAcceptActions = new List<Action<NWGameObject, NWGameObject>>();
-        private List<Action<NWGameObject, NWGameObject, int>> _onAdvanceActions = new List<Action<NWGameObject, NWGameObject, int>>();
-        private List<Action<NWGameObject, NWGameObject>> _onCompleteActions = new List<Action<NWGameObject, NWGameObject>>();
+        private Dictionary<int, QuestState> States { get; } = new Dictionary<int, QuestState>();
+        private readonly List<Action<NWGameObject, NWGameObject>> _onAcceptActions = new List<Action<NWGameObject, NWGameObject>>();
+        private readonly List<Action<NWGameObject, NWGameObject, int>> _onAdvanceActions = new List<Action<NWGameObject, NWGameObject, int>>();
+        private readonly List<Action<NWGameObject, NWGameObject>> _onCompleteActions = new List<Action<NWGameObject, NWGameObject>>();
 
         /// <summary>
         /// Adds a quest state to this quest.
@@ -95,12 +95,17 @@ namespace NWN.FinalFantasy.Quest.API
             AllowRewardSelection = true;
         }
 
+        protected void EnableRepeatability()
+        {
+            IsRepeatable = true;
+        }
+
         /// <summary>
         /// Returns true if player can accept this quest. Returns false otherwise.
         /// </summary>
         /// <param name="player">The player to check</param>
         /// <returns>true if player can accept, false otherwise</returns>
-        internal bool CanAccept(NWGameObject player)
+        private bool CanAccept(NWGameObject player)
         {
             // Retrieve the player's current quest status for this quest.
             // If they haven't accepted it yet, this will be null.
@@ -146,7 +151,7 @@ namespace NWN.FinalFantasy.Quest.API
         /// </summary>
         /// <param name="player">The player to check</param>
         /// <returns>true if player can complete, false otherwise</returns>
-        public bool CanComplete(NWGameObject player)
+        private bool CanComplete(NWGameObject player)
         {
             // Has the player even accepted this quest?
             var playerID = GetGlobalID(player);
@@ -167,18 +172,6 @@ namespace NWN.FinalFantasy.Quest.API
 
             // Met all requirements. We can complete this quest.
             return true;
-        }
-
-        /// <summary>
-        /// Returns true if quest has been completed at least one time.
-        /// </summary>
-        /// <param name="player">The player to check</param>
-        /// <returns>true if player has completed quest, false otherwise.</returns>
-        public bool IsComplete(NWGameObject player)
-        {
-            var playerID = GetGlobalID(player);
-            var pcStatus = QuestProgressRepo.Get(playerID, QuestID);
-            return pcStatus.TimesCompleted > 0;
         }
 
         /// <summary>
@@ -219,6 +212,24 @@ namespace NWN.FinalFantasy.Quest.API
         protected void AddPrerequisite(IQuestPrerequisite prerequisite)
         {
             Prerequisites.Add(prerequisite);
+        }
+
+        /// <summary>
+        /// Adds a new prerequisite quest which must be completed at least once before accepting this quest.
+        /// </summary>
+        /// <param name="requiredQuestID">The new prerequisite quest</param>
+        protected void AddPrerequisiteQuest(string requiredQuestID)
+        {
+            AddPrerequisite(new RequiredQuestPrerequisite(requiredQuestID));
+        }
+
+        /// <summary>
+        /// Returns the rewards given for completing this quest.
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<IQuestReward> GetRewards()
+        {
+            return Rewards;
         }
 
         /// <summary>

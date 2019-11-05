@@ -44,9 +44,18 @@
     <Compile Include="API\Contracts\IQuestObjective.cs" />
     <Compile Include="API\Contracts\IQuestPrerequisite.cs" />
     <Compile Include="API\Contracts\IQuestReward.cs" />
+    <Compile Include="API\Menu\QuestRewardSelection.cs" />
+    <Compile Include="API\Objective\CollectItemObjective.cs" />
+    <Compile Include="API\Objective\KillTargetObjective.cs" />
+    <Compile Include="API\Prerequisite\RequiredQuestPrerequisite.cs" />
     <Compile Include="API\Quest.cs" />
     <Compile Include="API\QuestState.cs" />
+    <Compile Include="API\Reward\GoldReward.cs" />
+    <Compile Include="API\Reward\ItemReward.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QuestRegistry.cs" />
+    <Compile Include="Startup.cs" />
+    <Compile Include="TestLocation\MyTestQuest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NWN.FinalFantasy.Auditing\NWN.FinalFantasy.Auditing.csproj">
@@ -62,10 +71,6 @@
       <Name>NWN.FinalFantasy.Data</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="API\Objective\" />
-    <Folder Include="API\Prerequisite\" />
-    <Folder Include="API\Reward\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

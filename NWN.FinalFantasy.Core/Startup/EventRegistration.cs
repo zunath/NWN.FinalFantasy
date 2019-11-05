@@ -10,6 +10,7 @@ using NWN.FinalFantasy.Core.Message;
 using NWN.FinalFantasy.Core.Messaging;
 using NWN.FinalFantasy.Core.NWNX;
 using NWN.FinalFantasy.Core.NWScript.Enumerations;
+using NWN.FinalFantasy.Core.Utility;
 using static NWN._;
 
 namespace NWN.FinalFantasy.Core.Startup
@@ -191,25 +192,25 @@ namespace NWN.FinalFantasy.Core.Startup
             SetEventScript(trigger, EventScriptTrigger.OnTrapTriggered, string.Empty);
             SetEventScript(trigger, EventScriptTrigger.OnUserDefinedEvent, string.Empty);
 
-            if (ScriptRunner.GetMatchingVariables(trigger, TriggerPrefix.OnHeartbeat).Any())
+            if (LocalVariableTool.FindByPrefix(trigger, TriggerPrefix.OnHeartbeat).Any())
                 SetEventScript(trigger, EventScriptTrigger.OnHeartbeat, "trig_on_hb");
 
-            if (ScriptRunner.GetMatchingVariables(trigger, TriggerPrefix.OnClicked).Any())
+            if (LocalVariableTool.FindByPrefix(trigger, TriggerPrefix.OnClicked).Any())
                 SetEventScript(trigger, EventScriptTrigger.OnClicked, "trig_on_click");
 
-            if (ScriptRunner.GetMatchingVariables(trigger, TriggerPrefix.OnDisarmed).Any())
+            if (LocalVariableTool.FindByPrefix(trigger, TriggerPrefix.OnDisarmed).Any())
                 SetEventScript(trigger, EventScriptTrigger.OnDisarmed, "trig_on_disarm");
 
-            if (ScriptRunner.GetMatchingVariables(trigger, TriggerPrefix.OnEnter).Any())
+            if (LocalVariableTool.FindByPrefix(trigger, TriggerPrefix.OnEnter).Any())
                 SetEventScript(trigger, EventScriptTrigger.OnObjectEnter, "trig_on_enter");
 
-            if (ScriptRunner.GetMatchingVariables(trigger, TriggerPrefix.OnExit).Any())
+            if (LocalVariableTool.FindByPrefix(trigger, TriggerPrefix.OnExit).Any())
                 SetEventScript(trigger, EventScriptTrigger.OnObjectExit, "trig_on_exit");
 
-            if (ScriptRunner.GetMatchingVariables(trigger, TriggerPrefix.OnTriggerTrap).Any())
+            if (LocalVariableTool.FindByPrefix(trigger, TriggerPrefix.OnTriggerTrap).Any())
                 SetEventScript(trigger, EventScriptTrigger.OnTrapTriggered, "trig_on_trap");
 
-            if (ScriptRunner.GetMatchingVariables(trigger, TriggerPrefix.OnUserDefined).Any())
+            if (LocalVariableTool.FindByPrefix(trigger, TriggerPrefix.OnUserDefined).Any())
                 SetEventScript(trigger, EventScriptTrigger.OnUserDefinedEvent, "trig_on_userdef");
         }
 
@@ -234,49 +235,49 @@ namespace NWN.FinalFantasy.Core.Startup
             SetEventScript(door, EventScriptDoor.OnUnlock, string.Empty);
             SetEventScript(door, EventScriptDoor.OnUserDefined, string.Empty);
 
-            if (ScriptRunner.GetMatchingVariables(door, DoorPrefix.OnAttacked).Any())
+            if (LocalVariableTool.FindByPrefix(door, DoorPrefix.OnAttacked).Any())
                 SetEventScript(door, EventScriptDoor.OnMeleeAttacked, "door_on_attacked");
 
-            if (ScriptRunner.GetMatchingVariables(door, DoorPrefix.OnClicked).Any())
+            if (LocalVariableTool.FindByPrefix(door, DoorPrefix.OnClicked).Any())
                 SetEventScript(door, EventScriptDoor.OnClicked, "door_on_click");
 
-            if (ScriptRunner.GetMatchingVariables(door, DoorPrefix.OnClosed).Any())
+            if (LocalVariableTool.FindByPrefix(door, DoorPrefix.OnClosed).Any())
                 SetEventScript(door, EventScriptDoor.OnClose, "door_on_close");
 
-            if (ScriptRunner.GetMatchingVariables(door, DoorPrefix.OnConversation).Any())
+            if (LocalVariableTool.FindByPrefix(door, DoorPrefix.OnConversation).Any())
                 SetEventScript(door, EventScriptDoor.OnDialogue, "door_on_convo");
 
-            if (ScriptRunner.GetMatchingVariables(door, DoorPrefix.OnDamaged).Any())
+            if (LocalVariableTool.FindByPrefix(door, DoorPrefix.OnDamaged).Any())
                 SetEventScript(door, EventScriptDoor.OnDamage, "door_on_damage");
 
-            if (ScriptRunner.GetMatchingVariables(door, DoorPrefix.OnDeath).Any())
+            if (LocalVariableTool.FindByPrefix(door, DoorPrefix.OnDeath).Any())
                 SetEventScript(door, EventScriptDoor.OnDeath, "door_on_death");
 
-            if (ScriptRunner.GetMatchingVariables(door, DoorPrefix.OnDisarmed).Any())
+            if (LocalVariableTool.FindByPrefix(door, DoorPrefix.OnDisarmed).Any())
                 SetEventScript(door, EventScriptDoor.OnDisarm, "door_on_disarm");
 
-            if (ScriptRunner.GetMatchingVariables(door, DoorPrefix.OnFailToOpen).Any())
+            if (LocalVariableTool.FindByPrefix(door, DoorPrefix.OnFailToOpen).Any())
                 SetEventScript(door, EventScriptDoor.OnFailToOpen, "door_on_fail");
 
-            if (ScriptRunner.GetMatchingVariables(door, DoorPrefix.OnHeartbeat).Any())
+            if (LocalVariableTool.FindByPrefix(door, DoorPrefix.OnHeartbeat).Any())
                 SetEventScript(door, EventScriptDoor.OnHeartbeat, "door_on_hb");
 
-            if (ScriptRunner.GetMatchingVariables(door, DoorPrefix.OnLocked).Any())
+            if (LocalVariableTool.FindByPrefix(door, DoorPrefix.OnLocked).Any())
                 SetEventScript(door, EventScriptDoor.OnLock, "door_on_lock");
 
-            if (ScriptRunner.GetMatchingVariables(door, DoorPrefix.OnOpened).Any())
+            if (LocalVariableTool.FindByPrefix(door, DoorPrefix.OnOpened).Any())
                 SetEventScript(door, EventScriptDoor.OnOpen, "door_on_open");
 
-            if (ScriptRunner.GetMatchingVariables(door, DoorPrefix.OnSpellCastAt).Any())
+            if (LocalVariableTool.FindByPrefix(door, DoorPrefix.OnSpellCastAt).Any())
                 SetEventScript(door, EventScriptDoor.OnSpellCastAt, "door_on_splcast");
 
-            if (ScriptRunner.GetMatchingVariables(door, DoorPrefix.OnTriggerTrap).Any())
+            if (LocalVariableTool.FindByPrefix(door, DoorPrefix.OnTriggerTrap).Any())
                 SetEventScript(door, EventScriptDoor.OnTrapTriggered, "door_on_trap");
 
-            if (ScriptRunner.GetMatchingVariables(door, DoorPrefix.OnUnlock).Any())
+            if (LocalVariableTool.FindByPrefix(door, DoorPrefix.OnUnlock).Any())
                 SetEventScript(door, EventScriptDoor.OnUnlock, "door_on_unlock");
 
-            if (ScriptRunner.GetMatchingVariables(door, DoorPrefix.OnUserDefined).Any())
+            if (LocalVariableTool.FindByPrefix(door, DoorPrefix.OnUserDefined).Any())
                 SetEventScript(door, EventScriptDoor.OnUserDefined, "door_on_userdef");
         }
 
@@ -290,16 +291,16 @@ namespace NWN.FinalFantasy.Core.Startup
             SetEventScript(aoe, EventScriptAreaOfEffect.OnObjectEnter, string.Empty);
             SetEventScript(aoe, EventScriptAreaOfEffect.OnObjectExit, string.Empty);
 
-            if (ScriptRunner.GetMatchingVariables(aoe, AreaOfEffectPrefix.OnHeartbeat).Any())
+            if (LocalVariableTool.FindByPrefix(aoe, AreaOfEffectPrefix.OnHeartbeat).Any())
                 SetEventScript(aoe, EventScriptAreaOfEffect.OnHeartbeat, "aoe_on_hb");
 
-            if (ScriptRunner.GetMatchingVariables(aoe, AreaOfEffectPrefix.OnUserDefined).Any())
+            if (LocalVariableTool.FindByPrefix(aoe, AreaOfEffectPrefix.OnUserDefined).Any())
                 SetEventScript(aoe, EventScriptAreaOfEffect.OnUserDefinedEvent, "aoe_on_userdef");
 
-            if (ScriptRunner.GetMatchingVariables(aoe, AreaOfEffectPrefix.OnEnter).Any())
+            if (LocalVariableTool.FindByPrefix(aoe, AreaOfEffectPrefix.OnEnter).Any())
                 SetEventScript(aoe, EventScriptAreaOfEffect.OnObjectEnter, "aoe_on_enter");
 
-            if (ScriptRunner.GetMatchingVariables(aoe, AreaOfEffectPrefix.OnExit).Any())
+            if (LocalVariableTool.FindByPrefix(aoe, AreaOfEffectPrefix.OnExit).Any())
                 SetEventScript(aoe, EventScriptAreaOfEffect.OnObjectExit, "aoe_on_exit");
         }
 
@@ -325,52 +326,52 @@ namespace NWN.FinalFantasy.Core.Startup
             SetEventScript(placeable, EventScriptPlaceable.OnUsed, string.Empty);
             SetEventScript(placeable, EventScriptPlaceable.OnUserDefinedEvent, string.Empty);
 
-            if (ScriptRunner.GetMatchingVariables(placeable, PlaceablePrefix.OnAttacked).Any())
+            if (LocalVariableTool.FindByPrefix(placeable, PlaceablePrefix.OnAttacked).Any())
                 SetEventScript(placeable, EventScriptPlaceable.OnMeleeAttacked, "plc_on_attack");
 
-            if (ScriptRunner.GetMatchingVariables(placeable, PlaceablePrefix.OnClicked).Any())
+            if (LocalVariableTool.FindByPrefix(placeable, PlaceablePrefix.OnClicked).Any())
                 SetEventScript(placeable, EventScriptPlaceable.OnLeftClick, "plc_on_click");
 
-            if (ScriptRunner.GetMatchingVariables(placeable, PlaceablePrefix.OnClosed).Any())
+            if (LocalVariableTool.FindByPrefix(placeable, PlaceablePrefix.OnClosed).Any())
                 SetEventScript(placeable, EventScriptPlaceable.OnClosed, "plc_on_close");
 
-            if (ScriptRunner.GetMatchingVariables(placeable, PlaceablePrefix.OnConversation).Any())
+            if (LocalVariableTool.FindByPrefix(placeable, PlaceablePrefix.OnConversation).Any())
                 SetEventScript(placeable, EventScriptPlaceable.OnDialogue, "plc_on_convo");
 
-            if (ScriptRunner.GetMatchingVariables(placeable, PlaceablePrefix.OnDamaged).Any())
+            if (LocalVariableTool.FindByPrefix(placeable, PlaceablePrefix.OnDamaged).Any())
                 SetEventScript(placeable, EventScriptPlaceable.OnDamaged, "plc_on_damage");
 
-            if (ScriptRunner.GetMatchingVariables(placeable, PlaceablePrefix.OnDeath).Any())
+            if (LocalVariableTool.FindByPrefix(placeable, PlaceablePrefix.OnDeath).Any())
                 SetEventScript(placeable, EventScriptPlaceable.OnDeath, "plc_on_death");
 
-            if (ScriptRunner.GetMatchingVariables(placeable, PlaceablePrefix.OnDisarmed).Any())
+            if (LocalVariableTool.FindByPrefix(placeable, PlaceablePrefix.OnDisarmed).Any())
                 SetEventScript(placeable, EventScriptPlaceable.OnDisarm, "plc_on_disarm");
 
-            if (ScriptRunner.GetMatchingVariables(placeable, PlaceablePrefix.OnDisturbed).Any())
+            if (LocalVariableTool.FindByPrefix(placeable, PlaceablePrefix.OnDisturbed).Any())
                 SetEventScript(placeable, EventScriptPlaceable.OnInventoryDisturbed, "plc_on_disturb");
 
-            if (ScriptRunner.GetMatchingVariables(placeable, PlaceablePrefix.OnHeartbeat).Any())
+            if (LocalVariableTool.FindByPrefix(placeable, PlaceablePrefix.OnHeartbeat).Any())
                 SetEventScript(placeable, EventScriptPlaceable.OnHeartbeat, "plc_on_hb");
 
-            if (ScriptRunner.GetMatchingVariables(placeable, PlaceablePrefix.OnLocked).Any())
+            if (LocalVariableTool.FindByPrefix(placeable, PlaceablePrefix.OnLocked).Any())
                 SetEventScript(placeable, EventScriptPlaceable.OnLock, "plc_on_lock");
 
-            if (ScriptRunner.GetMatchingVariables(placeable, PlaceablePrefix.OnOpened).Any())
+            if (LocalVariableTool.FindByPrefix(placeable, PlaceablePrefix.OnOpened).Any())
                 SetEventScript(placeable, EventScriptPlaceable.OnOpen, "plc_on_open");
 
-            if (ScriptRunner.GetMatchingVariables(placeable, PlaceablePrefix.OnSpellCastAt).Any())
+            if (LocalVariableTool.FindByPrefix(placeable, PlaceablePrefix.OnSpellCastAt).Any())
                 SetEventScript(placeable, EventScriptPlaceable.OnSpellCastAt, "plc_on_splcast");
 
-            if (ScriptRunner.GetMatchingVariables(placeable, PlaceablePrefix.OnTriggerTrap).Any())
+            if (LocalVariableTool.FindByPrefix(placeable, PlaceablePrefix.OnTriggerTrap).Any())
                 SetEventScript(placeable, EventScriptPlaceable.OnTrapTriggered, "plc_on_trap");
 
-            if (ScriptRunner.GetMatchingVariables(placeable, PlaceablePrefix.OnUnlocked).Any())
+            if (LocalVariableTool.FindByPrefix(placeable, PlaceablePrefix.OnUnlocked).Any())
                 SetEventScript(placeable, EventScriptPlaceable.OnUnlock, "plc_on_unlock");
 
-            if (ScriptRunner.GetMatchingVariables(placeable, PlaceablePrefix.OnUsed).Any())
+            if (LocalVariableTool.FindByPrefix(placeable, PlaceablePrefix.OnUsed).Any())
                 SetEventScript(placeable, EventScriptPlaceable.OnUsed, "plc_on_used");
 
-            if (ScriptRunner.GetMatchingVariables(placeable, PlaceablePrefix.OnUserDefined).Any())
+            if (LocalVariableTool.FindByPrefix(placeable, PlaceablePrefix.OnUserDefined).Any())
                 SetEventScript(placeable, EventScriptPlaceable.OnUserDefinedEvent, "plc_on_userdef");
         }
 
@@ -382,10 +383,10 @@ namespace NWN.FinalFantasy.Core.Startup
             SetEventScript(store, EventScriptStore.OnOpen, string.Empty);
             SetEventScript(store, EventScriptStore.OnClose, string.Empty);
 
-            if (ScriptRunner.GetMatchingVariables(store, StorePrefix.OnOpen).Any())
+            if (LocalVariableTool.FindByPrefix(store, StorePrefix.OnOpen).Any())
                 SetEventScript(store, EventScriptStore.OnOpen, "store_on_open");
 
-            if (ScriptRunner.GetMatchingVariables(store, StorePrefix.OnClose).Any())
+            if (LocalVariableTool.FindByPrefix(store, StorePrefix.OnClose).Any())
                 SetEventScript(store, EventScriptStore.OnClose, "store_on_close");
         }
 
@@ -400,19 +401,19 @@ namespace NWN.FinalFantasy.Core.Startup
             SetEventScript(encounter, EventScriptEncounter.OnEncounterExhausted, string.Empty);
             SetEventScript(encounter, EventScriptEncounter.OnUserDefinedEvent, string.Empty);
 
-            if (ScriptRunner.GetMatchingVariables(encounter, EncounterPrefix.OnEnter).Any())
+            if (LocalVariableTool.FindByPrefix(encounter, EncounterPrefix.OnEnter).Any())
                 SetEventScript(encounter, EventScriptEncounter.OnObjectEnter, "enc_on_enter");
 
-            if (ScriptRunner.GetMatchingVariables(encounter, EncounterPrefix.OnExit).Any())
+            if (LocalVariableTool.FindByPrefix(encounter, EncounterPrefix.OnExit).Any())
                 SetEventScript(encounter, EventScriptEncounter.OnObjectExit, "enc_on_exit");
 
-            if (ScriptRunner.GetMatchingVariables(encounter, EncounterPrefix.OnHeartbeat).Any())
+            if (LocalVariableTool.FindByPrefix(encounter, EncounterPrefix.OnHeartbeat).Any())
                 SetEventScript(encounter, EventScriptEncounter.OnHeartbeat, "enc_on_hb");
 
-            if (ScriptRunner.GetMatchingVariables(encounter, EncounterPrefix.OnExhausted).Any())
+            if (LocalVariableTool.FindByPrefix(encounter, EncounterPrefix.OnExhausted).Any())
                 SetEventScript(encounter, EventScriptEncounter.OnEncounterExhausted, "enc_on_exhaust");
 
-            if (ScriptRunner.GetMatchingVariables(encounter, EncounterPrefix.OnUserDefined).Any())
+            if (LocalVariableTool.FindByPrefix(encounter, EncounterPrefix.OnUserDefined).Any())
                 SetEventScript(encounter, EventScriptEncounter.OnUserDefinedEvent, "enc_on_userdef");
         }
 

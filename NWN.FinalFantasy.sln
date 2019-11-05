@@ -29,6 +29,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{92FEB66D
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWN.FinalFantasy.Tool.ModulePacker", "NWN.FinalFantasy.Tool.ModulePacker\NWN.FinalFantasy.Tool.ModulePacker.csproj", "{E8FA17B2-E1CA-4A8E-BCD6-DBD84E254EC9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWN.FinalFantasy.Loot", "NWN.FinalFantasy.Loot\NWN.FinalFantasy.Loot.csproj", "{42A9B3A7-02F8-464A-A5F0-B15CD1209E9A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -83,6 +85,10 @@ Global
 		{E8FA17B2-E1CA-4A8E-BCD6-DBD84E254EC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E8FA17B2-E1CA-4A8E-BCD6-DBD84E254EC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E8FA17B2-E1CA-4A8E-BCD6-DBD84E254EC9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{42A9B3A7-02F8-464A-A5F0-B15CD1209E9A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{42A9B3A7-02F8-464A-A5F0-B15CD1209E9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{42A9B3A7-02F8-464A-A5F0-B15CD1209E9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{42A9B3A7-02F8-464A-A5F0-B15CD1209E9A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

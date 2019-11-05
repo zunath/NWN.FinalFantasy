@@ -49,10 +49,15 @@ namespace NWN.FinalFantasy.Core.Logging
 
                 var path = settings.LogDirectory + group + "/" + group + "_.log";
                 var logger = new LoggerConfiguration()
-                    .WriteTo.Async(a => a.File(path, rollingInterval: RollingInterval.Day)) 
-                    .CreateLogger();
+                    .WriteTo.Async(a => a.File(path, rollingInterval: RollingInterval.Day));
 
-                _loggers[group] = logger;
+                // Errors should also be print to the console.
+                if (group == AuditGroup.Error)
+                {
+                    logger.WriteTo.Console();
+                }
+
+                _loggers[group] = logger.CreateLogger();
             }
 
             _loggers[group].Information(details);

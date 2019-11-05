@@ -2,6 +2,7 @@
 using NWN.FinalFantasy.Core.Event.Area;
 using NWN.FinalFantasy.Core.Message;
 using NWN.FinalFantasy.Core.Messaging;
+using NWN.FinalFantasy.Core.Utility;
 using static NWN._;
 
 namespace NWN.FinalFantasy.Core.Startup
@@ -35,10 +36,10 @@ namespace NWN.FinalFantasy.Core.Startup
         private static void LoadAreaScripts()
         {
             NWGameObject module = GetModule();
-            _onEnterScripts.AddRange(ScriptRunner.GetMatchingVariables(module, $"AREA_{AreaScriptPrefix.OnEnter}"));
-            _onExitScripts.AddRange(ScriptRunner.GetMatchingVariables(module, $"AREA_{AreaScriptPrefix.OnExit}"));
-            _onHeartbeatScripts.AddRange(ScriptRunner.GetMatchingVariables(module, $"AREA_{AreaScriptPrefix.OnHeartbeat}"));
-            _onUserDefinedScripts.AddRange(ScriptRunner.GetMatchingVariables(module, $"AREA_{AreaScriptPrefix.OnUserDefined}"));
+            _onEnterScripts.AddRange(LocalVariableTool.FindByPrefix(module, $"AREA_{AreaScriptPrefix.OnEnter}"));
+            _onExitScripts.AddRange(LocalVariableTool.FindByPrefix(module, $"AREA_{AreaScriptPrefix.OnExit}"));
+            _onHeartbeatScripts.AddRange(LocalVariableTool.FindByPrefix(module, $"AREA_{AreaScriptPrefix.OnHeartbeat}"));
+            _onUserDefinedScripts.AddRange(LocalVariableTool.FindByPrefix(module, $"AREA_{AreaScriptPrefix.OnUserDefined}"));
         }
 
         /// <summary>
@@ -66,46 +67,29 @@ namespace NWN.FinalFantasy.Core.Startup
         {
             foreach (var onEnter in _onEnterScripts)
             {
-                var varName = AreaScriptPrefix.OnEnter + GetOpenID(area, AreaScriptPrefix.OnEnter);
+                var varName = AreaScriptPrefix.OnEnter + LocalVariableTool.GetOpenScriptID(area, AreaScriptPrefix.OnEnter);
                 SetLocalString(area, varName, onEnter);
             }
 
             foreach (var onExit in _onExitScripts)
             {
-                var varName = AreaScriptPrefix.OnExit + GetOpenID(area, AreaScriptPrefix.OnExit);
+                var varName = AreaScriptPrefix.OnExit + LocalVariableTool.GetOpenScriptID(area, AreaScriptPrefix.OnExit);
                 SetLocalString(area, varName, onExit);
             }
 
             foreach (var onHeartbeat in _onHeartbeatScripts)
             {
-                var varName = AreaScriptPrefix.OnHeartbeat + GetOpenID(area, AreaScriptPrefix.OnHeartbeat);
+                var varName = AreaScriptPrefix.OnHeartbeat + LocalVariableTool.GetOpenScriptID(area, AreaScriptPrefix.OnHeartbeat);
                 SetLocalString(area, varName, onHeartbeat);
             }
 
             foreach (var onUserDefined in _onUserDefinedScripts)
             {
-                var varName = AreaScriptPrefix.OnUserDefined + GetOpenID(area, AreaScriptPrefix.OnUserDefined);
+                var varName = AreaScriptPrefix.OnUserDefined + LocalVariableTool.GetOpenScriptID(area, AreaScriptPrefix.OnUserDefined);
                 SetLocalString(area, varName, onUserDefined);
             }
 
         }
 
-        /// <summary>
-        /// Finds an open ID number for a given script prefix.
-        /// </summary>
-        /// <param name="area">The area to check variables on</param>
-        /// <param name="prefix">The prefix to look for</param>
-        /// <returns>An open ID number</returns>
-        private static int GetOpenID(NWGameObject area, string prefix)
-        {
-            int id = 1;
-            
-            while(!string.IsNullOrWhiteSpace(GetLocalString(area, prefix + id)))
-            {
-                id++;
-            }
-
-            return id;
-        }
     }
 }

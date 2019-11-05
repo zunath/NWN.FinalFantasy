@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using NWN.FinalFantasy.Core.NWScript.Enumerations;
+using static NWN._;
 
 namespace NWN.FinalFantasy.Core.NWNX
 {
@@ -170,9 +171,9 @@ namespace NWN.FinalFantasy.Core.NWNX
 
         public static Location OnFeatUsed_GetTargetLocation()
         {
-            return _.Location(
+            return Location(
                     OnFeatUsed_GetArea(),
-                    _.Vector(OnFeatUsed_GetTargetPositionX(), OnFeatUsed_GetTargetPositionY(), OnFeatUsed_GetTargetPositionZ()),
+                    Vector(OnFeatUsed_GetTargetPositionX(), OnFeatUsed_GetTargetPositionY(), OnFeatUsed_GetTargetPositionZ()),
                     0.0f
             );
         }
@@ -213,9 +214,9 @@ namespace NWN.FinalFantasy.Core.NWNX
             var x = GetEventDataFloat("TARGET_POSITION_X");
             var y = GetEventDataFloat("TARGET_POSITION_Y");
             var z = GetEventDataFloat("TARGET_POSITION_Z");
-            var vector = _.Vector(x, y, z);
+            var vector = Vector(x, y, z);
 
-            return _.Location(_.GetArea(user), vector, 0.0f);
+            return Location(GetArea(user), vector, 0.0f);
         }
 
         public static int OnItemUsed_GetItemPropertyIndex()
@@ -423,6 +424,19 @@ namespace NWN.FinalFantasy.Core.NWNX
         {
             return GetEventDataObject("TARGET");
         }
-        
+
+        public static NWGameObject OnInventoryAddItem_GetItem()
+        {
+            return GetEventDataObject("ITEM");
+        }
+
+        public static NWGameObject OnInventoryAddItem_GetPlayer()
+        {
+            var item = OnInventoryAddItem_GetItem();
+            var player = GetItemPossessor(item);
+
+            return player;
+        }
+
     }
 }

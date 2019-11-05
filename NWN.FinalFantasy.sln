@@ -31,6 +31,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWN.FinalFantasy.Tool.Modul
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWN.FinalFantasy.Loot", "NWN.FinalFantasy.Loot\NWN.FinalFantasy.Loot.csproj", "{42A9B3A7-02F8-464A-A5F0-B15CD1209E9A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWN.FinalFantasy.Item.Storage", "NWN.FinalFantasy.Item.Storage\NWN.FinalFantasy.Item.Storage.csproj", "{CC63A477-06BE-4CCA-B850-03E911476D7F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -89,6 +91,10 @@ Global
 		{42A9B3A7-02F8-464A-A5F0-B15CD1209E9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{42A9B3A7-02F8-464A-A5F0-B15CD1209E9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{42A9B3A7-02F8-464A-A5F0-B15CD1209E9A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC63A477-06BE-4CCA-B850-03E911476D7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC63A477-06BE-4CCA-B850-03E911476D7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC63A477-06BE-4CCA-B850-03E911476D7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC63A477-06BE-4CCA-B850-03E911476D7F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

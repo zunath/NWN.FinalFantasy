@@ -97,6 +97,9 @@
     <Compile Include="Event\DM\dm_toggle_invuln.cs" />
     <Compile Include="Event\DM\dm_toggle_lock.cs" />
     <Compile Include="Event\DM\dm_togg_immo.cs" />
+    <Compile Include="Event\Inventory\InventoryPrefix.cs" />
+    <Compile Include="Event\Inventory\inv_add_item.cs" />
+    <Compile Include="Event\Inventory\inv_rem_item.cs" />
     <Compile Include="Event\Module\mod_on_attack.cs" />
     <Compile Include="Event\Module\mod_on_examine.cs" />
     <Compile Include="Event\Module\mod_on_nwnxchat.cs" />
@@ -121,7 +124,7 @@
     <Compile Include="Event\AreaOfEffect\aoe_on_hb.cs" />
     <Compile Include="Event\AreaOfEffect\aoe_on_userdef.cs" />
     <Compile Include="Event\AreaOfEffect\AreaOfEffectPrefix.cs" />
-    <Compile Include="Event\Area\AreaScriptPrefix.cs" />
+    <Compile Include="Event\Area\AreaPrefix.cs" />
     <Compile Include="Event\Area\area_on_enter.cs" />
     <Compile Include="Event\Area\area_on_exit.cs" />
     <Compile Include="Event\Area\area_on_hb.cs" />

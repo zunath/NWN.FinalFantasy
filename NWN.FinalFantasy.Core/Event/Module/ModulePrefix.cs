@@ -26,5 +26,6 @@
         public const string OnUseFeat = "ON_USE_FEAT_";
         public const string OnUseItem = "ON_USE_ITEM_";
         public const string OnNWNXChat = "ON_NWNX_CHAT_";
+        public const string OnInventoryAddItem = "ON_INVENTORY_ADD_ITEM_";
     }
 }

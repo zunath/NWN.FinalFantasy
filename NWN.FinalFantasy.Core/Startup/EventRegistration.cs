@@ -29,6 +29,7 @@ namespace NWN.FinalFantasy.Core.Startup
             RegisterAreaEvents();
             RegisterObjectEvents();
             RegisterDMEvents();
+            RegisterInventoryEvents();
         }
 
         /// <summary>
@@ -419,7 +420,6 @@ namespace NWN.FinalFantasy.Core.Startup
 
         private static void RegisterDMEvents()
         {
-
             NWNXEvents.SubscribeEvent(NWNXEventType.DMAppearBefore, "dm_appear");
             NWNXEvents.SubscribeEvent(NWNXEventType.DMChangeDifficultyBefore, "dm_change_diff");
             NWNXEvents.SubscribeEvent(NWNXEventType.DMDisableTrapBefore, "dm_disab_trap");
@@ -447,6 +447,12 @@ namespace NWN.FinalFantasy.Core.Startup
             NWNXEvents.SubscribeEvent(NWNXEventType.DMToggleInvulnerabilityBefore, "dm_togg_invuln");
             NWNXEvents.SubscribeEvent(NWNXEventType.DMToggleAIBefore, "dm_toggle_ai");
             NWNXEvents.SubscribeEvent(NWNXEventType.DMToggleLockBefore, "dm_toggle_lock");
+        }
+
+        private static void RegisterInventoryEvents()
+        {
+            NWNXEvents.SubscribeEvent(NWNXEventType.ItemInventoryAddItemBefore, "inv_add_item");
+            NWNXEvents.SubscribeEvent(NWNXEventType.ItemInventoryRemoveItemBefore, "inv_rem_item");
         }
     }
 }

@@ -3477,10 +3477,10 @@ namespace NWN
         //  Get the type of disturbance (INVENTORY_DISTURB_*) that caused the caller's
         //  OnInventoryDisturbed script to fire.  This will only work for creatures and
         //  placeables.
-        public static int GetInventoryDisturbType()
+        public static InventoryDisturbType GetInventoryDisturbType()
         {
             Internal.CallBuiltIn(352);
-            return Internal.StackPopInteger();
+            return (InventoryDisturbType)Internal.StackPopInteger();
         }
 
         //  get the item that caused the caller's OnInventoryDisturbed script to fire.
@@ -5795,7 +5795,7 @@ namespace NWN
         //    other items.
         //  * if it is possible to merge this item with any others in the target location,
         //    then it will do so and return the merged object.
-        public static NWGameObject CopyItem(NWGameObject oItem, NWGameObject oTargetInventory = null, bool bCopyVars = false)
+        public static NWGameObject CopyItem(NWGameObject oItem, NWGameObject oTargetInventory = null, bool bCopyVars = true)
         {
             Internal.StackPushInteger(Convert.ToInt32(bCopyVars));
             Internal.StackPushObject(oTargetInventory, false);
@@ -9669,7 +9669,9 @@ namespace NWN
         }
 
         /// <summary>
-        /// Retrieves a unique ID for a given object. Throws an exception if the object has not been assigned an ID yet.
+        /// Retrieves a unique ID for a given object.
+        /// Throws an exception if a player has not been assigned an ID yet.
+        /// Assigns a new ID if a non-player has not been assigned an ID yet.
         /// </summary>
         /// <param name="obj">The object to retrieve the ID from</param>
         /// <returns>The ID of the object</returns>
@@ -9687,7 +9689,10 @@ namespace NWN
             {
                 var id = GetLocalString(obj, "GLOBAL_ID");
                 if(string.IsNullOrWhiteSpace(id))
-                    throw new Exception($"Object has not been assigned an ID yet. Object Name: {GetName(obj)}");
+                {
+                    id = Guid.NewGuid().ToString();
+                    SetLocalString(obj, "GLOBAL_ID", id);
+                }
 
                 return new Guid(id);
             } 
@@ -9711,6 +9716,41 @@ namespace NWN
             }
 
             return NWGameObject.OBJECT_INVALID;
+        }
+
+        /// <summary>
+        /// Destroys all items inside an object's inventory.
+        /// </summary>
+        /// <param name="obj">The objects whose inventory will be wiped.</param>
+        public static void DestroyAllInventoryItems(NWGameObject obj)
+        {
+            NWGameObject item = _.GetFirstItemInInventory(obj);
+            while (GetIsObjectValid(item))
+            {
+                DestroyObject(item);
+                item = GetNextItemInInventory(obj);
+            }
+        }
+
+        /// <summary>
+        /// Returns the number of items in an object's inventory.
+        /// Returns -1 if target does not have an inventory
+        /// </summary>
+        /// <param name="obj">The object to check</param>
+        /// <returns>-1 if obj doesn't have an inventory, otherwise returns the number of items in the inventory</returns>
+        public static int GetInventoryItemCount(NWGameObject obj)
+        {
+            if (!GetHasInventory(obj)) return -1;
+
+            int count = 0;
+            NWGameObject item = GetFirstItemInInventory(obj);
+            while (GetIsObjectValid(item))
+            {
+                count++;
+                item = GetNextItemInInventory(obj);
+            }
+
+            return count;
         }
     }
 }

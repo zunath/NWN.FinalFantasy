@@ -154,9 +154,9 @@ namespace NWN.FinalFantasy.Core.NWNX
         // The following methods are specific to our implementation which makes the API a little easier to use.
         // Pattern is: "Event_Action()"
 
-        public static int OnFeatUsed_GetFeatID()
+        public static Feat OnFeatUsed_GetFeat()
         {
-            return GetEventDataInt("FEAT_ID");
+            return (Feat)GetEventDataInt("FEAT_ID");
         }
 
         public static int OnFeatUsed_GetSubFeatID()

@@ -55,10 +55,12 @@
   <ItemGroup>
     <Compile Include="DB.cs" />
     <Compile Include="EntityBase.cs" />
+    <Compile Include="Entity\Cooldown.cs" />
     <Compile Include="Entity\EntityList.cs" />
     <Compile Include="Entity\BugReport.cs" />
     <Compile Include="Entity\DM.cs" />
     <Compile Include="Entity\InventoryItem.cs" />
+    <Compile Include="Entity\Job.cs" />
     <Compile Include="Entity\MapPin.cs" />
     <Compile Include="Entity\MapProgression.cs" />
     <Compile Include="Entity\Player.cs" />
@@ -67,8 +69,10 @@
     <Compile Include="Keys.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\BugReportRepo.cs" />
+    <Compile Include="Repository\CooldownRepo.cs" />
     <Compile Include="Repository\DMRepo.cs" />
     <Compile Include="Repository\InventoryItemRepo.cs" />
+    <Compile Include="Repository\JobRepo.cs" />
     <Compile Include="Repository\MapPinRepo.cs" />
     <Compile Include="Repository\MapProgressionRepo.cs" />
     <Compile Include="Repository\PlayerRepo.cs" />

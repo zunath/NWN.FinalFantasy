@@ -5,6 +5,7 @@
         public int Version { get; set; }
         public string Name { get; set; }
         public int HitPoints { get; set; }
+        public int MP { get; set; }
         public string LocationAreaResref { get; set; }
         public float LocationX { get; set; }
         public float LocationY { get; set; }

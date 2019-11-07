@@ -4,13 +4,13 @@ using NWN.FinalFantasy.Job.Enumeration;
 
 namespace NWN.FinalFantasy.Job.JobDefinition
 {
-    internal class Warrior: JobDefinitionBase
+    internal class BlackMage: JobDefinitionBase
     {
-        public Warrior()
+        public BlackMage()
         {
-            Name = "Warrior";
-            Description = "Melee fighter which specializes in a variety of weapons and armor.";
-            GF = GuardianForce.Ifrit;
+            Name = "Black Mage";
+            Description = "Magic user which specializes in destructive black magic.";
+            GF = GuardianForce.Ramuh;
 
             HPRating = ProficiencyRating.B;
             MPRating = ProficiencyRating.E;
@@ -23,18 +23,10 @@ namespace NWN.FinalFantasy.Job.JobDefinition
 
             WeaponTypes.AddRange(new []
             {
-                BaseItemType.Longsword,
-                BaseItemType.GreatSword,
-                BaseItemType.GreatAxe,
-                BaseItemType.Battleaxe,
-
-                BaseItemType.SmallShield,
-                BaseItemType.LargeShield,
-                BaseItemType.TowerShield
+                BaseItemType.Quarterstaff, 
+                BaseItemType.LightFlail, 
+                BaseItemType.Lightmace
             });
-
-            AddAbility(1, AbilityType.MightyStrikes);
-            AddAbility(3, AbilityType.DefenseBonus1);
         }
     }
 }

@@ -4,13 +4,13 @@ using NWN.FinalFantasy.Job.Enumeration;
 
 namespace NWN.FinalFantasy.Job.JobDefinition
 {
-    internal class Warrior: JobDefinitionBase
+    internal class Ranger: JobDefinitionBase
     {
-        public Warrior()
+        public Ranger()
         {
-            Name = "Warrior";
-            Description = "Melee fighter which specializes in a variety of weapons and armor.";
-            GF = GuardianForce.Ifrit;
+            Name = "Ranger";
+            Description = "Combatant which specializes in attacking from afar with ranged attacks.";
+            GF = GuardianForce.Valefor;
 
             HPRating = ProficiencyRating.B;
             MPRating = ProficiencyRating.E;
@@ -23,18 +23,14 @@ namespace NWN.FinalFantasy.Job.JobDefinition
 
             WeaponTypes.AddRange(new []
             {
-                BaseItemType.Longsword,
-                BaseItemType.GreatSword,
-                BaseItemType.GreatAxe,
-                BaseItemType.Battleaxe,
-
-                BaseItemType.SmallShield,
-                BaseItemType.LargeShield,
-                BaseItemType.TowerShield
+                BaseItemType.ShortBow,
+                BaseItemType.Longbow,
+                BaseItemType.LightCrossbow,
+                BaseItemType.HeavyCrossbow,
+                BaseItemType.Shortsword,
+                BaseItemType.HandAxe,
+                BaseItemType.ThrowingAxe
             });
-
-            AddAbility(1, AbilityType.MightyStrikes);
-            AddAbility(3, AbilityType.DefenseBonus1);
         }
     }
 }

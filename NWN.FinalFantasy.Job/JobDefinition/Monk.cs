@@ -4,13 +4,13 @@ using NWN.FinalFantasy.Job.Enumeration;
 
 namespace NWN.FinalFantasy.Job.JobDefinition
 {
-    internal class Warrior: JobDefinitionBase
+    internal class Monk: JobDefinitionBase
     {
-        public Warrior()
+        public Monk()
         {
-            Name = "Warrior";
-            Description = "Melee fighter which specializes in a variety of weapons and armor.";
-            GF = GuardianForce.Ifrit;
+            Name = "Monk";
+            Description = "Melee fighter which specializes in fighting unarmed.";
+            GF = GuardianForce.Titan;
 
             HPRating = ProficiencyRating.B;
             MPRating = ProficiencyRating.E;
@@ -23,18 +23,8 @@ namespace NWN.FinalFantasy.Job.JobDefinition
 
             WeaponTypes.AddRange(new []
             {
-                BaseItemType.Longsword,
-                BaseItemType.GreatSword,
-                BaseItemType.GreatAxe,
-                BaseItemType.Battleaxe,
-
-                BaseItemType.SmallShield,
-                BaseItemType.LargeShield,
-                BaseItemType.TowerShield
+                BaseItemType.Gloves
             });
-
-            AddAbility(1, AbilityType.MightyStrikes);
-            AddAbility(3, AbilityType.DefenseBonus1);
         }
     }
 }

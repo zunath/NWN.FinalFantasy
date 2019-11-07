@@ -3,12 +3,13 @@
     internal enum GuardianForce
     {
         Ifrit,          // Warrior
+        Titan,          // Monk 
+        Fenrir,         // Thief
         Ramuh,          // Black Mage
         Carbuncle,      // White Mage
+        Valefor,        // Ranger
         Shiva,          // 
-        Titan,          // Monk 
         Diablos,        // Dark Knight
-        Leviathan,      // 
         Pandemona,      // 
         Cerberus,       // 
         Alexander,      // 

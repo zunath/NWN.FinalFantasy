@@ -45,7 +45,12 @@
     <Compile Include="Enumeration\GuardianForce.cs" />
     <Compile Include="Enumeration\ProficiencyRating.cs" />
     <Compile Include="Enumeration\RatingStat.cs" />
+    <Compile Include="JobDefinition\Ranger.cs" />
+    <Compile Include="JobDefinition\Thief.cs" />
     <Compile Include="JobDefinition\JobDefinitionBase.cs" />
+    <Compile Include="JobDefinition\BlackMage.cs" />
+    <Compile Include="JobDefinition\WhiteMage.cs" />
+    <Compile Include="JobDefinition\Monk.cs" />
     <Compile Include="JobDefinition\Warrior.cs" />
     <Compile Include="Registry\AbilityRegistry.cs" />
     <Compile Include="Enumeration\AbilityCategory.cs" />

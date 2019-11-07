@@ -2,7 +2,7 @@
 using NWN.FinalFantasy.Job.Contracts;
 using NWN.FinalFantasy.Job.Enumeration;
 
-namespace NWN.FinalFantasy.Job.Ability
+namespace NWN.FinalFantasy.Job.AbilityDefinition
 {
     internal class TestAbility: IAbilityDefinition
     {

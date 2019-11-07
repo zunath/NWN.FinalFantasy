@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using NWN.FinalFantasy.Core.NWScript.Enumerations;
-using NWN.FinalFantasy.Job.Ability;
+using NWN.FinalFantasy.Job.AbilityDefinition;
 using NWN.FinalFantasy.Job.Contracts;
 
 namespace NWN.FinalFantasy.Job.Registry

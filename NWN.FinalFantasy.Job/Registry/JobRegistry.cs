@@ -3,61 +3,25 @@ using System.Collections.Generic;
 using NWN.FinalFantasy.Core.Enumerations;
 using NWN.FinalFantasy.Core.NWScript.Enumerations;
 using NWN.FinalFantasy.Job.Enumeration;
+using NWN.FinalFantasy.Job.JobDefinition;
 
 namespace NWN.FinalFantasy.Job.Registry
 {
     internal static class JobRegistry
     {
-        private static readonly Dictionary<JobType, JobDefinition> _jobs = new Dictionary<JobType, JobDefinition>();
+        private static readonly Dictionary<JobType, JobDefinitionBase> _jobs = new Dictionary<JobType, JobDefinitionBase>();
 
         public static void Register()
         {
-            _jobs[JobType.Warrior] = Warrior();
+            _jobs[JobType.Warrior] = new Warrior();
         }
 
-        public static JobDefinition Get(JobType type)
+        public static JobDefinitionBase Get(JobType type)
         {
             if(!_jobs.ContainsKey(type))
                 throw new Exception($"Job type {type} has not been registered.");
 
             return _jobs[type];
-        }
-
-        private static JobDefinition Warrior()
-        {
-            var job = new JobDefinition
-            {
-                Name = "Warrior",
-                Description = "Melee fighter which specializes in a variety of weapons and armor.",
-                GF = GuardianForce.Ifrit,
-
-                HPRating = ProficiencyRating.B,
-                MPRating = ProficiencyRating.E,
-                STRRating = ProficiencyRating.A,
-                DEXRating = ProficiencyRating.B,
-                CONRating = ProficiencyRating.A,
-                INTRating = ProficiencyRating.E,
-                WISRating = ProficiencyRating.E,
-                CHARating = ProficiencyRating.C,
-
-                WeaponTypes =
-                {
-                    BaseItemType.Longsword,
-                    BaseItemType.Greatsword,
-                    BaseItemType.Greataxe,
-                    BaseItemType.Battleaxe,
-
-                    BaseItemType.SmallShield,
-                    BaseItemType.LargeShield,
-                    BaseItemType.TowerShield
-                }
-            };
-
-            job.AddAbility(1, AbilityType.MightyStrikes);
-
-            job.AddAbility(3, AbilityType.DefenseBonus1);
-
-            return job;
         }
     }
 }

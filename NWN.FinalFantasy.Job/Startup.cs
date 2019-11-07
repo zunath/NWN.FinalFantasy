@@ -7,6 +7,8 @@ namespace NWN.FinalFantasy.Job
         public static void Main()
         {
             AbilityRegistry.Register();
+            JobRegistry.Register();
+            RatingRegistry.Register();
         }
     }
 }

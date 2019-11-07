@@ -2,9 +2,9 @@
 using NWN.FinalFantasy.Core.NWScript.Enumerations;
 using NWN.FinalFantasy.Job.Enumeration;
 
-namespace NWN.FinalFantasy.Job
+namespace NWN.FinalFantasy.Job.JobDefinition
 {
-    internal class JobDefinition
+    internal class JobDefinitionBase
     {
         public string Name { get; set; }
         public string Description { get; set; }

@@ -44,15 +44,24 @@
     <Compile Include="Enumeration\AbilityType.cs" />
     <Compile Include="Enumeration\GuardianForce.cs" />
     <Compile Include="Enumeration\ProficiencyRating.cs" />
-    <Compile Include="JobDefinition.cs" />
+    <Compile Include="Enumeration\RatingStat.cs" />
+    <Compile Include="JobDefinition\JobDefinitionBase.cs" />
+    <Compile Include="JobDefinition\Warrior.cs" />
     <Compile Include="Registry\AbilityRegistry.cs" />
     <Compile Include="Enumeration\AbilityCategory.cs" />
-    <Compile Include="Ability\TestAbility.cs" />
+    <Compile Include="AbilityDefinition\TestAbility.cs" />
     <Compile Include="Contracts\IAbilityDefinition.cs" />
     <Compile Include="Registry\JobRegistry.cs" />
     <Compile Include="OnUseFeat.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Registry\RatingRegistry.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="StatRating\RatingE.cs" />
+    <Compile Include="StatRating\RatingD.cs" />
+    <Compile Include="StatRating\RatingC.cs" />
+    <Compile Include="StatRating\RatingB.cs" />
+    <Compile Include="StatRating\RatingA.cs" />
+    <Compile Include="StatRating\RatingChart.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NWN.FinalFantasy.Core\NWN.FinalFantasy.Core.csproj">

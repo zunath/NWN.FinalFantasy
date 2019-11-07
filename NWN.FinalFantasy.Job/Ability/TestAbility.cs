@@ -1,9 +1,10 @@
 ﻿using System;
 using NWN.FinalFantasy.Job.Contracts;
+using NWN.FinalFantasy.Job.Enumeration;
 
 namespace NWN.FinalFantasy.Job.Ability
 {
-    internal class TestAbility: IAbility
+    internal class TestAbility: IAbilityDefinition
     {
         public int MP(NWGameObject user)
         {
@@ -30,6 +31,6 @@ namespace NWN.FinalFantasy.Job.Ability
             Console.WriteLine("Running impact script");
         }
 
-        public AbilityType Type => AbilityType.Spell;
+        public AbilityCategory Category => AbilityCategory.Spell;
     }
 }

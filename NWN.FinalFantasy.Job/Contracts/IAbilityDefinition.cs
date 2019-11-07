@@ -1,13 +1,15 @@
-﻿namespace NWN.FinalFantasy.Job.Contracts
+﻿using NWN.FinalFantasy.Job.Enumeration;
+
+namespace NWN.FinalFantasy.Job.Contracts
 {
-    internal interface IAbility
+    internal interface IAbilityDefinition
     {
         int MP(NWGameObject user);
         string CanUse(NWGameObject user, NWGameObject target);
         float CastingTime(NWGameObject user);
         float CooldownTime(NWGameObject user);
         void Impact(NWGameObject user, NWGameObject target);
-        AbilityType Type { get; }
+        AbilityCategory Category { get; }
 
     }
 }

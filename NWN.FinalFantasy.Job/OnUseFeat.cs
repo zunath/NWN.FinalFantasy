@@ -5,6 +5,7 @@ using NWN.FinalFantasy.Core.NWScript.Enumerations;
 using NWN.FinalFantasy.Core.Utility;
 using NWN.FinalFantasy.Data.Repository;
 using NWN.FinalFantasy.Job.Contracts;
+using NWN.FinalFantasy.Job.Registry;
 using static NWN._;
 
 namespace NWN.FinalFantasy.Job
@@ -18,7 +19,7 @@ namespace NWN.FinalFantasy.Job
             public Location TargetLocation { get; set; }
             public int MP { get; set; }
             public int MPCost { get; set; }
-            public IAbility Ability { get; set; }
+            public IAbilityDefinition AbilityDefinition { get; set; }
             public DateTime Now { get; set; }
             public DateTime CooldownUnlock { get; set; }
             public bool IsCancelled { get; set; }
@@ -51,7 +52,7 @@ namespace NWN.FinalFantasy.Job
         private static bool ValidateFeatUse(UserStats stats)
         {
             var user = stats.User;
-            var ability = stats.Ability;
+            var ability = stats.AbilityDefinition;
             var target = stats.Target;
             var canUse = ability.CanUse(user, target);
 
@@ -106,7 +107,7 @@ namespace NWN.FinalFantasy.Job
         /// <param name="stats"></param>
         private static void StartCasting(UserStats stats)
         {
-            var castingTime = stats.Ability.CastingTime(stats.User);
+            var castingTime = stats.AbilityDefinition.CastingTime(stats.User);
             NWNXPlayer.StartGuiTimingBar(stats.User, castingTime, string.Empty);
 
             SetIsBusy(stats.User, true);
@@ -156,7 +157,7 @@ namespace NWN.FinalFantasy.Job
             // Get the latest stats as other parts of the system may have changed our data since we started casting.
             stats = GetUserStats(stats.User, stats.Target, stats.Feat);
             stats.MP -= stats.MPCost;
-            stats.Ability.Impact(stats.User, stats.Target);
+            stats.AbilityDefinition.Impact(stats.User, stats.Target);
 
             // Apply changes to stats.
             ApplyUserStatChanges(stats);
@@ -174,7 +175,7 @@ namespace NWN.FinalFantasy.Job
             var stats = new UserStats
             {
                 User = user,
-                Ability = ability,
+                AbilityDefinition = ability,
                 Target = target,
                 TargetLocation = targetLocation,
                 Now = DateTime.UtcNow,
@@ -213,7 +214,7 @@ namespace NWN.FinalFantasy.Job
         /// <param name="stats">The current user stats.</param>
         private static void ApplyUserStatChanges(UserStats stats)
         {
-            var delay = stats.Ability.CooldownTime(stats.User);
+            var delay = stats.AbilityDefinition.CooldownTime(stats.User);
             var dateUnlocks = DateTime.UtcNow.AddSeconds(delay);
             if (GetIsPlayer(stats.User))
             {

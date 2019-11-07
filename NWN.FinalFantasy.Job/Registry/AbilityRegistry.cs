@@ -3,11 +3,11 @@ using NWN.FinalFantasy.Core.NWScript.Enumerations;
 using NWN.FinalFantasy.Job.Ability;
 using NWN.FinalFantasy.Job.Contracts;
 
-namespace NWN.FinalFantasy.Job
+namespace NWN.FinalFantasy.Job.Registry
 {
     internal class AbilityRegistry
     {
-        private static readonly Dictionary<Feat, IAbility> _abilityRegistry = new Dictionary<Feat, IAbility>();
+        private static readonly Dictionary<Feat, IAbilityDefinition> _abilityRegistry = new Dictionary<Feat, IAbilityDefinition>();
 
         internal static void Register()
         {
@@ -29,7 +29,7 @@ namespace NWN.FinalFantasy.Job
         /// </summary>
         /// <param name="feat">The feat to use as the key</param>
         /// <returns>An ability associated with the specified feat</returns>
-        public static IAbility Get(Feat feat)
+        public static IAbilityDefinition Get(Feat feat)
         {
             return _abilityRegistry[feat];
         }

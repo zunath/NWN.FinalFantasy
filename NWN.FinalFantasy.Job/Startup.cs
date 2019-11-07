@@ -1,4 +1,6 @@
-﻿namespace NWN.FinalFantasy.Job
+﻿using NWN.FinalFantasy.Job.Registry;
+
+namespace NWN.FinalFantasy.Job
 {
     public static class Startup
     {

@@ -9,6 +9,22 @@
           "type": "byte",
           "value": 6
         },
+        "LIST": {
+          "type": "list",
+          "value": [
+            {
+              "__struct_id": 0,
+              "NAME": {
+                "type": "cexostring",
+                "value": "Ominous breathings"
+              },
+              "RESREF": {
+                "type": "resref",
+                "value": "q_mnstbreath"
+              }
+            }
+          ]
+        },
         "STRREF": {
           "type": "dword",
           "value": 6694
@@ -19,6 +35,99 @@
         "ID": {
           "type": "byte",
           "value": 13
+        },
+        "LIST": {
+          "type": "list",
+          "value": [
+            {
+              "__struct_id": 0,
+              "NAME": {
+                "type": "cexostring",
+                "value": "Drawbrigde Down"
+              },
+              "RESREF": {
+                "type": "resref",
+                "value": "qs_drawbrdg_002"
+              }
+            },
+            {
+              "__struct_id": 0,
+              "NAME": {
+                "type": "cexostring",
+                "value": "Drawbrigde Up"
+              },
+              "RESREF": {
+                "type": "resref",
+                "value": "qs_drawbrdg_001"
+              }
+            },
+            {
+              "__struct_id": 0,
+              "NAME": {
+                "type": "cexostring",
+                "value": "Fanfare Horn"
+              },
+              "RESREF": {
+                "type": "resref",
+                "value": "qs_fanfare_001"
+              }
+            },
+            {
+              "__struct_id": 0,
+              "NAME": {
+                "type": "cexostring",
+                "value": "Fanfare Intro"
+              },
+              "RESREF": {
+                "type": "resref",
+                "value": "qs_fanfare_003"
+              }
+            },
+            {
+              "__struct_id": 0,
+              "NAME": {
+                "type": "cexostring",
+                "value": "Fanfare Long"
+              },
+              "RESREF": {
+                "type": "resref",
+                "value": "qs_fanfare_004"
+              }
+            },
+            {
+              "__struct_id": 0,
+              "NAME": {
+                "type": "cexostring",
+                "value": "Fanfare Trumpet"
+              },
+              "RESREF": {
+                "type": "resref",
+                "value": "qs_fanfare_002"
+              }
+            },
+            {
+              "__struct_id": 0,
+              "NAME": {
+                "type": "cexostring",
+                "value": "Flag Flapping"
+              },
+              "RESREF": {
+                "type": "resref",
+                "value": "qs_flagflapping"
+              }
+            },
+            {
+              "__struct_id": 0,
+              "NAME": {
+                "type": "cexostring",
+                "value": "Waterwheel"
+              },
+              "RESREF": {
+                "type": "resref",
+                "value": "qs_waterwheel"
+              }
+            }
+          ]
         },
         "STRREF": {
           "type": "dword",
@@ -41,6 +150,33 @@
         "ID": {
           "type": "byte",
           "value": 7
+        },
+        "LIST": {
+          "type": "list",
+          "value": [
+            {
+              "__struct_id": 0,
+              "NAME": {
+                "type": "cexostring",
+                "value": "Water Wave"
+              },
+              "RESREF": {
+                "type": "resref",
+                "value": "qs_waterwave"
+              }
+            },
+            {
+              "__struct_id": 0,
+              "NAME": {
+                "type": "cexostring",
+                "value": "Waterfall Over Cliff Large"
+              },
+              "RESREF": {
+                "type": "resref",
+                "value": "qs_watercliff"
+              }
+            }
+          ]
         },
         "STRREF": {
           "type": "dword",

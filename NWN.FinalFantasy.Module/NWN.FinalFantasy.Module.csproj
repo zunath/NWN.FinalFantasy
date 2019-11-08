@@ -65,26 +65,7 @@
     <Folder Include="utw\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="are\area001.are.json" />
-    <None Include="are\ooc_area.are.json" />
-    <None Include="dlg\dialog.dlg.json" />
-    <None Include="fac\Repute.fac.json" />
-    <None Include="gic\area001.gic.json" />
-    <None Include="gic\ooc_area.gic.json" />
-    <None Include="git\area001.git.json" />
-    <None Include="git\ooc_area.git.json" />
-    <None Include="ifo\module.ifo.json" />
-    <None Include="itp\creaturepalcus.itp.json" />
-    <None Include="itp\doorpalcus.itp.json" />
-    <None Include="itp\encounterpalcus.itp.json" />
-    <None Include="itp\itempalcus.itp.json" />
-    <None Include="itp\placeablepalcus.itp.json" />
-    <None Include="itp\soundpalcus.itp.json" />
-    <None Include="itp\storepalcus.itp.json" />
-    <None Include="itp\triggerpalcus.itp.json" />
-    <None Include="itp\waypointpalcus.itp.json" />
     <None Include="NWN.FinalFantasy.Tool.ModulePacker.exe.config" />
-    <None Include="utp\home_point.utp.json" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

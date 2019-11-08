@@ -9669,6 +9669,18 @@ namespace NWN
         }
 
         /// <summary>
+        /// Returns true if obj is a non-player, non-DM, non-possessed creature. 
+        /// </summary>
+        /// <param name="obj">The object to check</param>
+        /// <returns>true if object is a NPC or false if not</returns>
+        public static bool GetIsNPC(NWGameObject obj)
+        {
+            return !GetIsPlayer(obj) && 
+                   !GetIsDungeonMaster(obj) && 
+                   GetObjectType(obj) == ObjectType.Creature;
+        }
+
+        /// <summary>
         /// Retrieves a unique ID for a given object.
         /// Throws an exception if a player has not been assigned an ID yet.
         /// Assigns a new ID if a non-player has not been assigned an ID yet.
@@ -9751,6 +9763,27 @@ namespace NWN
             }
 
             return count;
+        }
+
+        /// <summary>
+        /// If creature is currently busy, returns true.
+        /// Otherwise returns false.
+        /// </summary>
+        /// <param name="creature">The creature to check busy status of</param>
+        /// <returns>true if busy, false otherwise</returns>
+        public static bool GetIsBusy(NWGameObject creature)
+        {
+            return Convert.ToBoolean(GetLocalString(creature, "IS_BUSY"));
+        }
+
+        /// <summary>
+        /// Sets whether creature is busy.
+        /// </summary>
+        /// <param name="creature">The creature to change the busy status of</param>
+        /// <param name="isBusy">true or false</param>
+        public static void SetIsBusy(NWGameObject creature, bool isBusy)
+        {
+            SetLocalInt(creature, "IS_BUSY", Convert.ToInt32(isBusy));
         }
     }
 }

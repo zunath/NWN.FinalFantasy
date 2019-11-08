@@ -21,9 +21,13 @@ namespace NWN.FinalFantasy.Core
         /// </summary>
         /// <param name="caller">The object whose scripts we're checking</param>
         /// <param name="scriptPrefix">The prefix to look for.</param>
-        internal static void RunScriptEvents(NWGameObject caller, string scriptPrefix)
+        /// <param name="scriptRegistrationObject">If the local variables are stored on a different object than the caller, you can use this argument to dictate where to look for the local variables</param>
+        internal static void RunScriptEvents(NWGameObject caller, string scriptPrefix, NWGameObject scriptRegistrationObject = null)
         {
-            var scripts = LocalVariableTool.FindByPrefix(caller, scriptPrefix);
+            if (scriptRegistrationObject == null)
+                scriptRegistrationObject = caller;
+
+            var scripts = LocalVariableTool.FindByPrefix(scriptRegistrationObject, scriptPrefix);
 
             foreach (var script in scripts)
             {

@@ -65,6 +65,7 @@
     <Compile Include="Dialog\IConversation.cs" />
     <Compile Include="Dialog\PlayerDialog.cs" />
     <Compile Include="Enumerations\AuthorizationLevel.cs" />
+    <Compile Include="Enumerations\JobType.cs" />
     <Compile Include="Event\Dialog\dialog_action.cs" />
     <Compile Include="Event\Dialog\dialog_appears.cs" />
     <Compile Include="Event\Dialog\dialog_end.cs" />
@@ -393,6 +394,7 @@
     <Compile Include="Utility\ColorToken.cs" />
     <Compile Include="Utility\LocalVariableTool.cs" />
     <Compile Include="Utility\Random.cs" />
+    <Compile Include="Utility\Time.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Docker\docker-compose.yml" />

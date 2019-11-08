@@ -1,0 +1,34 @@
+﻿using System.Collections.Generic;
+using NWN.FinalFantasy.Core.NWScript.Enumerations;
+using NWN.FinalFantasy.Job.Enumeration;
+
+namespace NWN.FinalFantasy.Job.JobDefinition
+{
+    internal class WhiteMage: JobDefinitionBase
+    {
+        public WhiteMage()
+        {
+            Name = "White Mage";
+            Description = "Magic user which specializes in restorative white magic.";
+            GF = GuardianForce.Carbuncle;
+
+            HPRating = ProficiencyRating.B;
+            MPRating = ProficiencyRating.E;
+            STRRating = ProficiencyRating.A;
+            DEXRating = ProficiencyRating.B;
+            CONRating = ProficiencyRating.A;
+            INTRating = ProficiencyRating.E;
+            WISRating = ProficiencyRating.E;
+            CHARating = ProficiencyRating.C;
+
+            WeaponTypes.AddRange(new []
+            {
+                BaseItemType.Quarterstaff, 
+                BaseItemType.LightFlail, 
+                BaseItemType.Lightmace,
+
+                BaseItemType.SmallShield
+            });
+        }
+    }
+}

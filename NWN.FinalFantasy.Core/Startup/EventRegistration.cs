@@ -75,9 +75,9 @@ namespace NWN.FinalFantasy.Core.Startup
         private static void RegisterNWNXEvents()
         {
             NWNXEvents.SubscribeEvent(NWNXEventType.StartCombatRoundBefore, "mod_on_attack");
-            NWNXEvents.SubscribeEvent(NWNXEventType.StartCombatRoundBefore, "mod_on_examine");
-            NWNXEvents.SubscribeEvent(NWNXEventType.StartCombatRoundBefore, "mod_on_usefeat");
-            NWNXEvents.SubscribeEvent(NWNXEventType.StartCombatRoundBefore, "mod_on_useitem");
+            NWNXEvents.SubscribeEvent(NWNXEventType.ExamineObjectBefore, "mod_on_examine");
+            NWNXEvents.SubscribeEvent(NWNXEventType.UseFeatBefore, "mod_on_usefeat");
+            NWNXEvents.SubscribeEvent(NWNXEventType.UseItemBefore, "mod_on_useitem");
 
             NWNXChat.RegisterChatScript("mod_on_nwnxchat");
         }

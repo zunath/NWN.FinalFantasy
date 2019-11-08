@@ -109,6 +109,7 @@
     <Compile Include="Logging\Audit.cs" />
     <Compile Include="Logging\AuditGroup.cs" />
     <Compile Include="Logging\ExceptionExtensions.cs" />
+    <Compile Include="Message\JobChanged.cs" />
     <Compile Include="Message\QuestAccepted.cs" />
     <Compile Include="Message\QuestAdvanced.cs" />
     <Compile Include="Message\QuestCompleted.cs" />
@@ -217,7 +218,7 @@
     <Compile Include="Event\Trigger\trig_on_userdef.cs" />
     <Compile Include="Message\AreaCreated.cs" />
     <Compile Include="Message\ObjectCreated.cs" />
-    <Compile Include="ScriptRunner.cs" />
+    <Compile Include="Script.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Messaging\Contracts\IMessageHub.cs" />
     <Compile Include="Messaging\MessageHub.cs" />

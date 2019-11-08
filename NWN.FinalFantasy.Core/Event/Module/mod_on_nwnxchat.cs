@@ -9,7 +9,7 @@ namespace NWN.Scripts
     {
         internal static void Main()
         {
-            ScriptRunner.RunScriptEvents(GetModule(), ModulePrefix.OnNWNXChat);
+            Script.RunScriptEvents(GetModule(), ModulePrefix.OnNWNXChat);
         }
     }
 }

@@ -12,7 +12,7 @@ using static NWN._;
 
 namespace NWN.FinalFantasy.Core
 {
-    internal static class ScriptRunner
+    public static class Script
     {
         private static readonly Dictionary<string, MethodInfo> _cachedScripts = new Dictionary<string, MethodInfo>();
 
@@ -33,7 +33,7 @@ namespace NWN.FinalFantasy.Core
             {
                 try
                 {
-                    RunScript(caller, script);
+                    Run(caller, script);
                 }
                 catch(Exception ex)
                 {
@@ -50,7 +50,8 @@ namespace NWN.FinalFantasy.Core
         /// </summary>
         /// <param name="script">Name of the script's namespace</param>
         /// <param name="caller">The caller of this script</param>
-        private static void RunScript(NWGameObject caller, string script)
+        /// <param name="data">Arbitrary data to pass to the script.</param>
+        public static void Run<T>(NWGameObject caller, string script, T data)
         {
             if (!_cachedScripts.ContainsKey(script))
             {
@@ -80,7 +81,20 @@ namespace NWN.FinalFantasy.Core
                 _cachedScripts[script] = method;
             }
 
-            _cachedScripts[script].Invoke(null, null);
+            _cachedScripts[script].Invoke(null, data == null ? null : new object[] {data});
+        }
+
+        /// <summary>
+        /// Runs a C# script's Main() method.
+        /// "script" should be specified with the project name.
+        /// Example: 'Death.OnPlayerDeath' is valid. Just 'OnPlayerDeath' is not.
+        /// Exclude the root namespace when specifying script.
+        /// </summary>
+        /// <param name="script">Name of the script's namespace</param>
+        /// <param name="caller">The caller of this script</param>
+        public static void Run(NWGameObject caller, string script)
+        {
+            Run<object>(caller, script, null);
         }
     }
 }

@@ -18,7 +18,7 @@ namespace NWN.Scripts
             var obj = NWNXEvents.OnDMSpawnObject_GetObject();
             MessageHub.Instance.Publish(new ObjectCreated(obj));
 
-            ScriptRunner.RunScriptEvents(_.GetModule(), DMScriptPrefix.OnSpawnObject);
+            Script.RunScriptEvents(_.GetModule(), DMScriptPrefix.OnSpawnObject);
         }
     }
 }

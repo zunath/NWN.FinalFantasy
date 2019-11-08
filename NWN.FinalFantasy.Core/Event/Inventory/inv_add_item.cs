@@ -15,7 +15,7 @@ namespace NWN.Scripts
                 return;
             }
 
-            ScriptRunner.RunScriptEvents(NWGameObject.OBJECT_SELF, InventoryPrefix.OnAddItem);
+            Script.RunScriptEvents(NWGameObject.OBJECT_SELF, InventoryPrefix.OnAddItem);
         }
     }
 }

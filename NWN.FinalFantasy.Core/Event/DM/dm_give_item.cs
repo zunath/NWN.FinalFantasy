@@ -12,7 +12,7 @@ namespace NWN.Scripts
         // ReSharper disable once UnusedMember.Local
         public static void Main()
         {
-            ScriptRunner.RunScriptEvents(_.GetModule(), DMScriptPrefix.OnGiveItem);
+            Script.RunScriptEvents(_.GetModule(), DMScriptPrefix.OnGiveItem);
         }
     }
 }

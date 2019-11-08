@@ -52,6 +52,7 @@
     <Compile Include="JobDefinition\WhiteMage.cs" />
     <Compile Include="JobDefinition\Monk.cs" />
     <Compile Include="JobDefinition\Warrior.cs" />
+    <Compile Include="ChangeJob.cs" />
     <Compile Include="Registry\AbilityRegistry.cs" />
     <Compile Include="Enumeration\AbilityCategory.cs" />
     <Compile Include="AbilityDefinition\TestAbility.cs" />

@@ -8,7 +8,7 @@ namespace NWN.Scripts
     {
         internal static void Main()
         {
-            ScriptRunner.RunScriptEvents(NWGameObject.OBJECT_SELF, EncounterPrefix.OnUserDefined);
+            Script.RunScriptEvents(NWGameObject.OBJECT_SELF, EncounterPrefix.OnUserDefined);
         }
     }
 }

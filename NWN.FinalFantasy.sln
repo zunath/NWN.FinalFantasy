@@ -37,6 +37,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWN.FinalFantasy.Quest", "N
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWN.FinalFantasy.Job", "NWN.FinalFantasy.Job\NWN.FinalFantasy.Job.csproj", "{E90F269B-3AB4-4988-A7F8-E2364B94F549}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWN.FinalFantasy.Tool.HakBuilder", "NWN.FinalFantasy.Tool.HakBuilder\NWN.FinalFantasy.Tool.HakBuilder.csproj", "{7B132628-00BE-491A-B881-5F08D43464DB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -107,12 +109,17 @@ Global
 		{E90F269B-3AB4-4988-A7F8-E2364B94F549}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E90F269B-3AB4-4988-A7F8-E2364B94F549}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E90F269B-3AB4-4988-A7F8-E2364B94F549}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B132628-00BE-491A-B881-5F08D43464DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B132628-00BE-491A-B881-5F08D43464DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B132628-00BE-491A-B881-5F08D43464DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B132628-00BE-491A-B881-5F08D43464DB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{E8FA17B2-E1CA-4A8E-BCD6-DBD84E254EC9} = {92FEB66D-B035-4A44-A1E4-609770AA5A89}
+		{7B132628-00BE-491A-B881-5F08D43464DB} = {92FEB66D-B035-4A44-A1E4-609770AA5A89}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E22D87B0-729D-415B-8E3B-E4CBBA384E58}

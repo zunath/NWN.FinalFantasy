@@ -11,7 +11,7 @@ namespace NWN.FinalFantasy.Job.Registry
 
         internal static void Register()
         {
-            _abilityRegistry[Feat.TestAbility] = new TestAbility();
+            _abilityRegistry[Feat.OpenRestMenu] = new TestAbility();
         }
 
         /// <summary>

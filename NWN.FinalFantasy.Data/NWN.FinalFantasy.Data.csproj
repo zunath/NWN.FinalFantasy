@@ -78,6 +78,7 @@
     <Compile Include="Repository\PlayerRepo.cs" />
     <Compile Include="Repository\QuestProgressRepo.cs" />
     <Compile Include="Repository\ServerConfigurationRepo.cs" />
+    <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NWN.FinalFantasy.Core\NWN.FinalFantasy.Core.csproj">

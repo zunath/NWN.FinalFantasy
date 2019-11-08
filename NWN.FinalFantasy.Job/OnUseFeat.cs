@@ -32,15 +32,25 @@ namespace NWN.FinalFantasy.Job
         {
             // Ignore any unregistered feats.
             var feat = NWNXEvents.OnFeatUsed_GetFeat();
+            Console.WriteLine("Got feat = " + feat);
+
             if (!AbilityRegistry.IsRegistered(feat)) return;
+
+            Console.WriteLine("getting target");
             var target = NWNXEvents.OnFeatUsed_GetTarget();
 
+            Console.WriteLine("Getting user stats");
             // Retrieve stats and validate the use of this ability.
             var stats = GetUserStats(NWGameObject.OBJECT_SELF, target, feat);
+
+            Console.WriteLine("validating feat use");
             if (!ValidateFeatUse(stats)) return;
 
+            Console.WriteLine("starting casting process");
             // Begin the casting process
             StartCasting(stats);
+
+            Console.WriteLine("done casting");
         }
 
         /// <summary>

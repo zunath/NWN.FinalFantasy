@@ -12,10 +12,10 @@ namespace NWN.FinalFantasy.Core.NWNX
         /// </summary>
         /// <param name="creature"></param>
         /// <param name="feat"></param>
-        public static void AddFeat(NWGameObject creature, int feat)
+        public static void AddFeat(NWGameObject creature, Feat feat)
         {
             string sFunc = "AddFeat";
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, feat);
+            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, (int)feat);
             NWNXCore.NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
 
             NWNXCore.NWNX_CallFunction(NWNX_Creature, sFunc);

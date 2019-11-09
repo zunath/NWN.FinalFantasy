@@ -65,6 +65,10 @@
       <Project>{e94c10ba-6cdf-48cb-9473-d242db9d82c9}</Project>
       <Name>NWN.FinalFantasy.Data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\NWN.FinalFantasy.Job\NWN.FinalFantasy.Job.csproj">
+      <Project>{e90f269b-3ab4-4988-a7f8-e2364b94f549}</Project>
+      <Name>NWN.FinalFantasy.Job</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

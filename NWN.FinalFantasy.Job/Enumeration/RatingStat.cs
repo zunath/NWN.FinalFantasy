@@ -4,6 +4,8 @@
     {
         HP,
         MP,
+        AC,
+        BAB,
         STR,
         DEX,
         CON,

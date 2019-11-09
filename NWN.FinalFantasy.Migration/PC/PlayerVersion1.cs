@@ -29,28 +29,14 @@ namespace NWN.FinalFantasy.Migration.PC
 
         private void InitializeJobs(Guid playerID)
         {
-            JobRepo.Set(playerID, ClassType.Warrior, new Job());
-            JobRepo.Set(playerID, ClassType.Monk, new Job());
-            JobRepo.Set(playerID, ClassType.WhiteMage, new Job());
-            JobRepo.Set(playerID, ClassType.BlackMage, new Job());
-            JobRepo.Set(playerID, ClassType.RedMage, new Job());
-            JobRepo.Set(playerID, ClassType.Thief, new Job());
-            JobRepo.Set(playerID, ClassType.Paladin, new Job());
-            JobRepo.Set(playerID, ClassType.DarkKnight, new Job());
-            JobRepo.Set(playerID, ClassType.Beastmaster, new Job());
-            JobRepo.Set(playerID, ClassType.Bard, new Job());
-            JobRepo.Set(playerID, ClassType.Ranger, new Job());
-            JobRepo.Set(playerID, ClassType.Samurai, new Job());
-            JobRepo.Set(playerID, ClassType.Ninja, new Job());
-            JobRepo.Set(playerID, ClassType.Dragoon, new Job());
-            JobRepo.Set(playerID, ClassType.Summoner, new Job());
-            JobRepo.Set(playerID, ClassType.BlueMage, new Job());
-            JobRepo.Set(playerID, ClassType.Corsair, new Job());
-            JobRepo.Set(playerID, ClassType.Puppetmaster, new Job());
-            JobRepo.Set(playerID, ClassType.Dancer, new Job());
-            JobRepo.Set(playerID, ClassType.Scholar, new Job());
-            JobRepo.Set(playerID, ClassType.Geomancer, new Job());
-            JobRepo.Set(playerID, ClassType.RuneFencer, new Job());
+            JobRepo.Set(playerID, ClassType.Warrior, new Data.Entity.Job());
+            JobRepo.Set(playerID, ClassType.Monk, new Data.Entity.Job());
+            JobRepo.Set(playerID, ClassType.WhiteMage, new Data.Entity.Job());
+            JobRepo.Set(playerID, ClassType.BlackMage, new Data.Entity.Job());
+            JobRepo.Set(playerID, ClassType.Thief, new Data.Entity.Job());
+            JobRepo.Set(playerID, ClassType.Ranger, new Data.Entity.Job());
+
+
         }
 
     }

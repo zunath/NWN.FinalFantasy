@@ -297,12 +297,12 @@ namespace NWN.FinalFantasy.Core.NWNX
         /// <param name="creature"></param>
         /// <param name="ability"></param>
         /// <param name="value"></param>
-        public static void SetRawAbilityScore(NWGameObject creature, int ability, int value)
+        public static void SetRawAbilityScore(NWGameObject creature, Ability ability, int value)
         {
             string sFunc = "SetRawAbilityScore";
 
             NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, value);
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, ability);
+            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, (int)ability);
             NWNXCore.NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
 
             NWNXCore.NWNX_CallFunction(NWNX_Creature, sFunc);

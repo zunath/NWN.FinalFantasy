@@ -9,7 +9,7 @@ using NWN.FinalFantasy.Job.Registry;
 
 namespace NWN.FinalFantasy.Job.Event
 {
-    internal class OnUseFeat
+    internal class UseFeat
     {
         private struct UserStats
         {

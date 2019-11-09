@@ -16,6 +16,9 @@ namespace NWN.FinalFantasy.Job.JobDefinition
 
             HPRating = ProficiencyRating.B;
             MPRating = ProficiencyRating.E;
+            ACRating = ProficiencyRating.E;
+            BABRating = ProficiencyRating.E;
+
             STRRating = ProficiencyRating.A;
             DEXRating = ProficiencyRating.B;
             CONRating = ProficiencyRating.A;

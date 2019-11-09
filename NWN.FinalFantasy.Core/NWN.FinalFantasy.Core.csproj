@@ -112,6 +112,7 @@
     <Compile Include="Logging\AuditGroup.cs" />
     <Compile Include="Logging\ExceptionExtensions.cs" />
     <Compile Include="Message\ServerStopped.cs" />
+    <Compile Include="Messaging\Publish.cs" />
     <Compile Include="NWNX\DialogLanguage.cs" />
     <Compile Include="NWNX\DialogNodeType.cs" />
     <Compile Include="NWNX\DialogScriptType.cs" />

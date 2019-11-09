@@ -59,7 +59,6 @@ namespace NWN.FinalFantasy.Core.Dialog
                 throw new Exception($"Cannot find player ID in active dialogs: {playerID} ({GetName(player)})");
             }
 
-            Console.WriteLine("Ending");
             _playerDialogs.Remove(playerID);
         }
 

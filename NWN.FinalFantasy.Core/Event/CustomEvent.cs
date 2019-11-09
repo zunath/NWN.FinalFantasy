@@ -1,6 +1,6 @@
 ﻿namespace NWN.FinalFantasy.Core.Event
 {
-    public class CustomEvent
+    internal class CustomEvent
     {
         public NWGameObject Caller { get; set; }
         public string ScriptPrefix { get; set; }

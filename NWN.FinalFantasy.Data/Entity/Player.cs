@@ -7,7 +7,9 @@ namespace NWN.FinalFantasy.Data.Entity
         public int Version { get; set; }
         public ClassType CurrentJob { get; set; }
         public string Name { get; set; }
-        public int HitPoints { get; set; }
+        public int MaxHP { get; set; }
+        public int MaxMP { get; set; }
+        public int HP { get; set; }
         public int MP { get; set; }
         public string LocationAreaResref { get; set; }
         public float LocationX { get; set; }

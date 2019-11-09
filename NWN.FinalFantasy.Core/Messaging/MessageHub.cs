@@ -11,7 +11,7 @@ namespace NWN.FinalFantasy.Core.Messaging
     /// <summary>
     /// An implementation of the <c>Event Aggregator</c> pattern.
     /// </summary>
-    public sealed class MessageHub : IMessageHub
+    internal sealed class MessageHub : IMessageHub
     {
         private readonly Subscriptions _subscriptions;
         private Action<Type, object> _globalHandler;

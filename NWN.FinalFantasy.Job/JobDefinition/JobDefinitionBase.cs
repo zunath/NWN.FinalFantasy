@@ -14,6 +14,8 @@ namespace NWN.FinalFantasy.Job.JobDefinition
 
         public ProficiencyRating HPRating { get; set; }
         public ProficiencyRating MPRating { get; set; }
+        public ProficiencyRating ACRating { get; set; }
+        public ProficiencyRating BABRating { get; set; }
         public ProficiencyRating STRRating { get; set; }
         public ProficiencyRating DEXRating { get; set; }
         public ProficiencyRating CONRating { get; set; }

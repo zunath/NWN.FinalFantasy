@@ -49,7 +49,7 @@ namespace NWN.FinalFantasy.Job.Menu
             var classType = (ClassType)response.Data;
 
             var data = new JobChanged(player, entity.CurrentJob, classType);
-            MessageHub.Instance.Publish(new CustomEvent(player, JobEventPrefix.OnJobChanged, data));
+            Publish.CustomEvent(player, JobEventPrefix.OnJobChanged, data);
         }
 
         public override void Back(NWGameObject player, string beforeMovePage, string afterMovePage)

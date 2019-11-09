@@ -436,6 +436,8 @@
         Onhit_Castspell_Knockdown = 138,
         Onhit_Castspell_Freeze = 139,
         Onhit_Castspell_Combust = 140,
+        Onhit_CastSpell_RustMetal = 141,
+        Onhit_CastSpell_FFOSystem = 142,
         Poison_1D2_Strdamage = 0,
         Poison_1D2_Dexdamage = 1,
         Poison_1D2_Condamage = 2,

@@ -122,6 +122,7 @@
     <Compile Include="NWNX\NWNXDialog.cs" />
     <Compile Include="NWNX\NWNXEventType.cs" />
     <Compile Include="NWNX\NWNXRedis.cs" />
+    <Compile Include="NWScript\Enumerations\AddItemPropertyPolicy.cs" />
     <Compile Include="Startup\AreaScriptRegistration.cs" />
     <Compile Include="Startup\AssemblyLoader.cs" />
     <Compile Include="Startup\CustomEventRegistration.cs" />

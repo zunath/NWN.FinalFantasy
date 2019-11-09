@@ -101,6 +101,8 @@
     <Compile Include="Event\Inventory\InventoryPrefix.cs" />
     <Compile Include="Event\Inventory\inv_add_item.cs" />
     <Compile Include="Event\Inventory\inv_rem_item.cs" />
+    <Compile Include="Event\Item\ItemEventPrefix.cs" />
+    <Compile Include="Event\Item\item_on_hit.cs" />
     <Compile Include="Event\Module\mod_nwnx_equip.cs" />
     <Compile Include="Event\Module\mod_nwnx_unequip.cs" />
     <Compile Include="Event\Module\mod_on_attack.cs" />

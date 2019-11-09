@@ -46,8 +46,8 @@
     <Compile Include="Enumeration\ProficiencyRating.cs" />
     <Compile Include="Enumeration\RatingStat.cs" />
     <Compile Include="Event\JobEventPrefix.cs" />
-    <Compile Include="Event\PreventNonClassItems.cs" />
     <Compile Include="Event\RecalculateStats.cs" />
+    <Compile Include="Event\TagWeaponUse.cs" />
     <Compile Include="Event\UnequipAllItems.cs" />
     <Compile Include="JobDefinition\Ranger.cs" />
     <Compile Include="JobDefinition\Thief.cs" />
@@ -74,6 +74,7 @@
     <Compile Include="StatRating\RatingB.cs" />
     <Compile Include="StatRating\RatingA.cs" />
     <Compile Include="StatRating\RatingChart.cs" />
+    <Compile Include="StatRating\RatingZero.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NWN.FinalFantasy.Core\NWN.FinalFantasy.Core.csproj">

@@ -498,13 +498,13 @@ namespace NWN.FinalFantasy.Core.NWNX
         /// <param name="class"></param>
         /// <param name="level"></param>
         /// <param name="spellId"></param>
-        public static void RemoveKnownSpell(NWGameObject creature, int @class, int level, int spellId)
+        public static void RemoveKnownSpell(NWGameObject creature, ClassType @class, int level, int spellId)
         {
             string sFunc = "RemoveKnownSpell";
 
             NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, spellId);
             NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, level);
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, @class);
+            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, (int)@class);
             NWNXCore.NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
 
             NWNXCore.NWNX_CallFunction(NWNX_Creature, sFunc);

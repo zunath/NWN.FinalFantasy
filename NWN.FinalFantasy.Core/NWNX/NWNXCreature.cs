@@ -43,10 +43,10 @@ namespace NWN.FinalFantasy.Core.NWNX
         /// </summary>
         /// <param name="creature"></param>
         /// <param name="feat"></param>
-        public static void RemoveFeat(NWGameObject creature, int feat)
+        public static void RemoveFeat(NWGameObject creature, Feat feat)
         {
             string sFunc = "RemoveFeat";
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, feat);
+            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, (int)feat);
             NWNXCore.NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
 
             NWNXCore.NWNX_CallFunction(NWNX_Creature, sFunc);
@@ -126,7 +126,7 @@ namespace NWN.FinalFantasy.Core.NWNX
         /// <param name="creature"></param>
         /// <param name="index"></param>
         /// <returns></returns>
-        public static int GetFeatByIndex(NWGameObject creature, int index)
+        public static Feat GetFeatByIndex(NWGameObject creature, int index)
         {
             string sFunc = "GetFeatByIndex";
 
@@ -134,7 +134,7 @@ namespace NWN.FinalFantasy.Core.NWNX
             NWNXCore.NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
 
             NWNXCore.NWNX_CallFunction(NWNX_Creature, sFunc);
-            return NWNXCore.NWNX_GetReturnValueInt(NWNX_Creature, sFunc);
+            return (Feat)NWNXCore.NWNX_GetReturnValueInt(NWNX_Creature, sFunc);
         }
 
         /// <summary>

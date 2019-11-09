@@ -27,12 +27,13 @@ namespace NWN.FinalFantasy.Migration.PC
             PlayerRepo.Set(entity);
 
             InitializeJobs(playerID);
-            InitializeFeats(player);
             InitializeSkills(player);
             InitializeSavingThrows(player);
             RemoveNWNSpells(player);
 
+            // Treat this initialization as a job change and a level-up.
             Publish.CustomEvent(player, JobEventPrefix.OnJobChanged, new JobChanged(player, job, job));
+            Publish.CustomEvent(player, JobEventPrefix.OnLeveledUp, new LeveledUp(player));
         }
 
         private void InitializeJobs(Guid playerID)
@@ -43,24 +44,6 @@ namespace NWN.FinalFantasy.Migration.PC
             JobRepo.Set(playerID, ClassType.BlackMage, new Data.Entity.Job());
             JobRepo.Set(playerID, ClassType.Thief, new Data.Entity.Job());
             JobRepo.Set(playerID, ClassType.Ranger, new Data.Entity.Job());
-        }
-
-        private void InitializeFeats(NWGameObject player)
-        {
-            int numberOfFeats = NWNXCreature.GetFeatCount(player);
-            for (int currentFeat = numberOfFeats; currentFeat >= 0; currentFeat--)
-            {
-                NWNXCreature.RemoveFeat(player, NWNXCreature.GetFeatByIndex(player, currentFeat - 1));
-            }
-
-            NWNXCreature.AddFeatByLevel(player, Feat.Armor_Proficiency_Light, 1);
-            NWNXCreature.AddFeatByLevel(player, Feat.Armor_Proficiency_Medium, 1);
-            NWNXCreature.AddFeatByLevel(player, Feat.Armor_Proficiency_Heavy, 1);
-            NWNXCreature.AddFeatByLevel(player, Feat.Shield_Proficiency, 1);
-            NWNXCreature.AddFeatByLevel(player, Feat.Weapon_Proficiency_Exotic, 1);
-            NWNXCreature.AddFeatByLevel(player, Feat.Weapon_Proficiency_Martial, 1);
-            NWNXCreature.AddFeatByLevel(player, Feat.Weapon_Proficiency_Simple, 1);
-            NWNXCreature.AddFeatByLevel(player, Feat.Uncanny_Dodge_1, 1);
         }
 
         private void InitializeSkills(NWGameObject player)

@@ -41,15 +41,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Enumeration\AbilityType.cs" />
     <Compile Include="Enumeration\GuardianForce.cs" />
     <Compile Include="Enumeration\ProficiencyRating.cs" />
     <Compile Include="Enumeration\RatingStat.cs" />
+    <Compile Include="Scripts\ApplyFeats\ApplyFeatsBase.cs" />
+    <Compile Include="Scripts\ApplyFeats\OnJobChanged.cs" />
+    <Compile Include="Scripts\ApplyFeats\OnLevelUp.cs" />
     <Compile Include="Scripts\GainXP.cs" />
     <Compile Include="Event\JobEventPrefix.cs" />
+    <Compile Include="Scripts\LoadHotBar.cs" />
     <Compile Include="Scripts\RecalculateStats\RecalculateStatsBase.cs" />
     <Compile Include="Scripts\RecalculateStats\OnJobChange.cs" />
     <Compile Include="Scripts\RecalculateStats\OnLevelUp.cs" />
+    <Compile Include="Scripts\SaveHotBar.cs" />
     <Compile Include="Scripts\TagWeaponUse.cs" />
     <Compile Include="Scripts\UnequipAllItems.cs" />
     <Compile Include="JobDefinition\Ranger.cs" />

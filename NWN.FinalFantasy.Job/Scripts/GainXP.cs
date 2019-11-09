@@ -1,5 +1,4 @@
-﻿using System;
-using NWN.FinalFantasy.Core;
+﻿using NWN.FinalFantasy.Core;
 using NWN.FinalFantasy.Core.Message;
 using NWN.FinalFantasy.Core.Messaging;
 using NWN.FinalFantasy.Core.NWScript.Enumerations;

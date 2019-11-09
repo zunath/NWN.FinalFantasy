@@ -37,9 +37,6 @@ namespace NWN.FinalFantasy.Job.JobDefinition
                 BaseItemType.LargeShield,
                 BaseItemType.TowerShield
             });
-
-            AddAbility(1, AbilityType.MightyStrikes);
-            AddAbility(3, AbilityType.DefenseBonus1);
         }
 
     }

@@ -1,4 +1,4 @@
-﻿namespace NWN.FinalFantasy.Core.Message
+﻿namespace NWN.FinalFantasy.Quest.API.Event
 {
     public class QuestAdvanced
     {

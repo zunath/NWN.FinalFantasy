@@ -111,9 +111,6 @@
     <Compile Include="Logging\Audit.cs" />
     <Compile Include="Logging\AuditGroup.cs" />
     <Compile Include="Logging\ExceptionExtensions.cs" />
-    <Compile Include="Message\QuestAccepted.cs" />
-    <Compile Include="Message\QuestAdvanced.cs" />
-    <Compile Include="Message\QuestCompleted.cs" />
     <Compile Include="Message\ServerStopped.cs" />
     <Compile Include="NWNX\DialogLanguage.cs" />
     <Compile Include="NWNX\DialogNodeType.cs" />

@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using NWN.FinalFantasy.Core;
 using NWN.FinalFantasy.Core.Dialog;
+using NWN.FinalFantasy.Core.Event;
 using NWN.FinalFantasy.Core.Message;
 using NWN.FinalFantasy.Core.Messaging;
 using NWN.FinalFantasy.Data.Repository;
 using NWN.FinalFantasy.Quest.API.Contracts;
+using NWN.FinalFantasy.Quest.API.Event;
 using NWN.FinalFantasy.Quest.API.Prerequisite;
 using static NWN._;
 
@@ -289,7 +292,8 @@ namespace NWN.FinalFantasy.Quest.API
             }
 
             // Notify to subscribers that a quest has just been accepted.
-            MessageHub.Instance.Publish(new QuestAccepted(player, QuestID));
+            var data = new QuestAccepted(player, QuestID);
+            MessageHub.Instance.Publish(new CustomEvent(player, QuestEventPrefix.OnQuestAccepted, data));
         }
 
         /// <summary>
@@ -353,7 +357,8 @@ namespace NWN.FinalFantasy.Quest.API
                 }
 
                 // Notify to subscribers that the player has advanced to the next state of the quest.
-                MessageHub.Instance.Publish(new QuestAdvanced(player, QuestID, questStatus.CurrentState));
+                var data = new QuestAdvanced(player, QuestID, questStatus.CurrentState);
+                MessageHub.Instance.Publish(new CustomEvent(player, QuestEventPrefix.OnQuestAdvanced, data));
             }
 
         }
@@ -406,7 +411,9 @@ namespace NWN.FinalFantasy.Quest.API
 
             SendMessageToPC(player,"Quest '" + Name + "' complete!");
             RemoveJournalQuestEntry(JournalTag, player, false);
-            MessageHub.Instance.Publish(new QuestCompleted(player, QuestID));
+
+            var data = new QuestCompleted(player, QuestID);
+            MessageHub.Instance.Publish(new CustomEvent(player, QuestEventPrefix.OnQuestCompleted, data));
         }
 
 

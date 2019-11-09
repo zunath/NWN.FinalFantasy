@@ -44,6 +44,10 @@
     <Compile Include="API\Contracts\IQuestObjective.cs" />
     <Compile Include="API\Contracts\IQuestPrerequisite.cs" />
     <Compile Include="API\Contracts\IQuestReward.cs" />
+    <Compile Include="API\Event\QuestAccepted.cs" />
+    <Compile Include="API\Event\QuestAdvanced.cs" />
+    <Compile Include="API\Event\QuestCompleted.cs" />
+    <Compile Include="API\Event\QuestEventPrefix.cs" />
     <Compile Include="API\Menu\QuestRewardSelection.cs" />
     <Compile Include="API\Objective\CollectItemObjective.cs" />
     <Compile Include="API\Objective\KillTargetObjective.cs" />

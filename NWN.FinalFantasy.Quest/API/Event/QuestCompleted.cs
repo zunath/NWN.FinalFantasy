@@ -1,11 +1,11 @@
-﻿namespace NWN.FinalFantasy.Core.Message
+﻿namespace NWN.FinalFantasy.Quest.API.Event
 {
-    public class QuestAccepted
+    public class QuestCompleted
     {
         public NWGameObject Player { get; set; }
         public string QuestID { get; set; }
 
-        public QuestAccepted(NWGameObject player, string questID)
+        public QuestCompleted(NWGameObject player, string questID)
         {
             Player = player;
             QuestID = questID;

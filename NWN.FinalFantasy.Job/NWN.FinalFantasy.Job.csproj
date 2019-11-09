@@ -45,10 +45,13 @@
     <Compile Include="Enumeration\GuardianForce.cs" />
     <Compile Include="Enumeration\ProficiencyRating.cs" />
     <Compile Include="Enumeration\RatingStat.cs" />
+    <Compile Include="Scripts\GainXP.cs" />
     <Compile Include="Event\JobEventPrefix.cs" />
-    <Compile Include="Event\RecalculateStats.cs" />
-    <Compile Include="Event\TagWeaponUse.cs" />
-    <Compile Include="Event\UnequipAllItems.cs" />
+    <Compile Include="Scripts\RecalculateStats\RecalculateStatsBase.cs" />
+    <Compile Include="Scripts\RecalculateStats\OnJobChange.cs" />
+    <Compile Include="Scripts\RecalculateStats\OnLevelUp.cs" />
+    <Compile Include="Scripts\TagWeaponUse.cs" />
+    <Compile Include="Scripts\UnequipAllItems.cs" />
     <Compile Include="JobDefinition\Ranger.cs" />
     <Compile Include="JobDefinition\Thief.cs" />
     <Compile Include="JobDefinition\JobDefinitionBase.cs" />
@@ -56,15 +59,16 @@
     <Compile Include="JobDefinition\WhiteMage.cs" />
     <Compile Include="JobDefinition\Monk.cs" />
     <Compile Include="JobDefinition\Warrior.cs" />
-    <Compile Include="Event\AdjustClass.cs" />
+    <Compile Include="Scripts\AdjustClass.cs" />
     <Compile Include="Menu\ChangeJobMenu.cs" />
-    <Compile Include="Message\JobChanged.cs" />
+    <Compile Include="Event\JobChanged.cs" />
+    <Compile Include="Event\LeveledUp.cs" />
     <Compile Include="Registry\AbilityRegistry.cs" />
     <Compile Include="Enumeration\AbilityCategory.cs" />
     <Compile Include="AbilityDefinition\TestAbility.cs" />
     <Compile Include="Contracts\IAbilityDefinition.cs" />
     <Compile Include="Registry\JobRegistry.cs" />
-    <Compile Include="Event\UseFeat.cs" />
+    <Compile Include="Scripts\UseFeat.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Registry\RatingRegistry.cs" />
     <Compile Include="Startup.cs" />
@@ -75,6 +79,7 @@
     <Compile Include="StatRating\RatingA.cs" />
     <Compile Include="StatRating\RatingChart.cs" />
     <Compile Include="StatRating\RatingZero.cs" />
+    <Compile Include="TestBread.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NWN.FinalFantasy.Core\NWN.FinalFantasy.Core.csproj">

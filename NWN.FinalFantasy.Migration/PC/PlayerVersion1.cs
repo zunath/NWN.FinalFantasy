@@ -4,7 +4,6 @@ using NWN.FinalFantasy.Core.NWNX;
 using NWN.FinalFantasy.Core.NWScript.Enumerations;
 using NWN.FinalFantasy.Data.Repository;
 using NWN.FinalFantasy.Job.Event;
-using NWN.FinalFantasy.Job.Message;
 using static NWN._;
 
 namespace NWN.FinalFantasy.Migration.PC

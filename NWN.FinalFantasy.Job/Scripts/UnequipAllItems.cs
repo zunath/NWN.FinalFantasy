@@ -1,8 +1,6 @@
-﻿using NWN.FinalFantasy.Core;
-using NWN.FinalFantasy.Core.NWScript.Enumerations;
-using NWN.FinalFantasy.Job.Message;
+﻿using NWN.FinalFantasy.Core.NWScript.Enumerations;
 
-namespace NWN.FinalFantasy.Job.Event
+namespace NWN.FinalFantasy.Job.Scripts
 {
     internal class UnequipAllItems
     {

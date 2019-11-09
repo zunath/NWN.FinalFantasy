@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace NWN.FinalFantasy.Job.Event
+namespace NWN.FinalFantasy.Job.Scripts
 {
     internal class TagWeaponUse
     {

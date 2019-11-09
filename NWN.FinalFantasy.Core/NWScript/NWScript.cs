@@ -1,4 +1,5 @@
 ﻿using System;
+using NWN.FinalFantasy.Core.Event;
 using NWN.FinalFantasy.Core.Message;
 using NWN.FinalFantasy.Core.Messaging;
 using NWN.FinalFantasy.Core.NWScript.Enumerations;
@@ -3917,12 +3918,17 @@ namespace NWN
             Internal.CallBuiltIn(392);
         }
 
-        //  Gives nXpAmount to oCreature.
-        public static void GiveXPToCreature(NWGameObject oCreature, int nXpAmount)
+        /// <summary>
+        /// Grants nXpAmount to the creature's current job.
+        /// </summary>
+        /// <param name="oCreature">The creature receiving the XP</param>
+        /// <param name="nXpAmount">The amount of XP to give the creature's current job.</param>
+        public static void GiveJobXP(NWGameObject oCreature, int nXpAmount)
         {
             Internal.StackPushInteger(nXpAmount);
             Internal.StackPushObject(oCreature, false);
             Internal.CallBuiltIn(393);
+            Publish.CustomEvent(oCreature, CustomEventPrefix.OnGainJobXP, new JobXPGained(oCreature, nXpAmount));
         }
 
         //  Sets oCreature's experience to nXpAmount.

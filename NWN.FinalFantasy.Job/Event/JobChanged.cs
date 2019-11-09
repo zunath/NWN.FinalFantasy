@@ -1,6 +1,6 @@
 ﻿using NWN.FinalFantasy.Core.NWScript.Enumerations;
 
-namespace NWN.FinalFantasy.Job.Message
+namespace NWN.FinalFantasy.Job.Event
 {
     public class JobChanged
     {

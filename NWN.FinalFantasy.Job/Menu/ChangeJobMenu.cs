@@ -5,7 +5,6 @@ using NWN.FinalFantasy.Core.Messaging;
 using NWN.FinalFantasy.Core.NWScript.Enumerations;
 using NWN.FinalFantasy.Data.Repository;
 using NWN.FinalFantasy.Job.Event;
-using NWN.FinalFantasy.Job.Message;
 using NWN.FinalFantasy.Job.Registry;
 using static NWN._;
 

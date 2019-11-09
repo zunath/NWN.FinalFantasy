@@ -1,21 +1,20 @@
-﻿using NWN.FinalFantasy.Core.NWNX;
+﻿using System;
+using NWN.FinalFantasy.Core.NWNX;
 using NWN.FinalFantasy.Core.NWScript.Enumerations;
 using NWN.FinalFantasy.Data.Repository;
 using NWN.FinalFantasy.Job.Enumeration;
 using NWN.FinalFantasy.Job.Registry;
-using static NWN._;
 
-namespace NWN.FinalFantasy.Job.Event
+namespace NWN.FinalFantasy.Job.Scripts.RecalculateStats
 {
-    internal class RecalculateStats
+    internal abstract class RecalculateStatsBase
     {
-        public static void Main()
+        protected static void Recalculate(NWGameObject player)
         {
-            var player = NWGameObject.OBJECT_SELF;
-            var playerID = GetGlobalID(player);
+            var playerID = _.GetGlobalID(player);
             var playerEntity = PlayerRepo.Get(playerID);
-            var @class = GetClassByPosition(ClassPosition.First, player);
-            var level = GetLevelByPosition(ClassPosition.First, player);
+            var @class = _.GetClassByPosition(ClassPosition.First, player);
+            var level = _.GetLevelByPosition(ClassPosition.First, player);
             var jobDefinition = JobRegistry.Get(@class);
 
             // Retrieve the rating chart for the stat, then retrieve the value for that stat at this player's level.
@@ -59,7 +58,7 @@ namespace NWN.FinalFantasy.Job.Event
         /// </summary>
         private static void ApplyHP(NWGameObject player, int hp)
         {
-            var level = GetLevelByPosition(ClassPosition.First, player);
+            var level = _.GetLevelByPosition(ClassPosition.First, player);
 
             // Every level needs at least one HP, so apply that now.
             for (int x = 1; x <= level; x++)
@@ -86,8 +85,8 @@ namespace NWN.FinalFantasy.Job.Event
             }
 
             // If player's current HP is higher than their max, apply damage to put them back to their maximum.
-            var currentHP = GetCurrentHitPoints(player);
-            var maxHP = GetMaxHitPoints(player);
+            var currentHP = _.GetCurrentHitPoints(player);
+            var maxHP = _.GetMaxHitPoints(player);
             if (currentHP > maxHP)
             {
                 int amount = currentHP - maxHP;

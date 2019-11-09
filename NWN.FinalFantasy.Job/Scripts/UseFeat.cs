@@ -7,7 +7,7 @@ using NWN.FinalFantasy.Data.Repository;
 using NWN.FinalFantasy.Job.Contracts;
 using NWN.FinalFantasy.Job.Registry;
 
-namespace NWN.FinalFantasy.Job.Event
+namespace NWN.FinalFantasy.Job.Scripts
 {
     internal class UseFeat
     {

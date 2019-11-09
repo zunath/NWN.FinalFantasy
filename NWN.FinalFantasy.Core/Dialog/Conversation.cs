@@ -5,6 +5,7 @@ using NWN.FinalFantasy.Core.Messaging;
 using NWN.FinalFantasy.Core.NWNX;
 using NWN.FinalFantasy.Core.NWScript.Enumerations;
 using NWN.FinalFantasy.Core.Startup;
+using static NWN._;
 
 namespace NWN.FinalFantasy.Core.Dialog
 {
@@ -23,25 +24,25 @@ namespace NWN.FinalFantasy.Core.Dialog
         /// <param name="class">The C# class to search for.</param>
         public static void Start(NWGameObject player, NWGameObject talkTo, string @class)
         {
-            var playerID = _.GetGlobalID(player);
+            var playerID = GetGlobalID(player);
 
             if (!_playerDialogs.ContainsKey(playerID))
             {
                 Load(player, talkTo, @class);
             }
 
-            if (_.GetObjectType(talkTo) == ObjectType.Creature &&
-                !_.GetIsPlayer(talkTo) &&
-                !_.GetIsDungeonMaster(talkTo))
+            if (GetObjectType(talkTo) == ObjectType.Creature &&
+                !GetIsPlayer(talkTo) &&
+                !GetIsDungeonMaster(talkTo))
             {
-                _.BeginConversation("dialog", new NWGameObject());
+                BeginConversation("dialog", talkTo);
             }
             // Everything else
             else
             {
-                _.AssignCommand(player, () =>
+                AssignCommand(player, () =>
                 {
-                    _.ActionStartConversation(talkTo, "dialog", true, false);
+                    ActionStartConversation(talkTo, "dialog", true, false);
                 });
             }
         }
@@ -52,12 +53,13 @@ namespace NWN.FinalFantasy.Core.Dialog
         /// <param name="player">The player whose dialog we're removing</param>
         public static void End(NWGameObject player)
         {
-            var playerID = _.GetGlobalID(player);
+            var playerID = GetGlobalID(player);
             if (!_playerDialogs.ContainsKey(playerID))
             {
-                throw new Exception($"Cannot find player ID in active dialogs: {playerID} ({_.GetName(player)})");
+                throw new Exception($"Cannot find player ID in active dialogs: {playerID} ({GetName(player)})");
             }
 
+            Console.WriteLine("Ending");
             _playerDialogs.Remove(playerID);
         }
 
@@ -69,7 +71,7 @@ namespace NWN.FinalFantasy.Core.Dialog
         /// <param name="class">The class name of the conversation</param>
         public static void Load(NWGameObject player, NWGameObject talkTo, string @class)
         {
-            var playerID = _.GetGlobalID(player);
+            var playerID = GetGlobalID(player);
             var conversation = FindConversation(@class);
             var playerDialog = new PlayerDialog("MainPage");
             conversation.SetUp(player, playerDialog);

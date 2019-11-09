@@ -10,7 +10,9 @@ namespace NWN.FinalFantasy.Job.JobDefinition
         {
             Name = "Black Mage";
             Description = "Magic user which specializes in destructive black magic.";
+            CallSign = "BLM";
             GF = GuardianForce.Ramuh;
+            Class = ClassType.BlackMage;
 
             HPRating = ProficiencyRating.B;
             MPRating = ProficiencyRating.E;

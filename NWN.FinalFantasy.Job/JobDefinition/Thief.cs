@@ -10,7 +10,9 @@ namespace NWN.FinalFantasy.Job.JobDefinition
         {
             Name = "Thief";
             Description = "Combat specialist which excels at stealth and thievery.";
+            CallSign = "THF";
             GF = GuardianForce.Fenrir;
+            Class = ClassType.Thief;
 
             HPRating = ProficiencyRating.B;
             MPRating = ProficiencyRating.E;

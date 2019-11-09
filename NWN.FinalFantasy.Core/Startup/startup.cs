@@ -1,4 +1,5 @@
 ﻿using NWN.FinalFantasy.Core.Logging;
+using NWN.FinalFantasy.Core.Messaging;
 using NWN.FinalFantasy.Core.Startup;
 using Serilog;
 
@@ -15,8 +16,10 @@ namespace NWN.Scripts
         internal static void Main()
         {
             ConfigureLogger();
+            RegisterMessageHubErrorHandler();
             Audit.Initialize();
             EventRegistration.Register();
+            CustomEventRegistration.Register();
             AssemblyLoader.LoadAssemblies();
             AreaScriptRegistration.Register();
         }
@@ -26,6 +29,11 @@ namespace NWN.Scripts
             Log.Logger = new LoggerConfiguration()
                 .WriteTo.Console()
                 .CreateLogger();
+        }
+
+        private static void RegisterMessageHubErrorHandler()
+        {
+            MessageHub.Instance.RegisterGlobalErrorHandler((guid, exception) => Audit.Write(AuditGroup.Error, exception.ToMessageAndCompleteStacktrace()));
         }
     }
 }

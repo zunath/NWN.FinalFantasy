@@ -33,7 +33,7 @@ namespace NWN.FinalFantasy.Job.StatRating
         /// <param name="rating">The rating to retrieve.</param>
         /// <param name="level">The level to retrieve</param>
         /// <returns>The value for a given rating and level.</returns>
-        protected int Get(RatingStat rating, int level)
+        public int Get(RatingStat rating, int level)
         {
             if(!_ratingChart.ContainsKey(rating))
                 throw new Exception($"Rating '{rating}' has not been registered.");

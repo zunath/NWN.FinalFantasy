@@ -1,11 +1,11 @@
-﻿using NWN.FinalFantasy.Core.Enumerations;
+﻿using NWN.FinalFantasy.Core.NWScript.Enumerations;
 
 namespace NWN.FinalFantasy.Data.Entity
 {
     public class Player: EntityBase
     {
         public int Version { get; set; }
-        public JobType CurrentJob { get; set; }
+        public ClassType CurrentJob { get; set; }
         public string Name { get; set; }
         public int HitPoints { get; set; }
         public int MP { get; set; }

@@ -10,7 +10,9 @@ namespace NWN.FinalFantasy.Job.JobDefinition
         {
             Name = "Warrior";
             Description = "Melee fighter which specializes in a variety of weapons and armor.";
+            CallSign = "WAR";
             GF = GuardianForce.Ifrit;
+            Class = ClassType.Warrior;
 
             HPRating = ProficiencyRating.B;
             MPRating = ProficiencyRating.E;
@@ -36,5 +38,6 @@ namespace NWN.FinalFantasy.Job.JobDefinition
             AddAbility(1, AbilityType.MightyStrikes);
             AddAbility(3, AbilityType.DefenseBonus1);
         }
+
     }
 }

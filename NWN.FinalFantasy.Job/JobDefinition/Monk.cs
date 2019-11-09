@@ -10,7 +10,9 @@ namespace NWN.FinalFantasy.Job.JobDefinition
         {
             Name = "Monk";
             Description = "Melee fighter which specializes in fighting unarmed.";
+            CallSign = "MNK";
             GF = GuardianForce.Titan;
+            Class = ClassType.Monk;
 
             HPRating = ProficiencyRating.B;
             MPRating = ProficiencyRating.E;

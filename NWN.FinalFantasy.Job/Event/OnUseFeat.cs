@@ -6,9 +6,8 @@ using NWN.FinalFantasy.Core.Utility;
 using NWN.FinalFantasy.Data.Repository;
 using NWN.FinalFantasy.Job.Contracts;
 using NWN.FinalFantasy.Job.Registry;
-using static NWN._;
 
-namespace NWN.FinalFantasy.Job
+namespace NWN.FinalFantasy.Job.Event
 {
     internal class OnUseFeat
     {
@@ -58,43 +57,43 @@ namespace NWN.FinalFantasy.Job
 
             if (stats.MP < stats.MPCost)
             {
-                SendMessageToPC(user, ColorToken.Red("Insufficient MP."));
+                _.SendMessageToPC(user, ColorToken.Red("Insufficient MP."));
                 return false;
             }
 
-            if (!GetIsObjectValid(user))
+            if (!_.GetIsObjectValid(user))
             {
                 return false;
             }
 
-            if (!GetIsObjectValid(target))
+            if (!_.GetIsObjectValid(target))
             {
-                SendMessageToPC(user, ColorToken.Red("Target lost."));
+                _.SendMessageToPC(user, ColorToken.Red("Target lost."));
                 return false;
             }
 
             if (!string.IsNullOrWhiteSpace(canUse))
             {
-                SendMessageToPC(user, ColorToken.Red(canUse));
+                _.SendMessageToPC(user, ColorToken.Red(canUse));
                 return false;
             }
 
             if (stats.Now < stats.CooldownUnlock)
             {
                 var timeToWait = Time.GetTimeToWaitLongIntervals(stats.Now, stats.CooldownUnlock, false);
-                SendMessageToPC(user, ColorToken.Red($"Ability available in {timeToWait}."));
+                _.SendMessageToPC(user, ColorToken.Red($"Ability available in {timeToWait}."));
                 return false;
             }
 
-            if (!LineOfSightObject(user, target))
+            if (!_.LineOfSightObject(user, target))
             {
-                SendMessageToPC(user, ColorToken.Red($"You cannot see your target."));
+                _.SendMessageToPC(user, ColorToken.Red($"You cannot see your target."));
                 return false;
             }
 
-            if (GetIsBusy(user) || GetCurrentHitPoints(user) <= 0 || !GetCommandable(user))
+            if (_.GetIsBusy(user) || _.GetCurrentHitPoints(user) <= 0 || !_.GetCommandable(user))
             {
-                SendMessageToPC(user, ColorToken.Red("You are too busy."));
+                _.SendMessageToPC(user, ColorToken.Red("You are too busy."));
                 return false;
             }
 
@@ -110,10 +109,10 @@ namespace NWN.FinalFantasy.Job
             var castingTime = stats.AbilityDefinition.CastingTime(stats.User);
             NWNXPlayer.StartGuiTimingBar(stats.User, castingTime, string.Empty);
 
-            SetIsBusy(stats.User, true);
+            _.SetIsBusy(stats.User, true);
 
-            DelayCommand(0.5f, () => CheckMovement(stats));
-            DelayCommand(castingTime, () => FinishCasting(stats));
+            _.DelayCommand(0.5f, () => CheckMovement(stats));
+            _.DelayCommand(castingTime, () => FinishCasting(stats));
         }
 
         /// <summary>
@@ -123,9 +122,9 @@ namespace NWN.FinalFantasy.Job
         private static void CheckMovement(UserStats stats)
         {
             if (stats.IsComplete) return;
-            if (!GetIsObjectValid(stats.User)) return;
+            if (!_.GetIsObjectValid(stats.User)) return;
 
-            var position = GetPosition(stats.User);
+            var position = _.GetPosition(stats.User);
 
             // Player moved too far from starting position. Cancel the spell.
             if (Math.Abs(position.X - stats.CastingPosition.X) > 0.01f ||
@@ -137,7 +136,7 @@ namespace NWN.FinalFantasy.Job
                 return;
             }
 
-            DelayCommand(0.5f, () => CheckMovement(stats));
+            _.DelayCommand(0.5f, () => CheckMovement(stats));
         }
 
         /// <summary>
@@ -152,7 +151,7 @@ namespace NWN.FinalFantasy.Job
 
             // Ensure we mark this cast as complete.
             stats.IsComplete = true;
-            SetIsBusy(stats.User, false);
+            _.SetIsBusy(stats.User, false);
 
             // Get the latest stats as other parts of the system may have changed our data since we started casting.
             stats = GetUserStats(stats.User, stats.Target, stats.Feat);
@@ -170,7 +169,7 @@ namespace NWN.FinalFantasy.Job
         private static UserStats GetUserStats(NWGameObject user, NWGameObject target, Feat feat)
         {
             var ability = AbilityRegistry.Get(feat);
-            var targetLocation = GetIsObjectValid(target) ? GetLocation(target) : NWNXEvents.OnFeatUsed_GetTargetLocation();
+            var targetLocation = _.GetIsObjectValid(target) ? _.GetLocation(target) : NWNXEvents.OnFeatUsed_GetTargetLocation();
 
             var stats = new UserStats
             {
@@ -179,26 +178,26 @@ namespace NWN.FinalFantasy.Job
                 Target = target,
                 TargetLocation = targetLocation,
                 Now = DateTime.UtcNow,
-                CastingPosition = GetPosition(user),
+                CastingPosition = _.GetPosition(user),
                 MPCost = ability.MP(user),
                 Feat = feat
             };
 
             // Players - retrieve from DB
-            if (GetIsPlayer(user))
+            if (_.GetIsPlayer(user))
             {
-                var playerID = GetGlobalID(user);
+                var playerID = _.GetGlobalID(user);
                 var player = PlayerRepo.Get(playerID);
                 var cooldown = CooldownRepo.Get(playerID, feat);
                 stats.MP = player.MP;
                 stats.CooldownUnlock = cooldown.DateUnlocked;
             }
             // NPCs - retrieve from local variables
-            else if (GetIsNPC(user))
+            else if (_.GetIsNPC(user))
             {
-                stats.MP = GetLocalInt(user, "MP_CURRENT");
+                stats.MP = _.GetLocalInt(user, "MP_CURRENT");
 
-                var cooldown = GetLocalString(user, $"ABILITY_COOLDOWN_{feat}");
+                var cooldown = _.GetLocalString(user, $"ABILITY_COOLDOWN_{feat}");
                 if (string.IsNullOrWhiteSpace(cooldown))
                     stats.CooldownUnlock = DateTime.UtcNow;
                 else
@@ -216,9 +215,9 @@ namespace NWN.FinalFantasy.Job
         {
             var delay = stats.AbilityDefinition.CooldownTime(stats.User);
             var dateUnlocks = DateTime.UtcNow.AddSeconds(delay);
-            if (GetIsPlayer(stats.User))
+            if (_.GetIsPlayer(stats.User))
             {
-                var playerID = GetGlobalID(stats.User);
+                var playerID = _.GetGlobalID(stats.User);
                 var player = PlayerRepo.Get(playerID);
                 var cooldown = CooldownRepo.Get(playerID, stats.Feat);
                 player.MP = stats.MP;
@@ -226,10 +225,10 @@ namespace NWN.FinalFantasy.Job
                 PlayerRepo.Set(player);
                 CooldownRepo.Set(playerID, cooldown);
             }
-            else if (GetIsNPC(stats.User))
+            else if (_.GetIsNPC(stats.User))
             {
-                SetLocalInt(stats.User, "MP_CURRENT", stats.MP);
-                SetLocalString(stats.User, $"ABILITY_COOLDOWN_{stats.Feat}", dateUnlocks.ToString("yyyy-MM-dd hh:mm:ss", CultureInfo.InvariantCulture));
+                _.SetLocalInt(stats.User, "MP_CURRENT", stats.MP);
+                _.SetLocalString(stats.User, $"ABILITY_COOLDOWN_{stats.Feat}", dateUnlocks.ToString("yyyy-MM-dd hh:mm:ss", CultureInfo.InvariantCulture));
             }
         }
     }

@@ -27,5 +27,7 @@
         public const string OnUseItem = "ON_USE_ITEM_";
         public const string OnNWNXChat = "ON_NWNX_CHAT_";
         public const string OnInventoryAddItem = "ON_INVENTORY_ADD_ITEM_";
+        public const string OnNWNXEquipItem = "ON_NWNX_EQUIP_ITEM_";
+        public const string OnNWNXUnequipItem = "ON_NWNX_UNEQUIP_ITEM_";
     }
 }

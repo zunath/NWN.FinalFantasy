@@ -438,5 +438,15 @@ namespace NWN.FinalFantasy.Core.NWNX
             return player;
         }
 
+        public static NWGameObject OnEquipItem_GetItem()
+        {
+            return GetEventDataObject("ITEM");
+        }
+
+        public static InventorySlot OnEquipItem_GetInventorySlot()
+        {
+            return (InventorySlot)GetEventDataInt("SLOT");
+        }
+
     }
 }

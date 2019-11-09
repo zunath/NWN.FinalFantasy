@@ -15,6 +15,41 @@ namespace NWN.FinalFantasy.Core
     public static class Script
     {
         private static readonly Dictionary<string, MethodInfo> _cachedScripts = new Dictionary<string, MethodInfo>();
+        private static object _scriptData;
+
+        /// <summary>
+        /// Sets data available for scripts to retrieve.
+        /// Only available during custom events.
+        /// </summary>
+        /// <param name="data">The data to store</param>
+        internal static void SetScriptData(object data)
+        {
+            _scriptData = data;
+        }
+
+        /// <summary>
+        /// Clears data available for scripts. Should be called
+        /// after all scripts have been executed for this custom event.
+        /// </summary>
+        internal static void ClearScriptData()
+        {
+            _scriptData = null;
+        }
+
+        /// <summary>
+        /// Retrieves data stored for this script.
+        /// Only available during custom events. 
+        /// </summary>
+        /// <typeparam name="T">The type of data to retrieve.</typeparam>
+        /// <returns>The stored data</returns>
+        public static T GetScriptData<T>()
+            where T: class
+        {
+            if(_scriptData == null)
+                throw new Exception("Script data does not exist. Is this a custom event?");
+
+            return _scriptData as T;
+        }
 
         /// <summary>
         /// Runs all scripts matching a given prefix, in the order they are found.

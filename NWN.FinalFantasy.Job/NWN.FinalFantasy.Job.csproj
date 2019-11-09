@@ -45,6 +45,8 @@
     <Compile Include="Enumeration\GuardianForce.cs" />
     <Compile Include="Enumeration\ProficiencyRating.cs" />
     <Compile Include="Enumeration\RatingStat.cs" />
+    <Compile Include="Event\JobEventPrefix.cs" />
+    <Compile Include="Event\OnEquipItem.cs" />
     <Compile Include="JobDefinition\Ranger.cs" />
     <Compile Include="JobDefinition\Thief.cs" />
     <Compile Include="JobDefinition\JobDefinitionBase.cs" />
@@ -52,13 +54,16 @@
     <Compile Include="JobDefinition\WhiteMage.cs" />
     <Compile Include="JobDefinition\Monk.cs" />
     <Compile Include="JobDefinition\Warrior.cs" />
-    <Compile Include="ChangeJob.cs" />
+    <Compile Include="Event\OnChangeJob.cs" />
+    <Compile Include="Menu\ChangeJobMenu.cs" />
+    <Compile Include="Message\JobChanged.cs" />
+    <Compile Include="RecalculateStats.cs" />
     <Compile Include="Registry\AbilityRegistry.cs" />
     <Compile Include="Enumeration\AbilityCategory.cs" />
     <Compile Include="AbilityDefinition\TestAbility.cs" />
     <Compile Include="Contracts\IAbilityDefinition.cs" />
     <Compile Include="Registry\JobRegistry.cs" />
-    <Compile Include="OnUseFeat.cs" />
+    <Compile Include="Event\OnUseFeat.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Registry\RatingRegistry.cs" />
     <Compile Include="Startup.cs" />
@@ -68,7 +73,6 @@
     <Compile Include="StatRating\RatingB.cs" />
     <Compile Include="StatRating\RatingA.cs" />
     <Compile Include="StatRating\RatingChart.cs" />
-    <Compile Include="Test.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NWN.FinalFantasy.Core\NWN.FinalFantasy.Core.csproj">

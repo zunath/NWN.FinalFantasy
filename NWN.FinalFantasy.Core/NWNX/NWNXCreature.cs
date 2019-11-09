@@ -780,12 +780,13 @@ namespace NWN.FinalFantasy.Core.NWNX
         /// </summary>
         /// <param name="creature"></param>
         /// <param name="position"></param>
-        /// <param name="classID"></param>
-        public static void SetClassByPosition(NWGameObject creature, int position, int @classID)
+        /// <param name="classType"></param>
+        public static void SetClassByPosition(NWGameObject creature, ClassPosition position, ClassType classType)
         {
+            int positionIndex = (int) position - 1;
             string sFunc = "SetClassByPosition";
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, @classID);
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, position);
+            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, (int)classType);
+            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, positionIndex);
             NWNXCore.NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
 
             NWNXCore.NWNX_CallFunction(NWNX_Creature, sFunc);
@@ -798,11 +799,12 @@ namespace NWN.FinalFantasy.Core.NWNX
         /// <param name="creature"></param>
         /// <param name="position"></param>
         /// <param name="level"></param>
-        public static void SetLevelByPosition(NWGameObject creature, int position, int level)
+        public static void SetLevelByPosition(NWGameObject creature, ClassPosition position, int level)
         {
+            int positionIndex = (int) position - 1;
             string sFunc = "SetLevelByPosition";
             NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, level);
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, position);
+            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, positionIndex);
             NWNXCore.NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
 
             NWNXCore.NWNX_CallFunction(NWNX_Creature, sFunc);

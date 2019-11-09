@@ -3350,19 +3350,24 @@ namespace NWN
             return Internal.StackPopObject();
         }
 
-        //  A creature can have up to three classes.  This function determines the
-        //  creature's class (CLASS_TYPE_*) based on nClassPosition.
-        //  - nClassPosition: 1, 2 or 3
-        //  - oCreature
-        //  * Returns CLASS_TYPE_INVALID if the oCreature does not have a class in
-        //    nClassPosition (i.e. a single-class creature will only have a value in
-        //    nClassLocation=1) or if oCreature is not a valid creature.
-        public static int GetClassByPosition(ClassPosition nClassPosition, NWGameObject oCreature = null)
+        /// <summary>
+        /// A creature can have up to three classes.  This function determines the
+        ///  creature's class (CLASS_TYPE_*) based on nClassPosition.
+        ///  - nClassPosition: 1, 2 or 3
+        ///  - oCreature
+        ///  * Returns CLASS_TYPE_INVALID if the oCreature does not have a class in
+        ///    nClassPosition (i.e. a single-class creature will only have a value in
+        ///    nClassLocation=1) or if oCreature is not a valid creature.
+        /// </summary>
+        /// <param name="nClassPosition">The position of the class</param>
+        /// <param name="oCreature">The creature to use</param>
+        /// <returns></returns>
+        public static ClassType GetClassByPosition(ClassPosition nClassPosition, NWGameObject oCreature = null)
         {
             Internal.StackPushObject(oCreature, false);
             Internal.StackPushInteger((int)nClassPosition);
             Internal.CallBuiltIn(341);
-            return Internal.StackPopInteger();
+            return (ClassType)Internal.StackPopInteger();
         }
 
         //  A creature can have up to three classes.  This function determines the

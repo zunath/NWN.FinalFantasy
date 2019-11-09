@@ -4,11 +4,13 @@ using NWN.FinalFantasy.Job.Enumeration;
 
 namespace NWN.FinalFantasy.Job.JobDefinition
 {
-    internal class JobDefinitionBase
+    internal abstract class JobDefinitionBase
     {
         public string Name { get; set; }
         public string Description { get; set; }
+        public string CallSign { get; set; }
         public GuardianForce GF { get; set; }
+        public ClassType Class { get; set; }
 
         public ProficiencyRating HPRating { get; set; }
         public ProficiencyRating MPRating { get; set; }

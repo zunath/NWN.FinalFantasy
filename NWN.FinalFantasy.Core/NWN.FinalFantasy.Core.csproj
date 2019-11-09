@@ -65,7 +65,7 @@
     <Compile Include="Dialog\IConversation.cs" />
     <Compile Include="Dialog\PlayerDialog.cs" />
     <Compile Include="Enumerations\AuthorizationLevel.cs" />
-    <Compile Include="Enumerations\JobType.cs" />
+    <Compile Include="Event\CustomEvent.cs" />
     <Compile Include="Event\Dialog\dialog_action.cs" />
     <Compile Include="Event\Dialog\dialog_appears.cs" />
     <Compile Include="Event\Dialog\dialog_end.cs" />
@@ -101,6 +101,8 @@
     <Compile Include="Event\Inventory\InventoryPrefix.cs" />
     <Compile Include="Event\Inventory\inv_add_item.cs" />
     <Compile Include="Event\Inventory\inv_rem_item.cs" />
+    <Compile Include="Event\Module\mod_nwnx_equip.cs" />
+    <Compile Include="Event\Module\mod_nwnx_unequip.cs" />
     <Compile Include="Event\Module\mod_on_attack.cs" />
     <Compile Include="Event\Module\mod_on_examine.cs" />
     <Compile Include="Event\Module\mod_on_nwnxchat.cs" />
@@ -109,7 +111,6 @@
     <Compile Include="Logging\Audit.cs" />
     <Compile Include="Logging\AuditGroup.cs" />
     <Compile Include="Logging\ExceptionExtensions.cs" />
-    <Compile Include="Message\JobChanged.cs" />
     <Compile Include="Message\QuestAccepted.cs" />
     <Compile Include="Message\QuestAdvanced.cs" />
     <Compile Include="Message\QuestCompleted.cs" />
@@ -123,6 +124,7 @@
     <Compile Include="NWNX\NWNXRedis.cs" />
     <Compile Include="Startup\AreaScriptRegistration.cs" />
     <Compile Include="Startup\AssemblyLoader.cs" />
+    <Compile Include="Startup\CustomEventRegistration.cs" />
     <Compile Include="Startup\EventRegistration.cs" />
     <Compile Include="Event\AreaOfEffect\aoe_on_enter.cs" />
     <Compile Include="Event\AreaOfEffect\aoe_on_exit.cs" />

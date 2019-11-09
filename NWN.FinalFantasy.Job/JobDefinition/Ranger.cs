@@ -10,7 +10,9 @@ namespace NWN.FinalFantasy.Job.JobDefinition
         {
             Name = "Ranger";
             Description = "Combatant which specializes in attacking from afar with ranged attacks.";
+            CallSign = "RNG";
             GF = GuardianForce.Valefor;
+            Class = ClassType.Ranger;
 
             HPRating = ProficiencyRating.B;
             MPRating = ProficiencyRating.E;

@@ -10,7 +10,9 @@ namespace NWN.FinalFantasy.Job.JobDefinition
         {
             Name = "White Mage";
             Description = "Magic user which specializes in restorative white magic.";
+            CallSign = "WHM";
             GF = GuardianForce.Carbuncle;
+            Class = ClassType.WhiteMage;
 
             HPRating = ProficiencyRating.B;
             MPRating = ProficiencyRating.E;

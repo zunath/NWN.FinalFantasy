@@ -11,21 +11,12 @@ namespace NWN.Scripts
             var pc = _.GetLastUsedBy();
             if (!_.GetIsObjectValid(pc)) pc = _.GetPCSpeaker();
 
-            string conversation = _.GetLocalString(NWGameObject.OBJECT_SELF, "CONVERSATION");
+            var talkTo = NWGameObject.OBJECT_SELF;
+            string conversation = _.GetLocalString(talkTo, "CONVERSATION");
 
             if (!string.IsNullOrWhiteSpace(conversation))
             {
-                var objectType = _.GetObjectType(NWGameObject.OBJECT_SELF);
-                if (objectType == ObjectType.Placeable)
-                {
-                    var talkTo = NWGameObject.OBJECT_SELF;
-                    Conversation.Start(pc, talkTo, conversation);
-                }
-                else
-                {
-                    var talkTo = NWGameObject.OBJECT_SELF;
-                    Conversation.Start(pc, talkTo, conversation);
-                }
+                Conversation.Start(pc, talkTo, conversation);
             }
             else
             {

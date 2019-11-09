@@ -16,7 +16,7 @@ namespace NWN.FinalFantasy.Menu.Module
                 GetIsDungeonMaster(player)) return;
 
             AssignCommand(player, () => ClearAllActions());
-            Conversation.Start(player, player, "Menu.RestMenu");
+            Conversation.Start(player, player, "Job.Menu.ChangeJobMenu");
         }
     }
 }

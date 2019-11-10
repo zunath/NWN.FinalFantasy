@@ -9784,7 +9784,7 @@ namespace NWN
         /// <returns>true if busy, false otherwise</returns>
         public static bool GetIsBusy(NWGameObject creature)
         {
-            return Convert.ToBoolean(GetLocalString(creature, "IS_BUSY"));
+            return Convert.ToBoolean(GetLocalInt(creature, "IS_BUSY"));
         }
 
         /// <summary>

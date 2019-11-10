@@ -41,6 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AbilityDefinition\BlackMagic\Fire.cs" />
+    <Compile Include="Enumeration\AbilityGroup.cs" />
     <Compile Include="Enumeration\GuardianForce.cs" />
     <Compile Include="Enumeration\ProficiencyRating.cs" />
     <Compile Include="Enumeration\RatingStat.cs" />
@@ -69,8 +71,7 @@
     <Compile Include="Event\LeveledUp.cs" />
     <Compile Include="Registry\AbilityRegistry.cs" />
     <Compile Include="Enumeration\AbilityCategory.cs" />
-    <Compile Include="AbilityDefinition\TestAbility.cs" />
-    <Compile Include="Contracts\IAbilityDefinition.cs" />
+    <Compile Include="AbilityDefinition\IAbilityDefinition.cs" />
     <Compile Include="Registry\JobRegistry.cs" />
     <Compile Include="Scripts\UseFeat.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -95,6 +96,12 @@
       <Name>NWN.FinalFantasy.Data</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="AbilityDefinition\Archery\" />
+    <Folder Include="AbilityDefinition\Chi\" />
+    <Folder Include="AbilityDefinition\Protection\" />
+    <Folder Include="AbilityDefinition\Thievery\" />
+    <Folder Include="AbilityDefinition\WhiteMagic\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

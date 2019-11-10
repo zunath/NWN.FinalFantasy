@@ -32,6 +32,8 @@ namespace NWN.FinalFantasy.Job.JobDefinition
                 BaseItemType.LightFlail, 
                 BaseItemType.Lightmace
             });
+
+            AddAbility(1, Feat.Fire);
         }
     }
 }

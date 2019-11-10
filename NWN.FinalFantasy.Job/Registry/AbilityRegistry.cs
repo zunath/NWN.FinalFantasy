@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using NWN.FinalFantasy.Core.NWScript.Enumerations;
 using NWN.FinalFantasy.Job.AbilityDefinition;
-using NWN.FinalFantasy.Job.Contracts;
 
 namespace NWN.FinalFantasy.Job.Registry
 {
@@ -11,7 +12,16 @@ namespace NWN.FinalFantasy.Job.Registry
 
         internal static void Register()
         {
-            _abilityRegistry[Feat.OpenRestMenu] = new TestAbility();
+            var type = typeof(IAbilityDefinition);
+            var types = AppDomain.CurrentDomain.GetAssemblies()
+                .SelectMany(s => s.GetTypes())
+                .Where(x => type.IsAssignableFrom(x) && !x.IsInterface);
+
+            foreach (var abilityType in types)
+            {
+                var ability = (IAbilityDefinition)Activator.CreateInstance(abilityType);
+                _abilityRegistry[ability.Feat] = ability;
+            }
         }
 
         /// <summary>

@@ -41,15 +41,15 @@ namespace NWN
 
     public struct Vector
     {
-        public float m_X;
-        public float m_Y;
-        public float m_Z;
+        public float X { get; set; }
+        public float Y { get; set; }
+        public float Z { get; set; }
 
         public Vector(float x, float y, float z)
         {
-            m_X = x;
-            m_Y = y;
-            m_Z = z;
+            X = x;
+            Y = y;
+            Z = z;
         }
     }
 

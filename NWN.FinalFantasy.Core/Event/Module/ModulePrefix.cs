@@ -12,7 +12,7 @@
         public const string OnPlayerEnter = "ON_PLAYER_ENTER_";
         public const string OnEquipItem = "ON_EQUIP_ITEM_";
         public const string OnHeartbeat = "ON_HEARTBEAT_";
-        public const string OnPlayerLeave = "ON_PLAYER_EXIT_";
+        public const string OnPlayerLeave = "ON_PLAYER_LEAVE_";
         public const string OnPlayerLevelUp = "ON_LEVEL_UP_";
         public const string OnPlayerRespawn = "ON_PLAYER_RESPAWN_";
         public const string OnPlayerRest = "ON_PLAYER_REST_";
@@ -25,5 +25,9 @@
         public const string OnExamine = "ON_EXAMINE_";
         public const string OnUseFeat = "ON_USE_FEAT_";
         public const string OnUseItem = "ON_USE_ITEM_";
+        public const string OnNWNXChat = "ON_NWNX_CHAT_";
+        public const string OnInventoryAddItem = "ON_INVENTORY_ADD_ITEM_";
+        public const string OnNWNXEquipItem = "ON_NWNX_EQUIP_ITEM_";
+        public const string OnNWNXUnequipItem = "ON_NWNX_UNEQUIP_ITEM_";
     }
 }

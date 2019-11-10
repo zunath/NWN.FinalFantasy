@@ -31,6 +31,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Serilog, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <HintPath>..\packages\Serilog.2.9.0\lib\net46\Serilog.dll</HintPath>
+    </Reference>
+    <Reference Include="Serilog.Sinks.Console, Version=3.1.1.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <HintPath>..\packages\Serilog.Sinks.Console.3.1.1\lib\net45\Serilog.Sinks.Console.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -42,9 +48,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IPCMigration.cs" />
+    <Compile Include="IServerMigration.cs" />
     <Compile Include="PlayerMigrationRunner.cs" />
     <Compile Include="PC\PlayerVersion1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServerMigrationRunner.cs" />
+    <Compile Include="Server\ServerVersion1.cs" />
+    <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NWN.FinalFantasy.Core\NWN.FinalFantasy.Core.csproj">
@@ -55,9 +65,14 @@
       <Project>{e94c10ba-6cdf-48cb-9473-d242db9d82c9}</Project>
       <Name>NWN.FinalFantasy.Data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\NWN.FinalFantasy.Job\NWN.FinalFantasy.Job.csproj">
+      <Project>{e90f269b-3ab4-4988-a7f8-e2364b94f549}</Project>
+      <Name>NWN.FinalFantasy.Job</Name>
+    </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Data\" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

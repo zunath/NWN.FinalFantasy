@@ -77,7 +77,7 @@
         Special_Walk = 79,
         Healers_Kit = 80,
         Weight_Increase = 81,
-        Onhitcastspell = 82,
+        OnHitCastSpell = 82,
         Visualeffect = 83,
         Arcane_Spell_Failure = 84,
         Material = 85,

@@ -8,7 +8,7 @@ namespace NWN.Scripts
     {
         internal static void Main()
         {
-            ScriptRunner.RunScriptEvents(NWGameObject.OBJECT_SELF, DoorPrefix.OnDeath);
+            Script.RunScriptEvents(NWGameObject.OBJECT_SELF, DoorPrefix.OnDeath);
         }
     }
 }

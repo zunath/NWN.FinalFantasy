@@ -3,6 +3,6 @@
     internal interface IPCMigration
     {
         int Version { get; }
-        void RunMigration();
+        void RunMigration(NWGameObject player);
     }
 }

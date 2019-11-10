@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using NWN.FinalFantasy.Data;
-using NWN.FinalFantasy.Data.Entity;
+using NWN.FinalFantasy.Data.Repository;
 using NWN.FinalFantasy.Migration.PC;
 
 namespace NWN.FinalFantasy.Migration
@@ -30,17 +29,10 @@ namespace NWN.FinalFantasy.Migration
             {
                 var id = Guid.NewGuid();
                 _.SetTag(player, id.ToString());
-                var entity = new Player
-                {
-                    ID = id,
-                    Version = 0
-                };
-
-                DB.Set(entity);
             }
 
-            var pcID = _.GetGlobalID(player);
-            var pcEntity = DB.Get<Player>(pcID);
+            var playerID = _.GetGlobalID(player);
+            var pcEntity = PlayerRepo.Get(playerID);
             // Iterate over the registered migrations. If player is below the migration version, that migration will be executed upon them.
             // If player is at or above that version, nothing will happen and they will move to the next migration in the list.
             foreach (var migration in _registeredMigrations)
@@ -49,9 +41,12 @@ namespace NWN.FinalFantasy.Migration
                 {
                     try
                     {
-                        migration.RunMigration();
+                        migration.RunMigration(player);
+
+                        // The migration might have modified the entity. Pull back a fresh copy and update the version.
+                        pcEntity = PlayerRepo.Get(playerID);
                         pcEntity.Version = migration.Version;
-                        DB.Set(pcEntity);
+                        PlayerRepo.Set(pcEntity);
                     }
                     catch (Exception ex)
                     {

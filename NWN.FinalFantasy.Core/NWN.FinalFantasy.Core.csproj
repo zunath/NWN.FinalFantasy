@@ -36,8 +36,14 @@
     <Reference Include="Serilog, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
       <HintPath>..\packages\Serilog.2.9.0\lib\net46\Serilog.dll</HintPath>
     </Reference>
+    <Reference Include="Serilog.Sinks.Async, Version=1.4.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <HintPath>..\packages\Serilog.Sinks.Async.1.4.0\lib\net461\Serilog.Sinks.Async.dll</HintPath>
+    </Reference>
     <Reference Include="Serilog.Sinks.Console, Version=3.1.1.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
       <HintPath>..\packages\Serilog.Sinks.Console.3.1.1\lib\net45\Serilog.Sinks.Console.dll</HintPath>
+    </Reference>
+    <Reference Include="Serilog.Sinks.File, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <HintPath>..\packages\Serilog.Sinks.File.4.1.0\lib\net45\Serilog.Sinks.File.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -50,24 +56,85 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationSettings.cs" />
+    <Compile Include="Dialog\Conversation.cs" />
+    <Compile Include="Dialog\ConversationBase.cs" />
+    <Compile Include="Dialog\DialogConstants.cs" />
+    <Compile Include="Dialog\DialogNavigation.cs" />
+    <Compile Include="Dialog\DialogPage.cs" />
+    <Compile Include="Dialog\DialogResponse.cs" />
+    <Compile Include="Dialog\IConversation.cs" />
+    <Compile Include="Dialog\PlayerDialog.cs" />
+    <Compile Include="Enumerations\AuthorizationLevel.cs" />
+    <Compile Include="Event\CustomEvent.cs" />
+    <Compile Include="Event\CustomEventPrefix.cs" />
+    <Compile Include="Event\Dialog\dialog_action.cs" />
+    <Compile Include="Event\Dialog\dialog_appears.cs" />
+    <Compile Include="Event\Dialog\dialog_end.cs" />
+    <Compile Include="Event\Dialog\dialog_start.cs" />
+    <Compile Include="Event\DM\DMScriptPrefix.cs" />
+    <Compile Include="Event\DM\dm_appear.cs" />
+    <Compile Include="Event\DM\dm_change_diff.cs" />
+    <Compile Include="Event\DM\dm_disab_trap.cs" />
+    <Compile Include="Event\DM\dm_disappear.cs" />
+    <Compile Include="Event\DM\dm_force_rest.cs" />
+    <Compile Include="Event\DM\dm_get_var.cs" />
+    <Compile Include="Event\DM\dm_give_gold.cs" />
+    <Compile Include="Event\DM\dm_give_item.cs" />
+    <Compile Include="Event\DM\dm_give_level.cs" />
+    <Compile Include="Event\DM\dm_give_xp.cs" />
+    <Compile Include="Event\DM\dm_heal.cs" />
+    <Compile Include="Event\DM\dm_jump.cs" />
+    <Compile Include="Event\DM\dm_jump_all.cs" />
+    <Compile Include="Event\DM\dm_jump_target.cs" />
+    <Compile Include="Event\DM\dm_kill.cs" />
+    <Compile Include="Event\DM\dm_limbo.cs" />
+    <Compile Include="Event\DM\dm_possess.cs" />
+    <Compile Include="Event\DM\dm_set_date.cs" />
+    <Compile Include="Event\DM\dm_set_stat.cs" />
+    <Compile Include="Event\DM\dm_set_time.cs" />
+    <Compile Include="Event\DM\dm_set_var.cs" />
+    <Compile Include="Event\DM\dm_spawn.cs" />
+    <Compile Include="Event\DM\dm_take_item.cs" />
+    <Compile Include="Event\DM\dm_toggle_ai.cs" />
+    <Compile Include="Event\DM\dm_toggle_invuln.cs" />
+    <Compile Include="Event\DM\dm_toggle_lock.cs" />
+    <Compile Include="Event\DM\dm_togg_immo.cs" />
+    <Compile Include="Event\Inventory\InventoryPrefix.cs" />
+    <Compile Include="Event\Inventory\inv_add_item.cs" />
+    <Compile Include="Event\Inventory\inv_rem_item.cs" />
+    <Compile Include="Event\Item\ItemEventPrefix.cs" />
+    <Compile Include="Event\Item\item_on_hit.cs" />
+    <Compile Include="Event\Module\mod_nwnx_equip.cs" />
+    <Compile Include="Event\Module\mod_nwnx_unequip.cs" />
     <Compile Include="Event\Module\mod_on_attack.cs" />
     <Compile Include="Event\Module\mod_on_examine.cs" />
+    <Compile Include="Event\Module\mod_on_nwnxchat.cs" />
     <Compile Include="Event\Module\mod_on_usefeat.cs" />
     <Compile Include="Event\Module\mod_on_useitem.cs" />
+    <Compile Include="Logging\Audit.cs" />
+    <Compile Include="Logging\AuditGroup.cs" />
+    <Compile Include="Logging\ExceptionExtensions.cs" />
+    <Compile Include="Message\JobXPGained.cs" />
+    <Compile Include="Message\ServerStopped.cs" />
+    <Compile Include="Messaging\Publish.cs" />
     <Compile Include="NWNX\DialogLanguage.cs" />
     <Compile Include="NWNX\DialogNodeType.cs" />
     <Compile Include="NWNX\DialogScriptType.cs" />
+    <Compile Include="NWNX\NWNXChatChannel.cs" />
     <Compile Include="NWNX\NWNXDialog.cs" />
     <Compile Include="NWNX\NWNXEventType.cs" />
     <Compile Include="NWNX\NWNXRedis.cs" />
+    <Compile Include="NWScript\Enumerations\AddItemPropertyPolicy.cs" />
+    <Compile Include="Startup\AreaScriptRegistration.cs" />
     <Compile Include="Startup\AssemblyLoader.cs" />
+    <Compile Include="Startup\CustomEventRegistration.cs" />
     <Compile Include="Startup\EventRegistration.cs" />
     <Compile Include="Event\AreaOfEffect\aoe_on_enter.cs" />
     <Compile Include="Event\AreaOfEffect\aoe_on_exit.cs" />
     <Compile Include="Event\AreaOfEffect\aoe_on_hb.cs" />
     <Compile Include="Event\AreaOfEffect\aoe_on_userdef.cs" />
     <Compile Include="Event\AreaOfEffect\AreaOfEffectPrefix.cs" />
-    <Compile Include="Event\Area\AreaScriptPrefix.cs" />
+    <Compile Include="Event\Area\AreaPrefix.cs" />
     <Compile Include="Event\Area\area_on_enter.cs" />
     <Compile Include="Event\Area\area_on_exit.cs" />
     <Compile Include="Event\Area\area_on_hb.cs" />
@@ -142,7 +209,7 @@
     <Compile Include="Event\Placeable\plc_on_unlock.cs" />
     <Compile Include="Event\Placeable\plc_on_used.cs" />
     <Compile Include="Event\Placeable\plc_on_userdef.cs" />
-    <Compile Include="Event\preload.cs" />
+    <Compile Include="Startup\startup.cs" />
     <Compile Include="Event\Store\StorePrefix.cs" />
     <Compile Include="Event\Store\store_on_close.cs" />
     <Compile Include="Event\Store\store_on_open.cs" />
@@ -156,7 +223,7 @@
     <Compile Include="Event\Trigger\trig_on_userdef.cs" />
     <Compile Include="Message\AreaCreated.cs" />
     <Compile Include="Message\ObjectCreated.cs" />
-    <Compile Include="ScriptRunner.cs" />
+    <Compile Include="Script.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Messaging\Contracts\IMessageHub.cs" />
     <Compile Include="Messaging\MessageHub.cs" />
@@ -330,10 +397,13 @@
     <Compile Include="NWScript\NWScript.cs" />
     <Compile Include="NWScript\NWScriptTypes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utility\ColorToken.cs" />
+    <Compile Include="Utility\LocalVariableTool.cs" />
+    <Compile Include="Utility\Random.cs" />
+    <Compile Include="Utility\Time.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Docker\docker-compose.yml" />
-    <None Include="Docker\ffo.cmd" />
     <None Include="Docker\ffo.env" />
     <None Include="packages.config" />
   </ItemGroup>

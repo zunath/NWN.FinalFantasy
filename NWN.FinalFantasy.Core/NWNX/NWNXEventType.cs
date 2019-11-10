@@ -71,35 +71,14 @@
         public const string StartCombatRoundBefore = "NWNX_ON_START_COMBAT_ROUND_BEFORE";
         public const string StartCombatRoundAfter = "NWNX_ON_START_COMBAT_ROUND_AFTER";
 
-        public const string DMSpawnCreatureBefore = "NWNX_ON_DM_SPAWN_CREATURE_BEFORE";
-        public const string DMSpawnCreatureAfter = "NWNX_ON_DM_SPAWN_CREATURE_AFTER";
-
-        public const string DMSpawnItemBefore = "NWNX_ON_DM_SPAWN_ITEM_BEFORE";
-        public const string DMSpawnItemAfter = "NWNX_ON_DM_SPAWN_ITEM_AFTER";
-
-        public const string DMSpawnTriggerBefore = "NWNX_ON_DM_SPAWN_TRIGGER_BEFORE";
-        public const string DMSpawnTriggerAfter = "NWNX_ON_DM_SPAWN_TRIGGER_AFTER";
-
-        public const string DMSpawnWaypointBefore = "NWNX_ON_DM_SPAWN_WAYPOINT_BEFORE";
-        public const string DMSpawnWaypointAfter = "NWNX_ON_DM_SPAWN_WAYPOINT_AFTER";
-
-        public const string DMSpawnEncounterBefore = "NWNX_ON_DM_SPAWN_ENCOUNTER_BEFORE";
-        public const string DMSpawnEncounterAfter = "NWNX_ON_DM_SPAWN_ENCOUNTER_AFTER";
-
-        public const string DMSpawnPortalBefore = "NWNX_ON_DM_SPAWN_PORTAL_BEFORE";
-        public const string DMSpawnPortalAfter = "NWNX_ON_DM_SPAWN_PORTAL_AFTER";
-
-        public const string DMSpawnPlaceableBefore = "NWNX_ON_DM_SPAWN_PLACEABLE_BEFORE";
-        public const string DMSpawnPlaceableAfter = "NWNX_ON_DM_SPAWN_PLACEABLE_AFTER";
+        public const string DMSpawnObjectBefore = "NWNX_ON_DM_SPAWN_OBJECT_BEFORE";
+        public const string DMSpawnObjectAfter = "NWNX_ON_DM_SPAWN_OBJECT_AFTER";
 
         public const string DMChangeDifficultyBefore = "NWNX_ON_DM_CHANGE_DIFFICULTY_BEFORE";
         public const string DMChangeDifficultyAfter = "NWNX_ON_DM_CHANGE_DIFFICULTY_AFTER";
 
         public const string DMViewInventoryBefore = "NWNX_ON_DM_VIEW_INVENTORY_BEFORE";
         public const string DMViewInventoryAfter = "NWNX_ON_DM_VIEW_INVENTORY_AFTER";
-
-        public const string DMSpawnTrapOnObjectBefore = "NWNX_ON_DM_SPAWN_TRAP_ON_OBJECT_BEFORE";
-        public const string DMSpawnTrapOnObjectAfter = "NWNX_ON_DM_SPAWN_TRAP_ON_OBJECT_AFTER";
 
         public const string DMHealBefore = "NWNX_ON_DM_HEAL_BEFORE";
         public const string DMHealAfter = "NWNX_ON_DM_HEAL_AFTER";
@@ -115,6 +94,9 @@
 
         public const string DMToggleImmortalBefore = "NWNX_ON_DM_TOGGLE_IMMORTAL_BEFORE";
         public const string DMToggleImmortalAfter = "NWNX_ON_DM_TOGGLE_IMMORTAL_AFTER";
+
+        public const string DMToggleInvulnerabilityBefore = "NWNX_ON_DM_TOGGLE_INVULNERABLE_BEFORE";
+        public const string DMToggleInvulnerabilityAfter = "NWNX_ON_DM_TOGGLE_INVULNERABLE_AFTER";
 
         public const string DMForceRestBefore = "NWNX_ON_DM_FORCE_REST_BEFORE";
         public const string DMForceRestAfter = "NWNX_ON_DM_FORCE_REST_AFTER";

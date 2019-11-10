@@ -1,41 +1,64 @@
-﻿using System;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using NWN.FinalFantasy.Core.NWNX;
+using NWN.FinalFantasy.Data.Entity;
 
 namespace NWN.FinalFantasy.Data
 {
-    public static class DB
+    internal static class DB
     {
         /// <summary>
-        /// Stores a specific object in the database by its ID.
+        /// Stores a specific object in the database by an arbitrary key.
         /// </summary>
-        /// <typeparam name="T">The type of data to store.</typeparam>
-        /// <param name="entity">The data to store</param>
-        public static void Set<T>(T entity)
+        /// <typeparam name="T">The type of data to store</typeparam>
+        /// <param name="entity">The data to store.</param>
+        /// <param name="key">The arbitrary key to set this object under.</param>
+        public static void Set<T>(string key, T entity)
             where T: EntityBase
         {
-            var @namespace = typeof(T).FullName;
-            var id = entity.ID.ToString();
-            var key = @namespace + ":" + id;
             var data = JsonConvert.SerializeObject(entity);
-
             NWNXRedis.Set(key, data);
         }
 
         /// <summary>
-        /// Retrieves a specific object in the database by its ID.
+        /// Retrieves a specific object in the database by an arbitrary key.
         /// </summary>
         /// <typeparam name="T">The type of data to retrieve</typeparam>
-        /// <param name="id">The ID of the entity</param>
+        /// <param name="key">The arbitrary key the data is stored under</param>
+        /// <returns>The object stored in the database under the specified key</returns>
+        public static T Get<T>(string key)
+        {
+            var json = NWNXRedis.Get(key);
+            if (string.IsNullOrWhiteSpace(json))
+                return default;
+
+            return JsonConvert.DeserializeObject<T>(json);
+        }
+
+        /// <summary>
+        /// Retrieves a list of objects stored under the specified key from the database. 
+        /// </summary>
+        /// <typeparam name="T">The type of data to retrieve.</typeparam>
+        /// <param name="key">The arbitrary key the data is stored under.</param>
         /// <returns></returns>
-        public static T Get<T>(Guid id)
+        public static EntityList<T> GetList<T>(string key)
             where T: EntityBase
         {
-            var @namespace = typeof(T).FullName;
-            var key = @namespace + ":" + id;
-
             var json = NWNXRedis.Get(key);
-            return JsonConvert.DeserializeObject<T>(json);
+            if (string.IsNullOrWhiteSpace(json))
+                return default;
+
+            return JsonConvert.DeserializeObject<EntityList<T>>(json);
+        }
+
+        /// <summary>
+        /// Returns true if an entry with the specified key exists.
+        /// Returns false if not.
+        /// </summary>
+        /// <param name="key">The key of the entity.</param>
+        /// <returns>true if found, false otherwise.</returns>
+        public static bool Exists(string key)
+        {
+            return NWNXRedis.Exists(key);
         }
     }
 }

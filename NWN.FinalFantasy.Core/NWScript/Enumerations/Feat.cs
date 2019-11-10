@@ -1023,6 +1023,8 @@
         Player_Tool_08 = 1113,
         Player_Tool_09 = 1114,
         Player_Tool_10 = 1115,
-
+        ChatCommandTargeter = 1116,
+        OpenRestMenu = 1117,
+        Fire = 1118
     }
 }

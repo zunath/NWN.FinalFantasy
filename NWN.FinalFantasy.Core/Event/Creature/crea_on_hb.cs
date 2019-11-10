@@ -10,7 +10,7 @@ namespace NWN.Scripts
         internal static void Main()
         {
             ExecuteScript("nw_c2_default1", NWGameObject.OBJECT_SELF);
-            ScriptRunner.RunScriptEvents(NWGameObject.OBJECT_SELF, CreaturePrefix.OnHeartbeat);
+            Script.RunScriptEvents(NWGameObject.OBJECT_SELF, CreaturePrefix.OnHeartbeat);
         }
     }
 }

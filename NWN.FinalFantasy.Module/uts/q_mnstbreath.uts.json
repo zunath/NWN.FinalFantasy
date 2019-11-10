@@ -1,0 +1,162 @@
+{
+  "__data_type": "UTS ",
+  "Active": {
+    "type": "byte",
+    "value": 1
+  },
+  "Comment": {
+    "type": "cexostring",
+    "value": "Good for a cavern where a great monster would be asleep. 1 to 4, soft exhale. 5 to 8, hard exhale."
+  },
+  "Continuous": {
+    "type": "byte",
+    "value": 1
+  },
+  "Elevation": {
+    "type": "float",
+    "value": 1.5
+  },
+  "Hours": {
+    "type": "dword",
+    "value": 0
+  },
+  "Interval": {
+    "type": "dword",
+    "value": 3000
+  },
+  "IntervalVrtn": {
+    "type": "dword",
+    "value": 5000
+  },
+  "LocName": {
+    "type": "cexolocstring",
+    "value": {
+      "2": "Ominous breathings"
+    }
+  },
+  "Looping": {
+    "type": "byte",
+    "value": 0
+  },
+  "MaxDistance": {
+    "type": "float",
+    "value": 13.0
+  },
+  "MinDistance": {
+    "type": "float",
+    "value": 1.299999952316284
+  },
+  "PaletteID": {
+    "type": "byte",
+    "value": 6
+  },
+  "PitchVariation": {
+    "type": "float",
+    "value": 0.300000011920929
+  },
+  "Positional": {
+    "type": "byte",
+    "value": 1
+  },
+  "Priority": {
+    "type": "byte",
+    "value": 20
+  },
+  "Random": {
+    "type": "byte",
+    "value": 1
+  },
+  "RandomPosition": {
+    "type": "byte",
+    "value": 0
+  },
+  "RandomRangeX": {
+    "type": "float",
+    "value": 0.0
+  },
+  "RandomRangeY": {
+    "type": "float",
+    "value": 0.0
+  },
+  "Sounds": {
+    "type": "list",
+    "value": [
+      {
+        "__struct_id": 0,
+        "Sound": {
+          "type": "resref",
+          "value": "as_an_mnstbrth1"
+        }
+      },
+      {
+        "__struct_id": 0,
+        "Sound": {
+          "type": "resref",
+          "value": "as_an_mnstbrth2"
+        }
+      },
+      {
+        "__struct_id": 0,
+        "Sound": {
+          "type": "resref",
+          "value": "as_an_mnstbrth3"
+        }
+      },
+      {
+        "__struct_id": 0,
+        "Sound": {
+          "type": "resref",
+          "value": "as_an_mnstbrth4"
+        }
+      },
+      {
+        "__struct_id": 0,
+        "Sound": {
+          "type": "resref",
+          "value": "as_an_mnstbrth5"
+        }
+      },
+      {
+        "__struct_id": 0,
+        "Sound": {
+          "type": "resref",
+          "value": "as_an_mnstbrth6"
+        }
+      },
+      {
+        "__struct_id": 0,
+        "Sound": {
+          "type": "resref",
+          "value": "as_an_mnstbrth7"
+        }
+      },
+      {
+        "__struct_id": 0,
+        "Sound": {
+          "type": "resref",
+          "value": "as_an_mnstbrth8"
+        }
+      }
+    ]
+  },
+  "Tag": {
+    "type": "cexostring",
+    "value": "Q_mnstbreath"
+  },
+  "TemplateResRef": {
+    "type": "resref",
+    "value": "q_mnstbreath"
+  },
+  "Times": {
+    "type": "byte",
+    "value": 3
+  },
+  "Volume": {
+    "type": "byte",
+    "value": 127
+  },
+  "VolumeVrtn": {
+    "type": "byte",
+    "value": 69
+  }
+}

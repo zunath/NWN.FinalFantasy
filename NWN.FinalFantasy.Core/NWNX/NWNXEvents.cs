@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using NWN.FinalFantasy.Core.NWScript.Enumerations;
+using static NWN._;
 
 namespace NWN.FinalFantasy.Core.NWNX
 {
@@ -152,9 +154,9 @@ namespace NWN.FinalFantasy.Core.NWNX
         // The following methods are specific to our implementation which makes the API a little easier to use.
         // Pattern is: "Event_Action()"
 
-        public static int OnFeatUsed_GetFeatID()
+        public static Feat OnFeatUsed_GetFeat()
         {
-            return GetEventDataInt("FEAT_ID");
+            return (Feat)GetEventDataInt("FEAT_ID");
         }
 
         public static int OnFeatUsed_GetSubFeatID()
@@ -169,9 +171,9 @@ namespace NWN.FinalFantasy.Core.NWNX
 
         public static Location OnFeatUsed_GetTargetLocation()
         {
-            return _.Location(
+            return Location(
                     OnFeatUsed_GetArea(),
-                    _.Vector(OnFeatUsed_GetTargetPositionX(), OnFeatUsed_GetTargetPositionY(), OnFeatUsed_GetTargetPositionZ()),
+                    Vector(OnFeatUsed_GetTargetPositionX(), OnFeatUsed_GetTargetPositionY(), OnFeatUsed_GetTargetPositionZ()),
                     0.0f
             );
         }
@@ -212,9 +214,9 @@ namespace NWN.FinalFantasy.Core.NWNX
             var x = GetEventDataFloat("TARGET_POSITION_X");
             var y = GetEventDataFloat("TARGET_POSITION_Y");
             var z = GetEventDataFloat("TARGET_POSITION_Z");
-            var vector = _.Vector(x, y, z);
+            var vector = Vector(x, y, z);
 
-            return _.Location(_.GetArea(user), vector, 0.0f);
+            return Location(GetArea(user), vector, 0.0f);
         }
 
         public static int OnItemUsed_GetItemPropertyIndex()
@@ -304,7 +306,7 @@ namespace NWN.FinalFantasy.Core.NWNX
 
         public static int OnDMGiveLevels_GetAmount()
         {
-            return GetEventDataInt("NUM_LEVELS");
+            return GetEventDataInt("AMOUNT");
         }
 
         public static NWGameObject OnDMGiveLevels_GetTarget()
@@ -363,5 +365,88 @@ namespace NWN.FinalFantasy.Core.NWNX
         {
             return GetEventDataFloat("POS_Z");
         }
+
+        public static GameDifficulty OnDMChangeDifficulty_GetDifficultySetting()
+        {
+            return (GameDifficulty) GetEventDataInt("DIFFICULTY_SETTING");
+        }
+
+        public static NWGameObject OnDMDisableTrap_GetTrap()
+        {
+            return GetEventDataObject("TARGET");
+        }
+
+        public static List<NWGameObject> DMEvents_GetTargetList(string tagPrefix = "TARGET_")
+        {
+            var targetCount = GetEventDataInt("NUM_TARGETS");
+            var result = new List<NWGameObject>();
+
+            for (int x = 1; x <= targetCount; x++)
+            {
+                var target = GetEventDataObject(tagPrefix + x);
+                result.Add(target);
+            }
+
+            return result;
+        }
+
+        public static NWGameObject OnDMGiveItem_GetTarget()
+        {
+            return GetEventDataObject("TARGET");
+        }
+
+        public static NWGameObject OnDMGiveItem_GetItem()
+        {
+            return GetEventDataObject("ITEM");
+        }
+
+        public static NWGameObject OnDMJumpToPoint_GetArea()
+        {
+            return GetEventDataObject("TARGET_AREA");
+        }
+
+        public static float OnDMJumpToPoint_GetX()
+        {
+            return GetEventDataFloat("POS_X");
+        }
+
+        public static float OnDMJumpToPoint_GetY()
+        {
+            return GetEventDataFloat("POS_Y");
+        }
+
+        public static float OnDMJumpToPoint_GetZ()
+        {
+            return GetEventDataFloat("POS_Z");
+        }
+
+        public static NWGameObject OnDMPossess_GetTarget()
+        {
+            return GetEventDataObject("TARGET");
+        }
+
+        public static NWGameObject OnInventoryAddItem_GetItem()
+        {
+            return GetEventDataObject("ITEM");
+        }
+
+        public static NWGameObject OnInventoryAddItem_GetPlayer()
+        {
+            var item = OnInventoryAddItem_GetItem();
+            var player = GetItemPossessor(item);
+
+            return player;
+        }
+
+        public static NWGameObject OnEquipItem_GetItem()
+        {
+            return GetEventDataObject("ITEM");
+        }
+
+        public static InventorySlot OnEquipItem_GetInventorySlot()
+        {
+            return (InventorySlot)GetEventDataInt("SLOT");
+        }
+
     }
 }

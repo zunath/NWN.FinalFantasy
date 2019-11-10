@@ -226,6 +226,7 @@ namespace NWN.FinalFantasy.Job.Scripts
                 var player = PlayerRepo.Get(playerID);
                 var cooldown = CooldownRepo.Get(playerID, stats.Feat);
                 player.MP = stats.MP;
+                cooldown.DateUnlocked = dateUnlocks;
 
                 PlayerRepo.Set(player);
                 CooldownRepo.Set(playerID, cooldown);

@@ -28,7 +28,6 @@ namespace NWN.FinalFantasy.Job.Scripts
             var currentLevel = XPChart.GetLevelByXP(xp);
             var jobLevel = job.Level;
 
-            Console.WriteLine("Level = " + currentLevel);
             NWNXCreature.SetLevelByPosition(player, ClassPosition.First, currentLevel);
 
             // Update the DB record

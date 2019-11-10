@@ -54,7 +54,7 @@ namespace NWN.FinalFantasy.Job
             int level = 0;
             for (int x = 1; x <= _levelCount; x++)
             {
-                int levelXP = _xpAtLevel[level];
+                int levelXP = _xpAtLevel[x];
 
                 if (levelXP > xp)
                     break;

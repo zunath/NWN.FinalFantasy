@@ -21,7 +21,7 @@ namespace NWN.FinalFantasy.Job.Scripts.RecalculateStats
             // Retrieve the rating chart for the stat, then retrieve the value for that stat at this player's level.
             var hp = RatingRegistry.Get(jobDefinition.HPRating).Get(RatingStat.HP, level);
             var mp = RatingRegistry.Get(jobDefinition.MPRating).Get(RatingStat.MP, level);
-            var ac = RatingRegistry.Get(jobDefinition.ACRating).Get(RatingStat.AC, level);
+            var ac = RatingRegistry.Get(jobDefinition.ACRating).Get(RatingStat.AC, level) - 10; // Offset by the base 10
             var bab = RatingRegistry.Get(jobDefinition.BABRating).Get(RatingStat.BAB, level);
 
             var str = RatingRegistry.Get(jobDefinition.STRRating).Get(RatingStat.STR, level);
@@ -30,7 +30,6 @@ namespace NWN.FinalFantasy.Job.Scripts.RecalculateStats
             var wis = RatingRegistry.Get(jobDefinition.WISRating).Get(RatingStat.WIS, level);
             var @int = RatingRegistry.Get(jobDefinition.INTRating).Get(RatingStat.INT, level);
             var cha = RatingRegistry.Get(jobDefinition.CHARating).Get(RatingStat.CHA, level);
-
 
             // Now apply the changes to the player.
             ApplyHP(player, hp);
@@ -59,31 +58,10 @@ namespace NWN.FinalFantasy.Job.Scripts.RecalculateStats
         /// </summary>
         private static void ApplyHP(NWGameObject player, int hp)
         {
-            var level = GetLevelByPosition(ClassPosition.First, player);
+            if (hp > 255)
+                hp = 255;
 
-            // Every level needs at least one HP, so apply that now.
-            for (int x = 1; x <= level; x++)
-            {
-                hp--;
-                NWNXCreature.SetMaxHitPointsByLevel(player, x, 1);
-            }
-
-            // Now add the remaining HP as needed to each level.
-            for(int x = 1; x <= level; level++)
-            {
-                // Levels can only contain a max of 255 HP.
-                if(hp > 255)
-                {
-                    NWNXCreature.SetMaxHitPointsByLevel(player, x, 255);
-                    hp -= 254; // We've already added 1, so reduce by 254.
-                }
-                // Remaining value gets set to the level (<255 hp)
-                else
-                {
-                    NWNXCreature.SetMaxHitPointsByLevel(player, x, hp + 1);
-                    break;
-                }
-            }
+            NWNXCreature.SetMaxHitPointsByLevel(player, 1, hp);
 
             // If player's current HP is higher than their max, apply damage to put them back to their maximum.
             var currentHP = GetCurrentHitPoints(player);

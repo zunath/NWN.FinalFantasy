@@ -26,6 +26,7 @@ namespace NWN.FinalFantasy.Migration.PC
             entity.CurrentJob = job;
             PlayerRepo.Set(entity);
 
+            ClearInventory(player);
             InitializeJobs(playerID);
             InitializeSkills(player);
             InitializeSavingThrows(player);
@@ -34,6 +35,19 @@ namespace NWN.FinalFantasy.Migration.PC
             // Treat this initialization as a job change and a level-up.
             Publish.CustomEvent(player, JobEventPrefix.OnJobChanged, new JobChanged(player, job, job));
             Publish.CustomEvent(player, JobEventPrefix.OnLeveledUp, new LeveledUp(player));
+        }
+
+        private void ClearInventory(NWGameObject player)
+        {
+            for(int slot = 0; slot < NWNConstants.NumberOfInventorySlots; slot++)
+            {
+                var item = GetItemInSlot((InventorySlot)slot, player);
+                if (!GetIsObjectValid(item)) continue;
+
+                DestroyObject(item);
+            }
+
+            _.DestroyAllInventoryItems(player);
         }
 
         private void InitializeJobs(Guid playerID)

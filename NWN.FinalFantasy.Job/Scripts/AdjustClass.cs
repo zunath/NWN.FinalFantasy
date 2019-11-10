@@ -13,7 +13,7 @@ namespace NWN.FinalFantasy.Job.Scripts
         {
             var data = Script.GetScriptData<JobChanged>();
             var newJob = data.NewJob;
-            var player = NWGameObject.OBJECT_SELF;
+            var player = data.Player;
             var playerID = GetGlobalID(player);
             var playerEntity = PlayerRepo.Get(playerID);
             var jobEntity = JobRepo.Get(playerID, newJob);

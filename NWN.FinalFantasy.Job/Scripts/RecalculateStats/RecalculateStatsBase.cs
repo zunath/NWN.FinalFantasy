@@ -4,6 +4,7 @@ using NWN.FinalFantasy.Core.NWScript.Enumerations;
 using NWN.FinalFantasy.Data.Repository;
 using NWN.FinalFantasy.Job.Enumeration;
 using NWN.FinalFantasy.Job.Registry;
+using static NWN._;
 
 namespace NWN.FinalFantasy.Job.Scripts.RecalculateStats
 {
@@ -11,10 +12,10 @@ namespace NWN.FinalFantasy.Job.Scripts.RecalculateStats
     {
         protected static void Recalculate(NWGameObject player)
         {
-            var playerID = _.GetGlobalID(player);
+            var playerID = GetGlobalID(player);
             var playerEntity = PlayerRepo.Get(playerID);
-            var @class = _.GetClassByPosition(ClassPosition.First, player);
-            var level = _.GetLevelByPosition(ClassPosition.First, player);
+            var @class = GetClassByPosition(ClassPosition.First, player);
+            var level = GetLevelByPosition(ClassPosition.First, player);
             var jobDefinition = JobRegistry.Get(@class);
 
             // Retrieve the rating chart for the stat, then retrieve the value for that stat at this player's level.
@@ -49,7 +50,7 @@ namespace NWN.FinalFantasy.Job.Scripts.RecalculateStats
             NWNXCreature.SetRawAbilityScore(player, Ability.Charisma, cha);
 
             PlayerRepo.Set(playerEntity);
-            _.DelayCommand(1.0f, () => NWNXPlayer.UpdateCharacterSheet(player));
+            DelayCommand(1.0f, () => NWNXPlayer.UpdateCharacterSheet(player));
         }
 
         /// <summary>
@@ -58,7 +59,7 @@ namespace NWN.FinalFantasy.Job.Scripts.RecalculateStats
         /// </summary>
         private static void ApplyHP(NWGameObject player, int hp)
         {
-            var level = _.GetLevelByPosition(ClassPosition.First, player);
+            var level = GetLevelByPosition(ClassPosition.First, player);
 
             // Every level needs at least one HP, so apply that now.
             for (int x = 1; x <= level; x++)
@@ -85,13 +86,13 @@ namespace NWN.FinalFantasy.Job.Scripts.RecalculateStats
             }
 
             // If player's current HP is higher than their max, apply damage to put them back to their maximum.
-            var currentHP = _.GetCurrentHitPoints(player);
-            var maxHP = _.GetMaxHitPoints(player);
+            var currentHP = GetCurrentHitPoints(player);
+            var maxHP = GetMaxHitPoints(player);
             if (currentHP > maxHP)
             {
                 int amount = currentHP - maxHP;
-                Effect damage = _.EffectDamage(amount);
-                _.ApplyEffectToObject(DurationType.Instant, damage, player);
+                Effect damage = EffectDamage(amount);
+                ApplyEffectToObject(DurationType.Instant, damage, player);
             }
 
         }

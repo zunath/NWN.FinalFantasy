@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using NWN.FinalFantasy.Core;
 using NWN.FinalFantasy.Core.NWNX;
 using NWN.FinalFantasy.Core.NWScript.Enumerations;
@@ -33,6 +34,18 @@ namespace NWN.FinalFantasy.Job.Scripts.ApplyFeats
             var jobDefinition = JobRegistry.Get(jobType);
             var job = JobRepo.Get(playerID, jobType);
             var abilityList = jobDefinition.GetAbilityListByLevel(job.Level);
+
+            // Ensure the player has mastered the ability.
+            // If it's not mastered, remove it from the list of abilities to add.
+            for(int x = abilityList.Count-1; x >= 0; x--)
+            {
+                var feat = abilityList.ElementAt(x);
+                var progress = AbilityProgressRepo.Get(playerID, feat);
+                var definition = AbilityRegistry.Get(feat);
+
+                if(progress.AP < definition.APRequired)
+                    abilityList.RemoveAt(x);
+            }
 
             var allFeats = new List<Feat>(DefaultFeats);
             allFeats.AddRange(abilityList);

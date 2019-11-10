@@ -45,6 +45,9 @@
     <Compile Include="PreventCombatItemSwaps\OnEquipItem.cs" />
     <Compile Include="PreventCombatItemSwaps\OnUnequipItem.cs" />
     <Compile Include="PreventCombatItemSwaps\PreventCombatItemSwapsBase.cs" />
+    <Compile Include="PreventLoginEquipEvents\MarkPlayerLoggingIn.cs" />
+    <Compile Include="PreventLoginEquipEvents\PreventEquipEventOnLogin.cs" />
+    <Compile Include="PreventLoginEquipEvents\UnmarkPlayerLoggingIn.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResetDescription.cs" />
   </ItemGroup>

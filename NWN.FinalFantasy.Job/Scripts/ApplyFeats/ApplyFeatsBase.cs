@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using NWN.FinalFantasy.Core;
 using NWN.FinalFantasy.Core.NWNX;
 using NWN.FinalFantasy.Core.NWScript.Enumerations;
 using NWN.FinalFantasy.Data.Repository;
-using NWN.FinalFantasy.Job.Event;
 using NWN.FinalFantasy.Job.Registry;
 
 namespace NWN.FinalFantasy.Job.Scripts.ApplyFeats

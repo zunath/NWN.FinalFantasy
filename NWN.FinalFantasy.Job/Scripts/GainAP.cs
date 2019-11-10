@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Linq;
 using NWN.FinalFantasy.Core;
 using NWN.FinalFantasy.Core.Message;
 using NWN.FinalFantasy.Core.Messaging;
+using NWN.FinalFantasy.Core.NWScript.Enumerations;
 using NWN.FinalFantasy.Data.Repository;
 using NWN.FinalFantasy.Job.Event;
 using NWN.FinalFantasy.Job.Registry;
@@ -23,6 +25,8 @@ namespace NWN.FinalFantasy.Job.Scripts
             int ap = data.Amount / 1000;
             if (ap < 1) 
                 ap = 1;
+            var job = GetClassByPosition(ClassPosition.First, player);
+            var level = GetTotalLevel(player);
 
             SendMessageToPC(player, "AP Gained: " + ap);
             foreach (var ability in equippedAbilities.Entities)
@@ -32,6 +36,15 @@ namespace NWN.FinalFantasy.Job.Scripts
 
                 // Ability has already been mastered.
                 if (progress.AP >= definition.APRequired)
+                    continue;
+
+                // Player is not on a permitted job
+                var matchingJob = definition.JobRequirements.SingleOrDefault(x => x.Job == job);
+                if (matchingJob == null)
+                    continue;
+
+                // Player does not meet required level
+                if (level < matchingJob.Level)
                     continue;
 
                 progress.AP += ap * ability.Quantity;

@@ -4,6 +4,7 @@ using NWN.FinalFantasy.Core.NWNX;
 using NWN.FinalFantasy.Core.NWScript.Enumerations;
 using NWN.FinalFantasy.Data.Repository;
 using NWN.FinalFantasy.Job.Registry;
+using static NWN._;
 
 namespace NWN.FinalFantasy.Job.Scripts.ApplyFeats
 {
@@ -26,22 +27,28 @@ namespace NWN.FinalFantasy.Job.Scripts.ApplyFeats
 
         public static void Apply(NWGameObject player)
         {
-            var playerID = _.GetGlobalID(player);
-            var jobType = _.GetClassByPosition(ClassPosition.First, player);
+            var playerID = GetGlobalID(player);
+            var jobType = GetClassByPosition(ClassPosition.First, player);
             var jobDefinition = JobRegistry.Get(jobType);
             var job = JobRepo.Get(playerID, jobType);
             var abilityList = jobDefinition.GetAbilityListByLevel(job.Level);
+            var level = GetTotalLevel(player);
 
-            // Ensure the player has mastered the ability.
-            // If it's not mastered, remove it from the list of abilities to add.
+            // Ensure the player has mastered the ability and meets the level requirement.
+            // If it's not mastered or player fails to meet requirements, remove it from the list of abilities to add.
             for(int x = abilityList.Count-1; x >= 0; x--)
             {
                 var feat = abilityList.ElementAt(x);
                 var progress = AbilityProgressRepo.Get(playerID, feat);
                 var definition = AbilityRegistry.Get(feat);
+                var matchingJob = definition.JobRequirements.SingleOrDefault(j => j.Job == jobType);
 
-                if(progress.AP < definition.APRequired)
+                if (progress.AP < definition.APRequired || // Missing AP
+                    matchingJob == null || // Not a valid job
+                    level < matchingJob.Level) // Level too low.
+                {
                     abilityList.RemoveAt(x);
+                }
             }
 
             var allFeats = new List<Feat>(DefaultFeats);
@@ -59,7 +66,7 @@ namespace NWN.FinalFantasy.Job.Scripts.ApplyFeats
             // Add any feats the player needs.
             foreach (var feat in allFeats)
             {
-                if (_.GetHasFeat(feat, player)) continue;
+                if (GetHasFeat(feat, player)) continue;
 
                 NWNXCreature.AddFeatByLevel(player, feat, 1);
             }

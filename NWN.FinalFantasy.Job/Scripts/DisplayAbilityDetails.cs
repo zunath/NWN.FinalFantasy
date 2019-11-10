@@ -50,7 +50,7 @@ namespace NWN.FinalFantasy.Job.Scripts
                     abilityDetails += $"{ColorToken.Orange(abilityDefinition.Name)} {jobText}\n    {ColorToken.Orange("AP:")} {progress.AP} / {abilityDefinition.APRequired}";
 
                     if (progress.AP >= abilityDefinition.APRequired)
-                        abilityDetails += " [**MASTERED**]";
+                        abilityDetails += $" {ColorToken.Orange("[**MASTERED**]")}";
                     abilityDetails += "\n";
                 }
 

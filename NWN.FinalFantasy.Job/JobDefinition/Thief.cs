@@ -13,6 +13,7 @@ namespace NWN.FinalFantasy.Job.JobDefinition
             CallSign = "THF";
             GF = GuardianForce.Fenrir;
             Class = ClassType.Thief;
+            Package = Package.Thief;
 
             HPRating = ProficiencyRating.B;
             MPRating = ProficiencyRating.E;

@@ -8,7 +8,7 @@ namespace NWN.Scripts
     {
         internal static void Main()
         {
-            Script.RunScriptEvents(NWGameObject.OBJECT_SELF, ModulePrefix.OnExamine);
+            Script.RunScriptEvents(NWGameObject.OBJECT_SELF, ModulePrefix.OnExamine, _.GetModule());
         }
     }
 }

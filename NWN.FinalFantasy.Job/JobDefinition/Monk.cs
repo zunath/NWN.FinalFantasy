@@ -13,6 +13,7 @@ namespace NWN.FinalFantasy.Job.JobDefinition
             CallSign = "MNK";
             GF = GuardianForce.Titan;
             Class = ClassType.Monk;
+            Package = Package.Monk;
 
             HPRating = ProficiencyRating.B;
             MPRating = ProficiencyRating.E;

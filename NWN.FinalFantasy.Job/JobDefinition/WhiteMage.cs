@@ -13,6 +13,7 @@ namespace NWN.FinalFantasy.Job.JobDefinition
             CallSign = "WHM";
             GF = GuardianForce.Carbuncle;
             Class = ClassType.WhiteMage;
+            Package = Package.WhiteMage;
 
             HPRating = ProficiencyRating.B;
             MPRating = ProficiencyRating.E;

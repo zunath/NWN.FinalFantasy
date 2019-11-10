@@ -7323,14 +7323,14 @@ namespace NWN
         //    (ie: no Barbarian Savage/Wizard Divination combinations)
         //  If you turn on bReadyAllSpells, all memorized spells will be ready to cast without resting.
         //  if nPackage is PACKAGE_INVALID then it will use the starting package assigned to that class or just the class package
-        public static int LevelUpHenchman(NWGameObject oCreature, ClassType nClass = ClassType.Invalid, bool bReadyAllSpells = false, Package nPackage = Package.Invalid)
+        public static bool LevelUpHenchman(NWGameObject oCreature, ClassType nClass = ClassType.Invalid, bool bReadyAllSpells = false, Package nPackage = Package.Invalid)
         {
             Internal.StackPushInteger((int)nPackage);
             Internal.StackPushInteger(Convert.ToInt32(bReadyAllSpells));
             Internal.StackPushInteger((int)nClass);
             Internal.StackPushObject(oCreature, false);
             Internal.CallBuiltIn(704);
-            return Internal.StackPopInteger();
+            return Convert.ToBoolean(Internal.StackPopInteger());
         }
 
         //  Sets the droppable flag on an item

@@ -13,6 +13,7 @@ namespace NWN.FinalFantasy.Job.JobDefinition
             CallSign = "RNG";
             GF = GuardianForce.Valefor;
             Class = ClassType.Ranger;
+            Package = Package.Ranger;
 
             HPRating = ProficiencyRating.B;
             MPRating = ProficiencyRating.E;

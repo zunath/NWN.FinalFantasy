@@ -83,5 +83,8 @@
         Material = 85,
         Quality = 86,
         Additional = 87,
+
+
+        Ability = 100
     }
 }

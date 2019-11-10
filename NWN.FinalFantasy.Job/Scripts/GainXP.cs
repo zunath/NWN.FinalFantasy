@@ -1,9 +1,11 @@
-﻿using NWN.FinalFantasy.Core;
+﻿using System;
+using NWN.FinalFantasy.Core;
 using NWN.FinalFantasy.Core.Message;
 using NWN.FinalFantasy.Core.Messaging;
 using NWN.FinalFantasy.Core.NWScript.Enumerations;
 using NWN.FinalFantasy.Data.Repository;
 using NWN.FinalFantasy.Job.Event;
+using NWN.FinalFantasy.Job.Registry;
 using static NWN._;
 
 namespace NWN.FinalFantasy.Job.Scripts
@@ -17,10 +19,12 @@ namespace NWN.FinalFantasy.Job.Scripts
             var playerID = GetGlobalID(player);
             var jobType = GetClassByPosition(ClassPosition.First, player);
             var levelBefore = GetLevelByPosition(ClassPosition.First, player);
+            var jobDefinition = JobRegistry.Get(jobType);
 
             // Auto-level the NWN class.
             // These changes get adjusted as part of our auto-level process.
-            LevelUpHenchman(player, jobType);
+            LevelUpHenchman(player, jobType, false, jobDefinition.Package);
+
             var levelAfter = GetLevelByPosition(ClassPosition.First, player);
             var job = JobRepo.Get(playerID, jobType);
             job.Level = levelAfter;

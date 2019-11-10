@@ -13,6 +13,7 @@ namespace NWN.FinalFantasy.Job.JobDefinition
             CallSign = "BLM";
             GF = GuardianForce.Ramuh;
             Class = ClassType.BlackMage;
+            Package = Package.BlackMage;
 
             HPRating = ProficiencyRating.B;
             MPRating = ProficiencyRating.E;

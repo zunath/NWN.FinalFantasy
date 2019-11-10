@@ -12,6 +12,7 @@ namespace NWN.FinalFantasy.Job.JobDefinition
         public string CallSign { get; set; }
         public GuardianForce GF { get; set; }
         public ClassType Class { get; set; }
+        public Package Package { get; set; }
 
         public ProficiencyRating HPRating { get; set; }
         public ProficiencyRating MPRating { get; set; }

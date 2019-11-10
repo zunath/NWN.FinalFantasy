@@ -13,6 +13,7 @@ namespace NWN.FinalFantasy.Job.JobDefinition
             CallSign = "WAR";
             GF = GuardianForce.Ifrit;
             Class = ClassType.Warrior;
+            Package = Package.Warrior;
 
             HPRating = ProficiencyRating.B;
             MPRating = ProficiencyRating.E;

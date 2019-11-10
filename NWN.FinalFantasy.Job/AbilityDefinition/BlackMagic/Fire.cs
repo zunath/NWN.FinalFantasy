@@ -6,11 +6,17 @@ namespace NWN.FinalFantasy.Job.AbilityDefinition.BlackMagic
 {
     internal class Fire: IAbilityDefinition
     {
+        public string Name => "Fire";
         public Feat Feat => Feat.Fire;
         public AbilityCategory Category => AbilityCategory.Spell;
         public AbilityGroup Group => AbilityGroup.BlackMagic;
         public bool IsEquippable => true;
         public int APRequired => 40;
+
+        public JobLevel[] JobRequirements => new[]
+        {
+            new JobLevel(ClassType.BlackMage, 1), 
+        };
 
         public int MP(NWGameObject user)
         {

@@ -46,6 +46,8 @@
     <Compile Include="Enumeration\GuardianForce.cs" />
     <Compile Include="Enumeration\ProficiencyRating.cs" />
     <Compile Include="Enumeration\RatingStat.cs" />
+    <Compile Include="JobLevel.cs" />
+    <Compile Include="Scripts\DisplayAbilityDetails.cs" />
     <Compile Include="Scripts\ApplyFeats\ApplyFeatsBase.cs" />
     <Compile Include="Scripts\ApplyFeats\OnJobChanged.cs" />
     <Compile Include="Scripts\ApplyFeats\OnLevelUp.cs" />

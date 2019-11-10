@@ -6,6 +6,7 @@ namespace NWN.FinalFantasy.Job
     {
         public static void Main()
         {
+            XPChart.Register();
             AbilityRegistry.Register();
             JobRegistry.Register();
             RatingRegistry.Register();

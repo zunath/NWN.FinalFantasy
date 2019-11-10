@@ -4,7 +4,7 @@
     {
         public NWGameObject Creature { get; set; }
         public int Amount { get; set; }
-        
+
         public JobXPGained(NWGameObject creature, int amount)
         {
             Creature = creature;

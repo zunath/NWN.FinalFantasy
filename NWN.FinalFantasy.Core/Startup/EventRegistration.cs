@@ -24,6 +24,7 @@ namespace NWN.FinalFantasy.Core.Startup
         {
             SubscribeEvents();
 
+            RegisterServerEvents();
             RegisterModuleEvents();
             RegisterNWNXEvents();
             RegisterAreaEvents();
@@ -44,6 +45,12 @@ namespace NWN.FinalFantasy.Core.Startup
 
             MessageHub.Instance.Subscribe<ObjectCreated>(@event => RegisterObjectEvent(@event.GameObject));
             MessageHub.Instance.Subscribe<AreaCreated>(@event => RegisterAreaEvent(@event.Area));
+        }
+
+        private static void RegisterServerEvents()
+        {
+            NWNXEvents.SubscribeEvent(NWNXEventType.ClientDisconnectBefore, "server_on_discon");
+            NWNXEvents.SubscribeEvent(NWNXEventType.ClientConnectBefore, "server_on_connec");
         }
 
         /// <summary>

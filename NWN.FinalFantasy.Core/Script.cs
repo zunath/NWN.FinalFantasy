@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using NWN.FinalFantasy.Core.Logging;
-using NWN.FinalFantasy.Core.NWNX;
-using NWN.FinalFantasy.Core.NWScript.Enumerations;
 using NWN.FinalFantasy.Core.Startup;
 using NWN.FinalFantasy.Core.Utility;
 using Serilog;
@@ -38,14 +35,29 @@ namespace NWN.FinalFantasy.Core
 
         /// <summary>
         /// Retrieves data stored for this script.
+        /// If ignoreNullData is true, no exception will be thrown if null is retrieved.
+        /// </summary>
+        /// <typeparam name="T">The type of data to retrieve.</typeparam>
+        /// <param name="ignoreNullData">if true, does not throw a exception if data is null. otherwise it does</param>
+        /// <returns>The stored data</returns>
+        internal static T GetScriptData<T>(bool ignoreNullData)
+            where T: class
+        {
+            if (!ignoreNullData) return GetScriptData<T>();
+
+            return _scriptData as T;
+        }
+
+        /// <summary>
+        /// Retrieves data stored for this script.
         /// Only available during custom events. 
         /// </summary>
         /// <typeparam name="T">The type of data to retrieve.</typeparam>
         /// <returns>The stored data</returns>
         public static T GetScriptData<T>()
-            where T: class
+            where T : class
         {
-            if(_scriptData == null)
+            if (_scriptData == null)
                 throw new Exception("Script data does not exist. Is this a custom event?");
 
             return _scriptData as T;
@@ -70,7 +82,7 @@ namespace NWN.FinalFantasy.Core
                 {
                     Run(caller, script);
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     Audit.Write(AuditGroup.Error, ex.ToMessageAndCompleteStacktrace());
                 }
@@ -116,7 +128,7 @@ namespace NWN.FinalFantasy.Core
                 _cachedScripts[script] = method;
             }
 
-            _cachedScripts[script].Invoke(null, data == null ? null : new object[] {data});
+            _cachedScripts[script].Invoke(null, data == null ? null : new object[] { data });
         }
 
         /// <summary>

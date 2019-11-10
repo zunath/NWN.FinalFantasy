@@ -63,6 +63,8 @@
     <Compile Include="Scripts\RecalculateStats\OnJobChange.cs" />
     <Compile Include="Scripts\RecalculateStats\OnLevelUp.cs" />
     <Compile Include="Scripts\SaveHotBar.cs" />
+    <Compile Include="Scripts\SetLevelTo1.cs" />
+    <Compile Include="Scripts\SetLevelToNormal.cs" />
     <Compile Include="Scripts\TagWeaponUse.cs" />
     <Compile Include="Scripts\UnequipAllItems.cs" />
     <Compile Include="JobDefinition\Ranger.cs" />
@@ -92,6 +94,7 @@
     <Compile Include="StatRating\RatingChart.cs" />
     <Compile Include="StatRating\RatingZero.cs" />
     <Compile Include="TestBread.cs" />
+    <Compile Include="XPChart.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NWN.FinalFantasy.Core\NWN.FinalFantasy.Core.csproj">

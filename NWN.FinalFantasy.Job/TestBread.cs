@@ -5,7 +5,7 @@
         public static void Main()
         {
             var player = _.GetLastUsedBy();
-            int xp = 1000;
+            int xp = 500;
             _.GiveJobXP(player, xp);
         }
     }

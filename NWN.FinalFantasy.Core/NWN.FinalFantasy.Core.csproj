@@ -111,6 +111,9 @@
     <Compile Include="Event\Module\mod_on_nwnxchat.cs" />
     <Compile Include="Event\Module\mod_on_usefeat.cs" />
     <Compile Include="Event\Module\mod_on_useitem.cs" />
+    <Compile Include="Event\Server\ServerEventPrefix.cs" />
+    <Compile Include="Event\Server\server_on_connec.cs" />
+    <Compile Include="Event\Server\server_on_discon.cs" />
     <Compile Include="Logging\Audit.cs" />
     <Compile Include="Logging\AuditGroup.cs" />
     <Compile Include="Logging\ExceptionExtensions.cs" />
@@ -124,6 +127,8 @@
     <Compile Include="NWNX\NWNXDialog.cs" />
     <Compile Include="NWNX\NWNXEventType.cs" />
     <Compile Include="NWNX\NWNXRedis.cs" />
+    <Compile Include="NWNX\NWNXUtil.cs" />
+    <Compile Include="NWNX\UtilResrefType.cs" />
     <Compile Include="NWScript\Enumerations\AddItemPropertyPolicy.cs" />
     <Compile Include="Startup\AreaScriptRegistration.cs" />
     <Compile Include="Startup\AssemblyLoader.cs" />

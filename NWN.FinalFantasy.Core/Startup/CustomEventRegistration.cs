@@ -1,4 +1,5 @@
-﻿using NWN.FinalFantasy.Core.Event;
+﻿using System.Collections.Generic;
+using NWN.FinalFantasy.Core.Event;
 using NWN.FinalFantasy.Core.Messaging;
 
 namespace NWN.FinalFantasy.Core.Startup
@@ -12,9 +13,14 @@ namespace NWN.FinalFantasy.Core.Startup
 
         private static void OnCustomEvent(CustomEvent payload)
         {
+            var existingScriptData = Script.GetScriptData<object>(true);
             Script.SetScriptData(payload.Data);
             Script.RunScriptEvents(payload.Caller, payload.ScriptPrefix, _.GetModule());
-            Script.ClearScriptData();
+            
+            if(existingScriptData != null)
+                Script.SetScriptData(existingScriptData);
+            else 
+                Script.ClearScriptData();
         }
     }
 }

@@ -42,6 +42,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AttachSystemPropertiesToItem.cs" />
+    <Compile Include="PreventCombatItemSwaps\OnEquipItem.cs" />
+    <Compile Include="PreventCombatItemSwaps\OnUnequipItem.cs" />
+    <Compile Include="PreventCombatItemSwaps\PreventCombatItemSwapsBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResetDescription.cs" />
   </ItemGroup>

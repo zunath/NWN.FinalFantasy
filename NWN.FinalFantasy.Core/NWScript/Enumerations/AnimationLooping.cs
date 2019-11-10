@@ -2,6 +2,7 @@
 {
     public enum AnimationLooping
     {
+        Invalid = -1,
         Pause = 0,
         Pause2 = 1,
         Listen = 2,

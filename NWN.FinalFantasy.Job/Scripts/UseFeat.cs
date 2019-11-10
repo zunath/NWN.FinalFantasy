@@ -5,6 +5,7 @@ using NWN.FinalFantasy.Core.NWScript.Enumerations;
 using NWN.FinalFantasy.Core.Utility;
 using NWN.FinalFantasy.Data.Repository;
 using NWN.FinalFantasy.Job.AbilityDefinition;
+using NWN.FinalFantasy.Job.Enumeration;
 using NWN.FinalFantasy.Job.Registry;
 using static NWN._;
 
@@ -101,6 +102,32 @@ namespace NWN.FinalFantasy.Job.Scripts
             return true;
         }
 
+        private static AnimationLooping GetCastingAnimation(AbilityCategory category)
+        {
+            switch (category)
+            {
+                case AbilityCategory.Spell:
+                    return AnimationLooping.Conjure1;
+                case AbilityCategory.Combat:
+                    return AnimationLooping.Invalid;
+                case AbilityCategory.Queued:
+                    return AnimationLooping.Invalid;
+                case AbilityCategory.Stance:
+                    return AnimationLooping.Invalid;
+                default:
+                    return AnimationLooping.Invalid;
+            }
+        }
+
+        private static void PlayAnimation(NWGameObject user, AbilityCategory category)
+        {
+            var animation = GetCastingAnimation(category);
+            if (animation != AnimationLooping.Invalid)
+            {
+                AssignCommand(user, () => ActionPlayAnimation(animation));
+            }
+        }
+
         /// <summary>
         /// Initializes the casting process.
         /// </summary>
@@ -111,6 +138,7 @@ namespace NWN.FinalFantasy.Job.Scripts
             NWNXPlayer.StartGuiTimingBar(stats.User, castingTime, string.Empty);
 
             SetIsBusy(stats.User, true);
+            PlayAnimation(stats.User, stats.AbilityDefinition.Category);
 
             DelayCommand(0.5f, () => CheckMovement(stats));
             DelayCommand(castingTime, () => FinishCasting(stats));

@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AbilityDefinition\BlackMagic\Fire.cs" />
+    <Compile Include="AbilityDefinition\Protection\HallowedGround.cs" />
     <Compile Include="Enumeration\AbilityGroup.cs" />
     <Compile Include="Enumeration\GuardianForce.cs" />
     <Compile Include="Enumeration\ProficiencyRating.cs" />
@@ -109,7 +110,6 @@
   <ItemGroup>
     <Folder Include="AbilityDefinition\Archery\" />
     <Folder Include="AbilityDefinition\Chi\" />
-    <Folder Include="AbilityDefinition\Protection\" />
     <Folder Include="AbilityDefinition\Thievery\" />
     <Folder Include="AbilityDefinition\WhiteMagic\" />
   </ItemGroup>

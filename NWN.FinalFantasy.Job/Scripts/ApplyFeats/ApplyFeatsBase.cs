@@ -29,18 +29,16 @@ namespace NWN.FinalFantasy.Job.Scripts.ApplyFeats
         {
             var playerID = GetGlobalID(player);
             var jobType = GetClassByPosition(ClassPosition.First, player);
-            var jobDefinition = JobRegistry.Get(jobType);
-            var job = JobRepo.Get(playerID, jobType);
-            var abilityList = jobDefinition.GetAbilityListByLevel(job.Level);
+            var abilityList = AbilityRegistry.GetByJob(jobType);
             var level = GetTotalLevel(player);
 
             // Ensure the player has mastered the ability and meets the level requirement.
             // If it's not mastered or player fails to meet requirements, remove it from the list of abilities to add.
             for(int x = abilityList.Count-1; x >= 0; x--)
             {
-                var feat = abilityList.ElementAt(x);
-                var progress = AbilityProgressRepo.Get(playerID, feat);
-                var definition = AbilityRegistry.Get(feat);
+                var ability = abilityList.ElementAt(x);
+                var progress = AbilityProgressRepo.Get(playerID, ability.Feat);
+                var definition = AbilityRegistry.Get(ability.Feat);
                 var matchingJob = definition.JobRequirements.SingleOrDefault(j => j.Job == jobType);
 
                 if (progress.AP < definition.APRequired || // Missing AP
@@ -52,7 +50,7 @@ namespace NWN.FinalFantasy.Job.Scripts.ApplyFeats
             }
 
             var allFeats = new List<Feat>(DefaultFeats);
-            allFeats.AddRange(abilityList);
+            allFeats.AddRange(abilityList.Select(m => m.Feat));
 
             // Remove any feats the player shouldn't have.
             var featCount = NWNXCreature.GetFeatCount(player);

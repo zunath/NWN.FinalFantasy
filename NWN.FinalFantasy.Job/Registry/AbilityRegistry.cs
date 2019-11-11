@@ -9,6 +9,7 @@ namespace NWN.FinalFantasy.Job.Registry
     internal class AbilityRegistry
     {
         private static readonly Dictionary<Feat, IAbilityDefinition> _abilityRegistry = new Dictionary<Feat, IAbilityDefinition>();
+        private static readonly Dictionary<ClassType, List<IAbilityDefinition>> _abilitiesByJob = new Dictionary<ClassType, List<IAbilityDefinition>>();
 
         internal static void Register()
         {
@@ -21,6 +22,15 @@ namespace NWN.FinalFantasy.Job.Registry
             {
                 var ability = (IAbilityDefinition)Activator.CreateInstance(abilityType);
                 _abilityRegistry[ability.Feat] = ability;
+
+                foreach (var jobReq in ability.JobRequirements)
+                {
+                    if(!_abilitiesByJob.ContainsKey(jobReq.Job))
+                        _abilitiesByJob[jobReq.Job] = new List<IAbilityDefinition>();
+
+                    _abilitiesByJob[jobReq.Job].Add(ability);
+                }
+
             }
         }
 
@@ -42,6 +52,11 @@ namespace NWN.FinalFantasy.Job.Registry
         public static IAbilityDefinition Get(Feat feat)
         {
             return _abilityRegistry[feat];
+        }
+
+        public static List<IAbilityDefinition> GetByJob(ClassType job)
+        {
+            return _abilitiesByJob[job];
         }
     }
 }

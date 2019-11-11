@@ -42,6 +42,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AbilityDefinition\BlackMagic\Fire.cs" />
+    <Compile Include="AbilityDefinition\Protection\Cleave.cs" />
+    <Compile Include="AbilityDefinition\Protection\DefenseBonus1.cs" />
     <Compile Include="AbilityDefinition\Protection\HallowedGround.cs" />
     <Compile Include="Enumeration\AbilityGroup.cs" />
     <Compile Include="Enumeration\GuardianForce.cs" />
@@ -110,6 +112,7 @@
   <ItemGroup>
     <Folder Include="AbilityDefinition\Archery\" />
     <Folder Include="AbilityDefinition\Chi\" />
+    <Folder Include="AbilityDefinition\General\" />
     <Folder Include="AbilityDefinition\Thievery\" />
     <Folder Include="AbilityDefinition\WhiteMagic\" />
   </ItemGroup>

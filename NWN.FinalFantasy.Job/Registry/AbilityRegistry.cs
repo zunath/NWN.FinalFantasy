@@ -56,7 +56,7 @@ namespace NWN.FinalFantasy.Job.Registry
 
         public static List<IAbilityDefinition> GetByJob(ClassType job)
         {
-            return _abilitiesByJob[job];
+            return _abilitiesByJob[job].ToList();
         }
     }
 }

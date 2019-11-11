@@ -67,6 +67,13 @@ namespace NWN.FinalFantasy.Job.Scripts.ApplyFeats
                 if (GetHasFeat(feat, player)) continue;
 
                 NWNXCreature.AddFeatByLevel(player, feat, 1);
+
+                // If this feat is registered, run the Apply() method on the player.
+                if (AbilityRegistry.IsRegistered(feat))
+                {
+                    AbilityRegistry.Get(feat).Apply(player);
+                }
+
             }
         }
     }

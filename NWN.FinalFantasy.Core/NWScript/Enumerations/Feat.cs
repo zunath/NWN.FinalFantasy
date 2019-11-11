@@ -8,7 +8,7 @@
         Armor_Proficiency_Light = 3,
         Armor_Proficiency_Medium = 4,
         Called_Shot = 5,
-        NWNCleave = 6,
+        Cleave = 6,
         Combat_Casting = 7,
         Deflect_Arrows = 8,
         Disarm = 9,
@@ -1028,7 +1028,7 @@
         Fire = 1118,
         HallowedGround = 1119,
         DefenseBonus1 = 1120,
-        FFOCleave = 1121,
+        // 1121 undefined
         Provoke = 1122,
         HPBoost1 = 1123,
         Berserk = 1124,

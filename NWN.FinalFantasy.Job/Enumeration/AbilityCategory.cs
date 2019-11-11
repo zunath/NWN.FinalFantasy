@@ -4,6 +4,7 @@
     {
         Spell,
         Combat,
+        Trait,
         Queued,
         Stance
     }

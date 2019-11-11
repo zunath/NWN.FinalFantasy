@@ -37,6 +37,10 @@ namespace NWN.FinalFantasy.Job.AbilityDefinition.Protection
             return 3600;
         }
 
+        public void Apply(NWGameObject user)
+        {
+        }
+
         public void Impact(NWGameObject user, NWGameObject target)
         {
             SetPlotFlag(user, true);

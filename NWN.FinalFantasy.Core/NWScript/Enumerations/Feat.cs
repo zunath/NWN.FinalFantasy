@@ -1039,6 +1039,6 @@
         ProvokeMastery1 = 1129,
         HPBoost2 = 1130,
         AxeMastery2 = 1131,
-        AbilitySlot1 = 1132,
+        DualWield = 1132,
     }
 }

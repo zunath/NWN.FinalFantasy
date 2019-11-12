@@ -54,6 +54,7 @@
     <Compile Include="AbilityDefinition\StatBoost\HPBoost2.cs" />
     <Compile Include="AbilityDefinition\StatBoost\HPBoost1.cs" />
     <Compile Include="AbilityDefinition\WeaponMastery\AxeMastery1.cs" />
+    <Compile Include="AbilityDefinition\WeaponMastery\DualWield.cs" />
     <Compile Include="Enumeration\AbilityGroup.cs" />
     <Compile Include="Enumeration\GuardianForce.cs" />
     <Compile Include="Enumeration\ProficiencyRating.cs" />
@@ -62,6 +63,7 @@
     <Compile Include="JobLevel.cs" />
     <Compile Include="Scripts\ActiveAbilityCache\CacheAbilitiesOnItem.cs" />
     <Compile Include="Scripts\ActiveAbilityCache\DecacheAbilitiesOnItem.cs" />
+    <Compile Include="Scripts\CheckDualWield.cs" />
     <Compile Include="Scripts\DisplayAbilityDetails.cs" />
     <Compile Include="Scripts\ApplyFeats\ApplyFeatsBase.cs" />
     <Compile Include="Scripts\ApplyFeats\OnJobChanged.cs" />

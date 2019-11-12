@@ -42,9 +42,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AbilityDefinition\BlackMagic\Fire.cs" />
+    <Compile Include="AbilityDefinition\Protection\Bash.cs" />
+    <Compile Include="AbilityDefinition\Protection\Berserk.cs" />
     <Compile Include="AbilityDefinition\Protection\Cleave.cs" />
+    <Compile Include="AbilityDefinition\Protection\Cover.cs" />
     <Compile Include="AbilityDefinition\Protection\DefenseBonus1.cs" />
     <Compile Include="AbilityDefinition\Protection\HallowedGround.cs" />
+    <Compile Include="AbilityDefinition\Protection\ProvokeMastery.cs" />
+    <Compile Include="AbilityDefinition\Protection\Provoke2.cs" />
+    <Compile Include="AbilityDefinition\Protection\Provoke.cs" />
+    <Compile Include="AbilityDefinition\StatBoost\HPBoost2.cs" />
+    <Compile Include="AbilityDefinition\StatBoost\HPBoost1.cs" />
+    <Compile Include="AbilityDefinition\WeaponMastery\AxeMastery1.cs" />
     <Compile Include="Enumeration\AbilityGroup.cs" />
     <Compile Include="Enumeration\GuardianForce.cs" />
     <Compile Include="Enumeration\ProficiencyRating.cs" />

@@ -60,6 +60,7 @@
     <Compile Include="Enumeration\ProficiencyRating.cs" />
     <Compile Include="Enumeration\RatingStat.cs" />
     <Compile Include="Event\AbilityMastered.cs" />
+    <Compile Include="Event\StatsRecalculated.cs" />
     <Compile Include="JobLevel.cs" />
     <Compile Include="Scripts\ActiveAbilityCache\CacheAbilitiesOnItem.cs" />
     <Compile Include="Scripts\ActiveAbilityCache\DecacheAbilitiesOnItem.cs" />
@@ -79,7 +80,9 @@
     <Compile Include="Scripts\SaveHotBar.cs" />
     <Compile Include="Scripts\SetLevelTo1.cs" />
     <Compile Include="Scripts\SetLevelToNormal.cs" />
+    <Compile Include="Scripts\StatProcessingShared.cs" />
     <Compile Include="Scripts\TagWeaponUse.cs" />
+    <Compile Include="Scripts\Traits\ApplyHPBoostTrait.cs" />
     <Compile Include="Scripts\UnequipAllItems.cs" />
     <Compile Include="JobDefinition\Ranger.cs" />
     <Compile Include="JobDefinition\Thief.cs" />

@@ -1,14 +1,16 @@
 ﻿using System;
+using NWN.FinalFantasy.Core.Messaging;
 using NWN.FinalFantasy.Core.NWNX;
 using NWN.FinalFantasy.Core.NWScript.Enumerations;
 using NWN.FinalFantasy.Data.Repository;
 using NWN.FinalFantasy.Job.Enumeration;
+using NWN.FinalFantasy.Job.Event;
 using NWN.FinalFantasy.Job.Registry;
 using static NWN._;
 
 namespace NWN.FinalFantasy.Job.Scripts.RecalculateStats
 {
-    internal abstract class RecalculateStatsBase
+    internal abstract class RecalculateStatsBase: StatProcessingShared
     {
         protected static void Recalculate(NWGameObject player)
         {
@@ -50,29 +52,9 @@ namespace NWN.FinalFantasy.Job.Scripts.RecalculateStats
 
             PlayerRepo.Set(playerEntity);
             DelayCommand(1.0f, () => NWNXPlayer.UpdateCharacterSheet(player));
+
+            Publish.CustomEvent(player, JobEventPrefix.OnStatsRecalculated, new StatsRecalculated(player));
         }
 
-        /// <summary>
-        /// NWN stores HP as a field under each level object.
-        /// The level for each level is 255. Ensure this value doesn't go over the field limit.
-        /// </summary>
-        private static void ApplyHP(NWGameObject player, int hp)
-        {
-            if (hp > 255)
-                hp = 255;
-
-            NWNXCreature.SetMaxHitPointsByLevel(player, 1, hp);
-
-            // If player's current HP is higher than their max, apply damage to put them back to their maximum.
-            var currentHP = GetCurrentHitPoints(player);
-            var maxHP = GetMaxHitPoints(player);
-            if (currentHP > maxHP)
-            {
-                int amount = currentHP - maxHP;
-                Effect damage = EffectDamage(amount);
-                ApplyEffectToObject(DurationType.Instant, damage, player);
-            }
-
-        }
     }
 }

@@ -82,6 +82,7 @@
     <Compile Include="Scripts\SetLevelToNormal.cs" />
     <Compile Include="Scripts\StatProcessingShared.cs" />
     <Compile Include="Scripts\TagWeaponUse.cs" />
+    <Compile Include="Scripts\Traits\ApplyDefenseBonusTrait.cs" />
     <Compile Include="Scripts\Traits\ApplyHPBoostTrait.cs" />
     <Compile Include="Scripts\UnequipAllItems.cs" />
     <Compile Include="JobDefinition\Ranger.cs" />

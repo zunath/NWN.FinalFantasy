@@ -9,7 +9,7 @@ namespace NWN.FinalFantasy.Job.Scripts.Traits
     /// <summary>
     /// Handles adding bonus AC to players with the Defense Bonus feats.
     /// </summary>
-    internal class ApplyDefenseBonusTrait: StatProcessingShared
+    internal class ApplyDefenseBonusTrait: StatProcessingBase
     {
         public static void Main()
         {

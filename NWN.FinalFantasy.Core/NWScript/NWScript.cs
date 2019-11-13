@@ -1500,7 +1500,7 @@ namespace NWN
         //  - oCreature
         //  * Returns OBJECT_INVALID if oCreature is not a valid creature or there is no
         //    item in nInventorySlot.
-        public static NWGameObject GetItemInSlot(InventorySlot nInventorySlot, NWGameObject oCreature = null)
+        public static NWGameObject GetItemInSlot(InventorySlot nInventorySlot, NWGameObject oCreature)
         {
             Internal.StackPushObject(oCreature, false);
             Internal.StackPushInteger((int)nInventorySlot);
@@ -2816,7 +2816,7 @@ namespace NWN
         //  Determine whether oCreature has nFeat, and nFeat is useable.
         //  - nFeat: FEAT_*
         //  - oCreature
-        public static bool GetHasFeat(Feat nFeat, NWGameObject oCreature = null)
+        public static bool GetHasFeat(Feat nFeat, NWGameObject oCreature)
         {
             Internal.StackPushObject(oCreature, false);
             Internal.StackPushInteger((int)nFeat);
@@ -2827,7 +2827,7 @@ namespace NWN
         //  Determine whether oCreature has nSkill, and nSkill is useable.
         //  - nSkill: SKILL_*
         //  - oCreature
-        public static bool GetHasSkill(Skill nSkill, NWGameObject oCreature = null)
+        public static bool GetHasSkill(Skill nSkill, NWGameObject oCreature)
         {
             Internal.StackPushObject(oCreature, false);
             Internal.StackPushInteger((int)nSkill);

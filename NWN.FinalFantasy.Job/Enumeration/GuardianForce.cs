@@ -17,11 +17,8 @@
         Bahamut,        // 
         Cactuar,        // 
         Tonberry,       // 
-        Eden,           // 
         Odin,           // 
         Gilgamesh,      // 
-        Boko,           // 
-        Moomba,         // 
         Phoenix         // 
     }
 }

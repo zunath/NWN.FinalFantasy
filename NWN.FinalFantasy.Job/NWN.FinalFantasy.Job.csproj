@@ -53,6 +53,7 @@
     <Compile Include="AbilityDefinition\Protection\Provoke.cs" />
     <Compile Include="AbilityDefinition\StatBoost\HPBoost2.cs" />
     <Compile Include="AbilityDefinition\StatBoost\HPBoost1.cs" />
+    <Compile Include="AbilityDefinition\WeaponMastery\AxeMastery2.cs" />
     <Compile Include="AbilityDefinition\WeaponMastery\AxeMastery1.cs" />
     <Compile Include="AbilityDefinition\WeaponMastery\DualWield.cs" />
     <Compile Include="Enumeration\AbilityGroup.cs" />
@@ -74,14 +75,17 @@
     <Compile Include="Event\JobEventPrefix.cs" />
     <Compile Include="Scripts\LoadHotBar.cs" />
     <Compile Include="Scripts\MasterAbility.cs" />
+    <Compile Include="Scripts\RecalculateStats\OnUnequipItem.cs" />
+    <Compile Include="Scripts\RecalculateStats\OnEquipItem.cs" />
     <Compile Include="Scripts\RecalculateStats\RecalculateStatsBase.cs" />
     <Compile Include="Scripts\RecalculateStats\OnJobChange.cs" />
     <Compile Include="Scripts\RecalculateStats\OnLevelUp.cs" />
     <Compile Include="Scripts\SaveHotBar.cs" />
     <Compile Include="Scripts\SetLevelTo1.cs" />
     <Compile Include="Scripts\SetLevelToNormal.cs" />
-    <Compile Include="Scripts\StatProcessingShared.cs" />
+    <Compile Include="Scripts\StatProcessingBase.cs" />
     <Compile Include="Scripts\TagWeaponUse.cs" />
+    <Compile Include="Scripts\Traits\ApplyWeaponMasteryTrait.cs" />
     <Compile Include="Scripts\Traits\ApplyDefenseBonusTrait.cs" />
     <Compile Include="Scripts\Traits\ApplyHPBoostTrait.cs" />
     <Compile Include="Scripts\UnequipAllItems.cs" />

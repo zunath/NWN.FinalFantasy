@@ -9,7 +9,7 @@ namespace NWN.FinalFantasy.Job.Scripts.Traits
     /// Applies a percent increase to a player's HP if they have an HP Boost feat.
     /// Only the highest tier of the ability is used for this calculation. They do not stack.
     /// </summary>
-    internal class ApplyHPBoostTrait: StatProcessingShared
+    internal class ApplyHPBoostTrait: StatProcessingBase
     {
         public static void Main()
         {

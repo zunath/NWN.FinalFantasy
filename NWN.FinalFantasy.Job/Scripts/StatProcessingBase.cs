@@ -4,7 +4,7 @@ using static NWN._;
 
 namespace NWN.FinalFantasy.Job.Scripts
 {
-    internal abstract class StatProcessingShared
+    internal abstract class StatProcessingBase
     {
         /// <summary>
         /// NWN stores HP as a field under each level object.

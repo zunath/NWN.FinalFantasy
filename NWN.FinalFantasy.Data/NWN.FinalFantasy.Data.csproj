@@ -67,6 +67,7 @@
     <Compile Include="Entity\MapProgression.cs" />
     <Compile Include="Entity\Player.cs" />
     <Compile Include="Entity\QuestProgress.cs" />
+    <Compile Include="Entity\RoleplayProgress.cs" />
     <Compile Include="Entity\ServerConfiguration.cs" />
     <Compile Include="Keys.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -81,6 +82,7 @@
     <Compile Include="Repository\MapProgressionRepo.cs" />
     <Compile Include="Repository\PlayerRepo.cs" />
     <Compile Include="Repository\QuestProgressRepo.cs" />
+    <Compile Include="Repository\RoleplayProgressRepo.cs" />
     <Compile Include="Repository\ServerConfigurationRepo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>

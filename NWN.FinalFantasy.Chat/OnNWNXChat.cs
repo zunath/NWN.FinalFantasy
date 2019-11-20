@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Reflection;
 using NWN.FinalFantasy.Authorization;
 using NWN.FinalFantasy.Chat.Command;
@@ -94,7 +95,7 @@ namespace NWN.FinalFantasy.Chat
 
             if (targetLocation == null)
             {
-                targetLocation = new Location();
+                targetLocation = new Location(IntPtr.Zero);
             }
 
             CommandDetailsAttribute attribute = command.GetType().GetCustomAttribute<CommandDetailsAttribute>();

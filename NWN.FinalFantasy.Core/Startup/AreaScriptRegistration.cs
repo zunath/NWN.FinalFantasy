@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using NWN.FinalFantasy.Core.Event.Area;
+using NWN.FinalFantasy.Core.Event.Prefix;
 using NWN.FinalFantasy.Core.Message;
 using NWN.FinalFantasy.Core.Messaging;
 using NWN.FinalFantasy.Core.Utility;

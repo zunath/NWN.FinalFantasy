@@ -1,11 +1,6 @@
 ﻿using System;
 using System.Linq;
-using NWN.FinalFantasy.Core.Event.AreaOfEffect;
-using NWN.FinalFantasy.Core.Event.Door;
-using NWN.FinalFantasy.Core.Event.Encounter;
-using NWN.FinalFantasy.Core.Event.Placeable;
-using NWN.FinalFantasy.Core.Event.Store;
-using NWN.FinalFantasy.Core.Event.Trigger;
+using NWN.FinalFantasy.Core.Event.Prefix;
 using NWN.FinalFantasy.Core.Message;
 using NWN.FinalFantasy.Core.Messaging;
 using NWN.FinalFantasy.Core.NWNX;

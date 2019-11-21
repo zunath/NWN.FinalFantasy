@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using NWN.FinalFantasy.Core;
 using NWN.FinalFantasy.Core.Event.Prefix;
+using NWN.FinalFantasy.Core.Logging;
 using NWN.Scripts;
 using static NWN._;
 
@@ -39,15 +40,30 @@ namespace NWN
             // Is this one of the scripts we've registered in the OnStart() method below?
             if(_eventRegistrations.ContainsKey(script))
             {
-                _eventRegistrations[script].Invoke();
-
-                return SCRIPT_HANDLED;
+                try
+                {
+                    _eventRegistrations[script].Invoke();
+                    return SCRIPT_HANDLED;
+                }
+                catch (Exception ex)
+                {
+                    Audit.Write(AuditGroup.Error, ex.ToMessageAndCompleteStacktrace());
+                    return SCRIPT_NOT_HANDLED;
+                }
             }
 
             // Is this a conditional script (such as the dialog AppearsWhen event)?
             if (_dialogEventRegistrations.ContainsKey(script))
             {
-                return _dialogEventRegistrations[script].Invoke();
+                try
+                {
+                    return _dialogEventRegistrations[script].Invoke();
+                }
+                catch (Exception ex)
+                {
+                    Audit.Write(AuditGroup.Error, ex.ToMessageAndCompleteStacktrace());
+                    return SCRIPT_NOT_HANDLED;
+                }
             }
 
             // We don't have a registration, let the NWN script handle it, if it exists.

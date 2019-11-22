@@ -250,5 +250,43 @@ namespace NWN.FinalFantasy.Core.NWNX
 
             return NWNX_GetReturnValueObject(NWNX_Util, sFunc);
         }
+
+
+        /// <summary>
+        /// Compiles and adds a script to the UserDirectory/nwnx folder.
+        /// @Will override existing scripts that are in the module.
+        /// </summary>
+        /// <param name="sFileName">The script filename without extension, 16 or less characters</param>
+        /// <param name="sScriptData">The script data to compile</param>
+        /// <param name="bWrapIntoMain">Set to TRUE to wrap sScriptData into void main(){}.</param>
+        /// <returns>Empty string on success or the compilation error</returns>
+        public static string AddScript(string sFileName, string sScriptData, bool bWrapIntoMain = false)
+        {
+            string sFunc = "AddScript";
+
+            NWNX_PushArgumentInt(NWNX_Util, sFunc, bWrapIntoMain ? 1 : 0);
+            NWNX_PushArgumentString(NWNX_Util, sFunc, sScriptData);
+            NWNX_PushArgumentString(NWNX_Util, sFunc, sFileName);
+            NWNX_CallFunction(NWNX_Util, sFunc);
+
+            return NWNX_GetReturnValueString(NWNX_Util, sFunc);
+        }
+
+        /// <summary>
+        /// Gets the contents of a .nss script file as a string
+        /// </summary>
+        /// <param name="sScriptName">The name of the script to get the contents of.</param>
+        /// <param name="nMaxLength">The max length of the return string, -1 to get everything</param>
+        /// <returns>The script file contents or "" on error.</returns>
+        public static string GetNSSContents(string sScriptName, int nMaxLength = -1)
+        {
+            string sFunc = "GetNSSContents";
+
+            NWNX_PushArgumentInt(NWNX_Util, sFunc, nMaxLength);
+            NWNX_PushArgumentString(NWNX_Util, sFunc, sScriptName);
+            NWNX_CallFunction(NWNX_Util, sFunc);
+
+            return NWNX_GetReturnValueString(NWNX_Util, sFunc);
+        }
     }
 }

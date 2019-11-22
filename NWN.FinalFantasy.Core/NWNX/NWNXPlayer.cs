@@ -1,4 +1,6 @@
-﻿namespace NWN.FinalFantasy.Core.NWNX
+﻿using static NWN.FinalFantasy.Core.NWNX.NWNXCore;
+
+namespace NWN.FinalFantasy.Core.NWNX
 {
     public static class NWNXPlayer
     {
@@ -13,10 +15,10 @@
         public static void ForcePlaceableExamineWindow(NWGameObject player, NWGameObject placeable)
         {
             string sFunc = "ForcePlaceableExamineWindow";
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Player, sFunc, placeable);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Player, sFunc, player);
+            NWNX_PushArgumentObject(NWNX_Player, sFunc, placeable);
+            NWNX_PushArgumentObject(NWNX_Player, sFunc, player);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Player, sFunc);
+            NWNX_CallFunction(NWNX_Player, sFunc);
         }
 
         /// <summary>
@@ -34,10 +36,10 @@
         public static void ForcePlaceableInventoryWindow(NWGameObject player, NWGameObject placeable)
         {
             string sFunc = "ForcePlaceableInventoryWindow";
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Player, sFunc, placeable);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Player, sFunc, player);
+            NWNX_PushArgumentObject(NWNX_Player, sFunc, placeable);
+            NWNX_PushArgumentObject(NWNX_Player, sFunc, player);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Player, sFunc);
+            NWNX_CallFunction(NWNX_Player, sFunc);
         }
 
         /// <summary>
@@ -54,10 +56,10 @@
                 return;
 
             string sFunc = "StartGuiTimingBar";
-            NWNXCore.NWNX_PushArgumentFloat(NWNX_Player, sFunc, seconds);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Player, sFunc, creature);
+            NWNX_PushArgumentFloat(NWNX_Player, sFunc, seconds);
+            NWNX_PushArgumentObject(NWNX_Player, sFunc, creature);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Player, sFunc);
+            NWNX_CallFunction(NWNX_Player, sFunc);
 
             int id = _.GetLocalInt(creature, "NWNX_PLAYER_GUI_TIMING_ID") + 1;
             _.SetLocalInt(creature, "NWNX_PLAYER_GUI_TIMING_ACTIVE", id);
@@ -90,8 +92,8 @@
             _.DeleteLocalInt(creature, "NWNX_PLAYER_GUI_TIMING_ACTIVE");
 
             string sFunc = "StopGuiTimingBar";
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Player, sFunc, creature);
-            NWNXCore.NWNX_CallFunction(NWNX_Player, sFunc);
+            NWNX_PushArgumentObject(NWNX_Player, sFunc, creature);
+            NWNX_CallFunction(NWNX_Player, sFunc);
 
             if (!string.IsNullOrWhiteSpace(script))
             {
@@ -120,10 +122,10 @@
         public static void SetAlwaysWalk(NWGameObject player, int bWalk)
         {
             string sFunc = "SetAlwaysWalk";
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Player, sFunc, bWalk);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Player, sFunc, player);
+            NWNX_PushArgumentInt(NWNX_Player, sFunc, bWalk);
+            NWNX_PushArgumentObject(NWNX_Player, sFunc, player);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Player, sFunc);
+            NWNX_CallFunction(NWNX_Player, sFunc);
         }
 
         /// <summary>
@@ -137,23 +139,23 @@
             string sFunc = "GetQuickBarSlot";
             QuickBarSlot qbs = new QuickBarSlot();
 
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Player, sFunc, slot);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Player, sFunc, player);
-            NWNXCore.NWNX_CallFunction(NWNX_Player, sFunc);
+            NWNX_PushArgumentInt(NWNX_Player, sFunc, slot);
+            NWNX_PushArgumentObject(NWNX_Player, sFunc, player);
+            NWNX_CallFunction(NWNX_Player, sFunc);
 
-            qbs.Associate = (NWNXCore.NWNX_GetReturnValueObject(NWNX_Player, sFunc));
-            qbs.AssociateType = NWNXCore.NWNX_GetReturnValueInt(NWNX_Player, sFunc);
-            qbs.DomainLevel = NWNXCore.NWNX_GetReturnValueInt(NWNX_Player, sFunc);
-            qbs.MetaType = NWNXCore.NWNX_GetReturnValueInt(NWNX_Player, sFunc);
-            qbs.INTParam1 = NWNXCore.NWNX_GetReturnValueInt(NWNX_Player, sFunc);
-            qbs.ToolTip = NWNXCore.NWNX_GetReturnValueString(NWNX_Player, sFunc);
-            qbs.CommandLine = NWNXCore.NWNX_GetReturnValueString(NWNX_Player, sFunc);
-            qbs.CommandLabel = NWNXCore.NWNX_GetReturnValueString(NWNX_Player, sFunc);
-            qbs.Resref = NWNXCore.NWNX_GetReturnValueString(NWNX_Player, sFunc);
-            qbs.MultiClass = NWNXCore.NWNX_GetReturnValueInt(NWNX_Player, sFunc);
-            qbs.ObjectType = (QuickBarSlotType)NWNXCore.NWNX_GetReturnValueInt(NWNX_Player, sFunc);
-            qbs.SecondaryItem = (NWNXCore.NWNX_GetReturnValueObject(NWNX_Player, sFunc));
-            qbs.Item = (NWNXCore.NWNX_GetReturnValueObject(NWNX_Player, sFunc));
+            qbs.Associate = (NWNX_GetReturnValueObject(NWNX_Player, sFunc));
+            qbs.AssociateType = NWNX_GetReturnValueInt(NWNX_Player, sFunc);
+            qbs.DomainLevel = NWNX_GetReturnValueInt(NWNX_Player, sFunc);
+            qbs.MetaType = NWNX_GetReturnValueInt(NWNX_Player, sFunc);
+            qbs.INTParam1 = NWNX_GetReturnValueInt(NWNX_Player, sFunc);
+            qbs.ToolTip = NWNX_GetReturnValueString(NWNX_Player, sFunc);
+            qbs.CommandLine = NWNX_GetReturnValueString(NWNX_Player, sFunc);
+            qbs.CommandLabel = NWNX_GetReturnValueString(NWNX_Player, sFunc);
+            qbs.Resref = NWNX_GetReturnValueString(NWNX_Player, sFunc);
+            qbs.MultiClass = NWNX_GetReturnValueInt(NWNX_Player, sFunc);
+            qbs.ObjectType = (QuickBarSlotType)NWNX_GetReturnValueInt(NWNX_Player, sFunc);
+            qbs.SecondaryItem = (NWNX_GetReturnValueObject(NWNX_Player, sFunc));
+            qbs.Item = (NWNX_GetReturnValueObject(NWNX_Player, sFunc));
 
             return qbs;
         }
@@ -168,23 +170,23 @@
         {
             string sFunc = "SetQuickBarSlot";
 
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Player, sFunc, qbs.Item);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Player, sFunc, qbs.SecondaryItem);
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Player, sFunc, (int)qbs.ObjectType);
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Player, sFunc, qbs.MultiClass);
-            NWNXCore.NWNX_PushArgumentString(NWNX_Player, sFunc, qbs.Resref);
-            NWNXCore.NWNX_PushArgumentString(NWNX_Player, sFunc, qbs.CommandLabel);
-            NWNXCore.NWNX_PushArgumentString(NWNX_Player, sFunc, qbs.CommandLine);
-            NWNXCore.NWNX_PushArgumentString(NWNX_Player, sFunc, qbs.ToolTip);
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Player, sFunc, qbs.INTParam1);
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Player, sFunc, qbs.MetaType);
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Player, sFunc, qbs.DomainLevel);
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Player, sFunc, qbs.AssociateType);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Player, sFunc, qbs.Associate);
+            NWNX_PushArgumentObject(NWNX_Player, sFunc, qbs.Item);
+            NWNX_PushArgumentObject(NWNX_Player, sFunc, qbs.SecondaryItem);
+            NWNX_PushArgumentInt(NWNX_Player, sFunc, (int)qbs.ObjectType);
+            NWNX_PushArgumentInt(NWNX_Player, sFunc, qbs.MultiClass);
+            NWNX_PushArgumentString(NWNX_Player, sFunc, qbs.Resref);
+            NWNX_PushArgumentString(NWNX_Player, sFunc, qbs.CommandLabel);
+            NWNX_PushArgumentString(NWNX_Player, sFunc, qbs.CommandLine);
+            NWNX_PushArgumentString(NWNX_Player, sFunc, qbs.ToolTip);
+            NWNX_PushArgumentInt(NWNX_Player, sFunc, qbs.INTParam1);
+            NWNX_PushArgumentInt(NWNX_Player, sFunc, qbs.MetaType);
+            NWNX_PushArgumentInt(NWNX_Player, sFunc, qbs.DomainLevel);
+            NWNX_PushArgumentInt(NWNX_Player, sFunc, qbs.AssociateType);
+            NWNX_PushArgumentObject(NWNX_Player, sFunc, qbs.Associate);
 
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Player, sFunc, slot);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Player, sFunc, player);
-            NWNXCore.NWNX_CallFunction(NWNX_Player, sFunc);
+            NWNX_PushArgumentInt(NWNX_Player, sFunc, slot);
+            NWNX_PushArgumentObject(NWNX_Player, sFunc, player);
+            NWNX_CallFunction(NWNX_Player, sFunc);
         }
 
 
@@ -196,9 +198,9 @@
         public static string GetBicFileName(NWGameObject player)
         {
             string sFunc = "GetBicFileName";
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Player, sFunc, player);
-            NWNXCore.NWNX_CallFunction(NWNX_Player, sFunc);
-            return NWNXCore.NWNX_GetReturnValueString(NWNX_Player, sFunc);
+            NWNX_PushArgumentObject(NWNX_Player, sFunc, player);
+            NWNX_CallFunction(NWNX_Player, sFunc);
+            return NWNX_GetReturnValueString(NWNX_Player, sFunc);
         }
 
         /// <summary>
@@ -210,13 +212,13 @@
         public static void ShowVisualEffect(NWGameObject player, int effectId, Vector position)
         {
             string sFunc = "ShowVisualEffect";
-            NWNXCore.NWNX_PushArgumentFloat(NWNX_Player, sFunc, position.X);
-            NWNXCore.NWNX_PushArgumentFloat(NWNX_Player, sFunc, position.Y);
-            NWNXCore.NWNX_PushArgumentFloat(NWNX_Player, sFunc, position.Z);
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Player, sFunc, effectId);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Player, sFunc, player);
+            NWNX_PushArgumentFloat(NWNX_Player, sFunc, position.X);
+            NWNX_PushArgumentFloat(NWNX_Player, sFunc, position.Y);
+            NWNX_PushArgumentFloat(NWNX_Player, sFunc, position.Z);
+            NWNX_PushArgumentInt(NWNX_Player, sFunc, effectId);
+            NWNX_PushArgumentObject(NWNX_Player, sFunc, player);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Player, sFunc);
+            NWNX_CallFunction(NWNX_Player, sFunc);
         }
 
         /// <summary>
@@ -227,11 +229,11 @@
         public static void MusicBackgroundChangeDay(NWGameObject player, int track)
         {
             string sFunc = "ChangeBackgroundMusic";
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Player, sFunc, track);
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Player, sFunc, 1); // bool day = TRUE
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Player, sFunc, player);
+            NWNX_PushArgumentInt(NWNX_Player, sFunc, track);
+            NWNX_PushArgumentInt(NWNX_Player, sFunc, 1); // bool day = TRUE
+            NWNX_PushArgumentObject(NWNX_Player, sFunc, player);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Player, sFunc);
+            NWNX_CallFunction(NWNX_Player, sFunc);
         }
 
         /// <summary>
@@ -242,11 +244,11 @@
         public static void MusicBackgroundChangeNight(NWGameObject player, int track)
         {
             string sFunc = "ChangeBackgroundMusic";
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Player, sFunc, track);
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Player, sFunc, 0); // bool day = FALSE
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Player, sFunc, player);
+            NWNX_PushArgumentInt(NWNX_Player, sFunc, track);
+            NWNX_PushArgumentInt(NWNX_Player, sFunc, 0); // bool day = FALSE
+            NWNX_PushArgumentObject(NWNX_Player, sFunc, player);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Player, sFunc);
+            NWNX_CallFunction(NWNX_Player, sFunc);
         }
 
         /// <summary>
@@ -256,10 +258,10 @@
         public static void MusicBackgroundStart(NWGameObject player)
         {
             string sFunc = "PlayBackgroundMusic";
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Player, sFunc, 1); // bool play = TRUE
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Player, sFunc, player);
+            NWNX_PushArgumentInt(NWNX_Player, sFunc, 1); // bool play = TRUE
+            NWNX_PushArgumentObject(NWNX_Player, sFunc, player);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Player, sFunc);
+            NWNX_CallFunction(NWNX_Player, sFunc);
         }
 
         /// <summary>
@@ -269,10 +271,10 @@
         public static void MusicBackgroundStop(NWGameObject player)
         {
             string sFunc = "PlayBackgroundMusic";
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Player, sFunc, 0); // bool play = FALSE
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Player, sFunc, player);
+            NWNX_PushArgumentInt(NWNX_Player, sFunc, 0); // bool play = FALSE
+            NWNX_PushArgumentObject(NWNX_Player, sFunc, player);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Player, sFunc);
+            NWNX_CallFunction(NWNX_Player, sFunc);
         }
 
         /// <summary>
@@ -283,10 +285,10 @@
         public static void MusicBattleChange(NWGameObject player, int track)
         {
             string sFunc = "ChangeBattleMusic";
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Player, sFunc, track);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Player, sFunc, player);
+            NWNX_PushArgumentInt(NWNX_Player, sFunc, track);
+            NWNX_PushArgumentObject(NWNX_Player, sFunc, player);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Player, sFunc);
+            NWNX_CallFunction(NWNX_Player, sFunc);
         }
 
         /// <summary>
@@ -296,10 +298,10 @@
         public static void MusicBattleStart(NWGameObject player)
         {
             string sFunc = "PlayBattleMusic";
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Player, sFunc, 1); // bool play = TRUE
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Player, sFunc, player);
+            NWNX_PushArgumentInt(NWNX_Player, sFunc, 1); // bool play = TRUE
+            NWNX_PushArgumentObject(NWNX_Player, sFunc, player);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Player, sFunc);
+            NWNX_CallFunction(NWNX_Player, sFunc);
         }
 
         /// <summary>
@@ -309,10 +311,10 @@
         public static void MusicBattleStop(NWGameObject player)
         {
             string sFunc = "PlayBattleMusic";
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Player, sFunc, 0); // bool play = FALSE
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Player, sFunc, player);
+            NWNX_PushArgumentInt(NWNX_Player, sFunc, 0); // bool play = FALSE
+            NWNX_PushArgumentObject(NWNX_Player, sFunc, player);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Player, sFunc);
+            NWNX_CallFunction(NWNX_Player, sFunc);
         }
 
         /// <summary>
@@ -325,11 +327,11 @@
         public static void PlaySound(NWGameObject player, string sound, NWGameObject target)
         {
             string sFunc = "PlaySound";
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Player, sFunc, target);
-            NWNXCore.NWNX_PushArgumentString(NWNX_Player, sFunc, sound);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Player, sFunc, player);
+            NWNX_PushArgumentObject(NWNX_Player, sFunc, target);
+            NWNX_PushArgumentString(NWNX_Player, sFunc, sound);
+            NWNX_PushArgumentObject(NWNX_Player, sFunc, player);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Player, sFunc);
+            NWNX_CallFunction(NWNX_Player, sFunc);
         }
 
         /// <summary>
@@ -341,11 +343,11 @@
         public static void SetPlaceableUseable(NWGameObject player, NWGameObject placeable, bool isUseable)
         {
             string sFunc = "SetPlaceableUsable";
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Player, sFunc, isUseable ? 1 : 0);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Player, sFunc, placeable);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Player, sFunc, player);
+            NWNX_PushArgumentInt(NWNX_Player, sFunc, isUseable ? 1 : 0);
+            NWNX_PushArgumentObject(NWNX_Player, sFunc, placeable);
+            NWNX_PushArgumentObject(NWNX_Player, sFunc, player);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Player, sFunc);
+            NWNX_CallFunction(NWNX_Player, sFunc);
         }
 
         /// <summary>
@@ -359,10 +361,10 @@
         public static void SetRestDuration(NWGameObject player, int duration)
         {
             string sFunc = "SetRestDuration";
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Player, sFunc, duration);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Player, sFunc, player);
+            NWNX_PushArgumentInt(NWNX_Player, sFunc, duration);
+            NWNX_PushArgumentObject(NWNX_Player, sFunc, player);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Player, sFunc);
+            NWNX_CallFunction(NWNX_Player, sFunc);
         }
 
 
@@ -376,11 +378,11 @@
         public static void ApplyInstantVisualEffectToObject(NWGameObject player, NWGameObject target, int visualeffect)
         {
             string sFunc = "ApplyInstantVisualEffectToObject";
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Player, sFunc, visualeffect);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Player, sFunc, target);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Player, sFunc, player);
+            NWNX_PushArgumentInt(NWNX_Player, sFunc, visualeffect);
+            NWNX_PushArgumentObject(NWNX_Player, sFunc, target);
+            NWNX_PushArgumentObject(NWNX_Player, sFunc, player);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Player, sFunc);
+            NWNX_CallFunction(NWNX_Player, sFunc);
         }
 
         /// <summary>
@@ -392,9 +394,9 @@
         public static void UpdateCharacterSheet(NWGameObject player)
         {
             string sFunc = "UpdateCharacterSheet";
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Player, sFunc, player);
+            NWNX_PushArgumentObject(NWNX_Player, sFunc, player);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Player, sFunc);
+            NWNX_CallFunction(NWNX_Player, sFunc);
         }
 
         /// <summary>
@@ -409,11 +411,11 @@
         {
             string sFunc = "OpenInventory";
 
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Player, sFunc, open ? 1 : 0);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Player, sFunc, target);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Player, sFunc, player);
+            NWNX_PushArgumentInt(NWNX_Player, sFunc, open ? 1 : 0);
+            NWNX_PushArgumentObject(NWNX_Player, sFunc, target);
+            NWNX_PushArgumentObject(NWNX_Player, sFunc, player);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Player, sFunc);
+            NWNX_CallFunction(NWNX_Player, sFunc);
         }
 
         /// <summary>
@@ -425,11 +427,11 @@
         public static string GetAreaExplorationState(NWGameObject player, NWGameObject area)
         {
             string sFunc = "GetAreaExplorationState";
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Player, sFunc, area);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Player, sFunc, player);
+            NWNX_PushArgumentObject(NWNX_Player, sFunc, area);
+            NWNX_PushArgumentObject(NWNX_Player, sFunc, player);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Player, sFunc);
-            return NWNXCore.NWNX_GetReturnValueString(NWNX_Player, sFunc);
+            NWNX_CallFunction(NWNX_Player, sFunc);
+            return NWNX_GetReturnValueString(NWNX_Player, sFunc);
         }
 
         /// <summary>
@@ -441,11 +443,11 @@
         public static void SetAreaExplorationState(NWGameObject player, NWGameObject area, string str)
         {
             string sFunc = "SetAreaExplorationState";
-            NWNXCore.NWNX_PushArgumentString(NWNX_Player, sFunc, str);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Player, sFunc, area);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Player, sFunc, player);
+            NWNX_PushArgumentString(NWNX_Player, sFunc, str);
+            NWNX_PushArgumentObject(NWNX_Player, sFunc, area);
+            NWNX_PushArgumentObject(NWNX_Player, sFunc, player);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Player, sFunc);
+            NWNX_CallFunction(NWNX_Player, sFunc);
         }
 
         /// <summary>
@@ -461,10 +463,10 @@
         {
             string sFunc = "SetRestAnimation";
 
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Player, sFunc, nAnimation);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Player, sFunc, oPlayer);
+            NWNX_PushArgumentInt(NWNX_Player, sFunc, nAnimation);
+            NWNX_PushArgumentObject(NWNX_Player, sFunc, oPlayer);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Player, sFunc);
+            NWNX_CallFunction(NWNX_Player, sFunc);
         }
 
         /// <summary>
@@ -481,12 +483,12 @@
         {
             string sFunc = "SetObjectVisualTransformOverride";
 
-            NWNXCore.NWNX_PushArgumentFloat(NWNX_Player, sFunc, fValue);
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Player, sFunc, nTransform);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Player, sFunc, oObject);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Player, sFunc, oPlayer);
+            NWNX_PushArgumentFloat(NWNX_Player, sFunc, fValue);
+            NWNX_PushArgumentInt(NWNX_Player, sFunc, nTransform);
+            NWNX_PushArgumentObject(NWNX_Player, sFunc, oObject);
+            NWNX_PushArgumentObject(NWNX_Player, sFunc, oPlayer);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Player, sFunc);
+            NWNX_CallFunction(NWNX_Player, sFunc);
         }
 
         /// <summary>
@@ -504,11 +506,11 @@
         public static void ApplyLoopingVisualEffectToObject(NWGameObject player, NWGameObject target, int visualeffect)
         {
             string sFunc = "ApplyLoopingVisualEffectToObject";
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Player, sFunc, visualeffect);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Player, sFunc, target);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Player, sFunc, player);
+            NWNX_PushArgumentInt(NWNX_Player, sFunc, visualeffect);
+            NWNX_PushArgumentObject(NWNX_Player, sFunc, target);
+            NWNX_PushArgumentObject(NWNX_Player, sFunc, player);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Player, sFunc);
+            NWNX_CallFunction(NWNX_Player, sFunc);
         }
 
         /// <summary>
@@ -522,11 +524,11 @@
         {
             string sFunc = "SetPlaceableNameOverride";
 
-            NWNXCore.NWNX_PushArgumentString(NWNX_Player, sFunc, name);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Player, sFunc, placeable);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Player, sFunc, player);
+            NWNX_PushArgumentString(NWNX_Player, sFunc, name);
+            NWNX_PushArgumentObject(NWNX_Player, sFunc, placeable);
+            NWNX_PushArgumentObject(NWNX_Player, sFunc, player);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Player, sFunc);
+            NWNX_CallFunction(NWNX_Player, sFunc);
         }
 
         /// <summary>
@@ -539,11 +541,79 @@
         public static int GetQuestCompleted(NWGameObject player, string sQuestName)
         {
             string sFunc = "GetQuestCompleted";
-            NWNXCore.NWNX_PushArgumentString(NWNX_Player, sFunc, sQuestName);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Player, sFunc, player);
+            NWNX_PushArgumentString(NWNX_Player, sFunc, sQuestName);
+            NWNX_PushArgumentObject(NWNX_Player, sFunc, player);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Player, sFunc);
-            return NWNXCore.NWNX_GetReturnValueInt(NWNX_Player, sFunc);
+            NWNX_CallFunction(NWNX_Player, sFunc);
+            return NWNX_GetReturnValueInt(NWNX_Player, sFunc);
+        }
+
+        /// <summary>
+        /// This will require storing the PC's cd key or community name (depending on how you store in your vault)
+        /// and bic_filename along with routinely updating their location in some persistent method like OnRest,
+        /// OnAreaEnter and OnClentExit.
+        ///
+        /// Place waypoints on module load representing where a PC should start
+        /// </summary>
+        /// <param name="sCDKeyOrCommunityName">The Public CD Key or Community Name of the player, this will depend on your vault type.</param>
+        /// <param name="sBicFileName">The filename for the character. Retrieved with NWNX_Player_GetBicFileName().</param>
+        /// <param name="oWP">The waypoint object to place where the PC should start.</param>
+        /// <param name="bFirstConnectOnly">Set to FALSE if you would like the PC to go to this location every time they login instead of just every server restart.</param>
+        public static void SetPersistentLocation(string sCDKeyOrCommunityName, string sBicFileName, NWGameObject oWP, bool bFirstConnectOnly = true)
+        {
+            string sFunc = "SetPersistentLocation";
+
+            NWNX_PushArgumentInt(NWNX_Player, sFunc, bFirstConnectOnly ? 1 : 0);
+            NWNX_PushArgumentObject(NWNX_Player, sFunc, oWP);
+            NWNX_PushArgumentString(NWNX_Player, sFunc, sBicFileName);
+            NWNX_PushArgumentString(NWNX_Player, sFunc, sCDKeyOrCommunityName);
+
+            NWNX_CallFunction(NWNX_Player, sFunc);
+        }
+
+        /// <summary>
+        /// Force an item name to be updated.
+        /// This is a workaround for bug that occurs when updating item names in open containers.
+        /// </summary>
+        /// <param name="oPlayer">The player</param>
+        /// <param name="oItem">The item</param>
+        public static void UpdateItemName(NWGameObject oPlayer, NWGameObject oItem)
+        {
+            string sFunc = "UpdateItemName";
+
+            NWNX_PushArgumentObject(NWNX_Player, sFunc, oItem);
+            NWNX_PushArgumentObject(NWNX_Player, sFunc, oPlayer);
+
+            NWNX_CallFunction(NWNX_Player, sFunc);
+        }
+
+        /// <summary>
+        /// Possesses a creature by temporarily making them a familiar
+        /// This command allows a PC to possess an NPC by temporarily adding them as a familiar. It will work
+        /// if the player already has an existing familiar. The creatures must be in the same area. Unpossession can be
+        /// done with the regular @nwn{UnpossessFamiliar} commands.
+        /// The possessed creature will send automap data back to the possessor.
+        /// If you wish to prevent this you may wish to use NWNX_Player_GetAreaExplorationState() and
+        /// NWNX_Player_SetAreaExplorationState() before and after the possession.
+        /// The possessing creature will be left wherever they were when beginning the possession. You may wish
+        /// to use @nwn{EffectCutsceneImmobilize} and @nwn{EffectCutsceneGhost} to hide them.
+        /// </summary>
+        /// <param name="oPossessor">The possessor player object</param>
+        /// <param name="oPossessed">The possessed creature object. Only works on NPCs.</param>
+        /// <param name="bMindImmune">If FALSE will remove the mind immunity effect on the possessor.</param>
+        /// <param name="bCreateDefaultQB">If TRUE will populate the quick bar with default buttons.</param>
+        /// <returns>TRUE if possession succeeded.</returns>
+        public static bool PossessCreature(NWGameObject oPossessor, NWGameObject oPossessed, bool bMindImmune = true, bool bCreateDefaultQB = false)
+        {
+            string sFunc = "PossessCreature";
+
+            NWNX_PushArgumentInt(NWNX_Player, sFunc, bCreateDefaultQB ? 1 : 0);
+            NWNX_PushArgumentInt(NWNX_Player, sFunc, bMindImmune ? 1 : 0);
+            NWNX_PushArgumentObject(NWNX_Player, sFunc, oPossessed);
+            NWNX_PushArgumentObject(NWNX_Player, sFunc, oPossessor);
+
+            NWNX_CallFunction(NWNX_Player, sFunc);
+            return NWNX_GetReturnValueInt(NWNX_Player, sFunc) == 1;
         }
     }
 }

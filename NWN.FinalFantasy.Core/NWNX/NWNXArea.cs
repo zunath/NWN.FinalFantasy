@@ -1,4 +1,6 @@
-﻿namespace NWN.FinalFantasy.Core.NWNX
+﻿using static NWN.FinalFantasy.Core.NWNX.NWNXCore;
+
+namespace NWN.FinalFantasy.Core.NWNX
 {
     public static class NWNXArea
     {
@@ -14,10 +16,10 @@
         {
             string sFunc = "GetNumberOfPlayersInArea";
 
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Area, sFunc, area);
-            NWNXCore.NWNX_CallFunction(NWNX_Area, sFunc);
+            NWNX_PushArgumentObject(NWNX_Area, sFunc, area);
+            NWNX_CallFunction(NWNX_Area, sFunc);
 
-            return NWNXCore.NWNX_GetReturnValueInt(NWNX_Area, sFunc);
+            return NWNX_GetReturnValueInt(NWNX_Area, sFunc);
         }
 
         /// <summary>
@@ -29,10 +31,10 @@
         {
             string sFunc = "GetLastEntered";
 
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Area, sFunc, area);
-            NWNXCore.NWNX_CallFunction(NWNX_Area, sFunc);
+            NWNX_PushArgumentObject(NWNX_Area, sFunc, area);
+            NWNX_CallFunction(NWNX_Area, sFunc);
 
-            return NWNXCore.NWNX_GetReturnValueObject(NWNX_Area, sFunc);
+            return NWNX_GetReturnValueObject(NWNX_Area, sFunc);
         }
 
         /// <summary>
@@ -44,10 +46,10 @@
         {
             string sFunc = "GetLastLeft";
 
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Area, sFunc, area);
-            NWNXCore.NWNX_CallFunction(NWNX_Area, sFunc);
+            NWNX_PushArgumentObject(NWNX_Area, sFunc, area);
+            NWNX_CallFunction(NWNX_Area, sFunc);
 
-            return NWNXCore.NWNX_GetReturnValueObject(NWNX_Area, sFunc);
+            return NWNX_GetReturnValueObject(NWNX_Area, sFunc);
         }
 
         /// <summary>
@@ -59,10 +61,10 @@
         {
             string sFunc = "GetPVPSetting";
 
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Area, sFunc, area);
-            NWNXCore.NWNX_CallFunction(NWNX_Area, sFunc);
+            NWNX_PushArgumentObject(NWNX_Area, sFunc, area);
+            NWNX_CallFunction(NWNX_Area, sFunc);
 
-            return (AreaPVPSetting)NWNXCore.NWNX_GetReturnValueInt(NWNX_Area, sFunc);
+            return (AreaPVPSetting)NWNX_GetReturnValueInt(NWNX_Area, sFunc);
         }
 
         /// <summary>
@@ -74,9 +76,9 @@
         {
             string sFunc = "SetPVPSetting";
 
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Area, sFunc, (int)pvpSetting);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Area, sFunc, area);
-            NWNXCore.NWNX_CallFunction(NWNX_Area, sFunc);
+            NWNX_PushArgumentInt(NWNX_Area, sFunc, (int)pvpSetting);
+            NWNX_PushArgumentObject(NWNX_Area, sFunc, area);
+            NWNX_CallFunction(NWNX_Area, sFunc);
         }
 
         /// <summary>
@@ -88,10 +90,10 @@
         {
             string sFunc = "GetAreaSpotModifier";
 
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Area, sFunc, area);
-            NWNXCore.NWNX_CallFunction(NWNX_Area, sFunc);
+            NWNX_PushArgumentObject(NWNX_Area, sFunc, area);
+            NWNX_CallFunction(NWNX_Area, sFunc);
 
-            return NWNXCore.NWNX_GetReturnValueInt(NWNX_Area, sFunc);
+            return NWNX_GetReturnValueInt(NWNX_Area, sFunc);
         }
 
         /// <summary>
@@ -103,9 +105,9 @@
         {
             string sFunc = "SetAreaSpotModifier";
 
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Area, sFunc, spotModifier);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Area, sFunc, area);
-            NWNXCore.NWNX_CallFunction(NWNX_Area, sFunc);
+            NWNX_PushArgumentInt(NWNX_Area, sFunc, spotModifier);
+            NWNX_PushArgumentObject(NWNX_Area, sFunc, area);
+            NWNX_CallFunction(NWNX_Area, sFunc);
         }
 
         /// <summary>
@@ -117,10 +119,10 @@
         {
             string sFunc = "GetAreaListenModifier";
 
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Area, sFunc, area);
-            NWNXCore.NWNX_CallFunction(NWNX_Area, sFunc);
+            NWNX_PushArgumentObject(NWNX_Area, sFunc, area);
+            NWNX_CallFunction(NWNX_Area, sFunc);
 
-            return NWNXCore.NWNX_GetReturnValueInt(NWNX_Area, sFunc);
+            return NWNX_GetReturnValueInt(NWNX_Area, sFunc);
         }
 
         /// <summary>
@@ -132,9 +134,9 @@
         {
             string sFunc = "SetAreaListenModifier";
 
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Area, sFunc, listenModifier);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Area, sFunc, area);
-            NWNXCore.NWNX_CallFunction(NWNX_Area, sFunc);
+            NWNX_PushArgumentInt(NWNX_Area, sFunc, listenModifier);
+            NWNX_PushArgumentObject(NWNX_Area, sFunc, area);
+            NWNX_CallFunction(NWNX_Area, sFunc);
         }
 
         /// <summary>
@@ -146,10 +148,10 @@
         {
             string sFunc = "GetNoRestingAllowed";
 
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Area, sFunc, area);
-            NWNXCore.NWNX_CallFunction(NWNX_Area, sFunc);
+            NWNX_PushArgumentObject(NWNX_Area, sFunc, area);
+            NWNX_CallFunction(NWNX_Area, sFunc);
 
-            return NWNXCore.NWNX_GetReturnValueInt(NWNX_Area, sFunc) == 1;
+            return NWNX_GetReturnValueInt(NWNX_Area, sFunc) == 1;
         }
 
         /// <summary>
@@ -163,9 +165,9 @@
         {
             string sFunc = "SetNoRestingAllowed";
 
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Area, sFunc, bNoRestingAllowed ? 1 : 0);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Area, sFunc, area);
-            NWNXCore.NWNX_CallFunction(NWNX_Area, sFunc);
+            NWNX_PushArgumentInt(NWNX_Area, sFunc, bNoRestingAllowed ? 1 : 0);
+            NWNX_PushArgumentObject(NWNX_Area, sFunc, area);
+            NWNX_CallFunction(NWNX_Area, sFunc);
         }
 
         /// <summary>
@@ -177,10 +179,10 @@
         {
             string sFunc = "GetWindPower";
 
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Area, sFunc, area);
-            NWNXCore.NWNX_CallFunction(NWNX_Area, sFunc);
+            NWNX_PushArgumentObject(NWNX_Area, sFunc, area);
+            NWNX_CallFunction(NWNX_Area, sFunc);
 
-            return NWNXCore.NWNX_GetReturnValueInt(NWNX_Area, sFunc);
+            return NWNX_GetReturnValueInt(NWNX_Area, sFunc);
         }
 
         /// <summary>
@@ -193,9 +195,9 @@
         {
             string sFunc = "SetWindPower";
 
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Area, sFunc, windPower);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Area, sFunc, area);
-            NWNXCore.NWNX_CallFunction(NWNX_Area, sFunc);
+            NWNX_PushArgumentInt(NWNX_Area, sFunc, windPower);
+            NWNX_PushArgumentObject(NWNX_Area, sFunc, area);
+            NWNX_CallFunction(NWNX_Area, sFunc);
         }
 
         /// <summary>
@@ -208,11 +210,11 @@
         {
             string sFunc = "GetWeatherChance";
 
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Area, sFunc, (int)type);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Area, sFunc, area);
-            NWNXCore.NWNX_CallFunction(NWNX_Area, sFunc);
+            NWNX_PushArgumentInt(NWNX_Area, sFunc, (int)type);
+            NWNX_PushArgumentObject(NWNX_Area, sFunc, area);
+            NWNX_CallFunction(NWNX_Area, sFunc);
 
-            return NWNXCore.NWNX_GetReturnValueInt(NWNX_Area, sFunc);
+            return NWNX_GetReturnValueInt(NWNX_Area, sFunc);
         }
 
         /// <summary>
@@ -225,10 +227,10 @@
         {
             string sFunc = "SetWeatherChance";
 
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Area, sFunc, chance);
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Area, sFunc, (int)type);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Area, sFunc, area);
-            NWNXCore.NWNX_CallFunction(NWNX_Area, sFunc);
+            NWNX_PushArgumentInt(NWNX_Area, sFunc, chance);
+            NWNX_PushArgumentInt(NWNX_Area, sFunc, (int)type);
+            NWNX_PushArgumentObject(NWNX_Area, sFunc, area);
+            NWNX_CallFunction(NWNX_Area, sFunc);
         }
 
         /// <summary>
@@ -240,10 +242,10 @@
         {
             string sFunc = "GetFogClipDistance";
 
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Area, sFunc, area);
-            NWNXCore.NWNX_CallFunction(NWNX_Area, sFunc);
+            NWNX_PushArgumentObject(NWNX_Area, sFunc, area);
+            NWNX_CallFunction(NWNX_Area, sFunc);
 
-            return NWNXCore.NWNX_GetReturnValueFloat(NWNX_Area, sFunc);
+            return NWNX_GetReturnValueFloat(NWNX_Area, sFunc);
         }
 
         /// <summary>
@@ -255,9 +257,9 @@
         {
             string sFunc = "SetFogClipDistance";
 
-            NWNXCore.NWNX_PushArgumentFloat(NWNX_Area, sFunc, distance);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Area, sFunc, area);
-            NWNXCore.NWNX_CallFunction(NWNX_Area, sFunc);
+            NWNX_PushArgumentFloat(NWNX_Area, sFunc, distance);
+            NWNX_PushArgumentObject(NWNX_Area, sFunc, area);
+            NWNX_CallFunction(NWNX_Area, sFunc);
         }
 
         /// <summary>
@@ -269,10 +271,10 @@
         {
             string sFunc = "GetShadowOpacity";
 
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Area, sFunc, area);
-            NWNXCore.NWNX_CallFunction(NWNX_Area, sFunc);
+            NWNX_PushArgumentObject(NWNX_Area, sFunc, area);
+            NWNX_CallFunction(NWNX_Area, sFunc);
 
-            return NWNXCore.NWNX_GetReturnValueInt(NWNX_Area, sFunc);
+            return NWNX_GetReturnValueInt(NWNX_Area, sFunc);
         }
 
         /// <summary>
@@ -285,9 +287,9 @@
         {
             string sFunc = "SetShadowOpacity";
 
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Area, sFunc, shadowOpacity);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Area, sFunc, area);
-            NWNXCore.NWNX_CallFunction(NWNX_Area, sFunc);
+            NWNX_PushArgumentInt(NWNX_Area, sFunc, shadowOpacity);
+            NWNX_PushArgumentObject(NWNX_Area, sFunc, area);
+            NWNX_CallFunction(NWNX_Area, sFunc);
         }
 
         /// <summary>
@@ -299,10 +301,10 @@
         {
             string sFunc = "GetDayNightCycle";
 
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Area, sFunc, area);
-            NWNXCore.NWNX_CallFunction(NWNX_Area, sFunc);
+            NWNX_PushArgumentObject(NWNX_Area, sFunc, area);
+            NWNX_CallFunction(NWNX_Area, sFunc);
 
-            return (AreaDayNightCycle)NWNXCore.NWNX_GetReturnValueInt(NWNX_Area, sFunc);
+            return (AreaDayNightCycle)NWNX_GetReturnValueInt(NWNX_Area, sFunc);
         }
 
         /// <summary>
@@ -314,9 +316,9 @@
         {
             string sFunc = "SetDayNightCycle";
 
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Area, sFunc, (int)type);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Area, sFunc, area);
-            NWNXCore.NWNX_CallFunction(NWNX_Area, sFunc);
+            NWNX_PushArgumentInt(NWNX_Area, sFunc, (int)type);
+            NWNX_PushArgumentObject(NWNX_Area, sFunc, area);
+            NWNX_CallFunction(NWNX_Area, sFunc);
         }
 
         /// <summary>
@@ -337,10 +339,10 @@
         {
             string sFunc = "SetSunMoonColors";
 
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Area, sFunc, color);
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Area, sFunc, (int)type);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Area, sFunc, area);
-            NWNXCore.NWNX_CallFunction(NWNX_Area, sFunc);
+            NWNX_PushArgumentInt(NWNX_Area, sFunc, color);
+            NWNX_PushArgumentInt(NWNX_Area, sFunc, (int)type);
+            NWNX_PushArgumentObject(NWNX_Area, sFunc, area);
+            NWNX_CallFunction(NWNX_Area, sFunc);
         }
 
         /// <summary>
@@ -360,16 +362,89 @@
         {
             string sFunc = "CreateTransition";
 
-            NWNXCore.NWNX_PushArgumentString(NWNX_Area, sFunc, tag);
-            NWNXCore.NWNX_PushArgumentFloat(NWNX_Area, sFunc, size);
-            NWNXCore.NWNX_PushArgumentFloat(NWNX_Area, sFunc, z);
-            NWNXCore.NWNX_PushArgumentFloat(NWNX_Area, sFunc, y);
-            NWNXCore.NWNX_PushArgumentFloat(NWNX_Area, sFunc, x);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Area, sFunc, target);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Area, sFunc, area);
-            NWNXCore.NWNX_CallFunction(NWNX_Area, sFunc);
+            NWNX_PushArgumentString(NWNX_Area, sFunc, tag);
+            NWNX_PushArgumentFloat(NWNX_Area, sFunc, size);
+            NWNX_PushArgumentFloat(NWNX_Area, sFunc, z);
+            NWNX_PushArgumentFloat(NWNX_Area, sFunc, y);
+            NWNX_PushArgumentFloat(NWNX_Area, sFunc, x);
+            NWNX_PushArgumentObject(NWNX_Area, sFunc, target);
+            NWNX_PushArgumentObject(NWNX_Area, sFunc, area);
+            NWNX_CallFunction(NWNX_Area, sFunc);
 
-            return NWNXCore.NWNX_GetReturnValueObject(NWNX_Area, sFunc);
+            return NWNX_GetReturnValueObject(NWNX_Area, sFunc);
+        }
+
+        /// <summary>
+        /// Get the state of a tile animation loop
+        /// </summary>
+        /// <param name="oArea">The area object</param>
+        /// <param name="fTileX">The X coordinate of the tile</param>
+        /// <param name="fTileY">The Y coordinate of the tile</param>
+        /// <param name="nAnimLoop">The loop to check. (1-3)</param>
+        /// <returns>true if the loop is enabled, false otherwise</returns>
+        public static bool GetTileAnimationLoop(NWGameObject oArea, float fTileX, float fTileY, int nAnimLoop)
+        {
+            string sFunc = "GetTileAnimationLoop";
+
+            NWNX_PushArgumentInt(NWNX_Area, sFunc, nAnimLoop);
+            NWNX_PushArgumentFloat(NWNX_Area, sFunc, fTileY);
+            NWNX_PushArgumentFloat(NWNX_Area, sFunc, fTileX);
+            NWNX_PushArgumentObject(NWNX_Area, sFunc, oArea);
+
+            NWNX_CallFunction(NWNX_Area, sFunc);
+
+            return NWNX_GetReturnValueInt(NWNX_Area, sFunc) == 1;
+        }
+
+        /// <summary>
+        /// Set the state of a tile animation loop
+        /// </summary>
+        /// <param name="oArea">The area object.</param>
+        /// <param name="fTileX">The X coordinate of the tile</param>
+        /// <param name="fTileY">The Y coordinate of the tile</param>
+        /// <param name="nAnimLoop">The loop to set (1-3).</param>
+        /// <param name="bEnabled">true or false</param>
+        public static void SetTileAnimationLoop(NWGameObject oArea, float fTileX, float fTileY, int nAnimLoop, bool bEnabled)
+        {
+            string sFunc = "SetTileAnimationLoop";
+
+            NWNX_PushArgumentInt(NWNX_Area, sFunc, bEnabled ? 1 : 0);
+            NWNX_PushArgumentInt(NWNX_Area, sFunc, nAnimLoop);
+            NWNX_PushArgumentFloat(NWNX_Area, sFunc, fTileY);
+            NWNX_PushArgumentFloat(NWNX_Area, sFunc, fTileX);
+            NWNX_PushArgumentObject(NWNX_Area, sFunc, oArea);
+
+            NWNX_CallFunction(NWNX_Area, sFunc);
+        }
+
+        /// <summary>
+        /// Test to see if there's a direct, walkable line between two points in the area.
+        /// </summary>
+        /// <param name="oArea">The area object.</param>
+        /// <param name="fStartX">The starting point</param>
+        /// <param name="fStartY">The starting point</param>
+        /// <param name="fEndX">The ending point</param>
+        /// <param name="fEndY">The ending point</param>
+        /// <param name="fPerSpace">The personal space of a creature. Found in appearance.2da.</param>
+        /// <param name="fHeight">The height of a creature. Found in appearance.2da.</param>
+        /// <param name="bIgnoreDoors">Whether to ignore doors in the check.</param>
+        /// <returns>The DirectLineResult of the test</returns>
+        public static DirectLineResult TestDirectLine(NWGameObject oArea, float fStartX, float fStartY, float fEndX, float fEndY, float fPerSpace, float fHeight, bool bIgnoreDoors = false)
+        {
+            string sFunc = "TestDirectLine";
+
+            NWNX_PushArgumentInt(NWNX_Area, sFunc, bIgnoreDoors ? 1 : 0);
+            NWNX_PushArgumentFloat(NWNX_Area, sFunc, fHeight);
+            NWNX_PushArgumentFloat(NWNX_Area, sFunc, fPerSpace);
+            NWNX_PushArgumentFloat(NWNX_Area, sFunc, fEndY);
+            NWNX_PushArgumentFloat(NWNX_Area, sFunc, fEndX);
+            NWNX_PushArgumentFloat(NWNX_Area, sFunc, fStartY);
+            NWNX_PushArgumentFloat(NWNX_Area, sFunc, fStartX);
+            NWNX_PushArgumentObject(NWNX_Area, sFunc, oArea);
+
+            NWNX_CallFunction(NWNX_Area, sFunc);
+
+            return (DirectLineResult)NWNX_GetReturnValueInt(NWNX_Area, sFunc);
         }
     }
 }

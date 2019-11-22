@@ -14,6 +14,7 @@ namespace NWN.FinalFantasy.Core.Dialog
         public bool IsEnding { get; set; }
         public string DefaultPageName { get; set; }
         public bool EnableBackButton { get; set; }
+        public int DialogID { get; set; }
 
         public PlayerDialog(string defaultPageName)
         {

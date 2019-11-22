@@ -1,5 +1,6 @@
 ﻿using NWN.FinalFantasy.Core.NWScript.Enumerations;
 using static NWN._;
+using static NWN.FinalFantasy.Core.NWNX.NWNXCore;
 
 namespace NWN.FinalFantasy.Core.NWNX
 {
@@ -15,10 +16,10 @@ namespace NWN.FinalFantasy.Core.NWNX
         public static void AddFeat(NWGameObject creature, Feat feat)
         {
             string sFunc = "AddFeat";
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, (int)feat);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, (int)feat);
+            NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Creature, sFunc);
+            NWNX_CallFunction(NWNX_Creature, sFunc);
         }
 
         /// <summary>
@@ -31,11 +32,11 @@ namespace NWN.FinalFantasy.Core.NWNX
         {
             string sFunc = "AddFeatByLevel";
 
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, level);
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, (int)feat);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, level);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, (int)feat);
+            NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Creature, sFunc);
+            NWNX_CallFunction(NWNX_Creature, sFunc);
         }
 
         /// <summary>
@@ -46,10 +47,10 @@ namespace NWN.FinalFantasy.Core.NWNX
         public static void RemoveFeat(NWGameObject creature, Feat feat)
         {
             string sFunc = "RemoveFeat";
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, (int)feat);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, (int)feat);
+            NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Creature, sFunc);
+            NWNX_CallFunction(NWNX_Creature, sFunc);
         }
 
         /// <summary>
@@ -62,11 +63,11 @@ namespace NWN.FinalFantasy.Core.NWNX
         {
             string sFunc = "GetKnowsFeat";
 
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, feat);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, feat);
+            NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Creature, sFunc);
-            return NWNXCore.NWNX_GetReturnValueInt(NWNX_Creature, sFunc);
+            NWNX_CallFunction(NWNX_Creature, sFunc);
+            return NWNX_GetReturnValueInt(NWNX_Creature, sFunc);
         }
 
         /// <summary>
@@ -79,11 +80,11 @@ namespace NWN.FinalFantasy.Core.NWNX
         {
             string sFunc = "GetFeatCountByLevel";
 
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, level);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, level);
+            NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Creature, sFunc);
-            return NWNXCore.NWNX_GetReturnValueInt(NWNX_Creature, sFunc);
+            NWNX_CallFunction(NWNX_Creature, sFunc);
+            return NWNX_GetReturnValueInt(NWNX_Creature, sFunc);
         }
 
         /// <summary>
@@ -97,12 +98,12 @@ namespace NWN.FinalFantasy.Core.NWNX
         {
             string sFunc = "GetFeatByLevel";
 
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, index);
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, level);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, index);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, level);
+            NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Creature, sFunc);
-            return NWNXCore.NWNX_GetReturnValueInt(NWNX_Creature, sFunc);
+            NWNX_CallFunction(NWNX_Creature, sFunc);
+            return NWNX_GetReturnValueInt(NWNX_Creature, sFunc);
         }
 
         /// <summary>
@@ -114,10 +115,10 @@ namespace NWN.FinalFantasy.Core.NWNX
         {
             string sFunc = "GetFeatCount";
 
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
+            NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Creature, sFunc);
-            return NWNXCore.NWNX_GetReturnValueInt(NWNX_Creature, sFunc);
+            NWNX_CallFunction(NWNX_Creature, sFunc);
+            return NWNX_GetReturnValueInt(NWNX_Creature, sFunc);
         }
 
         /// <summary>
@@ -130,11 +131,11 @@ namespace NWN.FinalFantasy.Core.NWNX
         {
             string sFunc = "GetFeatByIndex";
 
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, index);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, index);
+            NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Creature, sFunc);
-            return (Feat)NWNXCore.NWNX_GetReturnValueInt(NWNX_Creature, sFunc);
+            NWNX_CallFunction(NWNX_Creature, sFunc);
+            return (Feat)NWNX_GetReturnValueInt(NWNX_Creature, sFunc);
         }
 
         /// <summary>
@@ -147,11 +148,11 @@ namespace NWN.FinalFantasy.Core.NWNX
         {
             string sFunc = "GetMeetsFeatRequirements";
 
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, feat);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, feat);
+            NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Creature, sFunc);
-            return NWNXCore.NWNX_GetReturnValueInt(NWNX_Creature, sFunc);
+            NWNX_CallFunction(NWNX_Creature, sFunc);
+            return NWNX_GetReturnValueInt(NWNX_Creature, sFunc);
         }
 
         /// <summary>
@@ -166,14 +167,14 @@ namespace NWN.FinalFantasy.Core.NWNX
 
             SpecialAbilitySlot ability = new SpecialAbilitySlot();
 
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, index);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, index);
+            NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Creature, sFunc);
+            NWNX_CallFunction(NWNX_Creature, sFunc);
 
-            ability.Level = NWNXCore.NWNX_GetReturnValueInt(NWNX_Creature, sFunc);
-            ability.Ready = NWNXCore.NWNX_GetReturnValueInt(NWNX_Creature, sFunc);
-            ability.ID = NWNXCore.NWNX_GetReturnValueInt(NWNX_Creature, sFunc);
+            ability.Level = NWNX_GetReturnValueInt(NWNX_Creature, sFunc);
+            ability.Ready = NWNX_GetReturnValueInt(NWNX_Creature, sFunc);
+            ability.ID = NWNX_GetReturnValueInt(NWNX_Creature, sFunc);
 
             return ability;
         }
@@ -187,10 +188,10 @@ namespace NWN.FinalFantasy.Core.NWNX
         {
             string sFunc = "GetSpecialAbilityCount";
 
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
-            NWNXCore.NWNX_CallFunction(NWNX_Creature, sFunc);
+            NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
+            NWNX_CallFunction(NWNX_Creature, sFunc);
 
-            return NWNXCore.NWNX_GetReturnValueInt(NWNX_Creature, sFunc);
+            return NWNX_GetReturnValueInt(NWNX_Creature, sFunc);
         }
 
         /// <summary>
@@ -202,12 +203,12 @@ namespace NWN.FinalFantasy.Core.NWNX
         {
             string sFunc = "AddSpecialAbility";
 
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, ability.ID);
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, ability.Ready);
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, ability.Level);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, ability.ID);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, ability.Ready);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, ability.Level);
+            NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Creature, sFunc);
+            NWNX_CallFunction(NWNX_Creature, sFunc);
         }
 
         /// <summary>
@@ -219,10 +220,10 @@ namespace NWN.FinalFantasy.Core.NWNX
         {
             string sFunc = "RemoveSpecialAbility";
 
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, index);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, index);
+            NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Creature, sFunc);
+            NWNX_CallFunction(NWNX_Creature, sFunc);
         }
 
         /// <summary>
@@ -235,13 +236,13 @@ namespace NWN.FinalFantasy.Core.NWNX
         {
             string sFunc = "SetSpecialAbility";
 
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, ability.ID);
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, ability.Ready);
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, ability.Level);
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, index);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, ability.ID);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, ability.Ready);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, ability.Level);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, index);
+            NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Creature, sFunc);
+            NWNX_CallFunction(NWNX_Creature, sFunc);
         }
 
         /// <summary>
@@ -254,11 +255,11 @@ namespace NWN.FinalFantasy.Core.NWNX
         {
             string sFunc = "GetClassByLevel";
 
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, level);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, level);
+            NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Creature, sFunc);
-            return NWNXCore.NWNX_GetReturnValueInt(NWNX_Creature, sFunc);
+            NWNX_CallFunction(NWNX_Creature, sFunc);
+            return NWNX_GetReturnValueInt(NWNX_Creature, sFunc);
         }
 
         /// <summary>
@@ -270,10 +271,10 @@ namespace NWN.FinalFantasy.Core.NWNX
         {
             string sFunc = "SetBaseAC";
 
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, ac);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, ac);
+            NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Creature, sFunc);
+            NWNX_CallFunction(NWNX_Creature, sFunc);
         }
 
         /// <summary>
@@ -285,10 +286,10 @@ namespace NWN.FinalFantasy.Core.NWNX
         {
             string sFunc = "GetBaseAC";
 
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
+            NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Creature, sFunc);
-            return NWNXCore.NWNX_GetReturnValueInt(NWNX_Creature, sFunc);
+            NWNX_CallFunction(NWNX_Creature, sFunc);
+            return NWNX_GetReturnValueInt(NWNX_Creature, sFunc);
         }
 
         /// <summary>
@@ -301,11 +302,11 @@ namespace NWN.FinalFantasy.Core.NWNX
         {
             string sFunc = "SetRawAbilityScore";
 
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, value);
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, (int)ability);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, value);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, (int)ability);
+            NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Creature, sFunc);
+            NWNX_CallFunction(NWNX_Creature, sFunc);
         }
 
         /// <summary>
@@ -318,11 +319,11 @@ namespace NWN.FinalFantasy.Core.NWNX
         {
             string sFunc = "GetRawAbilityScore";
 
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, ability);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, ability);
+            NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Creature, sFunc);
-            return NWNXCore.NWNX_GetReturnValueInt(NWNX_Creature, sFunc);
+            NWNX_CallFunction(NWNX_Creature, sFunc);
+            return NWNX_GetReturnValueInt(NWNX_Creature, sFunc);
         }
 
         /// <summary>
@@ -335,11 +336,11 @@ namespace NWN.FinalFantasy.Core.NWNX
         {
             string sFunc = "ModifyRawAbilityScore";
 
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, modifier);
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, ability);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, modifier);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, ability);
+            NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Creature, sFunc);
+            NWNX_CallFunction(NWNX_Creature, sFunc);
         }
 
         /// <summary>
@@ -355,17 +356,17 @@ namespace NWN.FinalFantasy.Core.NWNX
             string sFunc = "GetMemorisedSpell";
             MemorizedSpellSlot spell = new MemorizedSpellSlot();
 
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, index);
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, level);
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, @class);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, index);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, level);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, @class);
+            NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Creature, sFunc);
+            NWNX_CallFunction(NWNX_Creature, sFunc);
 
-            spell.Domain = NWNXCore.NWNX_GetReturnValueInt(NWNX_Creature, sFunc);
-            spell.Meta = NWNXCore.NWNX_GetReturnValueInt(NWNX_Creature, sFunc);
-            spell.Ready = NWNXCore.NWNX_GetReturnValueInt(NWNX_Creature, sFunc);
-            spell.ID = NWNXCore.NWNX_GetReturnValueInt(NWNX_Creature, sFunc);
+            spell.Domain = NWNX_GetReturnValueInt(NWNX_Creature, sFunc);
+            spell.Meta = NWNX_GetReturnValueInt(NWNX_Creature, sFunc);
+            spell.Ready = NWNX_GetReturnValueInt(NWNX_Creature, sFunc);
+            spell.ID = NWNX_GetReturnValueInt(NWNX_Creature, sFunc);
             return spell;
         }
 
@@ -380,12 +381,12 @@ namespace NWN.FinalFantasy.Core.NWNX
         {
             string sFunc = "GetMemorisedSpellCountByLevel";
 
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, level);
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, @class);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, level);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, @class);
+            NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Creature, sFunc);
-            return NWNXCore.NWNX_GetReturnValueInt(NWNX_Creature, sFunc);
+            NWNX_CallFunction(NWNX_Creature, sFunc);
+            return NWNX_GetReturnValueInt(NWNX_Creature, sFunc);
         }
 
         /// <summary>
@@ -400,17 +401,17 @@ namespace NWN.FinalFantasy.Core.NWNX
         {
             string sFunc = "SetMemorisedSpell";
 
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, spell.ID);
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, spell.Ready);
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, spell.Meta);
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, spell.Domain);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, spell.ID);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, spell.Ready);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, spell.Meta);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, spell.Domain);
 
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, index);
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, level);
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, @class);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, index);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, level);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, @class);
+            NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Creature, sFunc);
+            NWNX_CallFunction(NWNX_Creature, sFunc);
         }
 
         /// <summary>
@@ -424,12 +425,12 @@ namespace NWN.FinalFantasy.Core.NWNX
         {
             string sFunc = "GetRemainingSpellSlots";
 
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, level);
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, @class);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, level);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, @class);
+            NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Creature, sFunc);
-            return NWNXCore.NWNX_GetReturnValueInt(NWNX_Creature, sFunc);
+            NWNX_CallFunction(NWNX_Creature, sFunc);
+            return NWNX_GetReturnValueInt(NWNX_Creature, sFunc);
         }
 
         /// <summary>
@@ -443,12 +444,12 @@ namespace NWN.FinalFantasy.Core.NWNX
         {
             string sFunc = "SetRemainingSpellSlots";
 
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, slots);
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, level);
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, @class);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, slots);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, level);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, @class);
+            NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Creature, sFunc);
+            NWNX_CallFunction(NWNX_Creature, sFunc);
         }
 
         /// <summary>
@@ -463,13 +464,13 @@ namespace NWN.FinalFantasy.Core.NWNX
         {
             string sFunc = "GetKnownSpell";
 
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, index);
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, level);
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, @class);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, index);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, level);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, @class);
+            NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Creature, sFunc);
-            return NWNXCore.NWNX_GetReturnValueInt(NWNX_Creature, sFunc);
+            NWNX_CallFunction(NWNX_Creature, sFunc);
+            return NWNX_GetReturnValueInt(NWNX_Creature, sFunc);
         }
 
         /// <summary>
@@ -483,12 +484,12 @@ namespace NWN.FinalFantasy.Core.NWNX
         {
             string sFunc = "GetKnownSpellCount";
 
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, level);
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, @class);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, level);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, @class);
+            NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Creature, sFunc);
-            return NWNXCore.NWNX_GetReturnValueInt(NWNX_Creature, sFunc);
+            NWNX_CallFunction(NWNX_Creature, sFunc);
+            return NWNX_GetReturnValueInt(NWNX_Creature, sFunc);
         }
 
         /// <summary>
@@ -502,12 +503,12 @@ namespace NWN.FinalFantasy.Core.NWNX
         {
             string sFunc = "RemoveKnownSpell";
 
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, spellId);
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, level);
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, (int)@class);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, spellId);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, level);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, (int)@class);
+            NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Creature, sFunc);
+            NWNX_CallFunction(NWNX_Creature, sFunc);
         }
 
         /// <summary>
@@ -521,12 +522,12 @@ namespace NWN.FinalFantasy.Core.NWNX
         {
             string sFunc = "AddKnownSpell";
 
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, spellId);
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, level);
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, @class);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, spellId);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, level);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, @class);
+            NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Creature, sFunc);
+            NWNX_CallFunction(NWNX_Creature, sFunc);
         }
 
         /// <summary>
@@ -539,11 +540,11 @@ namespace NWN.FinalFantasy.Core.NWNX
         {
             string sFunc = "ClearMemorisedKnownSpells";
 
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, spellId);
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, @class);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, spellId);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, @class);
+            NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Creature, sFunc);
+            NWNX_CallFunction(NWNX_Creature, sFunc);
         }
 
         /// <summary>
@@ -557,12 +558,12 @@ namespace NWN.FinalFantasy.Core.NWNX
         {
             string sFunc = "ClearMemorisedSpell";
 
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, index);
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, level);
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, @class);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, index);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, level);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, @class);
+            NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Creature, sFunc);
+            NWNX_CallFunction(NWNX_Creature, sFunc);
         }
 
         /// <summary>
@@ -576,12 +577,12 @@ namespace NWN.FinalFantasy.Core.NWNX
         {
             string sFunc = "GetMaxSpellSlots";
 
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, level);
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, @class);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, level);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, @class);
+            NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Creature, sFunc);
-            return NWNXCore.NWNX_GetReturnValueInt(NWNX_Creature, sFunc);
+            NWNX_CallFunction(NWNX_Creature, sFunc);
+            return NWNX_GetReturnValueInt(NWNX_Creature, sFunc);
         }
 
         /// <summary>
@@ -594,11 +595,11 @@ namespace NWN.FinalFantasy.Core.NWNX
         {
             string sFunc = "GetMaxHitPointsByLevel";
 
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, level);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, level);
+            NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Creature, sFunc);
-            return NWNXCore.NWNX_GetReturnValueInt(NWNX_Creature, sFunc);
+            NWNX_CallFunction(NWNX_Creature, sFunc);
+            return NWNX_GetReturnValueInt(NWNX_Creature, sFunc);
         }
 
         /// <summary>
@@ -611,11 +612,11 @@ namespace NWN.FinalFantasy.Core.NWNX
         {
             string sFunc = "SetMaxHitPointsByLevel";
 
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, value);
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, level);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, value);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, level);
+            NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Creature, sFunc);
+            NWNX_CallFunction(NWNX_Creature, sFunc);
         }
 
         /// <summary>
@@ -627,10 +628,10 @@ namespace NWN.FinalFantasy.Core.NWNX
         {
             string sFunc = "SetMovementRate";
 
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, rate);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, rate);
+            NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Creature, sFunc);
+            NWNX_CallFunction(NWNX_Creature, sFunc);
         }
 
         /// <summary>
@@ -642,10 +643,10 @@ namespace NWN.FinalFantasy.Core.NWNX
         {
             string sFunc = "SetAlignmentGoodEvil";
 
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, value);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, value);
+            NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Creature, sFunc);
+            NWNX_CallFunction(NWNX_Creature, sFunc);
         }
 
         /// <summary>
@@ -657,10 +658,10 @@ namespace NWN.FinalFantasy.Core.NWNX
         {
             string sFunc = "SetAlignmentLawChaos";
 
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, value);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, value);
+            NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Creature, sFunc);
+            NWNX_CallFunction(NWNX_Creature, sFunc);
         }
 
         /// <summary>
@@ -673,11 +674,11 @@ namespace NWN.FinalFantasy.Core.NWNX
         {
             string sFunc = "GetClericDomain";
 
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, index);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, index);
+            NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Creature, sFunc);
-            return NWNXCore.NWNX_GetReturnValueInt(NWNX_Creature, sFunc);
+            NWNX_CallFunction(NWNX_Creature, sFunc);
+            return NWNX_GetReturnValueInt(NWNX_Creature, sFunc);
         }
 
         /// <summary>
@@ -690,11 +691,11 @@ namespace NWN.FinalFantasy.Core.NWNX
         {
             string sFunc = "SetClericDomain";
 
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, domain);
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, index);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, domain);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, index);
+            NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Creature, sFunc);
+            NWNX_CallFunction(NWNX_Creature, sFunc);
         }
 
         /// <summary>
@@ -706,10 +707,10 @@ namespace NWN.FinalFantasy.Core.NWNX
         {
             string sFunc = "GetWizardSpecialization";
 
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
+            NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Creature, sFunc);
-            return NWNXCore.NWNX_GetReturnValueInt(NWNX_Creature, sFunc);
+            NWNX_CallFunction(NWNX_Creature, sFunc);
+            return NWNX_GetReturnValueInt(NWNX_Creature, sFunc);
         }
 
         /// <summary>
@@ -721,10 +722,10 @@ namespace NWN.FinalFantasy.Core.NWNX
         {
             string sFunc = "SetWizardSpecialization";
 
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, school);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, school);
+            NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Creature, sFunc);
+            NWNX_CallFunction(NWNX_Creature, sFunc);
         }
 
         /// <summary>
@@ -736,10 +737,10 @@ namespace NWN.FinalFantasy.Core.NWNX
         {
             string sFunc = "GetSoundset";
 
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
+            NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Creature, sFunc);
-            return NWNXCore.NWNX_GetReturnValueInt(NWNX_Creature, sFunc);
+            NWNX_CallFunction(NWNX_Creature, sFunc);
+            return NWNX_GetReturnValueInt(NWNX_Creature, sFunc);
         }
 
         /// <summary>
@@ -751,10 +752,10 @@ namespace NWN.FinalFantasy.Core.NWNX
         {
             string sFunc = "SetSoundset";
 
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, soundset);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, soundset);
+            NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Creature, sFunc);
+            NWNX_CallFunction(NWNX_Creature, sFunc);
         }
 
         /// <summary>
@@ -766,11 +767,11 @@ namespace NWN.FinalFantasy.Core.NWNX
         public static void SetSkillRank(NWGameObject creature, int skill, int rank)
         {
             string sFunc = "SetSkillRank";
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, rank);
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, skill);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, rank);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, skill);
+            NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Creature, sFunc);
+            NWNX_CallFunction(NWNX_Creature, sFunc);
         }
 
         /// <summary>
@@ -785,11 +786,11 @@ namespace NWN.FinalFantasy.Core.NWNX
         {
             int positionIndex = (int) position - 1;
             string sFunc = "SetClassByPosition";
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, (int)classType);
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, positionIndex);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, (int)classType);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, positionIndex);
+            NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Creature, sFunc);
+            NWNX_CallFunction(NWNX_Creature, sFunc);
         }
         /// <summary>
         /// Set the level at the given position for a creature. A creature should already
@@ -803,11 +804,11 @@ namespace NWN.FinalFantasy.Core.NWNX
         {
             int positionIndex = (int) position - 1;
             string sFunc = "SetLevelByPosition";
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, level);
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, positionIndex);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, level);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, positionIndex);
+            NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Creature, sFunc);
+            NWNX_CallFunction(NWNX_Creature, sFunc);
         }
 
         /// <summary>
@@ -825,10 +826,10 @@ namespace NWN.FinalFantasy.Core.NWNX
         public static void SetBaseAttackBonus(NWGameObject creature, int bab)
         {
             string sFunc = "SetBaseAttackBonus";
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, bab);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, bab);
+            NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Creature, sFunc);
+            NWNX_CallFunction(NWNX_Creature, sFunc);
         }
 
         /// <summary>
@@ -843,11 +844,11 @@ namespace NWN.FinalFantasy.Core.NWNX
         public static int GetAttacksPerRound(NWGameObject creature, int bBaseAPR = 0)
         {
             string sFunc = "GetAttacksPerRound";
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, bBaseAPR);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, bBaseAPR);
+            NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Creature, sFunc);
-            return NWNXCore.NWNX_GetReturnValueInt(NWNX_Creature, sFunc);
+            NWNX_CallFunction(NWNX_Creature, sFunc);
+            return NWNX_GetReturnValueInt(NWNX_Creature, sFunc);
         }
 
         /// <summary>
@@ -858,10 +859,10 @@ namespace NWN.FinalFantasy.Core.NWNX
         public static void SetGender(NWGameObject creature, int gender)
         {
             string sFunc = "SetGender";
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, gender);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, gender);
+            NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Creature, sFunc);
+            NWNX_CallFunction(NWNX_Creature, sFunc);
         }
 
         /// <summary>
@@ -871,9 +872,9 @@ namespace NWN.FinalFantasy.Core.NWNX
         public static void RestoreFeats(NWGameObject creature)
         {
             string sFunc = "RestoreFeats";
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
+            NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Creature, sFunc);
+            NWNX_CallFunction(NWNX_Creature, sFunc);
         }
 
         /// <summary>
@@ -883,9 +884,9 @@ namespace NWN.FinalFantasy.Core.NWNX
         public static void RestoreSpecialAbilities(NWGameObject creature)
         {
             string sFunc = "RestoreSpecialAbilities";
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
+            NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Creature, sFunc);
+            NWNX_CallFunction(NWNX_Creature, sFunc);
         }
 
         /// <summary>
@@ -897,10 +898,10 @@ namespace NWN.FinalFantasy.Core.NWNX
         public static void RestoreSpells(NWGameObject creature, int level = -1)
         {
             string sFunc = "RestoreSpells";
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, level);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, level);
+            NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Creature, sFunc);
+            NWNX_CallFunction(NWNX_Creature, sFunc);
         }
 
         /// <summary>
@@ -910,9 +911,9 @@ namespace NWN.FinalFantasy.Core.NWNX
         public static void RestoreItems(NWGameObject creature)
         {
             string sFunc = "RestoreItems";
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
+            NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Creature, sFunc);
+            NWNX_CallFunction(NWNX_Creature, sFunc);
         }
 
         /// <summary>
@@ -923,10 +924,10 @@ namespace NWN.FinalFantasy.Core.NWNX
         public static void SetSize(NWGameObject creature, int size)
         {
             string sFunc = "SetSize";
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, size);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, size);
+            NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Creature, sFunc);
+            NWNX_CallFunction(NWNX_Creature, sFunc);
         }
 
         /// <summary>
@@ -937,10 +938,10 @@ namespace NWN.FinalFantasy.Core.NWNX
         public static int GetSkillPointsRemaining(NWGameObject creature)
         {
             string sFunc = "GetSkillPointsRemaining";
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
+            NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Creature, sFunc);
-            return NWNXCore.NWNX_GetReturnValueInt(NWNX_Creature, sFunc);
+            NWNX_CallFunction(NWNX_Creature, sFunc);
+            return NWNX_GetReturnValueInt(NWNX_Creature, sFunc);
         }
         
         /// <summary>
@@ -951,10 +952,10 @@ namespace NWN.FinalFantasy.Core.NWNX
         public static void SetSkillPointsRemaining(NWGameObject creature, int skillpoints)
         {
             string sFunc = "SetSkillPointsRemaining";
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, skillpoints);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, skillpoints);
+            NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Creature, sFunc);
+            NWNX_CallFunction(NWNX_Creature, sFunc);
         }
 
         /// <summary>
@@ -965,10 +966,10 @@ namespace NWN.FinalFantasy.Core.NWNX
         public static void SetRacialType(NWGameObject creature, int racialtype)
         {
             string sFunc = "SetRacialType";
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, racialtype);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, racialtype);
+            NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Creature, sFunc);
+            NWNX_CallFunction(NWNX_Creature, sFunc);
         }
 
         /// <summary>
@@ -979,10 +980,10 @@ namespace NWN.FinalFantasy.Core.NWNX
         public static int GetMovementType(NWGameObject creature)
         {
             string sFunc = "GetMovementType";
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
+            NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Creature, sFunc);
-            return NWNXCore.NWNX_GetReturnValueInt(NWNX_Creature, sFunc);
+            NWNX_CallFunction(NWNX_Creature, sFunc);
+            return NWNX_GetReturnValueInt(NWNX_Creature, sFunc);
         }
 
         /// <summary>
@@ -996,10 +997,10 @@ namespace NWN.FinalFantasy.Core.NWNX
         public static void SetWalkRateCap(NWGameObject creature, float fWalkRate = 2000.0f)
         {
             string sFunc = "SetWalkRateCap";
-            NWNXCore.NWNX_PushArgumentFloat(NWNX_Creature, sFunc, fWalkRate);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
+            NWNX_PushArgumentFloat(NWNX_Creature, sFunc, fWalkRate);
+            NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Creature, sFunc);
+            NWNX_CallFunction(NWNX_Creature, sFunc);
         }
 
         /// <summary>
@@ -1010,10 +1011,10 @@ namespace NWN.FinalFantasy.Core.NWNX
         public static void SetGold(NWGameObject creature, int gold)
         {
             string sFunc = "SetGold";
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, gold);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, gold);
+            NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Creature, sFunc);
+            NWNX_CallFunction(NWNX_Creature, sFunc);
         }
 
         /// <summary>
@@ -1024,10 +1025,10 @@ namespace NWN.FinalFantasy.Core.NWNX
         public static void SetCorpseDecayTime(NWGameObject creature, int nDecayTime)
         {
             string sFunc = "SetCorpseDecayTime";
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, nDecayTime);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, nDecayTime);
+            NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Creature, sFunc);
+            NWNX_CallFunction(NWNX_Creature, sFunc);
         }
 
         /// <summary>
@@ -1039,11 +1040,11 @@ namespace NWN.FinalFantasy.Core.NWNX
         public static int GetBaseSavingThrow(NWGameObject creature, int which)
         {
             string sFunc = "GetBaseSavingThrow";
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, which);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, which);
+            NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Creature, sFunc);
-            return NWNXCore.NWNX_GetReturnValueInt(NWNX_Creature, sFunc);
+            NWNX_CallFunction(NWNX_Creature, sFunc);
+            return NWNX_GetReturnValueInt(NWNX_Creature, sFunc);
         }
 
         /// <summary>
@@ -1055,11 +1056,11 @@ namespace NWN.FinalFantasy.Core.NWNX
         public static void SetBaseSavingThrow(NWGameObject creature, int which, int value)
         {
             string sFunc = "SetBaseSavingThrow";
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, value);
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, which);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, value);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, which);
+            NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Creature, sFunc);
+            NWNX_CallFunction(NWNX_Creature, sFunc);
         }
 
         /// <summary>
@@ -1072,11 +1073,11 @@ namespace NWN.FinalFantasy.Core.NWNX
         public static void LevelUp(NWGameObject creature, int @class, int count = 1)
         {
             string sFunc = "LevelUp";
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, count);
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, @class);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, count);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, @class);
+            NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Creature, sFunc);
+            NWNX_CallFunction(NWNX_Creature, sFunc);
         }
 
         /// <summary>
@@ -1088,10 +1089,10 @@ namespace NWN.FinalFantasy.Core.NWNX
         public static void LevelDown(NWGameObject creature, int count = 1)
         {
             string sFunc = "LevelDown";
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, count);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, count);
+            NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Creature, sFunc);
+            NWNX_CallFunction(NWNX_Creature, sFunc);
         }
 
         /// <summary>
@@ -1102,10 +1103,10 @@ namespace NWN.FinalFantasy.Core.NWNX
         public static void SetChallengeRating(NWGameObject creature, float fCR)
         {
             string sFunc = "SetChallengeRating";
-            NWNXCore.NWNX_PushArgumentFloat(NWNX_Creature, sFunc, fCR);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
+            NWNX_PushArgumentFloat(NWNX_Creature, sFunc, fCR);
+            NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Creature, sFunc);
+            NWNX_CallFunction(NWNX_Creature, sFunc);
         }
 
         /// <summary>
@@ -1142,14 +1143,14 @@ namespace NWN.FinalFantasy.Core.NWNX
                 }
             }
 
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, includeBaseAttackBonus);
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, isOffhand);
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, isTouchAttack);
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, isMelee);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, includeBaseAttackBonus);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, isOffhand);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, isTouchAttack);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, isMelee);
+            NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Creature, sFunc);
-            return NWNXCore.NWNX_GetReturnValueInt(NWNX_Creature, sFunc);
+            NWNX_CallFunction(NWNX_Creature, sFunc);
+            return NWNX_GetReturnValueInt(NWNX_Creature, sFunc);
         }
 
         /// <summary>
@@ -1162,11 +1163,11 @@ namespace NWN.FinalFantasy.Core.NWNX
         {
             string sFunc = "GetFeatRemainingUses";
 
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, feat);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, feat);
+            NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Creature, sFunc);
-            return NWNXCore.NWNX_GetReturnValueInt(NWNX_Creature, sFunc);
+            NWNX_CallFunction(NWNX_Creature, sFunc);
+            return NWNX_GetReturnValueInt(NWNX_Creature, sFunc);
         }
 
         /// <summary>
@@ -1179,11 +1180,11 @@ namespace NWN.FinalFantasy.Core.NWNX
         {
             string sFunc = "GetFeatTotalUses";
 
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, feat);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, feat);
+            NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Creature, sFunc);
-            return NWNXCore.NWNX_GetReturnValueInt(NWNX_Creature, sFunc);
+            NWNX_CallFunction(NWNX_Creature, sFunc);
+            return NWNX_GetReturnValueInt(NWNX_Creature, sFunc);
         }
 
         /// <summary>
@@ -1196,11 +1197,11 @@ namespace NWN.FinalFantasy.Core.NWNX
         {
             string sFunc = "SetFeatRemainingUses";
 
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, uses);
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, feat);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, uses);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, feat);
+            NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Creature, sFunc);
+            NWNX_CallFunction(NWNX_Creature, sFunc);
         }
 
         /// <summary>
@@ -1233,19 +1234,19 @@ namespace NWN.FinalFantasy.Core.NWNX
 
             string sFunc = "GetTotalEffectBonus";
 
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, isOffhand);
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, abilityScore);
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, skill);
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, saveSpecificType);
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, savetype);
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, isForceMax);
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, isElemental);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Creature, sFunc, target);
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, (int)bonusType);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, isOffhand);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, abilityScore);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, skill);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, saveSpecificType);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, savetype);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, isForceMax);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, isElemental);
+            NWNX_PushArgumentObject(NWNX_Creature, sFunc, target);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, (int)bonusType);
+            NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Creature, sFunc);
-            return NWNXCore.NWNX_GetReturnValueInt(NWNX_Creature, sFunc);
+            NWNX_CallFunction(NWNX_Creature, sFunc);
+            return NWNX_GetReturnValueInt(NWNX_Creature, sFunc);
         }
 
         /// <summary>
@@ -1259,11 +1260,11 @@ namespace NWN.FinalFantasy.Core.NWNX
         {
             string sFunc = "SetOriginalName";
 
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, isLastName);
-            NWNXCore.NWNX_PushArgumentString(NWNX_Creature, sFunc, name);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, isLastName);
+            NWNX_PushArgumentString(NWNX_Creature, sFunc, name);
+            NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Creature, sFunc);
+            NWNX_CallFunction(NWNX_Creature, sFunc);
         }
 
         /// <summary>
@@ -1276,11 +1277,11 @@ namespace NWN.FinalFantasy.Core.NWNX
         {
             string sFunc = "GetOriginalName";
 
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, isLastName ? 1 : 0);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, isLastName ? 1 : 0);
+            NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Creature, sFunc);
-            return NWNXCore.NWNX_GetReturnValueString(NWNX_Creature, sFunc);
+            NWNX_CallFunction(NWNX_Creature, sFunc);
+            return NWNX_GetReturnValueString(NWNX_Creature, sFunc);
         }
 
         /// <summary>
@@ -1292,12 +1293,100 @@ namespace NWN.FinalFantasy.Core.NWNX
         {
             string sFunc = "SetSpellResistance";
 
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Creature, sFunc, sr);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, sr);
+            NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Creature, sFunc);
+            NWNX_CallFunction(NWNX_Creature, sFunc);
         }
 
+        /// <summary>
+        /// Set creature's animal companion creature type
+        /// </summary>
+        /// <param name="creature">The master creature object</param>
+        /// <param name="type">The type of animal companion</param>
+        public static void SetAnimalCompanionCreatureType(NWGameObject creature, AnimalCompanionCreatureType type)
+        {
+            string sFunc = "SetAnimalCompanionCreatureType";
 
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, (int)type);
+            NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
+
+            NWNX_CallFunction(NWNX_Creature, sFunc);
+        }
+
+        /// <summary>
+        /// Set creature's familiar creature type
+        /// </summary>
+        /// <param name="creature">The master creature object</param>
+        /// <param name="type">The type of familiar</param>
+        public static void SetFamiliarCreatureType(NWGameObject creature, FamiliarCreatureType type)
+        {
+            string sFunc = "SetFamiliarCreatureType";
+
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, (int)type);
+            NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
+
+            NWNX_CallFunction(NWNX_Creature, sFunc);
+        }
+
+        /// <summary>
+        /// Set creature's animal companion's name
+        /// </summary>
+        /// <param name="creature">The master creature object</param>
+        /// <param name="name">The name to give their animal companion</param>
+        public static void SetAnimalCompanionName(NWGameObject creature, string name)
+        {
+            string sFunc = "SetAnimalCompanionName";
+
+            NWNX_PushArgumentString(NWNX_Creature, sFunc, name);
+            NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
+
+            NWNX_CallFunction(NWNX_Creature, sFunc);
+        }
+
+        /// <summary>
+        /// Set creature's familiar's name
+        /// </summary>
+        /// <param name="creature">The master creature object</param>
+        /// <param name="name">The name to give their familiar.</param>
+        public static void SetFamiliarName(NWGameObject creature, string name)
+        {
+            string sFunc = "SetFamiliarName";
+
+            NWNX_PushArgumentString(NWNX_Creature, sFunc, name);
+            NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
+
+            NWNX_CallFunction(NWNX_Creature, sFunc);
+        }
+
+        /// <summary>
+        /// Get whether the creature can be disarmed.
+        /// </summary>
+        /// <param name="oItem">The creature object.</param>
+        /// <returns>true if disarmable, false otherwise</returns>
+        public static bool GetDisarmable(NWGameObject oItem)
+        {
+            string sFunc = "GetDisarmable";
+
+            NWNX_PushArgumentObject(NWNX_Creature, sFunc, oItem);
+
+            NWNX_CallFunction(NWNX_Creature, sFunc);
+            return NWNX_GetReturnValueInt(NWNX_Creature, sFunc) == 1;
+        }
+
+        /// <summary>
+        /// Set whether a creature can be disarmed
+        /// </summary>
+        /// <param name="creature">The creature object.</param>
+        /// <param name="disarmable">Set to TRUE if the creature can be disarmed</param>
+        public static void SetDisarmable(NWGameObject creature, bool disarmable)
+        {
+            string sFunc = "SetDisarmable";
+
+            NWNX_PushArgumentInt(NWNX_Creature, sFunc, disarmable ? 1 : 0);
+            NWNX_PushArgumentObject(NWNX_Creature, sFunc, creature);
+
+            NWNX_CallFunction(NWNX_Creature, sFunc);
+        }
     }
 }

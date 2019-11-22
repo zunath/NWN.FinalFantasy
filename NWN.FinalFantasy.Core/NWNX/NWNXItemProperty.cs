@@ -6,6 +6,11 @@ namespace NWN.FinalFantasy.Core.NWNX
     {
         private const string NWNX_ItemProperty = "NWNX_ItemProperty";
 
+        /// <summary>
+        /// Convert native itemproperty type to unpacked structure
+        /// </summary>
+        /// <param name="ip">The itemproperty to convert</param>
+        /// <returns>A constructed NWNX_IPUnpacked.</returns>
         public static ItemPropertyUnpacked UnpackIP(ItemProperty ip)
         {
             const string FunctionName = "UnpackIP";
@@ -33,6 +38,11 @@ namespace NWN.FinalFantasy.Core.NWNX
             return n;
         }
 
+        /// <summary>
+        /// Convert unpacked itemproperty structure to native type.
+        /// </summary>
+        /// <param name="n">The NWNX_IPUnpacked structure to convert.</param>
+        /// <returns>The itemproperty</returns>
         public static ItemProperty PackIP(ItemPropertyUnpacked n)
         {
             const string sFunc = "PackIP";

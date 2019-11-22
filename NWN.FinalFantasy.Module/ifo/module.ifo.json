@@ -368,7 +368,7 @@
         "__struct_id": 0,
         "Name": {
           "type": "cexostring",
-          "value": "ON_PLAYER_ENTER_3"
+          "value": "ON_PLAYER_ENTER_5"
         },
         "Type": {
           "type": "dword",
@@ -398,7 +398,7 @@
         "__struct_id": 0,
         "Name": {
           "type": "cexostring",
-          "value": "ON_PLAYER_LEAVE_1"
+          "value": "ON_PLAYER_LEAVE_2"
         },
         "Type": {
           "type": "dword",
@@ -413,7 +413,7 @@
         "__struct_id": 0,
         "Name": {
           "type": "cexostring",
-          "value": "ON_PLAYER_ENTER_1"
+          "value": "ON_PLAYER_ENTER_2"
         },
         "Type": {
           "type": "dword",
@@ -848,7 +848,7 @@
         "__struct_id": 0,
         "Name": {
           "type": "cexostring",
-          "value": "ON_PLAYER_LEAVE_2"
+          "value": "ON_PLAYER_LEAVE_3"
         },
         "Type": {
           "type": "dword",
@@ -953,7 +953,7 @@
         "__struct_id": 0,
         "Name": {
           "type": "cexostring",
-          "value": "ON_PLAYER_ENTER_4"
+          "value": "ON_PLAYER_ENTER_6"
         },
         "Type": {
           "type": "dword",
@@ -968,7 +968,7 @@
         "__struct_id": 0,
         "Name": {
           "type": "cexostring",
-          "value": "ON_PLAYER_LEAVE_3"
+          "value": "ON_PLAYER_LEAVE_4"
         },
         "Type": {
           "type": "dword",
@@ -983,7 +983,7 @@
         "__struct_id": 0,
         "Name": {
           "type": "cexostring",
-          "value": "ON_PLAYER_ENTER_2"
+          "value": "ON_PLAYER_ENTER_4"
         },
         "Type": {
           "type": "dword",
@@ -992,6 +992,501 @@
         "Value": {
           "type": "cexostring",
           "value": "Authorization.OnModuleEnter"
+        }
+      },
+      {
+        "__struct_id": 0,
+        "Name": {
+          "type": "cexostring",
+          "value": "ON_USE_FEAT_1"
+        },
+        "Type": {
+          "type": "dword",
+          "value": 3
+        },
+        "Value": {
+          "type": "cexostring",
+          "value": "Job.Scripts.UseFeat"
+        }
+      },
+      {
+        "__struct_id": 0,
+        "Name": {
+          "type": "cexostring",
+          "value": "FFO_ON_JOB_CHANGED_2"
+        },
+        "Type": {
+          "type": "dword",
+          "value": 3
+        },
+        "Value": {
+          "type": "cexostring",
+          "value": "Job.Scripts.UnequipAllItems"
+        }
+      },
+      {
+        "__struct_id": 0,
+        "Name": {
+          "type": "cexostring",
+          "value": "FFO_ON_JOB_CHANGED_3"
+        },
+        "Type": {
+          "type": "dword",
+          "value": 3
+        },
+        "Value": {
+          "type": "cexostring",
+          "value": "Job.Scripts.AdjustClass"
+        }
+      },
+      {
+        "__struct_id": 0,
+        "Name": {
+          "type": "cexostring",
+          "value": "FFO_ON_JOB_CHANGED_5"
+        },
+        "Type": {
+          "type": "dword",
+          "value": 3
+        },
+        "Value": {
+          "type": "cexostring",
+          "value": "Job.Scripts.RecalculateStats.OnJobChange"
+        }
+      },
+      {
+        "__struct_id": 0,
+        "Name": {
+          "type": "cexostring",
+          "value": "ON_ITEM_HIT_CAST_SPELL_1"
+        },
+        "Type": {
+          "type": "dword",
+          "value": 3
+        },
+        "Value": {
+          "type": "cexostring",
+          "value": "Job.Scripts.TagWeaponUse"
+        }
+      },
+      {
+        "__struct_id": 0,
+        "Name": {
+          "type": "cexostring",
+          "value": "ON_NWNX_EQUIP_ITEM_2"
+        },
+        "Type": {
+          "type": "dword",
+          "value": 3
+        },
+        "Value": {
+          "type": "cexostring",
+          "value": "Item.AttachSystemPropertiesToItem"
+        }
+      },
+      {
+        "__struct_id": 0,
+        "Name": {
+          "type": "cexostring",
+          "value": "FFO_ON_GAIN_JOB_XP_1"
+        },
+        "Type": {
+          "type": "dword",
+          "value": 3
+        },
+        "Value": {
+          "type": "cexostring",
+          "value": "Job.Scripts.GainXP"
+        }
+      },
+      {
+        "__struct_id": 0,
+        "Name": {
+          "type": "cexostring",
+          "value": "FFO_ON_JOB_LEVEL_UP_1"
+        },
+        "Type": {
+          "type": "dword",
+          "value": 3
+        },
+        "Value": {
+          "type": "cexostring",
+          "value": "Job.Scripts.ApplyFeats.OnLevelUp"
+        }
+      },
+      {
+        "__struct_id": 0,
+        "Name": {
+          "type": "cexostring",
+          "value": "FFO_ON_JOB_CHANGED_4"
+        },
+        "Type": {
+          "type": "dword",
+          "value": 3
+        },
+        "Value": {
+          "type": "cexostring",
+          "value": "Job.Scripts.ApplyFeats.OnJobChanged"
+        }
+      },
+      {
+        "__struct_id": 0,
+        "Name": {
+          "type": "cexostring",
+          "value": "FFO_ON_JOB_CHANGED_1"
+        },
+        "Type": {
+          "type": "dword",
+          "value": 3
+        },
+        "Value": {
+          "type": "cexostring",
+          "value": "Job.Scripts.SaveHotBar"
+        }
+      },
+      {
+        "__struct_id": 0,
+        "Name": {
+          "type": "cexostring",
+          "value": "FFO_ON_JOB_CHANGED_6"
+        },
+        "Type": {
+          "type": "dword",
+          "value": 3
+        },
+        "Value": {
+          "type": "cexostring",
+          "value": "Job.Scripts.LoadHotBar"
+        }
+      },
+      {
+        "__struct_id": 0,
+        "Name": {
+          "type": "cexostring",
+          "value": "ON_EXAMINE_1"
+        },
+        "Type": {
+          "type": "dword",
+          "value": 3
+        },
+        "Value": {
+          "type": "cexostring",
+          "value": "Item.ResetDescription"
+        }
+      },
+      {
+        "__struct_id": 0,
+        "Name": {
+          "type": "cexostring",
+          "value": "ON_EXAMINE_2"
+        },
+        "Type": {
+          "type": "dword",
+          "value": 3
+        },
+        "Value": {
+          "type": "cexostring",
+          "value": "Job.Scripts.DisplayAbilityDetails"
+        }
+      },
+      {
+        "__struct_id": 0,
+        "Name": {
+          "type": "cexostring",
+          "value": "ON_NWNX_EQUIP_ITEM_3"
+        },
+        "Type": {
+          "type": "dword",
+          "value": 3
+        },
+        "Value": {
+          "type": "cexostring",
+          "value": "Item.PreventCombatItemSwaps.OnEquipItem"
+        }
+      },
+      {
+        "__struct_id": 0,
+        "Name": {
+          "type": "cexostring",
+          "value": "ON_NWNX_UNEQUIP_ITEM_1"
+        },
+        "Type": {
+          "type": "dword",
+          "value": 3
+        },
+        "Value": {
+          "type": "cexostring",
+          "value": "Item.PreventCombatItemSwaps.OnUnequipItem"
+        }
+      },
+      {
+        "__struct_id": 0,
+        "Name": {
+          "type": "cexostring",
+          "value": "FFO_ON_GAIN_JOB_XP_2"
+        },
+        "Type": {
+          "type": "dword",
+          "value": 3
+        },
+        "Value": {
+          "type": "cexostring",
+          "value": "Job.Scripts.GainAP"
+        }
+      },
+      {
+        "__struct_id": 0,
+        "Name": {
+          "type": "cexostring",
+          "value": "FFO_ON_ABILITY_MASTERED_1"
+        },
+        "Type": {
+          "type": "dword",
+          "value": 3
+        },
+        "Value": {
+          "type": "cexostring",
+          "value": "Job.Scripts.MasterAbility"
+        }
+      },
+      {
+        "__struct_id": 0,
+        "Name": {
+          "type": "cexostring",
+          "value": "ON_EQUIP_ITEM_1"
+        },
+        "Type": {
+          "type": "dword",
+          "value": 3
+        },
+        "Value": {
+          "type": "cexostring",
+          "value": "Job.Scripts.ActiveAbilityCache.CacheAbilitiesOnItem"
+        }
+      },
+      {
+        "__struct_id": 0,
+        "Name": {
+          "type": "cexostring",
+          "value": "ON_UNEQUIP_ITEM_1"
+        },
+        "Type": {
+          "type": "dword",
+          "value": 3
+        },
+        "Value": {
+          "type": "cexostring",
+          "value": "Job.Scripts.ActiveAbilityCache.DecacheAbilitiesOnItem"
+        }
+      },
+      {
+        "__struct_id": 0,
+        "Name": {
+          "type": "cexostring",
+          "value": "ON_PLAYER_ENTER_1"
+        },
+        "Type": {
+          "type": "dword",
+          "value": 3
+        },
+        "Value": {
+          "type": "cexostring",
+          "value": "Item.PreventLoginEquipEvents.MarkPlayerLoggingIn"
+        }
+      },
+      {
+        "__struct_id": 0,
+        "Name": {
+          "type": "cexostring",
+          "value": "ON_PLAYER_ENTER_99"
+        },
+        "Type": {
+          "type": "dword",
+          "value": 3
+        },
+        "Value": {
+          "type": "cexostring",
+          "value": "Item.PreventLoginEquipEvents.UnmarkPlayerLoggingIn"
+        }
+      },
+      {
+        "__struct_id": 0,
+        "Name": {
+          "type": "cexostring",
+          "value": "ON_NWNX_EQUIP_ITEM_1"
+        },
+        "Type": {
+          "type": "dword",
+          "value": 3
+        },
+        "Value": {
+          "type": "cexostring",
+          "value": "Item.PreventLoginEquipEvents.PreventEquipEventOnLogin"
+        }
+      },
+      {
+        "__struct_id": 0,
+        "Name": {
+          "type": "cexostring",
+          "value": "ON_PLAYER_ENTER_3"
+        },
+        "Type": {
+          "type": "dword",
+          "value": 3
+        },
+        "Value": {
+          "type": "cexostring",
+          "value": "Job.Scripts.SetLevelToNormal"
+        }
+      },
+      {
+        "__struct_id": 0,
+        "Name": {
+          "type": "cexostring",
+          "value": "SERVER_ON_DISCONNECT_1"
+        },
+        "Type": {
+          "type": "dword",
+          "value": 3
+        },
+        "Value": {
+          "type": "cexostring",
+          "value": "Job.Scripts.SetLevelTo1"
+        }
+      },
+      {
+        "__struct_id": 0,
+        "Name": {
+          "type": "cexostring",
+          "value": "FFO_ON_JOB_LEVEL_UP_2"
+        },
+        "Type": {
+          "type": "dword",
+          "value": 3
+        },
+        "Value": {
+          "type": "cexostring",
+          "value": "Job.Scripts.RecalculateStats.OnLevelUp"
+        }
+      },
+      {
+        "__struct_id": 0,
+        "Name": {
+          "type": "cexostring",
+          "value": "ON_NWNX_EQUIP_ITEM_4"
+        },
+        "Type": {
+          "type": "dword",
+          "value": 3
+        },
+        "Value": {
+          "type": "cexostring",
+          "value": "Job.Scripts.CheckDualWield"
+        }
+      },
+      {
+        "__struct_id": 0,
+        "Name": {
+          "type": "cexostring",
+          "value": "FFO_ON_STATS_RECALCULATED_1"
+        },
+        "Type": {
+          "type": "dword",
+          "value": 3
+        },
+        "Value": {
+          "type": "cexostring",
+          "value": "Job.Scripts.Traits.ApplyHPBoostTrait"
+        }
+      },
+      {
+        "__struct_id": 0,
+        "Name": {
+          "type": "cexostring",
+          "value": "FFO_ON_STATS_RECALCULATED_2"
+        },
+        "Type": {
+          "type": "dword",
+          "value": 3
+        },
+        "Value": {
+          "type": "cexostring",
+          "value": "Job.Scripts.Traits.ApplyDefenseBonusTrait"
+        }
+      },
+      {
+        "__struct_id": 0,
+        "Name": {
+          "type": "cexostring",
+          "value": "ON_EQUIP_ITEM_2"
+        },
+        "Type": {
+          "type": "dword",
+          "value": 3
+        },
+        "Value": {
+          "type": "cexostring",
+          "value": "Job.Scripts.RecalculateStats.OnEquipItem"
+        }
+      },
+      {
+        "__struct_id": 0,
+        "Name": {
+          "type": "cexostring",
+          "value": "ON_UNEQUIP_ITEM_2"
+        },
+        "Type": {
+          "type": "dword",
+          "value": 3
+        },
+        "Value": {
+          "type": "cexostring",
+          "value": "Job.Scripts.RecalculateStats.OnUnequipItem"
+        }
+      },
+      {
+        "__struct_id": 0,
+        "Name": {
+          "type": "cexostring",
+          "value": "FFO_ON_STATS_RECALCULATED_3"
+        },
+        "Type": {
+          "type": "dword",
+          "value": 3
+        },
+        "Value": {
+          "type": "cexostring",
+          "value": "Job.Scripts.Traits.ApplyWeaponMasteryTrait"
+        }
+      },
+      {
+        "__struct_id": 0,
+        "Name": {
+          "type": "cexostring",
+          "value": "ON_HEARTBEAT_1"
+        },
+        "Type": {
+          "type": "dword",
+          "value": 3
+        },
+        "Value": {
+          "type": "cexostring",
+          "value": "Roleplay.DistributeRoleplayXP"
+        }
+      },
+      {
+        "__struct_id": 0,
+        "Name": {
+          "type": "cexostring",
+          "value": "ON_NWNX_CHAT_3"
+        },
+        "Type": {
+          "type": "dword",
+          "value": 3
+        },
+        "Value": {
+          "type": "cexostring",
+          "value": "Roleplay.ProcessRPMessage"
         }
       }
     ]

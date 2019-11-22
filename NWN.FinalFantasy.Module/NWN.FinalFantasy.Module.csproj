@@ -3,27 +3,34 @@
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <OutputType>Library</OutputType>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
   </PropertyGroup>
   <ItemGroup>
     <Content Include="Final Fantasy Online.mod" />
     <Content Include="NWN.FinalFantasy.Tool.ModulePacker.exe" />
-    <Content Include="NWN.FinalFantasy.Tool.ModulePacker.pdb" />
     <Content Include="nwn_erf.exe" />
     <Content Include="nwn_gff.exe" />
     <Content Include="pcre64.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="jrl\" />
-    <Folder Include="ncs\" />
-    <Folder Include="nss\" />
-    <Folder Include="utc\" />
-    <Folder Include="utd\" />
-    <Folder Include="ute\" />
-    <Folder Include="uti\" />
-    <Folder Include="utm\" />
-    <Folder Include="uts\" />
-    <Folder Include="utt\" />
-    <Folder Include="utw\" />
+    <Content Include="are\**\*.*" />
+    <Content Include="dlg\**\*.*" />
+    <Content Include="fac\**\*.*" />
+    <Content Include="gic\**\*.*" />
+    <Content Include="git\**\*.*" />
+    <Content Include="ifo\**\*.*" />
+    <Content Include="itp\**\*.*" />
+    <Content Include="ncs\**\*.*" />
+    <Content Include="nss\**\*.*" />
+    <Content Include="utc\**\*.*" />
+    <Content Include="utd\**\*.*" />
+    <Content Include="ute\**\*.*" />
+    <Content Include="uti\**\*.*" />
+    <Content Include="utm\**\*.*" />
+    <Content Include="utp\**\*.*" />
+    <Content Include="uts\**\*.*" />
+    <Content Include="utt\**\*.*" />
+    <Content Include="utw\**\*.*" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />

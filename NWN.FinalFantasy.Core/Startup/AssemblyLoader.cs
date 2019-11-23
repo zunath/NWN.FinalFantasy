@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.Loader;
+using NWN.FinalFantasy.Core.Logging;
 
 namespace NWN.FinalFantasy.Core.Startup
 {
@@ -19,17 +21,16 @@ namespace NWN.FinalFantasy.Core.Startup
         internal static void LoadAssemblies()
         {
             var settings = ApplicationSettings.Get();
-
-            var assemblyName = Assembly.GetExecutingAssembly().GetName().Name;
             var files = Directory.GetFiles(settings.DllDirectory, settings.DllSearchPattern);
 
             foreach(var file in files)
             {
-                var fileName = Path.GetFileName(file);
-                if (fileName.StartsWith(assemblyName)) continue;
-                var assembly = Assembly.LoadFile(file);
+                var assembly = AssemblyLoadContext.Default.LoadFromAssemblyPath(file);
                 _assemblies.Add(assembly);
+            }
 
+            foreach (var assembly in _assemblies)
+            {
                 RunStartup(assembly);
             }
         }
@@ -40,14 +41,21 @@ namespace NWN.FinalFantasy.Core.Startup
         /// <param name="assembly">The assembly to search</param>
         private static void RunStartup(Assembly assembly)
         {
-            var types = assembly.GetTypes();
-            var matching = types.SingleOrDefault(x => x.Namespace + "." + x.Name == x.Namespace + ".Startup");
-            if (matching == null) return;
+            try
+            {
+                var types = assembly.GetTypes();
+                var matching = types.SingleOrDefault(x => x.Namespace + "." + x.Name == x.Namespace + ".Startup");
+                if (matching == null) return;
 
-            var method = matching.GetMethod("Main", BindingFlags.Static | BindingFlags.Public);
-            if (method == null) return;
+                var method = matching.GetMethod("Main", BindingFlags.Static | BindingFlags.Public);
+                if (method == null) return;
 
-            method.Invoke(null, null);
+                method.Invoke(null, null);
+            }
+            catch(Exception ex)
+            {
+                Audit.Write(AuditGroup.Error, ex.ToMessageAndCompleteStacktrace());
+            }
         }
 
         /// <summary>
@@ -68,6 +76,22 @@ namespace NWN.FinalFantasy.Core.Startup
             }
 
             return null;
+        }
+
+        /// <summary>
+        /// Finds all of the specified types of a given interface type T.
+        /// </summary>
+        /// <typeparam name="T">The type of interface to search for.</typeparam>
+        /// <returns>A list of types which implement type T.</returns>
+        public static List<Type> GetAllImplementingInterface<T>()
+        {
+            if(!typeof(T).IsInterface)
+                throw new Exception("T must be an interface type.");
+
+            var type = typeof(T);
+            return _assemblies.SelectMany(s => s.GetTypes())
+                .Where(p => type.IsAssignableFrom(p) && p.IsClass && !p.IsAbstract)
+                .ToList();
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace NWN.FinalFantasy.Chat
+﻿using System;
+
+namespace NWN.FinalFantasy.Chat
 {
     public class Startup
     {

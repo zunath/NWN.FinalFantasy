@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using NWN.FinalFantasy.Chat.Command;
+using NWN.FinalFantasy.Core.Startup;
 using NWN.FinalFantasy.Core.Utility;
 
 namespace NWN.FinalFantasy.Chat
@@ -23,9 +24,9 @@ namespace NWN.FinalFantasy.Chat
         private static void Register()
         {
             // Use reflection to get all of IChatCommand handler implementations.
-            var classes = Assembly.GetCallingAssembly().GetTypes()
-                .Where(p => typeof(IChatCommand).IsAssignableFrom(p) && p.IsClass && !p.IsAbstract).ToArray();
 
+            var classes = AssemblyLoader.GetAllImplementingInterface<IChatCommand>();
+            
             foreach (var type in classes)
             {
                 IChatCommand instance = Activator.CreateInstance(type) as IChatCommand;
@@ -36,6 +37,8 @@ namespace NWN.FinalFantasy.Chat
                 }
                 // We use the lower-case class name as the key because later on we do a lookup based on text entered by the player.
                 string key = type.Name.ToLower();
+
+                Console.WriteLine("registered chat command: " + key);
                 _chatCommands.Add(key, instance);
             }
         }

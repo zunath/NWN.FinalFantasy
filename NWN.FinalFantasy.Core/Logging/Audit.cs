@@ -19,7 +19,7 @@ namespace NWN.FinalFantasy.Core.Logging
         /// <summary>
         /// Sets up the Audit process and ensures it starts/stops gracefully.
         /// </summary>
-        internal static void Initialize()
+        public static void Initialize()
         {
             MessageHub.Instance.Subscribe<ServerStopped>(x => FlushAllLogs());
         }

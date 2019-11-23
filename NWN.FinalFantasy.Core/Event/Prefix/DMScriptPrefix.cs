@@ -1,6 +1,6 @@
 ﻿namespace NWN.FinalFantasy.Core.Event.Prefix
 {
-    internal class DMScriptPrefix
+    public class DMScriptPrefix
     {
         public const string OnAppear = "DM_ON_APPEAR_";
         public const string OnChangeDifficulty = "DM_ON_CHANGE_DIFFICULTY_";

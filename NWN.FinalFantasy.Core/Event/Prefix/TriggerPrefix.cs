@@ -1,6 +1,6 @@
 ﻿namespace NWN.FinalFantasy.Core.Event.Prefix
 {
-    internal class TriggerPrefix
+    public class TriggerPrefix
     {
         public const string OnClicked = "ON_CLICKED_";
         public const string OnDisarmed = "ON_TRAP_DISARMED_";

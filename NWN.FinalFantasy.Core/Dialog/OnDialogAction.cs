@@ -5,7 +5,7 @@ namespace NWN.FinalFantasy.Core.Dialog
 {
     public class OnDialogAction
     {
-        internal static void Run(int nodeID)
+        public static void Run(int nodeID)
         {
             NWGameObject player = (_.GetPCSpeaker());
             var playerID = _.GetGlobalID(player);

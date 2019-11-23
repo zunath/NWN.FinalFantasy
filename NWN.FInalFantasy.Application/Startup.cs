@@ -1,23 +1,27 @@
-﻿using NWN.FinalFantasy.Core.Logging;
+﻿using System;
+using System.Reflection;
+using System.Runtime.Loader;
+using NWN.FinalFantasy.Core.Logging;
 using NWN.FinalFantasy.Core.Messaging;
+using NWN.FinalFantasy.Location;
 using Serilog;
 
-namespace NWN.FinalFantasy.Core.Startup
+namespace NWN.FinalFantasy.Application
 {
     /// <summary>
     /// This script is executed before the module OnLoad event and is responsible for all the bootstrapping tasks
-    /// necessary for the framework. This entry point is case sensitive and must be lower case per NWN's naming rules on scripts.
+    /// necessary for the framework. 
     /// </summary>
     internal static class Startup
     {
         internal static void Main()
         {
+            AssemblyLoader.LoadAssemblies();
             ConfigureLogger();
             RegisterMessageHubErrorHandler();
             Audit.Initialize();
             EventRegistration.Register();
             CustomEventRegistration.Register();
-            AssemblyLoader.LoadAssemblies();
             AreaScriptRegistration.Register();
         }
 

@@ -4,11 +4,9 @@ using NWN.FinalFantasy.Core;
 using NWN.FinalFantasy.Core.Dialog;
 using NWN.FinalFantasy.Core.Event.Prefix;
 using NWN.FinalFantasy.Core.Logging;
-using NWN.FinalFantasy.Core.Startup;
-using static NWN._;
 
 // ReSharper disable once CheckNamespace
-namespace NWN
+namespace NWN.FinalFantasy.Application
 {
     public class Entrypoints
     {
@@ -144,33 +142,33 @@ namespace NWN
             _dialogEventRegistrations.Add("dialog_appears_b", () => OnDialogAppears.Run(5, 14));
 
             // DM events
-            _eventRegistrations.Add("dm_appear", () => Script.RunScriptEvents(GetModule(), DMScriptPrefix.OnAppear));
-            _eventRegistrations.Add("dm_change_diff", () => Script.RunScriptEvents(GetModule(), DMScriptPrefix.OnChangeDifficulty));
-            _eventRegistrations.Add("dm_disab_trap", () => Script.RunScriptEvents(GetModule(), DMScriptPrefix.OnDisableTrap));
-            _eventRegistrations.Add("dm_disappear", () => Script.RunScriptEvents(GetModule(), DMScriptPrefix.OnDisappear));
-            _eventRegistrations.Add("dm_force_rest", () => Script.RunScriptEvents(GetModule(), DMScriptPrefix.OnForceRest));
-            _eventRegistrations.Add("dm_get_var", () => Script.RunScriptEvents(GetModule(), DMScriptPrefix.OnGetVariable));
-            _eventRegistrations.Add("dm_give_gold", () => Script.RunScriptEvents(GetModule(), DMScriptPrefix.OnGiveGold));
-            _eventRegistrations.Add("dm_give_item", () => Script.RunScriptEvents(GetModule(), DMScriptPrefix.OnGiveItem));
-            _eventRegistrations.Add("dm_give_level", () => Script.RunScriptEvents(GetModule(), DMScriptPrefix.OnGiveLevel));
-            _eventRegistrations.Add("dm_give_xp", () => Script.RunScriptEvents(GetModule(), DMScriptPrefix.OnGiveXP));
-            _eventRegistrations.Add("dm_heal", () => Script.RunScriptEvents(GetModule(), DMScriptPrefix.OnHeal));
-            _eventRegistrations.Add("dm_jump", () => Script.RunScriptEvents(GetModule(), DMScriptPrefix.OnJump));
-            _eventRegistrations.Add("dm_jump_all", () => Script.RunScriptEvents(GetModule(), DMScriptPrefix.OnJumpAll));
-            _eventRegistrations.Add("dm_jump_target", () => Script.RunScriptEvents(GetModule(), DMScriptPrefix.OnJumpTarget));
-            _eventRegistrations.Add("dm_kill", () => Script.RunScriptEvents(GetModule(), DMScriptPrefix.OnKill));
-            _eventRegistrations.Add("dm_limbo", () => Script.RunScriptEvents(GetModule(), DMScriptPrefix.OnLimbo));
-            _eventRegistrations.Add("dm_possess", () => Script.RunScriptEvents(GetModule(), DMScriptPrefix.OnPossess));
-            _eventRegistrations.Add("dm_set_date", () => Script.RunScriptEvents(GetModule(), DMScriptPrefix.OnSetDate));
-            _eventRegistrations.Add("dm_set_stat", () => Script.RunScriptEvents(GetModule(), DMScriptPrefix.OnSetStat));
-            _eventRegistrations.Add("dm_set_time", () => Script.RunScriptEvents(GetModule(), DMScriptPrefix.OnSetTime));
-            _eventRegistrations.Add("dm_set_var", () => Script.RunScriptEvents(GetModule(), DMScriptPrefix.OnSetVariable));
-            _eventRegistrations.Add("dm_spawn", () => Script.RunScriptEvents(GetModule(), DMScriptPrefix.OnSpawnObject));
-            _eventRegistrations.Add("dm_take_item", () => Script.RunScriptEvents(GetModule(), DMScriptPrefix.OnTakeItem));
-            _eventRegistrations.Add("dm_togg_immo", () => Script.RunScriptEvents(GetModule(), DMScriptPrefix.OnToggleImmortality));
-            _eventRegistrations.Add("dm_toggle_ai", () => Script.RunScriptEvents(GetModule(), DMScriptPrefix.OnToggleAI));
-            _eventRegistrations.Add("dm_toggle_invuln", () => Script.RunScriptEvents(GetModule(), DMScriptPrefix.OnToggleInvulnerability));
-            _eventRegistrations.Add("dm_toggle_lock", () => Script.RunScriptEvents(GetModule(), DMScriptPrefix.OnToggleLock));
+            _eventRegistrations.Add("dm_appear", () => Script.RunScriptEvents(_.GetModule(), DMScriptPrefix.OnAppear));
+            _eventRegistrations.Add("dm_change_diff", () => Script.RunScriptEvents(_.GetModule(), DMScriptPrefix.OnChangeDifficulty));
+            _eventRegistrations.Add("dm_disab_trap", () => Script.RunScriptEvents(_.GetModule(), DMScriptPrefix.OnDisableTrap));
+            _eventRegistrations.Add("dm_disappear", () => Script.RunScriptEvents(_.GetModule(), DMScriptPrefix.OnDisappear));
+            _eventRegistrations.Add("dm_force_rest", () => Script.RunScriptEvents(_.GetModule(), DMScriptPrefix.OnForceRest));
+            _eventRegistrations.Add("dm_get_var", () => Script.RunScriptEvents(_.GetModule(), DMScriptPrefix.OnGetVariable));
+            _eventRegistrations.Add("dm_give_gold", () => Script.RunScriptEvents(_.GetModule(), DMScriptPrefix.OnGiveGold));
+            _eventRegistrations.Add("dm_give_item", () => Script.RunScriptEvents(_.GetModule(), DMScriptPrefix.OnGiveItem));
+            _eventRegistrations.Add("dm_give_level", () => Script.RunScriptEvents(_.GetModule(), DMScriptPrefix.OnGiveLevel));
+            _eventRegistrations.Add("dm_give_xp", () => Script.RunScriptEvents(_.GetModule(), DMScriptPrefix.OnGiveXP));
+            _eventRegistrations.Add("dm_heal", () => Script.RunScriptEvents(_.GetModule(), DMScriptPrefix.OnHeal));
+            _eventRegistrations.Add("dm_jump", () => Script.RunScriptEvents(_.GetModule(), DMScriptPrefix.OnJump));
+            _eventRegistrations.Add("dm_jump_all", () => Script.RunScriptEvents(_.GetModule(), DMScriptPrefix.OnJumpAll));
+            _eventRegistrations.Add("dm_jump_target", () => Script.RunScriptEvents(_.GetModule(), DMScriptPrefix.OnJumpTarget));
+            _eventRegistrations.Add("dm_kill", () => Script.RunScriptEvents(_.GetModule(), DMScriptPrefix.OnKill));
+            _eventRegistrations.Add("dm_limbo", () => Script.RunScriptEvents(_.GetModule(), DMScriptPrefix.OnLimbo));
+            _eventRegistrations.Add("dm_possess", () => Script.RunScriptEvents(_.GetModule(), DMScriptPrefix.OnPossess));
+            _eventRegistrations.Add("dm_set_date", () => Script.RunScriptEvents(_.GetModule(), DMScriptPrefix.OnSetDate));
+            _eventRegistrations.Add("dm_set_stat", () => Script.RunScriptEvents(_.GetModule(), DMScriptPrefix.OnSetStat));
+            _eventRegistrations.Add("dm_set_time", () => Script.RunScriptEvents(_.GetModule(), DMScriptPrefix.OnSetTime));
+            _eventRegistrations.Add("dm_set_var", () => Script.RunScriptEvents(_.GetModule(), DMScriptPrefix.OnSetVariable));
+            _eventRegistrations.Add("dm_spawn", () => Script.RunScriptEvents(_.GetModule(), DMScriptPrefix.OnSpawnObject));
+            _eventRegistrations.Add("dm_take_item", () => Script.RunScriptEvents(_.GetModule(), DMScriptPrefix.OnTakeItem));
+            _eventRegistrations.Add("dm_togg_immo", () => Script.RunScriptEvents(_.GetModule(), DMScriptPrefix.OnToggleImmortality));
+            _eventRegistrations.Add("dm_toggle_ai", () => Script.RunScriptEvents(_.GetModule(), DMScriptPrefix.OnToggleAI));
+            _eventRegistrations.Add("dm_toggle_invuln", () => Script.RunScriptEvents(_.GetModule(), DMScriptPrefix.OnToggleInvulnerability));
+            _eventRegistrations.Add("dm_toggle_lock", () => Script.RunScriptEvents(_.GetModule(), DMScriptPrefix.OnToggleLock));
 
             // Door events
             _eventRegistrations.Add("door_on_attacked", () => Script.RunScriptEvents(NWGameObject.OBJECT_SELF, DoorPrefix.OnAttacked));
@@ -199,7 +197,7 @@ namespace NWN
             // Inventory events
             _eventRegistrations.Add("inv_add_item", () =>
             {
-                if (!GetIsObjectValid(NWGameObject.OBJECT_SELF))
+                if (!_.GetIsObjectValid(NWGameObject.OBJECT_SELF))
                 {
                     return;
                 }
@@ -209,7 +207,7 @@ namespace NWN
 
             _eventRegistrations.Add("inv_rem_item", () =>
             {
-                if (!GetIsObjectValid(NWGameObject.OBJECT_SELF))
+                if (!_.GetIsObjectValid(NWGameObject.OBJECT_SELF))
                 {
                     return;
                 }
@@ -218,15 +216,15 @@ namespace NWN
             });
 
             // Item events
-            _eventRegistrations.Add("item_on_hit", () => Script.RunScriptEvents(NWGameObject.OBJECT_SELF, ItemEventPrefix.OnItemHitCastSpell, GetModule()));
+            _eventRegistrations.Add("item_on_hit", () => Script.RunScriptEvents(NWGameObject.OBJECT_SELF, ItemEventPrefix.OnItemHitCastSpell, _.GetModule()));
 
             // Module events (NWNX)
-            _eventRegistrations.Add("mod_nwnx_equip", () => Script.RunScriptEvents(NWGameObject.OBJECT_SELF, ModulePrefix.OnNWNXEquipItem, GetModule()));
-            _eventRegistrations.Add("mod_nwnx_unequip", () => Script.RunScriptEvents(NWGameObject.OBJECT_SELF, ModulePrefix.OnNWNXUnequipItem, GetModule()));
-            _eventRegistrations.Add("mod_on_attack", () => Script.RunScriptEvents(NWGameObject.OBJECT_SELF, ModulePrefix.OnAttack, GetModule()));
-            _eventRegistrations.Add("mod_on_examine", () => Script.RunScriptEvents(NWGameObject.OBJECT_SELF, ModulePrefix.OnExamine, GetModule()));
+            _eventRegistrations.Add("mod_nwnx_equip", () => Script.RunScriptEvents(NWGameObject.OBJECT_SELF, ModulePrefix.OnNWNXEquipItem, _.GetModule()));
+            _eventRegistrations.Add("mod_nwnx_unequip", () => Script.RunScriptEvents(NWGameObject.OBJECT_SELF, ModulePrefix.OnNWNXUnequipItem, _.GetModule()));
+            _eventRegistrations.Add("mod_on_attack", () => Script.RunScriptEvents(NWGameObject.OBJECT_SELF, ModulePrefix.OnAttack, _.GetModule()));
+            _eventRegistrations.Add("mod_on_examine", () => Script.RunScriptEvents(NWGameObject.OBJECT_SELF, ModulePrefix.OnExamine, _.GetModule()));
             _eventRegistrations.Add("mod_on_nwnxchat", () => Script.RunScriptEvents(NWGameObject.OBJECT_SELF, ModulePrefix.OnNWNXChat));
-            _eventRegistrations.Add("mod_on_usefeat", () => Script.RunScriptEvents(NWGameObject.OBJECT_SELF, ModulePrefix.OnUseFeat, GetModule()));
+            _eventRegistrations.Add("mod_on_usefeat", () => Script.RunScriptEvents(NWGameObject.OBJECT_SELF, ModulePrefix.OnUseFeat, _.GetModule()));
             _eventRegistrations.Add("mod_on_useitem", () => Script.RunScriptEvents(NWGameObject.OBJECT_SELF, ModulePrefix.OnUseItem));
 
             // Module events (Non-NWNX)
@@ -266,8 +264,8 @@ namespace NWN
             _eventRegistrations.Add("plc_on_userdef", () => Script.RunScriptEvents(NWGameObject.OBJECT_SELF, PlaceablePrefix.OnUserDefined));
 
             // Server events
-            _eventRegistrations.Add("server_on_connec", () => Script.RunScriptEvents(NWGameObject.OBJECT_SELF, ServerEventPrefix.OnConnect, GetModule()));
-            _eventRegistrations.Add("server_on_discon", () => Script.RunScriptEvents(NWGameObject.OBJECT_SELF, ServerEventPrefix.OnDisconnect, GetModule()));
+            _eventRegistrations.Add("server_on_connec", () => Script.RunScriptEvents(NWGameObject.OBJECT_SELF, ServerEventPrefix.OnConnect, _.GetModule()));
+            _eventRegistrations.Add("server_on_discon", () => Script.RunScriptEvents(NWGameObject.OBJECT_SELF, ServerEventPrefix.OnDisconnect, _.GetModule()));
 
             // Store events
             _eventRegistrations.Add("store_on_close", () => Script.RunScriptEvents(NWGameObject.OBJECT_SELF, StorePrefix.OnClose));

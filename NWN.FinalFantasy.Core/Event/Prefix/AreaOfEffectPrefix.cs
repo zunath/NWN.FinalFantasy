@@ -1,6 +1,6 @@
 ﻿namespace NWN.FinalFantasy.Core.Event.Prefix
 {
-    internal class AreaOfEffectPrefix
+    public class AreaOfEffectPrefix
     {
         public const string OnEnter = "ON_ENTER_";
         public const string OnExit = "ON_EXIT_";

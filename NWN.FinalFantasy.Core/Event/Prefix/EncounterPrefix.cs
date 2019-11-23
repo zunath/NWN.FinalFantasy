@@ -1,6 +1,6 @@
 ﻿namespace NWN.FinalFantasy.Core.Event.Prefix
 {
-    internal class EncounterPrefix
+    public class EncounterPrefix
     {
         public const string OnEnter = "ON_ENTER_";
         public const string OnExhausted = "ON_EXHAUSTED_";

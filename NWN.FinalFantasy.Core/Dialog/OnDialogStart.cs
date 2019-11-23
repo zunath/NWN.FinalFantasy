@@ -2,7 +2,7 @@
 {
     public class OnDialogStart
     {
-        internal static void Main()
+        public static void Main()
         {
             var pc = _.GetLastUsedBy();
             if (!_.GetIsObjectValid(pc)) pc = _.GetPCSpeaker();

@@ -2,7 +2,7 @@
 {
     public class OnDialogEnd
     {
-        internal static void Main()
+        public static void Main()
         {
             var player = _.GetPCSpeaker();
             var playerID = _.GetGlobalID(player);

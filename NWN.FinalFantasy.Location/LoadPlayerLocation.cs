@@ -1,4 +1,5 @@
-﻿using NWN.FinalFantasy.Data.Repository;
+﻿using System;
+using NWN.FinalFantasy.Data.Repository;
 
 namespace NWN.FinalFantasy.Location
 {
@@ -6,7 +7,9 @@ namespace NWN.FinalFantasy.Location
     {
         public static void Main()
         {
+            Console.WriteLine("running load player location");
             var player = _.GetEnteringObject();
+            Console.WriteLine("got player");
             var area = _.GetArea(player);
             var areaTag = _.GetTag(area);
 

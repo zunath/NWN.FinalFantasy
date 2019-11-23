@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using NWN.FinalFantasy.Core;
 using NWN.FinalFantasy.Core.Event;
 using NWN.FinalFantasy.Core.Messaging;
 
-namespace NWN.FinalFantasy.Core.Startup
+namespace NWN.FinalFantasy.Application
 {
     internal class CustomEventRegistration
     {

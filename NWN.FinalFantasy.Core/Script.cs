@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
+using System.Runtime.Loader;
 using NWN.FinalFantasy.Core.Logging;
-using NWN.FinalFantasy.Core.Startup;
 using NWN.FinalFantasy.Core.Utility;
 using Serilog;
 using static NWN._;
@@ -19,7 +20,7 @@ namespace NWN.FinalFantasy.Core
         /// Only available during custom events.
         /// </summary>
         /// <param name="data">The data to store</param>
-        internal static void SetScriptData(object data)
+        public static void SetScriptData(object data)
         {
             _scriptData = data;
         }
@@ -28,7 +29,7 @@ namespace NWN.FinalFantasy.Core
         /// Clears data available for scripts. Should be called
         /// after all scripts have been executed for this custom event.
         /// </summary>
-        internal static void ClearScriptData()
+        public static void ClearScriptData()
         {
             _scriptData = null;
         }
@@ -40,7 +41,7 @@ namespace NWN.FinalFantasy.Core
         /// <typeparam name="T">The type of data to retrieve.</typeparam>
         /// <param name="ignoreNullData">if true, does not throw a exception if data is null. otherwise it does</param>
         /// <returns>The stored data</returns>
-        internal static T GetScriptData<T>(bool ignoreNullData)
+        public static T GetScriptData<T>(bool ignoreNullData)
             where T: class
         {
             if (!ignoreNullData) return GetScriptData<T>();
@@ -69,7 +70,7 @@ namespace NWN.FinalFantasy.Core
         /// <param name="caller">The object whose scripts we're checking</param>
         /// <param name="scriptPrefix">The prefix to look for.</param>
         /// <param name="scriptRegistrationObject">If the local variables are stored on a different object than the caller, you can use this argument to dictate where to look for the local variables</param>
-        internal static void RunScriptEvents(NWGameObject caller, string scriptPrefix, NWGameObject scriptRegistrationObject = null)
+        public static void RunScriptEvents(NWGameObject caller, string scriptPrefix, NWGameObject scriptRegistrationObject = null)
         {
             if (scriptRegistrationObject == null)
                 scriptRegistrationObject = caller;
@@ -84,7 +85,7 @@ namespace NWN.FinalFantasy.Core
                 }
                 catch (Exception ex)
                 {
-                    Audit.Write(AuditGroup.Error, ex.ToMessageAndCompleteStacktrace());
+                    Audit.Write(AuditGroup.Error, "SCRIPT ERROR: " + script + " Exception: " + ex.ToMessageAndCompleteStacktrace());
                 }
             }
         }
@@ -109,7 +110,9 @@ namespace NWN.FinalFantasy.Core
                 if (type == null)
                 {
                     // Check the loaded assemblies for the type.
-                    type = AssemblyLoader.FindType(scriptNamespace);
+                    type = AppDomain.CurrentDomain.GetAssemblies()
+                        .SelectMany(x => x.DefinedTypes)
+                        .SingleOrDefault(x => x.Namespace + "." + x.Name == scriptNamespace);
 
                     if (type == null)
                     {

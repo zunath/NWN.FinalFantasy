@@ -1,6 +1,6 @@
 ﻿namespace NWN.FinalFantasy.Core.Event.Prefix
 {
-    internal class CreaturePrefix
+    public class CreaturePrefix
     {
         public const string OnAttacked = "ON_ATTACKED_";
         public const string OnBlocked = "ON_BLOCKED_";

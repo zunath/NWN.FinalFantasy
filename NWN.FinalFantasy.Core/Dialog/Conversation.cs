@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using NWN.FinalFantasy.Core.NWScript.Enumerations;
-using NWN.FinalFantasy.Core.Startup;
 using static NWN._;
 
 namespace NWN.FinalFantasy.Core.Dialog
@@ -113,9 +114,13 @@ namespace NWN.FinalFantasy.Core.Dialog
         {
             var settings = ApplicationSettings.Get();
             var @namespace = settings.NamespaceRoot + "." + @class;
-            var type = AssemblyLoader.FindType(@namespace);
+            var type = Assembly.GetExecutingAssembly()
+                .GetReferencedAssemblies()
+                .Select(Assembly.Load)
+                .SelectMany(x => x.DefinedTypes)
+                .SingleOrDefault(x => x.Namespace + "." + x.Name == @namespace);
 
-            if(type == null)
+            if (type == null)
                 throw new Exception("Could not location conversation at path: " + @class);
 
             var conversation = (IConversation)Activator.CreateInstance(type);

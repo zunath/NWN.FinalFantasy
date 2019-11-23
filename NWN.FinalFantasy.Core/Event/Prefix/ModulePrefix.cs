@@ -1,6 +1,6 @@
 ﻿namespace NWN.FinalFantasy.Core.Event.Prefix
 {
-    internal class ModulePrefix
+    public class ModulePrefix
     {
         // Regular NWN events
         public const string OnAcquireItem = "ON_ACQUIRE_ITEM_";

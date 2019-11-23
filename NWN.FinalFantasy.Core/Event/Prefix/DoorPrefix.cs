@@ -1,6 +1,6 @@
 ﻿namespace NWN.FinalFantasy.Core.Event.Prefix
 {
-    internal class DoorPrefix
+    public class DoorPrefix
     {
         public const string OnAttacked = "ON_ATTACKED_";
         public const string OnClicked = "ON_CLICKED_";

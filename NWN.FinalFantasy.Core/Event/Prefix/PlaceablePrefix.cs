@@ -1,6 +1,6 @@
 ﻿namespace NWN.FinalFantasy.Core.Event.Prefix
 {
-    internal class PlaceablePrefix
+    public class PlaceablePrefix
     {
         public const string OnAttacked = "ON_ATTACKED_";
         public const string OnClicked = "ON_CLICKED_";

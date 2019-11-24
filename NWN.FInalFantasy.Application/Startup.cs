@@ -16,13 +16,14 @@ namespace NWN.FinalFantasy.Application
     {
         internal static void Main()
         {
-            AssemblyLoader.LoadAssemblies();
             ConfigureLogger();
             RegisterMessageHubErrorHandler();
             Audit.Initialize();
             EventRegistration.Register();
             CustomEventRegistration.Register();
             AreaScriptRegistration.Register();
+
+            FeatureRegistration.Register();
         }
 
         private static void ConfigureLogger()

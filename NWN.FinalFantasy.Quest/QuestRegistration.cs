@@ -1,14 +1,17 @@
-﻿using NWN.FinalFantasy.Quest.TestLocation;
+﻿using NWN.FinalFantasy.Core.Contracts;
+using NWN.FinalFantasy.Quest.TestLocation;
+using Serilog;
 
 namespace NWN.FinalFantasy.Quest
 {
-    public class Startup
+    public class QuestRegistration: IFeatureRegistration
     {
         /// <summary>
         /// This script should be used to initialize all quests into the registry.
         /// </summary>
-        public static void Main()
+        public void Register()
         {
+            Log.Information("Registering Quest...");
             QuestRegistry.Register(new MyTestQuest());
         }
     }

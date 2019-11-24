@@ -8,7 +8,7 @@ using NWN.FinalFantasy.Core.Logging;
 // ReSharper disable once CheckNamespace
 namespace NWN.FinalFantasy.Application
 {
-    public class Entrypoints
+    public static class Entrypoints
     {
         public const int SCRIPT_HANDLED = 0;
         public const int SCRIPT_NOT_HANDLED = -1;

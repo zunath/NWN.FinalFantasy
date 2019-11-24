@@ -25,9 +25,8 @@ namespace NWN.FinalFantasy.Chat
             // Use reflection to get all of IChatCommand handler implementations.
 
             var type = typeof(IChatCommand);
-            var classes = Assembly.GetExecutingAssembly()
-                    .GetReferencedAssemblies()
-                    .Select(Assembly.Load)
+            var classes = AppDomain.CurrentDomain
+                    .GetAssemblies()
                     .SelectMany(x => x.DefinedTypes)
                     .Where(x => type.IsAssignableFrom(x) && x.IsClass && !x.IsAbstract)
                     .ToList();
@@ -42,8 +41,6 @@ namespace NWN.FinalFantasy.Chat
                 }
                 // We use the lower-case class name as the key because later on we do a lookup based on text entered by the player.
                 string key = classType.Name.ToLower();
-
-                Console.WriteLine("registered chat command: " + key);
                 _chatCommands.Add(key, instance);
             }
         }

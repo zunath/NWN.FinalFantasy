@@ -7,7 +7,7 @@ using NWN.FinalFantasy.Location;
 
 namespace NWN.FinalFantasy.Application
 {
-    public class Bootstrapper
+    public static class Bootstrapper
     {
         public static int Bootstrap(IntPtr arg, int argLength)
         {

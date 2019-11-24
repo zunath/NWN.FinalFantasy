@@ -62,6 +62,7 @@ namespace NWN.FinalFantasy.Application
             _.SetEventScript(_.GetModule(), EventScriptModule.OnPlayerDeath, "mod_on_death");
             _.SetEventScript(_.GetModule(), EventScriptModule.OnPlayerDying, "mod_on_dying");
             _.SetEventScript(_.GetModule(), EventScriptModule.OnEquipItem, "mod_on_equip");
+            _.SetEventScript(_.GetModule(), EventScriptModule.OnModuleStart, "mod_on_load");
             _.SetEventScript(_.GetModule(), EventScriptModule.OnPlayerLevelUp, "mod_on_levelup");
             _.SetEventScript(_.GetModule(), EventScriptModule.OnRespawnButtonPressed, "mod_on_respawn");
             _.SetEventScript(_.GetModule(), EventScriptModule.OnPlayerRest, "mod_on_rest");

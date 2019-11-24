@@ -41,7 +41,7 @@ namespace NWN.FinalFantasy.Application
             {
                 try
                 {
-                    _eventRegistrations[script].Invoke();
+                    _eventRegistrations[script]();
                     return SCRIPT_HANDLED;
                 }
                 catch (Exception ex)
@@ -56,7 +56,7 @@ namespace NWN.FinalFantasy.Application
             {
                 try
                 {
-                    return _dialogEventRegistrations[script].Invoke();
+                    return _dialogEventRegistrations[script]();
                 }
                 catch (Exception ex)
                 {
@@ -78,7 +78,7 @@ namespace NWN.FinalFantasy.Application
         {
             // Bootstrapping
             _eventRegistrations.Add("startup", Startup.Main);
-            
+
             // Area events
             _eventRegistrations.Add("area_on_enter", () => Script.RunScriptEvents(NWGameObject.OBJECT_SELF, AreaPrefix.OnEnter));
             _eventRegistrations.Add("area_on_exit", () => Script.RunScriptEvents(NWGameObject.OBJECT_SELF, AreaPrefix.OnExit));
@@ -239,6 +239,7 @@ namespace NWN.FinalFantasy.Application
             _eventRegistrations.Add("mod_on_heartbeat", () => Script.RunScriptEvents(NWGameObject.OBJECT_SELF, ModulePrefix.OnHeartbeat));
             _eventRegistrations.Add("mod_on_leave", () => Script.RunScriptEvents(NWGameObject.OBJECT_SELF, ModulePrefix.OnPlayerLeave));
             _eventRegistrations.Add("mod_on_levelup", () => Script.RunScriptEvents(NWGameObject.OBJECT_SELF, ModulePrefix.OnPlayerLevelUp));
+            _eventRegistrations.Add("mod_on_load", () => Script.RunScriptEvents(NWGameObject.OBJECT_SELF, ModulePrefix.OnLoad));
             _eventRegistrations.Add("mod_on_respawn", () => Script.RunScriptEvents(NWGameObject.OBJECT_SELF, ModulePrefix.OnPlayerRespawn));
             _eventRegistrations.Add("mod_on_rest", () => Script.RunScriptEvents(NWGameObject.OBJECT_SELF, ModulePrefix.OnPlayerRest));
             _eventRegistrations.Add("mod_on_unacquire", () => Script.RunScriptEvents(NWGameObject.OBJECT_SELF, ModulePrefix.OnUnacquireItem));

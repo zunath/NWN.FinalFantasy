@@ -1,10 +1,11 @@
-﻿using NWN.FinalFantasy.Core.NWNX;
+﻿using NWN.FinalFantasy.Core.Contracts;
+using NWN.FinalFantasy.Core.NWNX;
 
 namespace NWN.FinalFantasy.Auditing.DM
 {
-    public class OnGiveLevel : DMAudit
+    public class OnGiveLevel : DMAudit, IScript
     {
-        public static void Main()
+        public void Main()
         {
             var dm = NWGameObject.OBJECT_SELF;
             var amount = NWNXEvents.OnDMGiveLevels_GetAmount();

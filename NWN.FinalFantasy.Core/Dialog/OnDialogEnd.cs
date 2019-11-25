@@ -1,8 +1,10 @@
-﻿namespace NWN.FinalFantasy.Core.Dialog
+﻿using NWN.FinalFantasy.Core.Contracts;
+
+namespace NWN.FinalFantasy.Core.Dialog
 {
-    public class OnDialogEnd
+    public static class OnDialogEnd
     {
-        public static void Main()
+        public static void Run()
         {
             var player = _.GetPCSpeaker();
             var playerID = _.GetGlobalID(player);

@@ -1,8 +1,10 @@
-﻿namespace NWN.FinalFantasy.Core.Dialog
+﻿using NWN.FinalFantasy.Core.Contracts;
+
+namespace NWN.FinalFantasy.Core.Dialog
 {
-    public class OnDialogStart
+    public static class OnDialogStart
     {
-        public static void Main()
+        public static void Run()
         {
             var pc = _.GetLastUsedBy();
             if (!_.GetIsObjectValid(pc)) pc = _.GetPCSpeaker();

@@ -22,16 +22,8 @@ namespace NWN.FinalFantasy.Chat
 
         private static void Register()
         {
-            // Use reflection to get all of IChatCommand handler implementations.
-
-            var type = typeof(IChatCommand);
-            var classes = AppDomain.CurrentDomain
-                    .GetAssemblies()
-                    .SelectMany(x => x.DefinedTypes)
-                    .Where(x => type.IsAssignableFrom(x) && x.IsClass && !x.IsAbstract)
-                    .ToList();
-
-            foreach (var classType in classes)
+            var types = TypeFinder.GetTypesImplementingInterface<IChatCommand>();
+            foreach (var classType in types)
             {
                 IChatCommand instance = Activator.CreateInstance(classType) as IChatCommand;
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using NWN.FinalFantasy.Core.NWScript.Enumerations;
+using NWN.FinalFantasy.Core.Utility;
 using static NWN._;
 
 namespace NWN.FinalFantasy.Core.Dialog
@@ -12,6 +13,23 @@ namespace NWN.FinalFantasy.Core.Dialog
         private const int NumberOfDialogs = 255;
         private static readonly Dictionary<Guid, PlayerDialog> _playerDialogs = new Dictionary<Guid, PlayerDialog>();
         private static readonly Dictionary<int, bool> _dialogsInUse = new Dictionary<int, bool>();
+        private static readonly Dictionary<string, IConversation> _conversations = new Dictionary<string, IConversation>();
+
+        static Conversation()
+        {
+            var types = TypeFinder.GetTypesImplementingInterface<IConversation>();
+            foreach(var type in types)
+            {
+                var convo = (IConversation) Activator.CreateInstance(type);
+                var key = type.Namespace + "." + type.Name;
+                _conversations[key] = convo;
+            }
+
+            for (int x = 1; x <= NumberOfDialogs; x++)
+            {
+                _dialogsInUse[x] = false;
+            }
+        }
 
         /// <summary>
         /// Starts a new programmatic conversation between a player and another object.
@@ -113,17 +131,11 @@ namespace NWN.FinalFantasy.Core.Dialog
         public static IConversation FindConversation(string @class)
         {
             var settings = ApplicationSettings.Get();
-            var @namespace = settings.NamespaceRoot + "." + @class;
-            var type = Assembly.GetExecutingAssembly()
-                .GetReferencedAssemblies()
-                .Select(Assembly.Load)
-                .SelectMany(x => x.DefinedTypes)
-                .SingleOrDefault(x => x.Namespace + "." + x.Name == @namespace);
-
-            if (type == null)
+            var key = settings.NamespaceRoot + "." + @class;
+            if (!_conversations.ContainsKey(key))
                 throw new Exception("Could not location conversation at path: " + @class);
 
-            var conversation = (IConversation)Activator.CreateInstance(type);
+            var conversation = _conversations[key];
             return conversation;
         }
 

@@ -1,13 +1,14 @@
 ﻿using System.Linq;
+using NWN.FinalFantasy.Core.Contracts;
 using NWN.FinalFantasy.Core.NWNX;
 using NWN.FinalFantasy.Core.NWScript.Enumerations;
 using static NWN._;
 
 namespace NWN.FinalFantasy.Job.Scripts
 {
-    internal class CheckDualWield
+    public class CheckDualWield: IScript
     {
-        public static void Main()
+        public void Main()
         {
             var player = NWGameObject.OBJECT_SELF;
             var slot = NWNXEvents.OnEquipItem_GetInventorySlot();

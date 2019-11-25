@@ -1,18 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
+using NWN.FinalFantasy.Core.Contracts;
 using NWN.FinalFantasy.Core.Logging;
 using NWN.FinalFantasy.Core.Utility;
-using Serilog;
-using static NWN._;
 
 namespace NWN.FinalFantasy.Core
 {
     public static class Script
     {
-        private static readonly Dictionary<string, MethodInfo> _cachedScripts = new Dictionary<string, MethodInfo>();
+        private static readonly Dictionary<string, IScript> _cachedScripts = new Dictionary<string, IScript>();
         private static object _scriptData;
+        private static readonly ApplicationSettings _settings;
+
+        static Script()
+        {
+            _settings = ApplicationSettings.Get();
+            var types = TypeFinder.GetTypesImplementingInterface<IScript>();
+            foreach (var script in types)
+            {
+                var instance = (IScript) Activator.CreateInstance(script);
+                var key = script.Namespace + "." + script.Name;
+                Console.WriteLine("Registering type: " + key);
+                _cachedScripts[key] = instance;
+            }
+        }
 
         /// <summary>
         /// Sets data available for scripts to retrieve.
@@ -80,6 +91,7 @@ namespace NWN.FinalFantasy.Core
             {
                 try
                 {
+                    Console.WriteLine("script = " + script);
                     Run(caller, script);
                 }
                 catch (Exception ex)
@@ -100,37 +112,18 @@ namespace NWN.FinalFantasy.Core
         /// <param name="data">Arbitrary data to pass to the script.</param>
         public static void Run<T>(NWGameObject caller, string script, T data)
         {
-            if (!_cachedScripts.ContainsKey(script))
+            var key = _settings.NamespaceRoot + "." + script;
+            if (!_cachedScripts.ContainsKey(key))
+                throw new Exception("Script '" + script + "' has not been registered. Make sure a public class implementing the " + nameof(IScript) + " interface exists in the code base.");
+
+            try
             {
-                var settings = ApplicationSettings.Get();
-                var scriptNamespace = settings.NamespaceRoot + "." + script;
-
-                var type = Type.GetType(scriptNamespace);
-                if (type == null)
-                {
-                    // Check the loaded assemblies for the type.
-                    type = AppDomain.CurrentDomain.GetAssemblies()
-                        .SelectMany(x => x.DefinedTypes)
-                        .SingleOrDefault(x => x.Namespace + "." + x.Name == scriptNamespace);
-
-                    if (type == null)
-                    {
-                        Log.Warning($"Could not locate script: {scriptNamespace} from caller {GetName(caller)}");
-                        return;
-                    }
-                }
-
-                var method = type.GetMethod("Main", BindingFlags.Static | BindingFlags.Public);
-                if (method == null)
-                {
-                    Log.Warning("Could not locate method 'Main' on script: " + script);
-                    return;
-                }
-
-                _cachedScripts[script] = method;
+                _cachedScripts[key].Main();
             }
-
-            _cachedScripts[script].Invoke(null, data == null ? null : new object[] { data });
+            catch(Exception ex)
+            {
+                Audit.Write(AuditGroup.Error, "SCRIPT ERROR: " + script + " " + ex.ToMessageAndCompleteStacktrace());
+            }
         }
 
         /// <summary>

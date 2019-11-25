@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Globalization;
+using NWN.FinalFantasy.Core.Contracts;
 using NWN.FinalFantasy.Core.NWNX;
 using NWN.FinalFantasy.Data.Repository;
 using static NWN._;
 
 namespace NWN.FinalFantasy.Roleplay
 {
-    internal class ProcessRPMessage
+    public class ProcessRPMessage: IScript
     {
         private const string RPTimestampVariable = "RP_SYSTEM_LAST_MESSAGE_TIMESTAMP";
 
-        public static void Main()
+        public void Main()
         {
             NWNXChatChannel channel = NWNXChat.GetChannel();
             NWGameObject player = NWNXChat.GetSender();

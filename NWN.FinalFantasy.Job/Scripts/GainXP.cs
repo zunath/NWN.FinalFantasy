@@ -1,5 +1,6 @@
 ﻿using System;
 using NWN.FinalFantasy.Core;
+using NWN.FinalFantasy.Core.Contracts;
 using NWN.FinalFantasy.Core.Message;
 using NWN.FinalFantasy.Core.Messaging;
 using NWN.FinalFantasy.Core.NWNX;
@@ -14,9 +15,9 @@ namespace NWN.FinalFantasy.Job.Scripts
     /// <summary>
     /// Handles saving job XP changes and performs level ups as necessary.
     /// </summary>
-    internal class GainXP
+    public class GainXP: IScript
     {
-        public static void Main()
+        public void Main()
         {
             var data = Script.GetScriptData<JobXPGained>();
             var player = data.Creature;

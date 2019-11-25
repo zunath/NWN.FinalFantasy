@@ -1,12 +1,13 @@
-﻿using NWN.FinalFantasy.Core.Enumerations;
+﻿using NWN.FinalFantasy.Core.Contracts;
+using NWN.FinalFantasy.Core.Enumerations;
 using NWN.FinalFantasy.Core.Logging;
 using static NWN._;
 
 namespace NWN.FinalFantasy.Authorization
 {
-    public class OnModuleEnter
+    public class OnModuleEnter: IScript
     {
-        public static void Main()
+        public void Main()
         {
             NWGameObject dm = GetEnteringObject();
             if (!GetIsDungeonMaster(dm)) return;

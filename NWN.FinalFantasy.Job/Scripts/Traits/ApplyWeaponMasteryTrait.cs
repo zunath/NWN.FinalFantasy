@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using NWN.FinalFantasy.Core;
+using NWN.FinalFantasy.Core.Contracts;
 using NWN.FinalFantasy.Core.NWNX;
 using NWN.FinalFantasy.Core.NWScript.Enumerations;
 using NWN.FinalFantasy.Job.Event;
@@ -8,7 +9,7 @@ using static NWN._;
 
 namespace NWN.FinalFantasy.Job.Scripts.Traits
 {
-    internal class ApplyWeaponMasteryTrait
+    public class ApplyWeaponMasteryTrait: IScript
     {
         private static readonly BaseItemType[] _axeTypes =
         {
@@ -19,7 +20,7 @@ namespace NWN.FinalFantasy.Job.Scripts.Traits
             BaseItemType.ThrowingAxe
         };
 
-        public static void Main()
+        public void Main()
         {
             var data = Script.GetScriptData<StatsRecalculated>();
             var player = data.Player;

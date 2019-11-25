@@ -1,9 +1,10 @@
-﻿using NWN.FinalFantasy.Core.NWScript.Enumerations;
+﻿using NWN.FinalFantasy.Core.Contracts;
+using NWN.FinalFantasy.Core.NWScript.Enumerations;
 using static NWN._;
 
 namespace NWN.FinalFantasy.Death
 {
-    public class OnPlayerDeath
+    public class OnPlayerDeath: IScript
     {
         /// <summary>
         /// Handles resetting a player's faction reputation toward Commoner, Merchant, and Defender
@@ -11,7 +12,7 @@ namespace NWN.FinalFantasy.Death
         /// obtained toward this killer's faction.
         /// Pops up the respawn panel and writes an audit log as well.
         /// </summary>
-        public static void Main()
+        public void Main()
         {
             NWGameObject player = GetLastPlayerDied();
             NWGameObject hostile = GetLastHostileActor(player);

@@ -1,10 +1,11 @@
-﻿using static NWN._;
+﻿using NWN.FinalFantasy.Core.Contracts;
+using static NWN._;
 
 namespace NWN.FinalFantasy.Map
 {
-    public class HideMap
+    public class HideMap: IScript
     {
-        public static void Main()
+        public void Main()
         {
             NWGameObject area = NWGameObject.OBJECT_SELF;
 

@@ -1,10 +1,11 @@
 ﻿using System;
+using NWN.FinalFantasy.Core.Contracts;
 
 namespace NWN.FinalFantasy.Job.Scripts
 {
-    internal class TagWeaponUse
+    public class TagWeaponUse: IScript
     {
-        public static void Main()
+        public void Main()
         {
             Console.WriteLine("Tagging weapon use");
         }

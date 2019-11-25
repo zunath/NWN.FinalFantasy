@@ -1,4 +1,5 @@
 ﻿using System;
+using NWN.FinalFantasy.Core.Contracts;
 using NWN.FinalFantasy.Core.Logging;
 using NWN.FinalFantasy.Core.NWScript.Enumerations;
 using NWN.FinalFantasy.Data;
@@ -8,14 +9,14 @@ using static NWN._;
 
 namespace NWN.FinalFantasy.Death
 {
-    public class OnPlayerRespawn
+    public class OnPlayerRespawn: IScript
     {
         /// <summary>
         /// Restores a respawning player's health to half of maximum,
         /// applies penalties for death, and teleports him or her to
         /// their Home Point.
         /// </summary>
-        public static void Main()
+        public void Main()
         {
             NWGameObject player = GetLastRespawnButtonPresser();
             int maxHP = GetMaxHitPoints(player);

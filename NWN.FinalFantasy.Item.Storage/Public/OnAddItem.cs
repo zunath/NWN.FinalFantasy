@@ -1,8 +1,10 @@
-﻿namespace NWN.FinalFantasy.Item.Storage.Public
+﻿using NWN.FinalFantasy.Core.Contracts;
+
+namespace NWN.FinalFantasy.Item.Storage.Public
 {
-    public class OnAddItem: PublicStorageBase
+    public class OnAddItem: PublicStorageBase, IScript
     {
-        public static void Main()
+        public void Main()
         {
             var key = BuildKey();
             AddItem(key);

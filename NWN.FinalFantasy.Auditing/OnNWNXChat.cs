@@ -1,12 +1,13 @@
-﻿using NWN.FinalFantasy.Core.Logging;
+﻿using NWN.FinalFantasy.Core.Contracts;
+using NWN.FinalFantasy.Core.Logging;
 using NWN.FinalFantasy.Core.NWNX;
 using static NWN._;
 
 namespace NWN.FinalFantasy.Auditing
 {
-    public class OnNWNXChat
+    public class OnNWNXChat: IScript
     {
-        public static void Main()
+        public void Main()
         {
             var channel = NWNXChat.GetChannel();
             string log;

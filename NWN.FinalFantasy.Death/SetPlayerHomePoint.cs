@@ -1,13 +1,14 @@
-﻿using NWN.FinalFantasy.Data;
+﻿using NWN.FinalFantasy.Core.Contracts;
+using NWN.FinalFantasy.Data;
 using NWN.FinalFantasy.Data.Entity;
 using NWN.FinalFantasy.Data.Repository;
 using static NWN._;
 
 namespace NWN.FinalFantasy.Death
 {
-    public class SetPlayerHomePoint
+    public class SetPlayerHomePoint: IScript
     {
-        public static void Main()
+        public void Main()
         {
             NWGameObject player = GetLastUsedBy();
             if (!GetIsPlayer(player)) return;

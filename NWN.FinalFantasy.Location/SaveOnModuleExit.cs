@@ -1,8 +1,10 @@
-﻿namespace NWN.FinalFantasy.Location
+﻿using NWN.FinalFantasy.Core.Contracts;
+
+namespace NWN.FinalFantasy.Location
 {
-    public class SaveOnModuleExit: SavePlayerLocation
+    public class SaveOnModuleExit: SavePlayerLocation, IScript
     {
-        public static void Main()
+        public void Main()
         {
             var player = _.GetExitingObject();
             Run(player);

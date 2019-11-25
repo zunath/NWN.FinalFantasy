@@ -1,4 +1,5 @@
 ﻿using NWN.FinalFantasy.Core;
+using NWN.FinalFantasy.Core.Contracts;
 using NWN.FinalFantasy.Core.NWNX;
 using NWN.FinalFantasy.Job.Event;
 using NWN.FinalFantasy.Job.Registry;
@@ -9,9 +10,9 @@ namespace NWN.FinalFantasy.Job.Scripts
     /// <summary>
     /// Grants the mastered feat to the player.
     /// </summary>
-    internal class MasterAbility
+    public class MasterAbility: IScript
     {
-        public static void Main()
+        public void Main()
         {
             var data = Script.GetScriptData<AbilityMastered>();
             var player = data.Player;

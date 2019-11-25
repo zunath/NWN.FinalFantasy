@@ -3,6 +3,7 @@ using System.Linq;
 using System.Reflection;
 using NWN.FinalFantasy.Authorization;
 using NWN.FinalFantasy.Chat.Command;
+using NWN.FinalFantasy.Core.Contracts;
 using NWN.FinalFantasy.Core.Enumerations;
 using NWN.FinalFantasy.Core.NWNX;
 using NWN.FinalFantasy.Core.NWScript.Enumerations;
@@ -11,9 +12,9 @@ using static NWN._;
 
 namespace NWN.FinalFantasy.Chat
 {
-    public class OnNWNXChat
+    public class OnNWNXChat: IScript
     {
-        public static void Main()
+        public void Main()
         {
             NWGameObject sender = NWGameObject.OBJECT_SELF;
             string originalMessage = NWNXChat.GetMessage().Trim();

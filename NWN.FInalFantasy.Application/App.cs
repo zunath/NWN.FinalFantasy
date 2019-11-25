@@ -13,35 +13,52 @@ namespace NWN.FinalFantasy.Application
     /// </summary>
     internal class App: IApplication
     {
-        private ScriptRegistration _scriptRegistration;
-
+        /// <summary>
+        /// Runs when the server boots up. The NWN context is not available at this point.
+        /// </summary>
         public void OnStart()
         {
             ConfigureLogger();
             RegisterMessageHubErrorHandler();
             Audit.Initialize();
 
-            _scriptRegistration = new ScriptRegistration(OnNWNContextReady);
+            ScriptRegistration.RegisterStartupAction(OnNWNContextReady);
         }
 
+        /// <summary>
+        /// Runs when the NWN context is ready. The NWN context is available and can be used at this point.
+        /// </summary>
         public void OnNWNContextReady()
         {
             EventRegistration.Register();
-            _scriptRegistration.OnNWNContextReady();
+            ScriptRegistration.OnNWNContextReady();
             CustomEventRegistration.Register();
             AreaScriptRegistration.Register();
             FeatureRegistration.Register();
         }
 
+        /// <summary>
+        /// Executes once per server frame.
+        /// </summary>
+        /// <param name="frame"></param>
         public void OnMainLoop(ulong frame)
         {
         }
 
+        /// <summary>
+        /// Runs whenever a script is requested by NWN.
+        /// </summary>
+        /// <param name="script">The name of the script requested.</param>
+        /// <param name="oidSelf">The object ID of the object calling this script.</param>
+        /// <returns></returns>
         public int OnRunScript(string script, uint oidSelf)
         {
-            return _scriptRegistration.OnRunScript(script);
+            return ScriptRegistration.OnRunScript(script);
         }
 
+        /// <summary>
+        /// Sets up the logger.
+        /// </summary>
         private static void ConfigureLogger()
         {
             Log.Logger = new LoggerConfiguration()
@@ -49,12 +66,20 @@ namespace NWN.FinalFantasy.Application
                 .CreateLogger();
         }
 
+        /// <summary>
+        /// Configure the message hub to write an audit in the event of an error.
+        /// </summary>
         private static void RegisterMessageHubErrorHandler()
         {
             MessageHub.Instance.RegisterGlobalErrorHandler((guid, exception) => Audit.Write(AuditGroup.Error, exception.ToMessageAndCompleteStacktrace()));
         }
 
-
+        /// <summary>
+        /// Entry point for the NWNX_DotNET plugin.
+        /// </summary>
+        /// <param name="arg">Pointer to arguments</param>
+        /// <param name="argLength">Length of the arguments</param>
+        /// <returns></returns>
         public static int Bootstrap(IntPtr arg, int argLength)
         {
             if (arg == (IntPtr)0)

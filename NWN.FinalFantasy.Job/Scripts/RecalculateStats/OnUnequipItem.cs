@@ -1,10 +1,11 @@
-﻿using static NWN._;
+﻿using NWN.FinalFantasy.Core.Contracts;
+using static NWN._;
 
 namespace NWN.FinalFantasy.Job.Scripts.RecalculateStats
 {
-    internal class OnUnequipItem: RecalculateStatsBase
+    public class OnUnequipItem: RecalculateStatsBase, IScript
     {
-        public static void Main()
+        public void Main()
         {
             var player = GetPCItemLastUnequippedBy();
             var item = GetPCItemLastUnequipped();

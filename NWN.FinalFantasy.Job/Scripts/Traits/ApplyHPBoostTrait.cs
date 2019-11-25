@@ -1,5 +1,6 @@
 ﻿using System;
 using NWN.FinalFantasy.Core;
+using NWN.FinalFantasy.Core.Contracts;
 using NWN.FinalFantasy.Core.NWScript.Enumerations;
 using NWN.FinalFantasy.Job.Event;
 
@@ -9,9 +10,9 @@ namespace NWN.FinalFantasy.Job.Scripts.Traits
     /// Applies a percent increase to a player's HP if they have an HP Boost feat.
     /// Only the highest tier of the ability is used for this calculation. They do not stack.
     /// </summary>
-    internal class ApplyHPBoostTrait: StatProcessingBase
+    public class ApplyHPBoostTrait: StatProcessingBase, IScript
     {
-        public static void Main()
+        public void Main()
         {
             var data = Script.GetScriptData<StatsRecalculated>();
             var player = data.Player;

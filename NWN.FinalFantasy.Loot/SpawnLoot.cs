@@ -1,4 +1,5 @@
 ﻿using System;
+using NWN.FinalFantasy.Core.Contracts;
 using NWN.FinalFantasy.Core.Utility;
 using Serilog;
 using static NWN._;
@@ -6,7 +7,7 @@ using Random = NWN.FinalFantasy.Core.Utility.Random;
 
 namespace NWN.FinalFantasy.Loot
 {
-    public class SpawnLoot
+    public class SpawnLoot: IScript
     {
         // For every loot table:
         //   1.) Look for a chance and attempt variable. Use defaults if not found.
@@ -14,7 +15,7 @@ namespace NWN.FinalFantasy.Loot
         //   3.) Attempt to spawn an item if random checks are met.
         // Loot tables must be added as local variables on the creature. Prefix is LOOT_TABLE_
         // Values are as follows: Name, Chance, Attempts
-        public static void Main()
+        public void Main()
         {
             var creature = NWGameObject.OBJECT_SELF;
             var lootTableEntries = LocalVariableTool.FindByPrefix(creature, "LOOT_TABLE_");

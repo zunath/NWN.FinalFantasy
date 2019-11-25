@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using NWN.FinalFantasy.Core;
+using NWN.FinalFantasy.Core.Contracts;
 using NWN.FinalFantasy.Core.Message;
 using NWN.FinalFantasy.Core.Messaging;
 using NWN.FinalFantasy.Core.NWScript.Enumerations;
@@ -14,9 +15,9 @@ namespace NWN.FinalFantasy.Job.Scripts
     /// <summary>
     /// Grants AP to a player
     /// </summary>
-    internal class GainAP
+    public class GainAP: IScript
     {
-        public static void Main()
+        public void Main()
         {
             var data = Script.GetScriptData<JobXPGained>();
             var player = data.Creature;

@@ -1,11 +1,12 @@
-﻿using NWN.FinalFantasy.Core.NWNX;
+﻿using NWN.FinalFantasy.Core.Contracts;
+using NWN.FinalFantasy.Core.NWNX;
 using static NWN._;
 
 namespace NWN.FinalFantasy.Auditing.DM
 {
-    public class OnJumpToPoint : DMAudit
+    public class OnJumpToPoint : DMAudit, IScript
     {
-        public static void Main()
+        public void Main()
         {
             var dm = NWGameObject.OBJECT_SELF;
             var position = Vector(

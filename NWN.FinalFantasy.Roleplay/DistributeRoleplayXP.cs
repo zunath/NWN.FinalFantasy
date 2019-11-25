@@ -1,4 +1,5 @@
-﻿using NWN.FinalFantasy.Data.Repository;
+﻿using NWN.FinalFantasy.Core.Contracts;
+using NWN.FinalFantasy.Data.Repository;
 using static NWN._;
 
 namespace NWN.FinalFantasy.Roleplay
@@ -6,9 +7,9 @@ namespace NWN.FinalFantasy.Roleplay
     /// <summary>
     /// Attempts to distribute roleplay XP to all logged-in players.
     /// </summary>
-    internal class DistributeRoleplayXP
+    public class DistributeRoleplayXP: IScript
     {
-        public static void Main()
+        public void Main()
         {
             var module = GetModule();
             var ticks = GetLocalInt(module, "RP_SYSTEM_TICKS") + 1;

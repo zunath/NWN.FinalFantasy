@@ -9,7 +9,7 @@ using static NWN._;
 
 namespace NWN.FinalFantasy.Application
 {
-    internal class ScriptRegistration
+    public static class ScriptRegistration
     {
         private const int SCRIPT_HANDLED = 0;
         private const int SCRIPT_NOT_HANDLED = -1;
@@ -17,7 +17,7 @@ namespace NWN.FinalFantasy.Application
         private static readonly Dictionary<string, Action> _eventRegistrations = new Dictionary<string, Action>();
         private static readonly Dictionary<string, Func<int>> _dialogEventRegistrations = new Dictionary<string, Func<int>>();
 
-        public ScriptRegistration(Action startupAction)
+        public static void RegisterStartupAction(Action startupAction)
         {
             _eventRegistrations["startup"] = startupAction;
         }
@@ -29,7 +29,7 @@ namespace NWN.FinalFantasy.Application
         // forwarded to the original NWScript VM, return SCRIPT_NOT_HANDLED.
         // Otherwise, return either 0/SCRIPT_HANDLED for void main() scripts,
         // or an int (0 or 1) for StartingConditionals
-        public int OnRunScript(string script)
+        public static int OnRunScript(string script)
         {
             // Is this one of the scripts we've registered in the OnStart() method below?
             if (_eventRegistrations.ContainsKey(script))
@@ -64,7 +64,7 @@ namespace NWN.FinalFantasy.Application
             return SCRIPT_NOT_HANDLED;
         }
 
-        public void OnNWNContextReady()
+        public static void OnNWNContextReady()
         {
 
             // Area events
@@ -95,8 +95,8 @@ namespace NWN.FinalFantasy.Application
             _eventRegistrations.Add("crea_on_userdef", () => Script.RunScriptEvents(NWGameObject.OBJECT_SELF, CreaturePrefix.OnUserDefined));
 
             // Dialog events
-            _eventRegistrations.Add("dialog_start", OnDialogStart.Main);
-            _eventRegistrations.Add("dialog_end", OnDialogEnd.Main);
+            _eventRegistrations.Add("dialog_start", OnDialogStart.Run);
+            _eventRegistrations.Add("dialog_end", OnDialogEnd.Run);
             _eventRegistrations.Add("dialog_action_0", () => OnDialogAction.Run(0));
             _eventRegistrations.Add("dialog_action_1", () => OnDialogAction.Run(1));
             _eventRegistrations.Add("dialog_action_2", () => OnDialogAction.Run(2));

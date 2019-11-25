@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using NWN.FinalFantasy.Core.Contracts;
+using NWN.FinalFantasy.Core.Utility;
 
 // ReSharper disable once CheckNamespace
 namespace NWN
@@ -14,11 +15,7 @@ namespace NWN
 
         static Internal()
         {
-            var appType = typeof(IApplication);
-            var type = AppDomain.CurrentDomain.GetAssemblies()
-                .SelectMany(s => s.DefinedTypes)
-                .SingleOrDefault(x => appType.IsAssignableFrom(x) && x.IsClass && !x.IsAbstract);
-
+            var type = TypeFinder.GetTypesImplementingInterface<IApplication>().SingleOrDefault();
             if(type == null)
                 throw new Exception("Could not find implementation of IApplication.");
 

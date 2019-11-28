@@ -14,7 +14,7 @@ namespace NWN.FinalFantasy.AI
         /// </summary>
         /// <param name="creature">The creature whose table we're retrieving or creating.</param>
         /// <returns>The enmity table used by the specified creature.</returns>
-        private static EnmityTable GetOrCreateEnmityTable(NWGameObject creature)
+        internal static EnmityTable GetOrCreateEnmityTable(NWGameObject creature)
         {
             if(!GetIsNPC(creature))
                 throw new Exception(nameof(GetOrCreateEnmityTable) + " may only be used on NPCs.");
@@ -62,6 +62,13 @@ namespace NWN.FinalFantasy.AI
             if(!table.ContainsKey(targetID))
                 table[targetID] = new EnmityTarget(target, 0);
 
+            // If this is the first creature to go on the enmity table, immediately attack them so they aren't 
+            // waiting around to do something the next time their AI runs.
+            if (table.Count <= 0)
+            {
+                AssignCommand(creature, () => ActionAttack(target));
+            }
+
             table[targetID].Amount += adjustBy;
         }
 
@@ -75,6 +82,25 @@ namespace NWN.FinalFantasy.AI
                 return;
 
             _enmityTables.Remove(npcID);
+        }
+
+        /// <summary>
+        /// Removes a target from an NPC's enmity table.
+        /// </summary>
+        /// <param name="npc">The NPC whose enmity table we'll adjust.</param>
+        /// <param name="target">The target to remove from the enmity table.</param>
+        internal static void RemoveFromEnmityTable(NWGameObject npc, NWGameObject target)
+        {
+            var npcID = GetGlobalID(npc);
+            if (!_enmityTables.ContainsKey(npcID))
+                return;
+
+            var table = _enmityTables[npcID];
+            var targetID = GetGlobalID(target);
+            if (!table.ContainsKey(targetID))
+                return;
+
+            table.Remove(targetID);
         }
     }
 }

@@ -32,7 +32,7 @@ namespace NWN.FinalFantasy.Application
         public void OnNWNContextReady()
         {
             EventRegistration.Register();
-            ScriptRegistration.HookEvents();
+            ScriptRegistration.OnNWNContextReady();
             CustomEventRegistration.Register();
             AreaScriptRegistration.Register();
             FeatureRegistration.Register();
@@ -55,7 +55,7 @@ namespace NWN.FinalFantasy.Application
         /// <returns></returns>
         public int OnRunScript(string script, uint oidSelf)
         {
-            return ScriptRegistration.OnRunScript(script, oidSelf);
+            return ScriptRegistration.OnRunScript(script);
         }
 
         /// <summary>

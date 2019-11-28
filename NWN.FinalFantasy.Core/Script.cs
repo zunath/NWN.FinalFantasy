@@ -6,24 +6,24 @@ using NWN.FinalFantasy.Core.Utility;
 
 namespace NWN.FinalFantasy.Core
 {
-    public class Script
+    public static class Script
     {
         private static readonly Dictionary<string, Type> _cachedScripts = new Dictionary<string, Type>();
         private static object _scriptData;
+        private static ApplicationSettings _settings;
 
         public static void CacheScripts()
         {
-            var settings = ApplicationSettings.Get();
+            _settings = ApplicationSettings.Get();
             var types = TypeFinder.GetTypesImplementingInterface<IScript>();
             foreach (var type in types)
             {
                 var key = type.Namespace + "." + type.Name;
-                key = key.Replace(settings.NamespaceRoot + ".", string.Empty);
+                key = key.Replace(_settings.NamespaceRoot + ".", string.Empty);
                 Console.WriteLine("Registering type: " + key);
                 _cachedScripts[key] = type;
             }
         }
-
 
         /// <summary>
         /// Sets data available for scripts to retrieve.
@@ -52,7 +52,7 @@ namespace NWN.FinalFantasy.Core
         /// <param name="ignoreNullData">if true, does not throw a exception if data is null. otherwise it does</param>
         /// <returns>The stored data</returns>
         public static T GetScriptData<T>(bool ignoreNullData)
-            where T: class
+            where T : class
         {
             if (!ignoreNullData) return GetScriptData<T>();
 
@@ -77,24 +77,31 @@ namespace NWN.FinalFantasy.Core
         /// <summary>
         /// Runs all scripts matching a given prefix, in the order they are found.
         /// </summary>
-        /// <param name="scriptRegistrationObject">If the local variables are stored on a different object than the caller, you can use this argument to dictate where to look for the local variables</param>
+        /// <param name="caller">The object whose scripts we're checking</param>
         /// <param name="scriptPrefix">The prefix to look for.</param>
-        public static void RunScriptEvents(NWGameObject scriptRegistrationObject, string scriptPrefix)
+        /// <param name="scriptRegistrationObject">If the local variables are stored on a different object than the caller, you can use this argument to dictate where to look for the local variables</param>
+        public static void RunScriptEvents(NWGameObject caller, string scriptPrefix, NWGameObject scriptRegistrationObject = null)
         {
+            if (scriptRegistrationObject == null)
+                scriptRegistrationObject = caller;
+
             var scripts = LocalVariableTool.FindByPrefix(scriptRegistrationObject, scriptPrefix);
 
             foreach (var script in scripts)
             {
                 try
                 {
+                    Console.WriteLine("script = " + script);
+                    if (!_cachedScripts.ContainsKey(script))
+                        throw new Exception("Script '" + script + "' has not been registered. Make sure a public class implementing the " + nameof(IScript) + " interface exists in the code base.");
+
                     var type = _cachedScripts[script];
-                    var instance = Activator.CreateInstance(type);
                     var method = type.GetMethod("Main");
 
                     if(method == null)
-                        throw new Exception("Script '" + script + "' does not have a Main() method.");
+                        throw new Exception("Main method not found on script: " + script);
 
-                    Console.WriteLine("Running script: " + script);
+                    var instance = Activator.CreateInstance(type);
                     method.Invoke(instance, null);
                 }
                 catch (Exception ex)

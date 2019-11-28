@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using NWN.FinalFantasy.Core;
 using NWN.FinalFantasy.Core.Contracts;
 using NWN.FinalFantasy.Core.Logging;
 using NWN.FinalFantasy.Core.Messaging;
@@ -31,10 +32,11 @@ namespace NWN.FinalFantasy.Application
         public void OnNWNContextReady()
         {
             EventRegistration.Register();
-            ScriptRegistration.OnNWNContextReady();
+            ScriptRegistration.HookEvents();
             CustomEventRegistration.Register();
             AreaScriptRegistration.Register();
             FeatureRegistration.Register();
+            Script.CacheScripts();
         }
 
         /// <summary>
@@ -53,7 +55,7 @@ namespace NWN.FinalFantasy.Application
         /// <returns></returns>
         public int OnRunScript(string script, uint oidSelf)
         {
-            return ScriptRegistration.OnRunScript(script);
+            return ScriptRegistration.OnRunScript(script, oidSelf);
         }
 
         /// <summary>

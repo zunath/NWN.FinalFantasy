@@ -6,24 +6,24 @@ using NWN.FinalFantasy.Core.Utility;
 
 namespace NWN.FinalFantasy.Core
 {
-    public static class Script
+    public class Script
     {
-        private static readonly Dictionary<string, IScript> _cachedScripts = new Dictionary<string, IScript>();
+        private static readonly Dictionary<string, Type> _cachedScripts = new Dictionary<string, Type>();
         private static object _scriptData;
-        private static readonly ApplicationSettings _settings;
 
-        static Script()
+        public static void CacheScripts()
         {
-            _settings = ApplicationSettings.Get();
+            var settings = ApplicationSettings.Get();
             var types = TypeFinder.GetTypesImplementingInterface<IScript>();
-            foreach (var script in types)
+            foreach (var type in types)
             {
-                var instance = (IScript) Activator.CreateInstance(script);
-                var key = script.Namespace + "." + script.Name;
+                var key = type.Namespace + "." + type.Name;
+                key = key.Replace(settings.NamespaceRoot + ".", string.Empty);
                 Console.WriteLine("Registering type: " + key);
-                _cachedScripts[key] = instance;
+                _cachedScripts[key] = type;
             }
         }
+
 
         /// <summary>
         /// Sets data available for scripts to retrieve.
@@ -77,66 +77,31 @@ namespace NWN.FinalFantasy.Core
         /// <summary>
         /// Runs all scripts matching a given prefix, in the order they are found.
         /// </summary>
-        /// <param name="caller">The object whose scripts we're checking</param>
-        /// <param name="scriptPrefix">The prefix to look for.</param>
         /// <param name="scriptRegistrationObject">If the local variables are stored on a different object than the caller, you can use this argument to dictate where to look for the local variables</param>
-        public static void RunScriptEvents(NWGameObject caller, string scriptPrefix, NWGameObject scriptRegistrationObject = null)
+        /// <param name="scriptPrefix">The prefix to look for.</param>
+        public static void RunScriptEvents(NWGameObject scriptRegistrationObject, string scriptPrefix)
         {
-            if (scriptRegistrationObject == null)
-                scriptRegistrationObject = caller;
-
             var scripts = LocalVariableTool.FindByPrefix(scriptRegistrationObject, scriptPrefix);
 
             foreach (var script in scripts)
             {
                 try
                 {
-                    Console.WriteLine("script = " + script);
-                    Run(caller, script);
+                    var type = _cachedScripts[script];
+                    var instance = Activator.CreateInstance(type);
+                    var method = type.GetMethod("Main");
+
+                    if(method == null)
+                        throw new Exception("Script '" + script + "' does not have a Main() method.");
+
+                    Console.WriteLine("Running script: " + script);
+                    method.Invoke(instance, null);
                 }
                 catch (Exception ex)
                 {
                     Audit.Write(AuditGroup.Error, "SCRIPT ERROR: " + script + " Exception: " + ex.ToMessageAndCompleteStacktrace());
                 }
             }
-        }
-
-        /// <summary>
-        /// Runs a C# script's Main() method.
-        /// "script" should be specified with the project name.
-        /// Example: 'Death.OnPlayerDeath' is valid. Just 'OnPlayerDeath' is not.
-        /// Exclude the root namespace when specifying script.
-        /// </summary>
-        /// <param name="script">Name of the script's namespace</param>
-        /// <param name="caller">The caller of this script</param>
-        /// <param name="data">Arbitrary data to pass to the script.</param>
-        public static void Run<T>(NWGameObject caller, string script, T data)
-        {
-            var key = _settings.NamespaceRoot + "." + script;
-            if (!_cachedScripts.ContainsKey(key))
-                throw new Exception("Script '" + script + "' has not been registered. Make sure a public class implementing the " + nameof(IScript) + " interface exists in the code base.");
-
-            try
-            {
-                _cachedScripts[key].Main();
-            }
-            catch(Exception ex)
-            {
-                Audit.Write(AuditGroup.Error, "SCRIPT ERROR: " + script + " " + ex.ToMessageAndCompleteStacktrace());
-            }
-        }
-
-        /// <summary>
-        /// Runs a C# script's Main() method.
-        /// "script" should be specified with the project name.
-        /// Example: 'Death.OnPlayerDeath' is valid. Just 'OnPlayerDeath' is not.
-        /// Exclude the root namespace when specifying script.
-        /// </summary>
-        /// <param name="script">Name of the script's namespace</param>
-        /// <param name="caller">The caller of this script</param>
-        public static void Run(NWGameObject caller, string script)
-        {
-            Run<object>(caller, script, null);
         }
     }
 }

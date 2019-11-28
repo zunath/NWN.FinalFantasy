@@ -16,7 +16,7 @@ namespace NWN.FinalFantasy.Application
         {
             var existingScriptData = Script.GetScriptData<object>(true);
             Script.SetScriptData(payload.Data);
-            Script.RunScriptEvents(payload.Caller, payload.ScriptPrefix, _.GetModule());
+            Script.RunScriptEvents(_.GetModule(), payload.ScriptPrefix);
             
             if(existingScriptData != null)
                 Script.SetScriptData(existingScriptData);

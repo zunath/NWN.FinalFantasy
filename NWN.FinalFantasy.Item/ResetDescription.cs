@@ -1,4 +1,5 @@
-﻿using NWN.FinalFantasy.Core.NWNX;
+﻿using NWN.FinalFantasy.Core.Contracts;
+using NWN.FinalFantasy.Core.NWNX;
 using NWN.FinalFantasy.Core.NWScript.Enumerations;
 using static NWN._;
 
@@ -8,9 +9,9 @@ namespace NWN.FinalFantasy.Item
     /// Resets an item's description back to its original text.
     /// You should call this as the first step in the examine item pipeline.
     /// </summary>
-    internal class ResetDescription
+    public class ResetDescription: IScript
     {
-        public static void Main()
+        public void Main()
         {
             NWGameObject item = NWNXEvents.OnExamineObject_GetTarget();
             if (GetObjectType(item) != ObjectType.Item) return;

@@ -1,6 +1,6 @@
 ﻿namespace NWN.FinalFantasy.Core.Message
 {
-    internal class ObjectCreated
+    public class ObjectCreated
     {
         public NWGameObject GameObject { get; set; }
 

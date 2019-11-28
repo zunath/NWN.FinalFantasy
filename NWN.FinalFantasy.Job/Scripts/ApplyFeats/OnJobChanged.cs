@@ -1,11 +1,12 @@
 ﻿using NWN.FinalFantasy.Core;
+using NWN.FinalFantasy.Core.Contracts;
 using NWN.FinalFantasy.Job.Event;
 
 namespace NWN.FinalFantasy.Job.Scripts.ApplyFeats
 {
-    internal class OnJobChanged: ApplyFeatsBase
+    public class OnJobChanged: ApplyFeatsBase, IScript
     {
-        public static void Main()
+        public void Main()
         {
             var data = Script.GetScriptData<JobChanged>();
             var player = data.Player;

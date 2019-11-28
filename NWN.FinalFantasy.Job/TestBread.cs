@@ -1,8 +1,10 @@
-﻿namespace NWN.FinalFantasy.Job
+﻿using NWN.FinalFantasy.Core.Contracts;
+
+namespace NWN.FinalFantasy.Job
 {
-    internal class TestBread
+    public class TestBread: IScript
     {
-        public static void Main()
+        public void Main()
         {
             var player = _.GetLastUsedBy();
             int xp = 500;

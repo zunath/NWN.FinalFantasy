@@ -1,4 +1,5 @@
 ﻿using System;
+using NWN.FinalFantasy.Core.Contracts;
 using NWN.FinalFantasy.Core.NWNX;
 using NWN.FinalFantasy.Core.NWScript.Enumerations;
 using NWN.FinalFantasy.Core.Utility;
@@ -12,9 +13,9 @@ namespace NWN.FinalFantasy.Job.Scripts
     /// If an item has an ability attached, the details for that ability will be added to the description.
     /// Does not fire for any other types of objects.
     /// </summary>
-    internal class DisplayAbilityDetails
+    public class DisplayAbilityDetails: IScript
     {
-        public static void Main()
+        public void Main()
         {
             NWGameObject item = NWNXEvents.OnExamineObject_GetTarget();
 

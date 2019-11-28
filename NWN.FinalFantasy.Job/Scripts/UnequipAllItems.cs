@@ -1,10 +1,11 @@
-﻿using NWN.FinalFantasy.Core.NWScript.Enumerations;
+﻿using NWN.FinalFantasy.Core.Contracts;
+using NWN.FinalFantasy.Core.NWScript.Enumerations;
 
 namespace NWN.FinalFantasy.Job.Scripts
 {
-    internal class UnequipAllItems
+    public class UnequipAllItems: IScript
     {
-        public static void Main()
+        public void Main()
         {
             var player = NWGameObject.OBJECT_SELF;
 

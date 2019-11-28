@@ -22,20 +22,17 @@ namespace NWN.FinalFantasy.Chat
 
         private static void Register()
         {
-            // Use reflection to get all of IChatCommand handler implementations.
-            var classes = Assembly.GetCallingAssembly().GetTypes()
-                .Where(p => typeof(IChatCommand).IsAssignableFrom(p) && p.IsClass && !p.IsAbstract).ToArray();
-
-            foreach (var type in classes)
+            var types = TypeFinder.GetTypesImplementingInterface<IChatCommand>();
+            foreach (var classType in types)
             {
-                IChatCommand instance = Activator.CreateInstance(type) as IChatCommand;
+                IChatCommand instance = Activator.CreateInstance(classType) as IChatCommand;
 
                 if (instance == null)
                 {
-                    throw new NullReferenceException("Unable to activate instance of type: " + type);
+                    throw new NullReferenceException("Unable to activate instance of type: " + classType);
                 }
                 // We use the lower-case class name as the key because later on we do a lookup based on text entered by the player.
-                string key = type.Name.ToLower();
+                string key = classType.Name.ToLower();
                 _chatCommands.Add(key, instance);
             }
         }

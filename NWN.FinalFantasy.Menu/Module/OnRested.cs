@@ -1,12 +1,13 @@
-﻿using NWN.FinalFantasy.Core.Dialog;
+﻿using NWN.FinalFantasy.Core.Contracts;
+using NWN.FinalFantasy.Core.Dialog;
 using NWN.FinalFantasy.Core.NWScript.Enumerations;
 using static NWN._;
 
 namespace NWN.FinalFantasy.Menu.Module
 {
-    public class OnRested
+    public class OnRested: IScript
     {
-        public static void Main()
+        public void Main()
         {
             NWGameObject player = GetLastPCRested();
             RestEventType restType = GetLastRestEventType();

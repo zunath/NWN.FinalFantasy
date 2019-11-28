@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using NWN.FinalFantasy.Core.Contracts;
 using NWN.FinalFantasy.Core.NWScript.Enumerations;
 using NWN.FinalFantasy.Data.Entity;
 using NWN.FinalFantasy.Data.Repository;
@@ -11,9 +12,9 @@ namespace NWN.FinalFantasy.Job.Scripts.ActiveAbilityCache
     /// The quantity of each ability equipped is cached on the player for later retrieval
     /// when granting AP and marking mastery of an ability.
     /// </summary>
-    internal class CacheAbilitiesOnItem
+    public class CacheAbilitiesOnItem: IScript
     {
-        public static void Main()
+        public void Main()
         {
             var player = GetPCItemLastEquippedBy();
             if (!GetIsPlayer(player)) return;

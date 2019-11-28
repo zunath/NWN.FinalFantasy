@@ -1,11 +1,12 @@
-﻿using NWN.FinalFantasy.Core.NWNX;
+﻿using NWN.FinalFantasy.Core.Contracts;
+using NWN.FinalFantasy.Core.NWNX;
 using static NWN._;
 
 namespace NWN.FinalFantasy.Item.Storage.Bank
 {
-    public class OnAddItem: BankStorageBase
+    public class OnAddItem: BankStorageBase, IScript
     {
-        public static void Main()
+        public void Main()
         {
             var player = NWNXEvents.OnInventoryAddItem_GetPlayer();
             var playerID = GetGlobalID(player);

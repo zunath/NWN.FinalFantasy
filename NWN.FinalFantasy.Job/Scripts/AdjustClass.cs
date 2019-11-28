@@ -1,4 +1,5 @@
 ﻿using NWN.FinalFantasy.Core;
+using NWN.FinalFantasy.Core.Contracts;
 using NWN.FinalFantasy.Core.NWNX;
 using NWN.FinalFantasy.Core.NWScript.Enumerations;
 using NWN.FinalFantasy.Data.Repository;
@@ -7,9 +8,9 @@ using static NWN._;
 
 namespace NWN.FinalFantasy.Job.Scripts
 {
-    internal class AdjustClass
+    public class AdjustClass: IScript
     {
-        public static void Main()
+        public void Main()
         {
             var data = Script.GetScriptData<JobChanged>();
             var newJob = data.NewJob;

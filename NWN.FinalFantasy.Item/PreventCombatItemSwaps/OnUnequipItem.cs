@@ -1,8 +1,10 @@
-﻿namespace NWN.FinalFantasy.Item.PreventCombatItemSwaps
+﻿using NWN.FinalFantasy.Core.Contracts;
+
+namespace NWN.FinalFantasy.Item.PreventCombatItemSwaps
 {
-    internal class OnUnequipItem: PreventCombatItemSwapsBase
+    public class OnUnequipItem: PreventCombatItemSwapsBase, IScript
     {
-        public static void Main()
+        public void Main()
         {
             Prevent();
         }

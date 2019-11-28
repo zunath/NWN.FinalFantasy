@@ -1,12 +1,13 @@
-﻿using NWN.FinalFantasy.Data.Entity;
+﻿using NWN.FinalFantasy.Core.Contracts;
+using NWN.FinalFantasy.Data.Entity;
 using NWN.FinalFantasy.Data.Repository;
 using static NWN._;
 
 namespace NWN.FinalFantasy.Map
 {
-    public class SaveMapPins: MapPinBase
+    public class SaveMapPins: MapPinBase, IScript
     {
-        public static void Main()
+        public void Main()
         {
             var player = GetExitingObject();
             if (!GetIsPlayer(player)) return;

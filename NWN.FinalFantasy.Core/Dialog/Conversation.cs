@@ -1,17 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
-using NWN.FinalFantasy.Core.Message;
-using NWN.FinalFantasy.Core.Messaging;
-using NWN.FinalFantasy.Core.NWNX;
+using System.Linq;
+using System.Reflection;
 using NWN.FinalFantasy.Core.NWScript.Enumerations;
-using NWN.FinalFantasy.Core.Startup;
+using NWN.FinalFantasy.Core.Utility;
 using static NWN._;
 
 namespace NWN.FinalFantasy.Core.Dialog
 {
     public static class Conversation
     {
+        private const int NumberOfDialogs = 255;
         private static readonly Dictionary<Guid, PlayerDialog> _playerDialogs = new Dictionary<Guid, PlayerDialog>();
+        private static readonly Dictionary<int, bool> _dialogsInUse = new Dictionary<int, bool>();
+        private static readonly Dictionary<string, IConversation> _conversations = new Dictionary<string, IConversation>();
+
+        static Conversation()
+        {
+            var types = TypeFinder.GetTypesImplementingInterface<IConversation>();
+            foreach(var type in types)
+            {
+                var convo = (IConversation) Activator.CreateInstance(type);
+                var key = type.Namespace + "." + type.Name;
+                _conversations[key] = convo;
+            }
+
+            for (int x = 1; x <= NumberOfDialogs; x++)
+            {
+                _dialogsInUse[x] = false;
+            }
+        }
 
         /// <summary>
         /// Starts a new programmatic conversation between a player and another object.
@@ -31,18 +49,19 @@ namespace NWN.FinalFantasy.Core.Dialog
                 Load(player, talkTo, @class);
             }
 
+            var dialog = _playerDialogs[playerID];
             if (GetObjectType(talkTo) == ObjectType.Creature &&
                 !GetIsPlayer(talkTo) &&
                 !GetIsDungeonMaster(talkTo))
             {
-                BeginConversation("dialog", talkTo);
+                BeginConversation("dialog" + dialog.DialogID, talkTo);
             }
             // Everything else
             else
             {
                 AssignCommand(player, () =>
                 {
-                    ActionStartConversation(talkTo, "dialog", true, false);
+                    ActionStartConversation(talkTo, "dialog" + dialog.DialogID, true, false);
                 });
             }
         }
@@ -59,6 +78,8 @@ namespace NWN.FinalFantasy.Core.Dialog
                 throw new Exception($"Cannot find player ID in active dialogs: {playerID} ({GetName(player)})");
             }
 
+            var dialog = _playerDialogs[playerID];
+            _dialogsInUse[dialog.DialogID] = false;
             _playerDialogs.Remove(playerID);
         }
 
@@ -78,7 +99,11 @@ namespace NWN.FinalFantasy.Core.Dialog
             playerDialog.ActiveDialogName = @class;
             playerDialog.DialogTarget = talkTo;
 
+            var dialogID = RetrieveInactiveDialogID();
+            playerDialog.DialogID = dialogID;
+
             _playerDialogs[playerID] = playerDialog;
+            _dialogsInUse[dialogID] = true;
         }
 
         /// <summary>
@@ -106,15 +131,27 @@ namespace NWN.FinalFantasy.Core.Dialog
         public static IConversation FindConversation(string @class)
         {
             var settings = ApplicationSettings.Get();
-            var @namespace = settings.NamespaceRoot + "." + @class;
-            var type = AssemblyLoader.FindType(@namespace);
-
-            if(type == null)
+            var key = settings.NamespaceRoot + "." + @class;
+            if (!_conversations.ContainsKey(key))
                 throw new Exception("Could not location conversation at path: " + @class);
 
-            var conversation = (IConversation)Activator.CreateInstance(type);
+            var conversation = _conversations[key];
             return conversation;
         }
 
+        /// <summary>
+        /// Retrieves the ID of the first inactive dialog.
+        /// </summary>
+        /// <returns>The ID of the first inactive dialog.</returns>
+        private static int RetrieveInactiveDialogID()
+        {
+            for (int x = 1; x <= NumberOfDialogs; x++)
+            {
+                if (!_dialogsInUse[x])
+                    return x;
+            }
+
+            throw new Exception("Unable to find an unused dialog. Add more dialog files and increase the constant in Conversation.cs");
+        }
     }
 }

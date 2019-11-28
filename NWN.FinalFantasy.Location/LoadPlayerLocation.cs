@@ -1,10 +1,11 @@
-﻿using NWN.FinalFantasy.Data.Repository;
+﻿using NWN.FinalFantasy.Core.Contracts;
+using NWN.FinalFantasy.Data.Repository;
 
 namespace NWN.FinalFantasy.Location
 {
-    public class LoadPlayerLocation
+    public class LoadPlayerLocation: IScript
     {
-        public static void Main()
+        public void Main()
         {
             var player = _.GetEnteringObject();
             var area = _.GetArea(player);

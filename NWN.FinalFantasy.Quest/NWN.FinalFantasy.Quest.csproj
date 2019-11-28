@@ -1,80 +1,22 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A205399E-6D20-4F5F-9D63-5F9A77E577B1}</ProjectGuid>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
     <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NWN.FinalFantasy.Quest</RootNamespace>
-    <AssemblyName>NWN.FinalFantasy.Quest</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <Deterministic>true</Deterministic>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
     <OutputPath>..\bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xml" />
+    <PackageReference Include="Serilog" Version="2.9.0" />
+    <PackageReference Include="Serilog.Sinks.Async" Version="1.4.0" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="3.1.1" />
+    <PackageReference Include="Serilog.Sinks.File" Version="4.1.0" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="API\Contracts\IQuestObjective.cs" />
-    <Compile Include="API\Contracts\IQuestPrerequisite.cs" />
-    <Compile Include="API\Contracts\IQuestReward.cs" />
-    <Compile Include="API\Event\QuestAccepted.cs" />
-    <Compile Include="API\Event\QuestAdvanced.cs" />
-    <Compile Include="API\Event\QuestCompleted.cs" />
-    <Compile Include="API\Event\QuestEventPrefix.cs" />
-    <Compile Include="API\Menu\QuestRewardSelection.cs" />
-    <Compile Include="API\Objective\CollectItemObjective.cs" />
-    <Compile Include="API\Objective\KillTargetObjective.cs" />
-    <Compile Include="API\Prerequisite\RequiredQuestPrerequisite.cs" />
-    <Compile Include="API\Quest.cs" />
-    <Compile Include="API\QuestState.cs" />
-    <Compile Include="API\Reward\GoldReward.cs" />
-    <Compile Include="API\Reward\ItemReward.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="QuestRegistry.cs" />
-    <Compile Include="Startup.cs" />
-    <Compile Include="TestLocation\MyTestQuest.cs" />
+    <ProjectReference Include="..\NWN.FinalFantasy.Auditing\NWN.FinalFantasy.Auditing.csproj" />
+    <ProjectReference Include="..\NWN.FinalFantasy.Core\NWN.FinalFantasy.Core.csproj" />
+    <ProjectReference Include="..\NWN.FinalFantasy.Data\NWN.FinalFantasy.Data.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\NWN.FinalFantasy.Auditing\NWN.FinalFantasy.Auditing.csproj">
-      <Project>{e308b987-7bb1-4bea-bb6b-859f37854a55}</Project>
-      <Name>NWN.FinalFantasy.Auditing</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\NWN.FinalFantasy.Core\NWN.FinalFantasy.Core.csproj">
-      <Project>{3385d63b-0d64-4f15-8cc3-c2bd17f672e7}</Project>
-      <Name>NWN.FinalFantasy.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\NWN.FinalFantasy.Data\NWN.FinalFantasy.Data.csproj">
-      <Project>{e94c10ba-6cdf-48cb-9473-d242db9d82c9}</Project>
-      <Name>NWN.FinalFantasy.Data</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,12 +1,13 @@
-﻿using NWN.FinalFantasy.Core.NWNX;
+﻿using NWN.FinalFantasy.Core.Contracts;
+using NWN.FinalFantasy.Core.NWNX;
 using NWN.FinalFantasy.Core.NWScript.Enumerations;
 using static NWN._;
 
 namespace NWN.FinalFantasy.Item
 {
-    internal class AttachSystemPropertiesToItem
+    public class AttachSystemPropertiesToItem: IScript
     {
-        public static void Main()
+        public void Main()
         {
             var player = NWGameObject.OBJECT_SELF;
             if (!GetIsPlayer(player)) return;

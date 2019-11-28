@@ -10,7 +10,7 @@ using static NWN._;
 
 namespace NWN.FinalFantasy.Job.Scripts.RecalculateStats
 {
-    internal abstract class RecalculateStatsBase: StatProcessingBase
+    public abstract class RecalculateStatsBase: StatProcessingBase
     {
         protected static void Recalculate(NWGameObject player)
         {

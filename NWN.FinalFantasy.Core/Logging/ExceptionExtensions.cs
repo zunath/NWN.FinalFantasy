@@ -3,7 +3,7 @@ using System.Text;
 
 namespace NWN.FinalFantasy.Core.Logging
 {
-    internal static class ExceptionExtensions
+    public static class ExceptionExtensions
     {
         /// <summary>
         /// Pulls all relevant exception details out and formats them in a human-readable string.

@@ -3,7 +3,7 @@ using static NWN._;
 
 namespace NWN.FinalFantasy.Item.PreventCombatItemSwaps
 {
-    internal abstract class PreventCombatItemSwapsBase
+    public abstract class PreventCombatItemSwapsBase
     {
         protected static void Prevent()
         {

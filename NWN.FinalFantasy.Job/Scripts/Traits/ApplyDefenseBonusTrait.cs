@@ -1,5 +1,6 @@
 ﻿using System;
 using NWN.FinalFantasy.Core;
+using NWN.FinalFantasy.Core.Contracts;
 using NWN.FinalFantasy.Core.NWNX;
 using NWN.FinalFantasy.Core.NWScript.Enumerations;
 using NWN.FinalFantasy.Job.Event;
@@ -9,9 +10,9 @@ namespace NWN.FinalFantasy.Job.Scripts.Traits
     /// <summary>
     /// Handles adding bonus AC to players with the Defense Bonus feats.
     /// </summary>
-    internal class ApplyDefenseBonusTrait: StatProcessingBase
+    public class ApplyDefenseBonusTrait: StatProcessingBase, IScript
     {
-        public static void Main()
+        public void Main()
         {
             var data = Script.GetScriptData<StatsRecalculated>();
             var player = data.Player;

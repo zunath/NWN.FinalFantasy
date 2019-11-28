@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using NWN.FinalFantasy.Core.Contracts;
 using NWN.FinalFantasy.Core.NWScript.Enumerations;
 using NWN.FinalFantasy.Data.Repository;
 using static NWN._;
@@ -10,9 +11,9 @@ namespace NWN.FinalFantasy.Job.Scripts.ActiveAbilityCache
     /// Reduces the quantity stored in the cache for this player for each ability.
     /// If the quantity of an ability drops to zero or less, the entry is removed from the list.
     /// </summary>
-    internal class DecacheAbilitiesOnItem
+    public class DecacheAbilitiesOnItem: IScript
     {
-        public static void Main()
+        public void Main()
         {
             var player = GetPCItemLastUnequippedBy();
             if (!GetIsPlayer(player)) return;

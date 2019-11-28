@@ -176,8 +176,6 @@ namespace NWN.FinalFantasy.Item.Storage
             if (!_.GetIsPlayer(player)) return;
 
             var container = NWGameObject.OBJECT_SELF;
-            var bankID = GetStorageID();
-            var playerID = _.GetGlobalID(player);
             var items = InventoryItemRepo.Get(key);
 
             // Prevent the OnAddItem event from firing while we're loading the inventory.

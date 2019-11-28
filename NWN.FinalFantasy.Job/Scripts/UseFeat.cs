@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using NWN.FinalFantasy.Core.Contracts;
 using NWN.FinalFantasy.Core.NWNX;
 using NWN.FinalFantasy.Core.NWScript.Enumerations;
 using NWN.FinalFantasy.Core.Utility;
@@ -11,7 +12,7 @@ using static NWN._;
 
 namespace NWN.FinalFantasy.Job.Scripts
 {
-    internal class UseFeat
+    public class UseFeat: IScript
     {
         private class UserStats
         {
@@ -29,7 +30,7 @@ namespace NWN.FinalFantasy.Job.Scripts
             public Feat Feat { get; set; }
         };
 
-        public static void Main()
+        public void Main()
         {
             // Ignore any unregistered feats.
             var feat = NWNXEvents.OnFeatUsed_GetFeat();

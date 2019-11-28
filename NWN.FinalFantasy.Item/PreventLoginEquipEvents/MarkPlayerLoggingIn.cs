@@ -1,10 +1,11 @@
-﻿using static NWN._;
+﻿using NWN.FinalFantasy.Core.Contracts;
+using static NWN._;
 
 namespace NWN.FinalFantasy.Item.PreventLoginEquipEvents
 {
-    internal class MarkPlayerLoggingIn
+    public class MarkPlayerLoggingIn: IScript
     {
-        public static void Main()
+        public void Main()
         {
             NWGameObject player = GetEnteringObject();
             if (!GetIsPlayer(player)) return;

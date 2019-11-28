@@ -1,8 +1,10 @@
-﻿namespace NWN.FinalFantasy.Item.Storage
+﻿using NWN.FinalFantasy.Core.Contracts;
+
+namespace NWN.FinalFantasy.Item.Storage
 {
-    public class OnClosed
+    public class OnClosed: IScript
     {
-        public static void Main()
+        public void Main()
         {
             NWGameObject container = NWGameObject.OBJECT_SELF;
             _.DestroyAllInventoryItems(container);

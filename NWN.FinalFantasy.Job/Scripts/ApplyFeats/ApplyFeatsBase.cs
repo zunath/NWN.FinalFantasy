@@ -8,7 +8,7 @@ using static NWN._;
 
 namespace NWN.FinalFantasy.Job.Scripts.ApplyFeats
 {
-    internal abstract class ApplyFeatsBase
+    public abstract class ApplyFeatsBase
     {
         /// <summary>
         /// These are feats all players get.

@@ -1,8 +1,10 @@
-﻿namespace NWN.FinalFantasy.Job.Scripts.RecalculateStats
+﻿using NWN.FinalFantasy.Core.Contracts;
+
+namespace NWN.FinalFantasy.Job.Scripts.RecalculateStats
 {
-    internal class OnEquipItem: RecalculateStatsBase
+    public class OnEquipItem: RecalculateStatsBase, IScript
     {
-        public static void Main()
+        public void Main()
         {
             var player = _.GetPCItemLastEquippedBy();
             Recalculate(player);

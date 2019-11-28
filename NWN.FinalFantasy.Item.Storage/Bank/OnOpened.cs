@@ -1,10 +1,11 @@
-﻿using static NWN._;
+﻿using NWN.FinalFantasy.Core.Contracts;
+using static NWN._;
 
 namespace NWN.FinalFantasy.Item.Storage.Bank
 {
-    public class OnOpened : BankStorageBase
+    public class OnOpened : BankStorageBase, IScript
     {
-        public static void Main()
+        public void Main()
         {
             var player = GetLastOpenedBy();
             var playerID = GetGlobalID(player);

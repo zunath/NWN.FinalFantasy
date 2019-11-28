@@ -1,11 +1,12 @@
-﻿using NWN.FinalFantasy.Core.Logging;
+﻿using NWN.FinalFantasy.Core.Contracts;
+using NWN.FinalFantasy.Core.Logging;
 using static NWN._;
 
 namespace NWN.FinalFantasy.Auditing
 {
-    public class OnModuleEnter
+    public class OnModuleEnter: IScript
     {
-        public static void Main()
+        public void Main()
         {
             var player = GetEnteringObject();
             string ipAddress = GetPCIPAddress(player);

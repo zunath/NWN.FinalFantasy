@@ -1,6 +1,6 @@
 ﻿namespace NWN.FinalFantasy.Core.Message
 {
-    internal class AreaCreated
+    public class AreaCreated
     {
         public NWGameObject Area { get; set; }
 

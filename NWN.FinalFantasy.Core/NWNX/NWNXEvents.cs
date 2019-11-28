@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using NWN.FinalFantasy.Core.NWScript.Enumerations;
 using static NWN._;
+using static NWN.FinalFantasy.Core.NWNX.NWNXCore;
 
 namespace NWN.FinalFantasy.Core.NWNX
 {
     public static class NWNXEvents
     {
+        private const string NWNX_Events = "NWNX_Events";
+
         /// <summary>
         /// Scripts can subscribe to events.
         /// Some events are dispatched via the NWNX plugin (see NWNX_EVENTS_EVENT_* constants).
@@ -16,9 +19,11 @@ namespace NWN.FinalFantasy.Core.NWNX
         /// <param name="script"></param>
         public static void SubscribeEvent(string evt, string script)
         {
-            NWNXCore.NWNX_PushArgumentString("NWNX_Events", "SUBSCRIBE_EVENT", script);
-            NWNXCore.NWNX_PushArgumentString("NWNX_Events", "SUBSCRIBE_EVENT", evt);
-            NWNXCore.NWNX_CallFunction("NWNX_Events", "SUBSCRIBE_EVENT");
+            string sFunc = "OnSubscribeEvent";
+
+            NWNX_PushArgumentString(NWNX_Events, sFunc, script);
+            NWNX_PushArgumentString(NWNX_Events, sFunc, evt);
+            NWNX_CallFunction(NWNX_Events, sFunc);
         }
 
         /// <summary>
@@ -29,9 +34,11 @@ namespace NWN.FinalFantasy.Core.NWNX
         /// <param name="data"></param>
         public static void PushEventData(string tag, string data)
         {
-            NWNXCore.NWNX_PushArgumentString("NWNX_Events", "PUSH_EVENT_DATA", data);
-            NWNXCore.NWNX_PushArgumentString("NWNX_Events", "PUSH_EVENT_DATA", tag);
-            NWNXCore.NWNX_CallFunction("NWNX_Events", "PUSH_EVENT_DATA");
+            string sFunc = "OnPushEventData";
+
+            NWNX_PushArgumentString(NWNX_Events, sFunc, data);
+            NWNX_PushArgumentString(NWNX_Events, sFunc, tag);
+            NWNX_CallFunction(NWNX_Events, sFunc);
         }
 
         /// <summary>
@@ -43,10 +50,12 @@ namespace NWN.FinalFantasy.Core.NWNX
         /// <returns></returns>
         public static int SignalEvent(string evt, NWGameObject target)
         {
-            NWNXCore.NWNX_PushArgumentObject("NWNX_Events", "SIGNAL_EVENT", target);
-            NWNXCore.NWNX_PushArgumentString("NWNX_Events", "SIGNAL_EVENT", evt);
-            NWNXCore.NWNX_CallFunction("NWNX_Events", "SIGNAL_EVENT");
-            return NWNXCore.NWNX_GetReturnValueInt("NWNX_Events", "SIGNAL_EVENT");
+            string sFunc = "OnSignalEvent";
+
+            NWNX_PushArgumentObject(NWNX_Events, sFunc, target);
+            NWNX_PushArgumentString(NWNX_Events, sFunc, evt);
+            NWNX_CallFunction(NWNX_Events, sFunc);
+            return NWNX_GetReturnValueInt(NWNX_Events, sFunc);
         }
 
         /// <summary>
@@ -57,9 +66,11 @@ namespace NWN.FinalFantasy.Core.NWNX
         /// <returns></returns>
         public static string GetEventDataString(string tag)
         {
-            NWNXCore.NWNX_PushArgumentString("NWNX_Events", "GET_EVENT_DATA", tag);
-            NWNXCore.NWNX_CallFunction("NWNX_Events", "GET_EVENT_DATA");
-            return NWNXCore.NWNX_GetReturnValueString("NWNX_Events", "GET_EVENT_DATA");
+            string sFunc = "OnGetEventData";
+
+            NWNX_PushArgumentString(NWNX_Events, sFunc, tag);
+            NWNX_CallFunction(NWNX_Events, sFunc);
+            return NWNX_GetReturnValueString(NWNX_Events, sFunc);
         }
 
 
@@ -94,7 +105,9 @@ namespace NWN.FinalFantasy.Core.NWNX
         /// </summary>
         public static void SkipEvent()
         {
-            NWNXCore.NWNX_CallFunction("NWNX_Events", "SKIP_EVENT");
+            string sFunc = "OnSkipEvent";
+
+            NWNX_CallFunction(NWNX_Events, sFunc);
         }
 
         /// <summary>
@@ -112,8 +125,10 @@ namespace NWN.FinalFantasy.Core.NWNX
         /// <param name="data"></param>
         public static void SetEventResult(string data)
         {
-            NWNXCore.NWNX_PushArgumentString("NWNX_Events", "EVENT_RESULT", data);
-            NWNXCore.NWNX_CallFunction("NWNX_Events", "EVENT_RESULT");
+            string sFunc = "OnSetEventResult";
+
+            NWNX_PushArgumentString(NWNX_Events, sFunc, data);
+            NWNX_CallFunction(NWNX_Events, sFunc);
         }
 
         /// <summary>
@@ -123,8 +138,59 @@ namespace NWN.FinalFantasy.Core.NWNX
         /// <returns></returns>
         public static string GetCurrentEvent()
         {
-            NWNXCore.NWNX_CallFunction("NWNX_Events", "GET_CURRENT_EVENT");
-            return NWNXCore.NWNX_GetReturnValueString("NWNX_Events", "GET_CURRENT_EVENT");
+            string sFunc = "OnGetCurrentEvent";
+
+            NWNX_CallFunction(NWNX_Events, sFunc);
+            return NWNX_GetReturnValueString(NWNX_Events, sFunc);
+        }
+
+        /// <summary>
+        /// Toggles DispatchListMode for sEvent+sScript
+        /// If enabled, sEvent for sScript will only be signalled if the target object is on its dispatch list.
+        /// </summary>
+        /// <param name="sEvent"></param>
+        /// <param name="sScript"></param>
+        /// <param name="bEnable"></param>
+        public static void ToggleDispatchListMode(string sEvent, string sScript, int bEnable)
+        {
+            string sFunc = "OnToggleDispatchListMode";
+
+            NWNX_PushArgumentInt(NWNX_Events, sFunc, bEnable);
+            NWNX_PushArgumentString(NWNX_Events, sFunc, sScript);
+            NWNX_PushArgumentString(NWNX_Events, sFunc, sEvent);
+            NWNX_CallFunction(NWNX_Events, sFunc);
+        }
+
+        /// <summary>
+        /// Add oObject to the dispatch list for sEvent+sScript.
+        /// </summary>
+        /// <param name="sEvent"></param>
+        /// <param name="sScript"></param>
+        /// <param name="oObject"></param>
+        public static void AddObjectToDispatchList(string sEvent, string sScript, NWGameObject oObject)
+        {
+            string sFunc = "OnAddObjectToDispatchList";
+
+            NWNX_PushArgumentObject(NWNX_Events, sFunc, oObject);
+            NWNX_PushArgumentString(NWNX_Events, sFunc, sScript);
+            NWNX_PushArgumentString(NWNX_Events, sFunc, sEvent);
+            NWNX_CallFunction(NWNX_Events, sFunc);
+        }
+
+        /// <summary>
+        /// Remove oObject from the dispatch list for sEvent+sScript.
+        /// </summary>
+        /// <param name="sEvent"></param>
+        /// <param name="sScript"></param>
+        /// <param name="oObject"></param>
+        public static void RemoveObjectFromDispatchList(string sEvent, string sScript, NWGameObject oObject)
+        {
+            string sFunc = "OnRemoveObjectFromDispatchList";
+
+            NWNX_PushArgumentObject(NWNX_Events, sFunc, oObject);
+            NWNX_PushArgumentString(NWNX_Events, sFunc, sScript);
+            NWNX_PushArgumentString(NWNX_Events, sFunc, sEvent);
+            NWNX_CallFunction(NWNX_Events, sFunc);
         }
 
         private static int GetEventDataInt(string tag)

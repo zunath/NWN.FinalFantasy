@@ -1,12 +1,13 @@
-﻿using NWN.FinalFantasy.Core.NWNX;
+﻿using NWN.FinalFantasy.Core.Contracts;
+using NWN.FinalFantasy.Core.NWNX;
 using NWN.FinalFantasy.Data.Repository;
 using static NWN._;
 
 namespace NWN.FinalFantasy.Map
 {
-    public class LoadMapProgression
+    public class LoadMapProgression: IScript
     {
-        public static void Main()
+        public void Main()
         {
             var player = GetEnteringObject();
 

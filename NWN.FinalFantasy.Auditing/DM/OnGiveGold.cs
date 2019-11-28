@@ -1,10 +1,11 @@
-﻿using NWN.FinalFantasy.Core.NWNX;
+﻿using NWN.FinalFantasy.Core.Contracts;
+using NWN.FinalFantasy.Core.NWNX;
 
 namespace NWN.FinalFantasy.Auditing.DM
 {
-    public class OnGiveGold : DMAudit
+    public class OnGiveGold : DMAudit, IScript
     {
-        public static void Main()
+        public void Main()
         {
             var dm = NWGameObject.OBJECT_SELF;
             var amount = NWNXEvents.OnDMGiveGold_GetAmount();

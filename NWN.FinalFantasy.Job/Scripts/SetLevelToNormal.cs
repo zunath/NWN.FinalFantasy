@@ -1,4 +1,5 @@
-﻿using NWN.FinalFantasy.Core.NWNX;
+﻿using NWN.FinalFantasy.Core.Contracts;
+using NWN.FinalFantasy.Core.NWNX;
 using NWN.FinalFantasy.Core.NWScript.Enumerations;
 using NWN.FinalFantasy.Data.Repository;
 using static NWN._;
@@ -9,9 +10,9 @@ namespace NWN.FinalFantasy.Job.Scripts
     /// This is a workaround to prevent the server from crashing on log out.
     /// Sets the player's level back to what their current job level is.
     /// </summary>
-    internal class SetLevelToNormal
+    public class SetLevelToNormal: IScript
     {
-        public static void Main()
+        public void Main()
         {
             NWGameObject player = GetEnteringObject();
             if (!GetIsPlayer(player)) return;

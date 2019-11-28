@@ -1,8 +1,10 @@
-﻿namespace NWN.FinalFantasy.Location
+﻿using NWN.FinalFantasy.Core.Contracts;
+
+namespace NWN.FinalFantasy.Location
 {
-    public class SaveOnAreaEnter: SavePlayerLocation
+    public class SaveOnAreaEnter: SavePlayerLocation, IScript
     {
-        public static void Main()
+        public void Main()
         {
             var player = _.GetEnteringObject();
             Run(player);

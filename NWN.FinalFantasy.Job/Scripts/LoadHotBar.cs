@@ -1,8 +1,10 @@
-﻿namespace NWN.FinalFantasy.Job.Scripts
+﻿using NWN.FinalFantasy.Core.Contracts;
+
+namespace NWN.FinalFantasy.Job.Scripts
 {
-    internal class LoadHotBar
+    public class LoadHotBar: IScript
     {
-        public static void Main()
+        public void Main()
         {
 
         }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using NWN.FinalFantasy.Core.NWScript.Enumerations;
+using NWN.FinalFantasy.Core.Utility;
 using NWN.FinalFantasy.Job.AbilityDefinition;
 
 namespace NWN.FinalFantasy.Job.Registry
@@ -13,11 +14,7 @@ namespace NWN.FinalFantasy.Job.Registry
 
         internal static void Register()
         {
-            var type = typeof(IAbilityDefinition);
-            var types = AppDomain.CurrentDomain.GetAssemblies()
-                .SelectMany(s => s.GetTypes())
-                .Where(x => type.IsAssignableFrom(x) && !x.IsInterface);
-
+            var types = TypeFinder.GetTypesImplementingInterface<IAbilityDefinition>();
             foreach (var abilityType in types)
             {
                 var ability = (IAbilityDefinition)Activator.CreateInstance(abilityType);

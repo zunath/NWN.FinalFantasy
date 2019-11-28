@@ -1,4 +1,5 @@
 ﻿using NWN.FinalFantasy.Core.NWScript.Enumerations;
+using static NWN.FinalFantasy.Core.NWNX.NWNXCore;
 
 namespace NWN.FinalFantasy.Core.NWNX
 {
@@ -15,10 +16,10 @@ namespace NWN.FinalFantasy.Core.NWNX
         {
             string sFunc = "GetLocalVariableCount";
 
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Object, sFunc, obj);
-            NWNXCore.NWNX_CallFunction(NWNX_Object, sFunc);
+            NWNX_PushArgumentObject(NWNX_Object, sFunc, obj);
+            NWNX_CallFunction(NWNX_Object, sFunc);
 
-            return NWNXCore.NWNX_GetReturnValueInt(NWNX_Object, sFunc);
+            return NWNX_GetReturnValueInt(NWNX_Object, sFunc);
         }
 
         /// <summary>
@@ -31,13 +32,13 @@ namespace NWN.FinalFantasy.Core.NWNX
         {
             string sFunc = "GetLocalVariable";
 
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Object, sFunc, index);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Object, sFunc, obj);
-            NWNXCore.NWNX_CallFunction(NWNX_Object, sFunc);
+            NWNX_PushArgumentInt(NWNX_Object, sFunc, index);
+            NWNX_PushArgumentObject(NWNX_Object, sFunc, obj);
+            NWNX_CallFunction(NWNX_Object, sFunc);
 
             LocalVariable var = new LocalVariable();
-            var.Key = NWNXCore.NWNX_GetReturnValueString(NWNX_Object, sFunc);
-            var.Type = (LocalVariableType)NWNXCore.NWNX_GetReturnValueInt(NWNX_Object, sFunc);
+            var.Key = NWNX_GetReturnValueString(NWNX_Object, sFunc);
+            var.Type = (LocalVariableType)NWNX_GetReturnValueInt(NWNX_Object, sFunc);
             return var;
         }
 
@@ -51,9 +52,9 @@ namespace NWN.FinalFantasy.Core.NWNX
         {
             string sFunc = "StringToObject";
 
-            NWNXCore.NWNX_PushArgumentString(NWNX_Object, sFunc, id);
-            NWNXCore.NWNX_CallFunction(NWNX_Object, sFunc);
-            return NWNXCore.NWNX_GetReturnValueObject(NWNX_Object, sFunc);
+            NWNX_PushArgumentString(NWNX_Object, sFunc, id);
+            NWNX_CallFunction(NWNX_Object, sFunc);
+            return NWNX_GetReturnValueObject(NWNX_Object, sFunc);
         }
 
         /// <summary>
@@ -65,11 +66,11 @@ namespace NWN.FinalFantasy.Core.NWNX
         {
             string sFunc = "SetPosition";
 
-            NWNXCore.NWNX_PushArgumentFloat(NWNX_Object, sFunc, pos.X);
-            NWNXCore.NWNX_PushArgumentFloat(NWNX_Object, sFunc, pos.Y);
-            NWNXCore.NWNX_PushArgumentFloat(NWNX_Object, sFunc, pos.Z);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Object, sFunc, obj);
-            NWNXCore.NWNX_CallFunction(NWNX_Object, sFunc);
+            NWNX_PushArgumentFloat(NWNX_Object, sFunc, pos.X);
+            NWNX_PushArgumentFloat(NWNX_Object, sFunc, pos.Y);
+            NWNX_PushArgumentFloat(NWNX_Object, sFunc, pos.Z);
+            NWNX_PushArgumentObject(NWNX_Object, sFunc, obj);
+            NWNX_CallFunction(NWNX_Object, sFunc);
 
         }
 
@@ -82,10 +83,10 @@ namespace NWN.FinalFantasy.Core.NWNX
         {
             string sFunc = "SetCurrentHitPoints";
 
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Object, sFunc, hp);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Object, sFunc, creature);
+            NWNX_PushArgumentInt(NWNX_Object, sFunc, hp);
+            NWNX_PushArgumentObject(NWNX_Object, sFunc, creature);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Object, sFunc);
+            NWNX_CallFunction(NWNX_Object, sFunc);
         }
 
         /// <summary>
@@ -97,10 +98,10 @@ namespace NWN.FinalFantasy.Core.NWNX
         {
             string sFunc = "SetMaxHitPoints";
 
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Object, sFunc, hp);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Object, sFunc, creature);
+            NWNX_PushArgumentInt(NWNX_Object, sFunc, hp);
+            NWNX_PushArgumentObject(NWNX_Object, sFunc, creature);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Object, sFunc);
+            NWNX_CallFunction(NWNX_Object, sFunc);
         }
 
         /// <summary>
@@ -112,10 +113,10 @@ namespace NWN.FinalFantasy.Core.NWNX
         {
             string sFunc = "Serialize";
 
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Object, sFunc, obj);
+            NWNX_PushArgumentObject(NWNX_Object, sFunc, obj);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Object, sFunc);
-            return NWNXCore.NWNX_GetReturnValueString(NWNX_Object, sFunc);
+            NWNX_CallFunction(NWNX_Object, sFunc);
+            return NWNX_GetReturnValueString(NWNX_Object, sFunc);
         }
 
         /// <summary>
@@ -128,10 +129,10 @@ namespace NWN.FinalFantasy.Core.NWNX
         {
             string sFunc = "Deserialize";
 
-            NWNXCore.NWNX_PushArgumentString(NWNX_Object, sFunc, serialized);
+            NWNX_PushArgumentString(NWNX_Object, sFunc, serialized);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Object, sFunc);
-            return NWNXCore.NWNX_GetReturnValueObject(NWNX_Object, sFunc);
+            NWNX_CallFunction(NWNX_Object, sFunc);
+            return NWNX_GetReturnValueObject(NWNX_Object, sFunc);
         }
 
         /// <summary>
@@ -143,10 +144,10 @@ namespace NWN.FinalFantasy.Core.NWNX
         {
             string sFunc = "GetDialogResref";
 
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Object, sFunc, obj);
+            NWNX_PushArgumentObject(NWNX_Object, sFunc, obj);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Object, sFunc);
-            return NWNXCore.NWNX_GetReturnValueString(NWNX_Object, sFunc);
+            NWNX_CallFunction(NWNX_Object, sFunc);
+            return NWNX_GetReturnValueString(NWNX_Object, sFunc);
         }
 
         /// <summary>
@@ -158,10 +159,10 @@ namespace NWN.FinalFantasy.Core.NWNX
         {
             string sFunc = "SetDialogResref";
 
-            NWNXCore.NWNX_PushArgumentString(NWNX_Object, sFunc, dialog);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Object, sFunc, obj);
+            NWNX_PushArgumentString(NWNX_Object, sFunc, dialog);
+            NWNX_PushArgumentObject(NWNX_Object, sFunc, obj);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Object, sFunc);
+            NWNX_CallFunction(NWNX_Object, sFunc);
         }
 
         /// <summary>
@@ -174,10 +175,10 @@ namespace NWN.FinalFantasy.Core.NWNX
         {
             string sFunc = "SetAppearance";
 
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Object, sFunc, app);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Object, sFunc, obj);
+            NWNX_PushArgumentInt(NWNX_Object, sFunc, app);
+            NWNX_PushArgumentObject(NWNX_Object, sFunc, obj);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Object, sFunc);
+            NWNX_CallFunction(NWNX_Object, sFunc);
         }
 
         /// <summary>
@@ -189,10 +190,10 @@ namespace NWN.FinalFantasy.Core.NWNX
         {
             string sFunc = "GetAppearance";
 
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Object, sFunc, obj);
+            NWNX_PushArgumentObject(NWNX_Object, sFunc, obj);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Object, sFunc);
-            return NWNXCore.NWNX_GetReturnValueInt(NWNX_Object, sFunc);
+            NWNX_CallFunction(NWNX_Object, sFunc);
+            return NWNX_GetReturnValueInt(NWNX_Object, sFunc);
         }
 
         /// <summary>
@@ -205,12 +206,12 @@ namespace NWN.FinalFantasy.Core.NWNX
         {
             string sFunc = "GetHasVisualEffect";
 
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Object, sFunc, nVFX);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Object, sFunc, obj);
+            NWNX_PushArgumentInt(NWNX_Object, sFunc, nVFX);
+            NWNX_PushArgumentObject(NWNX_Object, sFunc, obj);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Object, sFunc);
+            NWNX_CallFunction(NWNX_Object, sFunc);
 
-            return NWNXCore.NWNX_GetReturnValueInt(NWNX_Object, sFunc) == 1;
+            return NWNX_GetReturnValueInt(NWNX_Object, sFunc) == 1;
         }
 
         /// <summary>
@@ -223,12 +224,12 @@ namespace NWN.FinalFantasy.Core.NWNX
         {
             string sFunc = "CheckFit";
 
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Object, sFunc, baseitem);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Object, sFunc, item);
+            NWNX_PushArgumentInt(NWNX_Object, sFunc, baseitem);
+            NWNX_PushArgumentObject(NWNX_Object, sFunc, item);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Object, sFunc);
+            NWNX_CallFunction(NWNX_Object, sFunc);
 
-            return NWNXCore.NWNX_GetReturnValueInt(NWNX_Object, sFunc) == 1;
+            return NWNX_GetReturnValueInt(NWNX_Object, sFunc) == 1;
         }
 
         /// <summary>
@@ -242,12 +243,12 @@ namespace NWN.FinalFantasy.Core.NWNX
         {
             string sFunc = "GetDamageImmunity";
 
-            NWNXCore.NWNX_PushArgumentInt(NWNX_Object, sFunc, damageType);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Object, sFunc, obj);
+            NWNX_PushArgumentInt(NWNX_Object, sFunc, damageType);
+            NWNX_PushArgumentObject(NWNX_Object, sFunc, obj);
 
-            NWNXCore.NWNX_CallFunction(NWNX_Object, sFunc);
+            NWNX_CallFunction(NWNX_Object, sFunc);
 
-            return NWNXCore.NWNX_GetReturnValueInt(NWNX_Object, sFunc);
+            return NWNX_GetReturnValueInt(NWNX_Object, sFunc);
         }
 
         /// <summary>
@@ -260,14 +261,152 @@ namespace NWN.FinalFantasy.Core.NWNX
         {
             string sFunc = "AddToArea";
 
-            NWNXCore.NWNX_PushArgumentFloat(NWNX_Object, sFunc, pos.Z);
-            NWNXCore.NWNX_PushArgumentFloat(NWNX_Object, sFunc, pos.Y);
-            NWNXCore.NWNX_PushArgumentFloat(NWNX_Object, sFunc, pos.X);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Object, sFunc, area);
-            NWNXCore.NWNX_PushArgumentObject(NWNX_Object, sFunc, obj);
-            NWNXCore.NWNX_CallFunction(NWNX_Object, sFunc);
+            NWNX_PushArgumentFloat(NWNX_Object, sFunc, pos.Z);
+            NWNX_PushArgumentFloat(NWNX_Object, sFunc, pos.Y);
+            NWNX_PushArgumentFloat(NWNX_Object, sFunc, pos.X);
+            NWNX_PushArgumentObject(NWNX_Object, sFunc, area);
+            NWNX_PushArgumentObject(NWNX_Object, sFunc, obj);
+            NWNX_CallFunction(NWNX_Object, sFunc);
         }
 
+        /// <summary>
+        /// Set placeable as static or not.
+        /// Will not update for PCs until they re-enter the area
+        /// </summary>
+        /// <param name="obj">The object</param>
+        /// <returns>true or false</returns>
+        public static bool GetPlaceableIsStatic(NWGameObject obj)
+        {
+            string sFunc = "GetPlaceableIsStatic";
 
+            NWNX_PushArgumentObject(NWNX_Object, sFunc, obj);
+
+            NWNX_CallFunction(NWNX_Object, sFunc);
+            return NWNX_GetReturnValueInt(NWNX_Object, sFunc) == 1;
+        }
+
+        /// <summary>
+        /// Set placeable as static or not
+        /// </summary>
+        /// <param name="obj">The object</param>
+        /// <param name="isStatic">true or false</param>
+        public static void SetPlaceableIsStatic(NWGameObject obj, bool isStatic)
+        {
+            string sFunc = "SetPlaceableIsStatic";
+
+            NWNX_PushArgumentInt(NWNX_Object, sFunc, isStatic ? 1 : 0);
+            NWNX_PushArgumentObject(NWNX_Object, sFunc, obj);
+
+            NWNX_CallFunction(NWNX_Object, sFunc);
+        }
+
+        /// <summary>
+        /// Gets if a door/placeable auto-removes the key after use.
+        /// </summary>
+        /// <param name="obj">The object</param>
+        /// <returns>true or false</returns>
+        public static bool GetAutoRemoveKey(NWGameObject obj)
+        {
+            string sFunc = "GetAutoRemoveKey";
+
+            NWNX_PushArgumentObject(NWNX_Object, sFunc, obj);
+            NWNX_CallFunction(NWNX_Object, sFunc);
+
+            return NWNX_GetReturnValueInt(NWNX_Object, sFunc) == 1;
+        }
+
+        /// <summary>
+        /// Sets if a door/placeable auto-removes the key after use
+        /// </summary>
+        /// <param name="obj">The object</param>
+        /// <param name="bRemoveKey">true or false</param>
+        public static void SetAutoRemoveKey(NWGameObject obj, bool bRemoveKey)
+        {
+            string sFunc = "SetAutoRemoveKey";
+
+            NWNX_PushArgumentInt(NWNX_Object, sFunc, bRemoveKey ? 1 : 0);
+            NWNX_PushArgumentObject(NWNX_Object, sFunc, obj);
+
+            NWNX_CallFunction(NWNX_Object, sFunc);
+        }
+
+        /// <summary>
+        /// Get the geometry of a trigger
+        /// </summary>
+        /// <param name="oTrigger">The trigger object</param>
+        /// <returns>A string of vertex positions</returns>
+        public static string GetTriggerGeometry(NWGameObject oTrigger)
+        {
+            string sFunc = "GetTriggerGeometry";
+
+            NWNX_PushArgumentObject(NWNX_Object, sFunc, oTrigger);
+            NWNX_CallFunction(NWNX_Object, sFunc);
+
+            return NWNX_GetReturnValueString(NWNX_Object, sFunc);
+        }
+
+        /// <summary>
+        /// Set the geometry of a trigger with a list of vertex positions.
+        /// sGeometry Needs to be in the following format -> {x.x, y.y, z.z} or {x.x, y.y}
+        /// Example Geometry: "{1.0, 1.0, 0.0}{4.0, 1.0, 0.0}{4.0, 4.0, 0.0}{1.0, 4.0, 0.0}"
+        /// The Z position is optional and will be calculated dynamically based
+        /// on terrain height if it's not provided.
+        /// The minimum number of vertices is 3.
+        /// </summary>
+        /// <param name="oTrigger">The trigger object.</param>
+        /// <param name="sGeometry">The geometry. Refer to summary for format of string.</param>
+        public static void SetTriggerGeometry(NWGameObject oTrigger, string sGeometry)
+        {
+            string sFunc = "SetTriggerGeometry";
+
+            NWNX_PushArgumentString(NWNX_Object, sFunc, sGeometry);
+            NWNX_PushArgumentObject(NWNX_Object, sFunc, oTrigger);
+            NWNX_CallFunction(NWNX_Object, sFunc);
+        }
+
+        /// <summary>
+        /// Add an effect to an object that displays an icon and has no other effect.
+        /// See effecticons.2da for a list of possible effect icons.
+        /// </summary>
+        /// <param name="obj">The object to apply the effect</param>
+        /// <param name="nIcon">The icon id.</param>
+        /// <param name="fDuration">If specified the effect will be temporary and last this length in seconds, otherwise the effect will be permanent.</param>
+        public static void AddIconEffect(NWGameObject obj, int nIcon, float fDuration = 0.0f)
+        {
+            string sFunc = "AddIconEffect";
+
+            NWNX_PushArgumentFloat(NWNX_Object, sFunc, fDuration);
+            NWNX_PushArgumentInt(NWNX_Object, sFunc, nIcon);
+            NWNX_PushArgumentObject(NWNX_Object, sFunc, obj);
+            NWNX_CallFunction(NWNX_Object, sFunc);
+        }
+
+        /// <summary>
+        /// Remove an icon effect from an object that was added by the NWNX_Object_AddIconEffect() function.
+        /// </summary>
+        /// <param name="obj">The object</param>
+        /// <param name="nIcon">The icon id.</param>
+        public static void RemoveIconEffect(NWGameObject obj, int nIcon)
+        {
+            string sFunc = "RemoveIconEffect";
+
+            NWNX_PushArgumentInt(NWNX_Object, sFunc, nIcon);
+            NWNX_PushArgumentObject(NWNX_Object, sFunc, obj);
+            NWNX_CallFunction(NWNX_Object, sFunc);
+        }
+
+        /// <summary>
+        /// Export an object to the UserDirectory/nwnx folder
+        /// </summary>
+        /// <param name="sFileName">The filename without extension, 16 or less characters.</param>
+        /// <param name="oObject">The object to export. Valid object types: Creature, Item, Placeable, Waypoint, Door, Store, Trigger</param>
+        public static void Export(string sFileName, NWGameObject oObject)
+        {
+            string sFunc = "Export";
+
+            NWNX_PushArgumentObject(NWNX_Object, sFunc, oObject);
+            NWNX_PushArgumentString(NWNX_Object, sFunc, sFileName);
+            NWNX_CallFunction(NWNX_Object, sFunc);
+        }
     }
 }

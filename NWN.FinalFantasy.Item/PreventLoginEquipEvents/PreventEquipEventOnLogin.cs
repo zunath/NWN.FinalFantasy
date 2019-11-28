@@ -1,12 +1,13 @@
 ﻿using System;
+using NWN.FinalFantasy.Core.Contracts;
 using NWN.FinalFantasy.Core.NWNX;
 using static NWN._;
 
 namespace NWN.FinalFantasy.Item.PreventLoginEquipEvents
 {
-    internal class PreventEquipEventOnLogin
+    public class PreventEquipEventOnLogin: IScript
     {
-        public static void Main()
+        public void Main()
         {
             var player = NWGameObject.OBJECT_SELF;
             if (!GetIsPlayer(player)) return;

@@ -1,8 +1,10 @@
-﻿namespace NWN.FinalFantasy.Auditing.DM
+﻿using NWN.FinalFantasy.Core.Contracts;
+
+namespace NWN.FinalFantasy.Auditing.DM
 {
-    public class OnHeal : DMTargetListAudit
+    public class OnHeal : DMTargetListAudit, IScript
     {
-        public static void Main()
+        public void Main()
         {
             RunAudit("Heal");
         }

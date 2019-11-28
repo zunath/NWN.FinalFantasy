@@ -1,8 +1,10 @@
-﻿namespace NWN.FinalFantasy.Job.Scripts
+﻿using NWN.FinalFantasy.Core.Contracts;
+
+namespace NWN.FinalFantasy.Job.Scripts
 {
-    internal class SaveHotBar
+    public class SaveHotBar: IScript
     {
-        public static void Main()
+        public void Main()
         {
 
         }

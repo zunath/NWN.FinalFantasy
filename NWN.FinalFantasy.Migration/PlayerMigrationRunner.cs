@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using NWN.FinalFantasy.Core.Contracts;
 using NWN.FinalFantasy.Data.Repository;
 using NWN.FinalFantasy.Migration.PC;
 
 namespace NWN.FinalFantasy.Migration
 {
-    internal class PlayerMigrationRunner
+    public class PlayerMigrationRunner: IScript
     {
         private static readonly Queue<IPCMigration> _registeredMigrations = new Queue<IPCMigration>();
 
@@ -18,7 +19,7 @@ namespace NWN.FinalFantasy.Migration
         /// <summary>
         /// Handles the migration of player characters.
         /// </summary>
-        public static void Main()
+        public void Main()
         {
             var player = _.GetEnteringObject();
             if (!_.GetIsPlayer(player)) return;

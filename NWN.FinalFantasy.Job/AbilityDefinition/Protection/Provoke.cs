@@ -1,6 +1,7 @@
 ﻿using NWN.FinalFantasy.AI;
 using NWN.FinalFantasy.Core.NWScript.Enumerations;
 using NWN.FinalFantasy.Job.Enumeration;
+using static NWN._;
 
 namespace NWN.FinalFantasy.Job.AbilityDefinition.Protection
 {
@@ -25,7 +26,7 @@ namespace NWN.FinalFantasy.Job.AbilityDefinition.Protection
 
         public string CanUse(NWGameObject user, NWGameObject target)
         {
-            if (!_.GetIsNPC(target))
+            if (!GetIsNPC(target))
                 return "This ability can only be used on NPCs.";
 
             return null;
@@ -47,7 +48,11 @@ namespace NWN.FinalFantasy.Job.AbilityDefinition.Protection
 
         public void Impact(NWGameObject user, NWGameObject target)
         {
-            Enmity.AdjustEnmity(target, user, 100);
+            var masteryBonus = GetHasFeat(Feat.ProvokeMastery1) ? 0.10f : 0.0f;
+            var enmity = 100;
+            enmity += (int) (enmity * masteryBonus);
+
+            Enmity.AdjustEnmity(target, user, enmity);
         }
     }
 }

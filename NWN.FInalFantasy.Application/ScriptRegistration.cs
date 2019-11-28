@@ -31,7 +31,6 @@ namespace NWN.FinalFantasy.Application
         // or an int (0 or 1) for StartingConditionals
         public static int OnRunScript(string script)
         {
-            Console.WriteLine("script = " + script);
             // Is this one of the scripts we've registered in the OnStart() method below?
             if (_eventRegistrations.ContainsKey(script))
             {

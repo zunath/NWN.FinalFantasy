@@ -11,7 +11,7 @@ Discord: https://discord.gg/b8QYAvw
 
 This project contains the C# source code used on the Final Fantasy Online server. 
 
-It serves as a replacement for NWScript and handles most server features and functions. This is possible by using the NWNX_Mono plugin for NWNX.
+It serves as a replacement for NWScript and handles most server features and functions. This is possible by using the NWNX_DotNET plugin for NWNX.
 
 Refer to the quick start guide below and be sure to post any issues on our forums. The link to the forums is above.
 

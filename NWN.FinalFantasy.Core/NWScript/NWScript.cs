@@ -6698,28 +6698,6 @@ namespace NWN
         }
 
         /// <summary>
-        ///  duplicates the item and returns a new object
-        ///  oItem - item to copy
-        ///  oTargetInventory - create item in this object's inventory. If this parameter
-        ///                     is not valid, the item will be created in oItem's location
-        ///  bCopyVars - copy the local variables from the old item to the new one
-        ///  * returns the new item
-        ///  * returns OBJECT_INVALID for non-items.
-        ///  * can only copy empty item containers. will return OBJECT_INVALID if oItem contains
-        ///    other items.
-        ///  * if it is possible to merge this item with any others in the target location,
-        ///    then it will do so and return the merged object.
-        /// </summary>
-        public static NWGameObject CopyItem(NWGameObject oItem, NWGameObject oTargetInventory = null, bool bCopyVars = false)
-        {
-            Internal.NativeFunctions.StackPushInteger(bCopyVars ? 1 : 0);
-            Internal.NativeFunctions.StackPushObject(oTargetInventory != null ? oTargetInventory.Self : NWGameObject.OBJECT_INVALID);
-            Internal.NativeFunctions.StackPushObject(oItem != null ? oItem.Self : NWGameObject.OBJECT_INVALID);
-            Internal.NativeFunctions.CallBuiltIn(584);
-            return Internal.NativeFunctions.StackPopObject();
-        }
-
-        /// <summary>
         ///  returns an effect that is guaranteed to paralyze a creature.
         ///  this effect is identical to EffectParalyze except that it cannot be resisted.
         /// </summary>

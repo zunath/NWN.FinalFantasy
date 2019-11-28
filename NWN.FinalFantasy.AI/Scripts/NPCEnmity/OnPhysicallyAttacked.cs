@@ -1,14 +1,13 @@
 ﻿using NWN.FinalFantasy.Core.Contracts;
-using static NWN._;
 
-namespace NWN.FinalFantasy.AI.Scripts
+namespace NWN.FinalFantasy.AI.Scripts.NPCEnmity
 {
-    public class NPCPhysicallyAttacked: IScript
+    public class OnPhysicallyAttacked: IScript
     {
         public void Main()
         {
             NWGameObject npc = NWGameObject.OBJECT_SELF;
-            NWGameObject attacker = GetLastAttacker(npc);
+            NWGameObject attacker = _.GetLastAttacker(npc);
 
             Enmity.AdjustEnmity(npc, attacker, 1);
         }

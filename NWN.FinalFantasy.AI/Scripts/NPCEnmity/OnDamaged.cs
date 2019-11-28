@@ -1,8 +1,8 @@
 ﻿using NWN.FinalFantasy.Core.Contracts;
 
-namespace NWN.FinalFantasy.AI.Scripts
+namespace NWN.FinalFantasy.AI.Scripts.NPCEnmity
 {
-    public class NPCDamaged: IScript
+    public class OnDamaged: IScript
     {
         public void Main()
         {

@@ -1,16 +1,15 @@
 ﻿using NWN.FinalFantasy.Core.Contracts;
-using static NWN._;
 
-namespace NWN.FinalFantasy.AI.Scripts
+namespace NWN.FinalFantasy.AI.Scripts.NPCEnmity
 {
-    public class NPCDeath: IScript
+    public class OnDeath: IScript
     {
         public void Main()
         {
             var npc = NWGameObject.OBJECT_SELF;
-            if (!GetIsNPC(npc)) return;
+            if (!_.GetIsNPC(npc)) return;
 
-            var npcID = GetGlobalID(npc);
+            var npcID = _.GetGlobalID(npc);
             Enmity.ClearEnmityTable(npcID);
         }
     }

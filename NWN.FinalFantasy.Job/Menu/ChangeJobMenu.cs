@@ -1,6 +1,4 @@
 ﻿using NWN.FinalFantasy.Core.Dialog;
-using NWN.FinalFantasy.Core.Event;
-using NWN.FinalFantasy.Core.Message;
 using NWN.FinalFantasy.Core.Messaging;
 using NWN.FinalFantasy.Core.NWScript.Enumerations;
 using NWN.FinalFantasy.Data.Repository;

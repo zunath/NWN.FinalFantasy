@@ -91,7 +91,6 @@ namespace NWN.FinalFantasy.Core
             {
                 try
                 {
-                    Console.WriteLine("script = " + script);
                     if (!_cachedScripts.ContainsKey(script))
                         throw new Exception("Script '" + script + "' has not been registered. Make sure a public class implementing the " + nameof(IScript) + " interface exists in the code base.");
 

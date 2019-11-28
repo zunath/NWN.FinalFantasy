@@ -57,10 +57,6 @@ namespace NWN.FinalFantasy.AI
                 throw new Exception(nameof(AdjustEnmity) + " may only be used on NPCs.");
 
             var table = GetOrCreateEnmityTable(creature);
-            var targetID = GetGlobalID(target);
-
-            if(!table.ContainsKey(targetID))
-                table[targetID] = new EnmityTarget(target, 0);
 
             // If this is the first creature to go on the enmity table, immediately attack them so they aren't 
             // waiting around to do something the next time their AI runs.
@@ -68,6 +64,10 @@ namespace NWN.FinalFantasy.AI
             {
                 AssignCommand(creature, () => ActionAttack(target));
             }
+
+            var targetID = GetGlobalID(target);
+            if (!table.ContainsKey(targetID))
+                table[targetID] = new EnmityTarget(target, 0);
 
             table[targetID].Amount += adjustBy;
         }

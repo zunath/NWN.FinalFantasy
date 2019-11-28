@@ -1,4 +1,5 @@
-﻿using static NWN.FinalFantasy.Core.NWNX.NWNXCore;
+﻿using static NWN._;
+using static NWN.FinalFantasy.Core.NWNX.NWNXCore;
 
 namespace NWN.FinalFantasy.Core.NWNX
 {
@@ -46,30 +47,29 @@ namespace NWN.FinalFantasy.Core.NWNX
         /// Starts displaying a timing bar.
         /// Will run a script at the end of the timing bar, if specified.
         /// </summary>
-        /// <param name="creature">The creature who will see the timing bar.</param>
+        /// <param name="player">The creature who will see the timing bar.</param>
         /// <param name="seconds">How long the timing bar should come on screen.</param>
         /// <param name="script">The script to run at the end of the timing bar.</param>
-        public static void StartGuiTimingBar(NWGameObject creature, float seconds, string script)
+        /// <param name="type">The type of timing bar to display.</param>
+        public static void StartGuiTimingBar(NWGameObject player, float seconds, string script = "", TimingBarType type = TimingBarType.Custom)
         {
-            // only one timing bar at a time!
-            if (_.GetLocalInt(creature, "NWNX_PLAYER_GUI_TIMING_ACTIVE") == 1)
+            if (GetLocalInt(player, "NWNX_PLAYER_GUI_TIMING_ACTIVE") == 1)
                 return;
 
             string sFunc = "StartGuiTimingBar";
+            NWNX_PushArgumentInt(NWNX_Player, sFunc, (int)type);
             NWNX_PushArgumentFloat(NWNX_Player, sFunc, seconds);
-            NWNX_PushArgumentObject(NWNX_Player, sFunc, creature);
+            NWNX_PushArgumentObject(NWNX_Player, sFunc, player);
 
             NWNX_CallFunction(NWNX_Player, sFunc);
 
-            int id = _.GetLocalInt(creature, "NWNX_PLAYER_GUI_TIMING_ID") + 1;
-            _.SetLocalInt(creature, "NWNX_PLAYER_GUI_TIMING_ACTIVE", id);
-            _.SetLocalInt(creature, "NWNX_PLAYER_GUI_TIMING_ID", id);
+            int id = GetLocalInt(player, "NWNX_PLAYER_GUI_TIMING_ID") + 1;
+            SetLocalInt(player, "NWNX_PLAYER_GUI_TIMING_ACTIVE", id);
+            SetLocalInt(player, "NWNX_PLAYER_GUI_TIMING_ID", id);
 
-            _.DelayCommand(seconds, () =>
-            {
-                StopGuiTimingBar(creature, script, -1);
-            });
+            DelayCommand(seconds, () => StopGuiTimingBar(player, script, id));
         }
+
 
         /// <summary>
         /// Stops displaying a timing bar.
@@ -80,7 +80,7 @@ namespace NWN.FinalFantasy.Core.NWNX
         /// <param name="id">ID number of this timing bar.</param>
         public static void StopGuiTimingBar(NWGameObject creature, string script, int id)
         {
-            int activeId = _.GetLocalInt(creature, "NWNX_PLAYER_GUI_TIMING_ACTIVE");
+            int activeId = GetLocalInt(creature, "NWNX_PLAYER_GUI_TIMING_ACTIVE");
             // Either the timing event was never started, or it already finished.
             if (activeId == 0)
                 return;
@@ -89,7 +89,7 @@ namespace NWN.FinalFantasy.Core.NWNX
             if (id != -1 && id != activeId)
                 return;
 
-            _.DeleteLocalInt(creature, "NWNX_PLAYER_GUI_TIMING_ACTIVE");
+            DeleteLocalInt(creature, "NWNX_PLAYER_GUI_TIMING_ACTIVE");
 
             string sFunc = "StopGuiTimingBar";
             NWNX_PushArgumentObject(NWNX_Player, sFunc, creature);
@@ -97,7 +97,7 @@ namespace NWN.FinalFantasy.Core.NWNX
 
             if (!string.IsNullOrWhiteSpace(script))
             {
-                _.ExecuteScript(script, creature);
+                ExecuteScript(script, creature);
             }
         }
 

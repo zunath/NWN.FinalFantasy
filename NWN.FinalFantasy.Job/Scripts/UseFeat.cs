@@ -136,7 +136,9 @@ namespace NWN.FinalFantasy.Job.Scripts
         private static void StartCasting(UserStats stats)
         {
             var castingTime = stats.AbilityDefinition.CastingTime(stats.User);
-            NWNXPlayer.StartGuiTimingBar(stats.User, castingTime, string.Empty);
+
+            if(castingTime > 0.0f)
+                NWNXPlayer.StartGuiTimingBar(stats.User, castingTime, string.Empty);
 
             SetIsBusy(stats.User, true);
             PlayAnimation(stats.User, stats.AbilityDefinition.Category);

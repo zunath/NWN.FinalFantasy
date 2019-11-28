@@ -1,4 +1,5 @@
-﻿using NWN.FinalFantasy.Core.NWScript.Enumerations;
+﻿using NWN.FinalFantasy.AI;
+using NWN.FinalFantasy.Core.NWScript.Enumerations;
 using NWN.FinalFantasy.Job.Enumeration;
 
 namespace NWN.FinalFantasy.Job.AbilityDefinition.Protection
@@ -24,6 +25,9 @@ namespace NWN.FinalFantasy.Job.AbilityDefinition.Protection
 
         public string CanUse(NWGameObject user, NWGameObject target)
         {
+            if (!_.GetIsNPC(target))
+                return "This ability can only be used on NPCs.";
+
             return null;
         }
 
@@ -34,7 +38,7 @@ namespace NWN.FinalFantasy.Job.AbilityDefinition.Protection
 
         public float CooldownTime(NWGameObject user)
         {
-            return 0;
+            return 30.0f;
         }
 
         public void Apply(NWGameObject user)
@@ -43,6 +47,7 @@ namespace NWN.FinalFantasy.Job.AbilityDefinition.Protection
 
         public void Impact(NWGameObject user, NWGameObject target)
         {
+            Enmity.AdjustEnmity(target, user, 100);
         }
     }
 }

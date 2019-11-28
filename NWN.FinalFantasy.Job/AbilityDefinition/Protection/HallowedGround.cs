@@ -34,7 +34,7 @@ namespace NWN.FinalFantasy.Job.AbilityDefinition.Protection
 
         public float CooldownTime(NWGameObject user)
         {
-            return 3600;
+            return 3600f;
         }
 
         public void Apply(NWGameObject user)

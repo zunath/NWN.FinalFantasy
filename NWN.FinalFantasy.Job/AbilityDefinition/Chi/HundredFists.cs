@@ -1,20 +1,21 @@
 ﻿using NWN.FinalFantasy.Core.NWScript.Enumerations;
 using NWN.FinalFantasy.Job.Enumeration;
+using static NWN._;
 
-namespace NWN.FinalFantasy.Job.AbilityDefinition.WeaponMastery
+namespace NWN.FinalFantasy.Job.AbilityDefinition.StatBoost
 {
-    internal class AxeMastery1: IAbilityDefinition
+    internal class HundredFists : IAbilityDefinition
     {
-        public string Name => "Axe Mastery";
-        public Feat Feat => Feat.AxeMastery1;
-        public AbilityCategory Category => AbilityCategory.Trait;
+        public string Name => "Hundred Fists";
+        public Feat Feat => Feat.HundredFists;
+        public AbilityCategory Category => AbilityCategory.Combat;
         public AbilityGroup Group => AbilityGroup.Individual;
         public bool IsEquippable => false;
-        public int APRequired => 100;
+        public int APRequired => 0;
 
         public JobLevel[] JobRequirements => new[]
         {
-            new JobLevel(ClassType.Warrior, 10),
+            new JobLevel(ClassType.Monk, 1),
         };
         public int MP(NWGameObject user)
         {
@@ -28,12 +29,12 @@ namespace NWN.FinalFantasy.Job.AbilityDefinition.WeaponMastery
 
         public float CastingTime(NWGameObject user)
         {
-            return 0;
+            return 3f;
         }
 
         public float CooldownTime(NWGameObject user)
         {
-            return 0;
+            return 3600f;
         }
 
         public void Apply(NWGameObject user)
@@ -42,6 +43,8 @@ namespace NWN.FinalFantasy.Job.AbilityDefinition.WeaponMastery
 
         public void Impact(NWGameObject user, NWGameObject target)
         {
+            var effect = EffectLinkEffects(EffectHaste(), EffectModifyAttacks(3));
+            ApplyEffectToObject(DurationType.Temporary, effect, user, 30.0f);
         }
     }
 }

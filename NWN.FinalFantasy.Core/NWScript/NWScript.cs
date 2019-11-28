@@ -3147,19 +3147,6 @@ namespace NWN
         }
 
         /// <summary>
-        ///  Determine whether oCreature has nFeat, and nFeat is useable.
-        ///  - nFeat: FEAT_*
-        ///  - oCreature
-        /// </summary>
-        public static bool GetHasFeat(Feat nFeat, NWGameObject oCreature = null)
-        {
-            Internal.NativeFunctions.StackPushObject(oCreature != null ? oCreature.Self : NWGameObject.OBJECT_INVALID);
-            Internal.NativeFunctions.StackPushInteger((int)nFeat);
-            Internal.NativeFunctions.CallBuiltIn(285);
-            return Internal.NativeFunctions.StackPopInteger() == 1;
-        }
-
-        /// <summary>
         ///  Determine whether oCreature has nSkill, and nSkill is useable.
         ///  - nSkill: SKILL_*
         ///  - oCreature

@@ -48,7 +48,7 @@ namespace NWN.FinalFantasy.Job.AbilityDefinition.Protection
 
         public void Impact(NWGameObject user, NWGameObject target)
         {
-            var masteryBonus = GetHasFeat(Feat.ProvokeMastery1) ? 0.10f : 0.0f;
+            var masteryBonus = GetHasFeat(Feat.ProvokeMastery1, user) ? 0.10f : 0.0f;
             var enmity = 100;
             enmity += (int)(enmity * masteryBonus);
 

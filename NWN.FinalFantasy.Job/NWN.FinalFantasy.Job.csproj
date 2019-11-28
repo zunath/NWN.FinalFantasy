@@ -15,7 +15,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="AbilityDefinition\Archery\" />
-    <Folder Include="AbilityDefinition\Chi\" />
     <Folder Include="AbilityDefinition\General\" />
     <Folder Include="AbilityDefinition\Thievery\" />
     <Folder Include="AbilityDefinition\WhiteMagic\" />

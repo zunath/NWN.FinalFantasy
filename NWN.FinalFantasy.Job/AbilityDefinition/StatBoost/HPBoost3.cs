@@ -1,20 +1,20 @@
 ﻿using NWN.FinalFantasy.Core.NWScript.Enumerations;
 using NWN.FinalFantasy.Job.Enumeration;
 
-namespace NWN.FinalFantasy.Job.AbilityDefinition.WeaponMastery
+namespace NWN.FinalFantasy.Job.AbilityDefinition.StatBoost
 {
-    internal class AxeMastery1: IAbilityDefinition
+    internal class HPBoost3: IAbilityDefinition
     {
-        public string Name => "Axe Mastery";
-        public Feat Feat => Feat.AxeMastery1;
+        public string Name => "HP Boost III";
+        public Feat Feat => Feat.HPBoost3;
         public AbilityCategory Category => AbilityCategory.Trait;
         public AbilityGroup Group => AbilityGroup.Individual;
-        public bool IsEquippable => false;
-        public int APRequired => 100;
+        public bool IsEquippable => true;
+        public int APRequired => 140;
 
         public JobLevel[] JobRequirements => new[]
         {
-            new JobLevel(ClassType.Warrior, 10),
+            new JobLevel(ClassType.Monk, 18),
         };
         public int MP(NWGameObject user)
         {

@@ -53,12 +53,26 @@ namespace NWN.FinalFantasy.Job.Scripts.Traits
 
         private static int GetFeatBonusBAB(NWGameObject player, BaseItemType type)
         {
+            var main = GetItemInSlot(InventorySlot.RightHand, player);
+            var offHand = GetItemInSlot(InventorySlot.LeftHand, player);
+
             // Axe Mastery
             if (_axeTypes.Contains(type))
             {
                 if (GetHasFeat(Feat.AxeMastery2, player))
                     return 2;
                 if (GetHasFeat(Feat.AxeMastery1, player))
+                    return 1;
+
+                return 0;
+            }
+
+            // Unarmed Mastery
+            else if (!GetIsObjectValid(main) && !GetIsObjectValid(offHand))
+            {
+                if (GetHasFeat(Feat.UnarmedMastery2, player))
+                    return 2;
+                if (GetHasFeat(Feat.UnarmedMastery1, player))
                     return 1;
 
                 return 0;

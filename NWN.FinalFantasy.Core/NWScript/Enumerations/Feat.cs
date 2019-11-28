@@ -23,7 +23,7 @@
         Improved_Parry = 18,
         Improved_Power_Attack = 19,
         Improved_Two_Weapon_Fighting = 20,
-        Improved_Unarmed_Strike = 21,
+        ImprovedUnarmedStrike = 21,
         Iron_Will = 22,
         Knockdown = 23,
         Lightning_Reflexes = 24,
@@ -198,7 +198,7 @@
         Resist_Natures_Lure = 202,
         Venom_Immunity = 203,
         Flurry_Of_Blows = 204,
-        Evasion = 206,
+        NWNEvasion = 206,
         Monk_Endurance = 207,
         Still_Mind = 208,
         Purity_Of_Body = 209,
@@ -1040,5 +1040,17 @@
         HPBoost2 = 1130,
         AxeMastery2 = 1131,
         DualWield = 1132,
+        HundredFists = 1133,
+        // 1134 undefined
+        ElectricFist = 1135,
+        Chakra = 1136,
+        UnarmedMastery1 = 1137,
+        Evasion = 1138,
+        // 1139 undefined
+        SilenceStrike = 1140,
+        // 1141 undefined
+        Mantra = 1142,
+        HPBoost3 = 1143,
+        UnarmedMastery2 = 1144
     }
 }

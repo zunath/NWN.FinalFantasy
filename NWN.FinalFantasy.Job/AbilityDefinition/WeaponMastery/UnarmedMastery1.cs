@@ -3,18 +3,18 @@ using NWN.FinalFantasy.Job.Enumeration;
 
 namespace NWN.FinalFantasy.Job.AbilityDefinition.WeaponMastery
 {
-    internal class AxeMastery1: IAbilityDefinition
+    internal class UnarmedMastery1 : IAbilityDefinition
     {
-        public string Name => "Axe Mastery";
-        public Feat Feat => Feat.AxeMastery1;
+        public string Name => "Unarmed Mastery";
+        public Feat Feat => Feat.UnarmedMastery1;
         public AbilityCategory Category => AbilityCategory.Trait;
         public AbilityGroup Group => AbilityGroup.Individual;
         public bool IsEquippable => false;
-        public int APRequired => 100;
+        public int APRequired => 50;
 
         public JobLevel[] JobRequirements => new[]
         {
-            new JobLevel(ClassType.Warrior, 10),
+            new JobLevel(ClassType.Monk, 6),
         };
         public int MP(NWGameObject user)
         {

@@ -19,7 +19,11 @@ namespace NWN.FinalFantasy.Job.Scripts.Traits
 
             float percentIncrease;
 
-            if (_.GetHasFeat(Feat.HPBoost2, player))
+            if (_.GetHasFeat(Feat.HPBoost3, player))
+            {
+                percentIncrease = 0.30f;
+            }
+            else if (_.GetHasFeat(Feat.HPBoost2, player))
             {
                 percentIncrease = 0.20f;
             }

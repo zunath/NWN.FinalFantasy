@@ -622,5 +622,30 @@ namespace NWN
             Internal.NativeFunctions.CallBuiltIn(584);
             return Internal.NativeFunctions.StackPopObject();
         }
+
+        /// <summary>
+        ///  Create an object of the specified type at lLocation.
+        ///  - nObjectType: OBJECT_TYPE_ITEM, OBJECT_TYPE_CREATURE, OBJECT_TYPE_PLACEABLE,
+        ///    OBJECT_TYPE_STORE, OBJECT_TYPE_WAYPOINT
+        ///  - sTemplate
+        ///  - lLocation
+        ///  - bUseAppearAnimation
+        ///  - sNewTag - if this string is not empty, it will replace the default tag from the template
+        /// </summary>
+        public static NWGameObject CreateObject(ObjectType nObjectType, string sTemplate, NWN.Location lLocation, bool bUseAppearAnimation = false, string sNewTag = "")
+        {
+            Internal.NativeFunctions.StackPushStringUTF8(sNewTag);
+            Internal.NativeFunctions.StackPushInteger(bUseAppearAnimation ? 1 : 0);
+            Internal.NativeFunctions.StackPushLocation(lLocation.Handle);
+            Internal.NativeFunctions.StackPushStringUTF8(sTemplate);
+            Internal.NativeFunctions.StackPushInteger((int)nObjectType);
+            Internal.NativeFunctions.CallBuiltIn(243);
+            var result = Internal.NativeFunctions.StackPopObject();
+
+            MessageHub.Instance.Publish(new ObjectCreated(result));
+
+            return result;
+        }
+
     }
 }

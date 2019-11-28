@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using NWN.FinalFantasy.AI;
 using NWN.FinalFantasy.Auditing;
 using NWN.FinalFantasy.Authorization;
 using NWN.FinalFantasy.Chat;
@@ -28,6 +29,7 @@ namespace NWN.FinalFantasy.Application
         public static void Register()
         {
             Log.Information("Registering Features...");
+            _registrations.Add(new AIRegistration());
             _registrations.Add(new AuditingRegistration());
             _registrations.Add(new AuthorizationRegistration());
             _registrations.Add(new ChatRegistration());

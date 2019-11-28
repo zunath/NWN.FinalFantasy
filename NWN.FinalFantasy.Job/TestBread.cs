@@ -1,4 +1,6 @@
 ﻿using NWN.FinalFantasy.Core.Contracts;
+using NWN.FinalFantasy.Core.NWScript.Enumerations;
+using static NWN._;
 
 namespace NWN.FinalFantasy.Job
 {
@@ -6,9 +8,14 @@ namespace NWN.FinalFantasy.Job
     {
         public void Main()
         {
-            var player = _.GetLastUsedBy();
+            var player = GetLastUsedBy();
             int xp = 500;
-            _.GiveJobXP(player, xp);
+            GiveJobXP(player, xp);
+
+
+            var wp = GetObjectByTag("ooc_wp");
+            var location = GetLocation(wp);
+            CreateObject(ObjectType.Creature, "nw_malekid01", location);
         }
     }
 }

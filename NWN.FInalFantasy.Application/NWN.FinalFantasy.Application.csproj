@@ -14,6 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\NWN.FinalFantasy.AI\NWN.FinalFantasy.AI.csproj" />
     <ProjectReference Include="..\NWN.FinalFantasy.Auditing\NWN.FinalFantasy.Auditing.csproj" />
     <ProjectReference Include="..\NWN.FinalFantasy.Authorization\NWN.FinalFantasy.Authorization.csproj" />
     <ProjectReference Include="..\NWN.FinalFantasy.Chat\NWN.FinalFantasy.Chat.csproj" />

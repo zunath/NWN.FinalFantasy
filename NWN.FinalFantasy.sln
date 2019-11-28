@@ -43,7 +43,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NWN.FinalFantasy.Item", "NW
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NWN.FinalFantasy.Roleplay", "NWN.FinalFantasy.Roleplay\NWN.FinalFantasy.Roleplay.csproj", "{6BC21966-D7D5-4884-AC43-0E1AE64E1C47}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWN.FinalFantasy.Application", "NWN.FInalFantasy.Application\NWN.FinalFantasy.Application.csproj", "{380498B3-E11E-435E-8E5A-DF31BACCB3B0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NWN.FinalFantasy.Application", "NWN.FInalFantasy.Application\NWN.FinalFantasy.Application.csproj", "{380498B3-E11E-435E-8E5A-DF31BACCB3B0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWN.FinalFantasy.AI", "NWN.FinalFantasy.AI\NWN.FinalFantasy.AI.csproj", "{957160C0-B94F-4A47-9F9F-49C205A00655}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -131,6 +133,10 @@ Global
 		{380498B3-E11E-435E-8E5A-DF31BACCB3B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{380498B3-E11E-435E-8E5A-DF31BACCB3B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{380498B3-E11E-435E-8E5A-DF31BACCB3B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{957160C0-B94F-4A47-9F9F-49C205A00655}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{957160C0-B94F-4A47-9F9F-49C205A00655}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{957160C0-B94F-4A47-9F9F-49C205A00655}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{957160C0-B94F-4A47-9F9F-49C205A00655}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

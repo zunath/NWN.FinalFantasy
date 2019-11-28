@@ -204,35 +204,35 @@ namespace NWN.FinalFantasy.Application
             });
 
             // Item events
-            _eventRegistrations.Add("item_on_hit", () => Script.RunScriptEvents(NWGameObject.OBJECT_SELF, ItemEventPrefix.OnItemHitCastSpell, GetModule()));
+            _eventRegistrations.Add("item_on_hit", () => Script.RunScriptEvents(GetModule(), ItemEventPrefix.OnItemHitCastSpell));
 
             // Module events (NWNX)
-            _eventRegistrations.Add("mod_nwnx_equip", () => Script.RunScriptEvents(NWGameObject.OBJECT_SELF, ModulePrefix.OnNWNXEquipItem, GetModule()));
-            _eventRegistrations.Add("mod_nwnx_unequip", () => Script.RunScriptEvents(NWGameObject.OBJECT_SELF, ModulePrefix.OnNWNXUnequipItem, GetModule()));
-            _eventRegistrations.Add("mod_on_attack", () => Script.RunScriptEvents(NWGameObject.OBJECT_SELF, ModulePrefix.OnAttack, GetModule()));
-            _eventRegistrations.Add("mod_on_examine", () => Script.RunScriptEvents(NWGameObject.OBJECT_SELF, ModulePrefix.OnExamine, GetModule()));
-            _eventRegistrations.Add("mod_on_nwnxchat", () => Script.RunScriptEvents(NWGameObject.OBJECT_SELF, ModulePrefix.OnNWNXChat));
-            _eventRegistrations.Add("mod_on_usefeat", () => Script.RunScriptEvents(NWGameObject.OBJECT_SELF, ModulePrefix.OnUseFeat, GetModule()));
-            _eventRegistrations.Add("mod_on_useitem", () => Script.RunScriptEvents(NWGameObject.OBJECT_SELF, ModulePrefix.OnUseItem));
+            _eventRegistrations.Add("mod_nwnx_equip", () => Script.RunScriptEvents(GetModule(), ModulePrefix.OnNWNXEquipItem));
+            _eventRegistrations.Add("mod_nwnx_unequip", () => Script.RunScriptEvents(GetModule(), ModulePrefix.OnNWNXUnequipItem));
+            _eventRegistrations.Add("mod_on_attack", () => Script.RunScriptEvents(GetModule(), ModulePrefix.OnAttack));
+            _eventRegistrations.Add("mod_on_examine", () => Script.RunScriptEvents(GetModule(), ModulePrefix.OnExamine));
+            _eventRegistrations.Add("mod_on_nwnxchat", () => Script.RunScriptEvents(GetModule(), ModulePrefix.OnNWNXChat));
+            _eventRegistrations.Add("mod_on_usefeat", () => Script.RunScriptEvents(GetModule(), ModulePrefix.OnUseFeat));
+            _eventRegistrations.Add("mod_on_useitem", () => Script.RunScriptEvents(GetModule(), ModulePrefix.OnUseItem));
 
             // Module events (Non-NWNX)
-            _eventRegistrations.Add("mod_on_acquire", () => Script.RunScriptEvents(NWGameObject.OBJECT_SELF, ModulePrefix.OnAcquireItem));
-            _eventRegistrations.Add("mod_on_activate", () => Script.RunScriptEvents(NWGameObject.OBJECT_SELF, ModulePrefix.OnActivateItem));
-            _eventRegistrations.Add("mod_on_chat", () => Script.RunScriptEvents(NWGameObject.OBJECT_SELF, ModulePrefix.OnPlayerChat));
-            _eventRegistrations.Add("mod_on_csabort", () => Script.RunScriptEvents(NWGameObject.OBJECT_SELF, ModulePrefix.OnCutsceneAbort));
-            _eventRegistrations.Add("mod_on_death", () => Script.RunScriptEvents(NWGameObject.OBJECT_SELF, ModulePrefix.OnPlayerDeath));
-            _eventRegistrations.Add("mod_on_dying", () => Script.RunScriptEvents(NWGameObject.OBJECT_SELF, ModulePrefix.OnPlayerDying));
-            _eventRegistrations.Add("mod_on_enter", () => Script.RunScriptEvents(NWGameObject.OBJECT_SELF, ModulePrefix.OnPlayerEnter));
-            _eventRegistrations.Add("mod_on_equip", () => Script.RunScriptEvents(NWGameObject.OBJECT_SELF, ModulePrefix.OnEquipItem));
-            _eventRegistrations.Add("mod_on_heartbeat", () => Script.RunScriptEvents(NWGameObject.OBJECT_SELF, ModulePrefix.OnHeartbeat));
-            _eventRegistrations.Add("mod_on_leave", () => Script.RunScriptEvents(NWGameObject.OBJECT_SELF, ModulePrefix.OnPlayerLeave));
-            _eventRegistrations.Add("mod_on_levelup", () => Script.RunScriptEvents(NWGameObject.OBJECT_SELF, ModulePrefix.OnPlayerLevelUp));
-            _eventRegistrations.Add("mod_on_load", () => Script.RunScriptEvents(NWGameObject.OBJECT_SELF, ModulePrefix.OnLoad));
-            _eventRegistrations.Add("mod_on_respawn", () => Script.RunScriptEvents(NWGameObject.OBJECT_SELF, ModulePrefix.OnPlayerRespawn));
-            _eventRegistrations.Add("mod_on_rest", () => Script.RunScriptEvents(NWGameObject.OBJECT_SELF, ModulePrefix.OnPlayerRest));
-            _eventRegistrations.Add("mod_on_unacquire", () => Script.RunScriptEvents(NWGameObject.OBJECT_SELF, ModulePrefix.OnUnacquireItem));
-            _eventRegistrations.Add("mod_on_unequip", () => Script.RunScriptEvents(NWGameObject.OBJECT_SELF, ModulePrefix.OnUnequipItem));
-            _eventRegistrations.Add("mod_on_user", () => Script.RunScriptEvents(NWGameObject.OBJECT_SELF, ModulePrefix.OnUserDefined));
+            _eventRegistrations.Add("mod_on_acquire", () => Script.RunScriptEvents(GetModule(), ModulePrefix.OnAcquireItem));
+            _eventRegistrations.Add("mod_on_activate", () => Script.RunScriptEvents(GetModule(), ModulePrefix.OnActivateItem));
+            _eventRegistrations.Add("mod_on_chat", () => Script.RunScriptEvents(GetModule(), ModulePrefix.OnPlayerChat));
+            _eventRegistrations.Add("mod_on_csabort", () => Script.RunScriptEvents(GetModule(), ModulePrefix.OnCutsceneAbort));
+            _eventRegistrations.Add("mod_on_death", () => Script.RunScriptEvents(GetModule(), ModulePrefix.OnPlayerDeath));
+            _eventRegistrations.Add("mod_on_dying", () => Script.RunScriptEvents(GetModule(), ModulePrefix.OnPlayerDying));
+            _eventRegistrations.Add("mod_on_enter", () => Script.RunScriptEvents(GetModule(), ModulePrefix.OnPlayerEnter));
+            _eventRegistrations.Add("mod_on_equip", () => Script.RunScriptEvents(GetModule(), ModulePrefix.OnEquipItem));
+            _eventRegistrations.Add("mod_on_heartbeat", () => Script.RunScriptEvents(GetModule(), ModulePrefix.OnHeartbeat));
+            _eventRegistrations.Add("mod_on_leave", () => Script.RunScriptEvents(GetModule(), ModulePrefix.OnPlayerLeave));
+            _eventRegistrations.Add("mod_on_levelup", () => Script.RunScriptEvents(GetModule(), ModulePrefix.OnPlayerLevelUp));
+            _eventRegistrations.Add("mod_on_load", () => Script.RunScriptEvents(GetModule(), ModulePrefix.OnLoad));
+            _eventRegistrations.Add("mod_on_respawn", () => Script.RunScriptEvents(GetModule(), ModulePrefix.OnPlayerRespawn));
+            _eventRegistrations.Add("mod_on_rest", () => Script.RunScriptEvents(GetModule(), ModulePrefix.OnPlayerRest));
+            _eventRegistrations.Add("mod_on_unacquire", () => Script.RunScriptEvents(GetModule(), ModulePrefix.OnUnacquireItem));
+            _eventRegistrations.Add("mod_on_unequip", () => Script.RunScriptEvents(GetModule(), ModulePrefix.OnUnequipItem));
+            _eventRegistrations.Add("mod_on_user", () => Script.RunScriptEvents(GetModule(), ModulePrefix.OnUserDefined));
 
             // Placeable events
             _eventRegistrations.Add("plc_on_attack", () => Script.RunScriptEvents(NWGameObject.OBJECT_SELF, PlaceablePrefix.OnAttacked));
@@ -253,8 +253,8 @@ namespace NWN.FinalFantasy.Application
             _eventRegistrations.Add("plc_on_userdef", () => Script.RunScriptEvents(NWGameObject.OBJECT_SELF, PlaceablePrefix.OnUserDefined));
 
             // Server events
-            _eventRegistrations.Add("server_on_connec", () => Script.RunScriptEvents(NWGameObject.OBJECT_SELF, ServerEventPrefix.OnConnect, GetModule()));
-            _eventRegistrations.Add("server_on_discon", () => Script.RunScriptEvents(NWGameObject.OBJECT_SELF, ServerEventPrefix.OnDisconnect, GetModule()));
+            _eventRegistrations.Add("server_on_connec", () => Script.RunScriptEvents(GetModule(), ServerEventPrefix.OnConnect));
+            _eventRegistrations.Add("server_on_discon", () => Script.RunScriptEvents(GetModule(), ServerEventPrefix.OnDisconnect));
 
             // Store events
             _eventRegistrations.Add("store_on_close", () => Script.RunScriptEvents(NWGameObject.OBJECT_SELF, StorePrefix.OnClose));

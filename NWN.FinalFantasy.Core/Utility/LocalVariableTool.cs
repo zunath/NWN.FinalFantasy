@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using NWN.FinalFantasy.Core.NWNX;
 using NWN.FinalFantasy.Core.NWScript.Enumerations;
@@ -18,6 +19,9 @@ namespace NWN.FinalFantasy.Core.Utility
         /// <returns>A list of scripts to run, ordered from lowest to highest</returns>
         public static IEnumerable<string> FindByPrefix(NWGameObject target, string prefix)
         {
+            if (!GetIsObjectValid(target))
+                throw new Exception("Invalid target for " + nameof(FindByPrefix) + ", prefix = " + prefix);
+
             var variableCount = NWNXObject.GetLocalVariableCount(target);
             var variableList = new SortedList<int, string>();
 

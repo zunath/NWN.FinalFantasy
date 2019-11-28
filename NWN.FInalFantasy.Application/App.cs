@@ -35,6 +35,7 @@ namespace NWN.FinalFantasy.Application
             ScriptRegistration.OnNWNContextReady();
             CustomEventRegistration.Register();
             AreaScriptRegistration.Register();
+            CreatureScriptRegistration.Register();
             FeatureRegistration.Register();
             Script.CacheScripts();
         }

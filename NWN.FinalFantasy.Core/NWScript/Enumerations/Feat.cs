@@ -1028,7 +1028,7 @@
         Fire = 1118,
         HallowedGround = 1119,
         DefenseBonus1 = 1120,
-        // 1121 undefined
+        AbilitySlot1 = 1121,
         Provoke = 1122,
         HPBoost1 = 1123,
         Berserk = 1124,
@@ -1041,7 +1041,7 @@
         AxeMastery2 = 1131,
         DualWield = 1132,
         HundredFists = 1133,
-        // 1134 undefined
+        AbilitySlot2 = 1134,
         ElectricFist = 1135,
         Chakra = 1136,
         UnarmedMastery1 = 1137,

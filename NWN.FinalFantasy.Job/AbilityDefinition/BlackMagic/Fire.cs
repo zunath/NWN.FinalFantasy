@@ -10,7 +10,7 @@ namespace NWN.FinalFantasy.Job.AbilityDefinition.BlackMagic
         public Feat Feat => Feat.Fire;
         public AbilityCategory Category => AbilityCategory.Spell;
         public AbilityGroup Group => AbilityGroup.BlackMagic;
-        public bool IsEquippable => true;
+        public EquipType EquipStatus => EquipType.CrossJob;
         public int APRequired => 40;
 
         public JobLevel[] JobRequirements => new[]

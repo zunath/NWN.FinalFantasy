@@ -9,7 +9,7 @@ namespace NWN.FinalFantasy.Job.AbilityDefinition.Protection
         public Feat Feat => Feat.Bash;
         public AbilityCategory Category => AbilityCategory.Combat;
         public AbilityGroup Group => AbilityGroup.Individual;
-        public bool IsEquippable => true;
+        public EquipType EquipStatus => EquipType.CrossJob;
         public int APRequired => 80;
 
         public JobLevel[] JobRequirements => new[]

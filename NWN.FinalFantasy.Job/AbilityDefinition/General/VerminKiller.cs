@@ -9,7 +9,7 @@ namespace NWN.FinalFantasy.Job.AbilityDefinition.General
         public Feat Feat => Feat.FavoredEnemyVermin;
         public AbilityCategory Category => AbilityCategory.Trait;
         public AbilityGroup Group => AbilityGroup.Individual;
-        public bool IsEquippable => true;
+        public EquipType EquipStatus => EquipType.CrossJobManuallyEquipped;
         public int APRequired => 40;
 
         public JobLevel[] JobRequirements => new[]

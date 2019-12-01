@@ -10,7 +10,7 @@ namespace NWN.FinalFantasy.Job.AbilityDefinition.StatBoost
         public Feat Feat => Feat.WhirlwindAttack;
         public AbilityCategory Category => AbilityCategory.Combat;
         public AbilityGroup Group => AbilityGroup.Individual;
-        public bool IsEquippable => false;
+        public EquipType EquipStatus => EquipType.SingleJob;
         public int APRequired => 90;
 
         public JobLevel[] JobRequirements => new[]

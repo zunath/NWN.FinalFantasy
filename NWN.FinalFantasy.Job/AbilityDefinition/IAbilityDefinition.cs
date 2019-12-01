@@ -26,9 +26,9 @@ namespace NWN.FinalFantasy.Job.AbilityDefinition
         AbilityGroup Group { get; }
 
         /// <summary>
-        /// If true, other jobs can equip this ability. If false, they cannot.
+        /// Determines the equip status of the ability. Refer to the EquipType enum for valid values and their definitions.
         /// </summary>
-        bool IsEquippable { get; }
+        EquipType EquipStatus { get; }
 
         /// <summary>
         /// The amount of AP needed to master this ability. Leave at 0 if you want it to

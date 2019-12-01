@@ -9,7 +9,7 @@ namespace NWN.FinalFantasy.Job.AbilityDefinition.WeaponMastery
         public Feat Feat => Feat.UnarmedMastery2;
         public AbilityCategory Category => AbilityCategory.Trait;
         public AbilityGroup Group => AbilityGroup.Individual;
-        public bool IsEquippable => false;
+        public EquipType EquipStatus => EquipType.SingleJob;
         public int APRequired => 100;
 
         public JobLevel[] JobRequirements => new[]

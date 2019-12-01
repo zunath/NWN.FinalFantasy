@@ -9,7 +9,7 @@ namespace NWN.FinalFantasy.Job.AbilityDefinition.WeaponMastery
         public Feat Feat => Feat.DualWield;
         public AbilityCategory Category => AbilityCategory.Trait;
         public AbilityGroup Group => AbilityGroup.Individual;
-        public bool IsEquippable => true;
+        public EquipType EquipStatus => EquipType.CrossJob;
         public int APRequired => 125;
 
         public JobLevel[] JobRequirements => new[]

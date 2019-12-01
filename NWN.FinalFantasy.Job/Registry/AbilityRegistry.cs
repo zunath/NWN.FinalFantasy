@@ -4,6 +4,7 @@ using System.Linq;
 using NWN.FinalFantasy.Core.NWScript.Enumerations;
 using NWN.FinalFantasy.Core.Utility;
 using NWN.FinalFantasy.Job.AbilityDefinition;
+using NWN.FinalFantasy.Job.Enumeration;
 
 namespace NWN.FinalFantasy.Job.Registry
 {
@@ -20,14 +21,18 @@ namespace NWN.FinalFantasy.Job.Registry
                 var ability = (IAbilityDefinition)Activator.CreateInstance(abilityType);
                 _abilityRegistry[ability.Feat] = ability;
 
-                foreach (var jobReq in ability.JobRequirements)
+                // If the ability does not need to be manually equipped, add it to the list to be granted.
+                if(ability.EquipStatus == EquipType.CrossJob ||
+                   ability.EquipStatus == EquipType.SingleJob)
                 {
-                    if(!_abilitiesByJob.ContainsKey(jobReq.Job))
-                        _abilitiesByJob[jobReq.Job] = new List<IAbilityDefinition>();
+                    foreach (var jobReq in ability.JobRequirements)
+                    {
+                        if (!_abilitiesByJob.ContainsKey(jobReq.Job))
+                            _abilitiesByJob[jobReq.Job] = new List<IAbilityDefinition>();
 
-                    _abilitiesByJob[jobReq.Job].Add(ability);
+                        _abilitiesByJob[jobReq.Job].Add(ability);
+                    }
                 }
-
             }
         }
 

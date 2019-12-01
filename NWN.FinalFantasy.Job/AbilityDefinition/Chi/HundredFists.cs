@@ -10,7 +10,7 @@ namespace NWN.FinalFantasy.Job.AbilityDefinition.StatBoost
         public Feat Feat => Feat.HundredFists;
         public AbilityCategory Category => AbilityCategory.Combat;
         public AbilityGroup Group => AbilityGroup.Individual;
-        public bool IsEquippable => false;
+        public EquipType EquipStatus => EquipType.SingleJob;
         public int APRequired => 0;
 
         public JobLevel[] JobRequirements => new[]

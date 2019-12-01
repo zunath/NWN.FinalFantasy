@@ -9,7 +9,7 @@ namespace NWN.FinalFantasy.Job.AbilityDefinition.Protection
         public Feat Feat => Feat.Cleave;
         public AbilityCategory Category => AbilityCategory.Trait;
         public AbilityGroup Group => AbilityGroup.Individual;
-        public bool IsEquippable => false;
+        public EquipType EquipStatus => EquipType.SingleJob;
         public int APRequired => 50;
 
         public JobLevel[] JobRequirements => new[]

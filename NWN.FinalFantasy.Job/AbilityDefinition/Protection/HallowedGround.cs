@@ -10,7 +10,7 @@ namespace NWN.FinalFantasy.Job.AbilityDefinition.Protection
         public Feat Feat => Feat.HallowedGround;
         public AbilityCategory Category => AbilityCategory.Combat;
         public AbilityGroup Group => AbilityGroup.Individual;
-        public bool IsEquippable => false;
+        public EquipType EquipStatus => EquipType.SingleJob;
         public int APRequired => 0;
 
         public JobLevel[] JobRequirements => new[]

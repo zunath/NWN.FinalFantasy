@@ -11,7 +11,7 @@ namespace NWN.FinalFantasy.Job.AbilityDefinition.Protection
         public Feat Feat => Feat.Provoke;
         public AbilityCategory Category => AbilityCategory.Combat;
         public AbilityGroup Group => AbilityGroup.Individual;
-        public bool IsEquippable => true;
+        public EquipType EquipStatus => EquipType.CrossJob;
         public int APRequired => 50;
 
         public JobLevel[] JobRequirements => new[]

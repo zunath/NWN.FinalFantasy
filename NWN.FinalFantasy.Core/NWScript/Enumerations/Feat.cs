@@ -1031,7 +1031,7 @@
         AbilitySlot1 = 1121,
         Provoke = 1122,
         HPBoost1 = 1123,
-        Berserk = 1124,
+        SpikedDefense = 1124,
         Cover = 1125,
         AxeMastery1 = 1126,
         Provoke2 = 1127,

@@ -42,7 +42,7 @@ namespace NWN.FinalFantasy.Job.AbilityDefinition.Protection
 
         public void Impact(NWGameObject user, NWGameObject target)
         {
-            var effect = _.EffectDamageShield(4, DamageBonus.OneD4, DamageType.Sonic);
+            var effect = _.EffectDamageShield(1, DamageBonus.OneD4, DamageType.Sonic);
             var vfx = _.EffectVisualEffect(Vfx.Vfx_Imp_Death_Ward);
 
             _.ApplyEffectToObject(DurationType.Instant, vfx, target);

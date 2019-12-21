@@ -6,6 +6,7 @@ using NWN.FinalFantasy.Authorization;
 using NWN.FinalFantasy.Chat;
 using NWN.FinalFantasy.Core.Contracts;
 using NWN.FinalFantasy.Core.Logging;
+using NWN.FinalFantasy.Crafting;
 using NWN.FinalFantasy.Data;
 using NWN.FinalFantasy.Death;
 using NWN.FinalFantasy.Item;
@@ -33,6 +34,7 @@ namespace NWN.FinalFantasy.Application
             _registrations.Add(new AuditingRegistration());
             _registrations.Add(new AuthorizationRegistration());
             _registrations.Add(new ChatRegistration());
+            _registrations.Add(new CraftingRegistration());
             _registrations.Add(new DataRegistration());
             _registrations.Add(new DeathRegistration());
             _registrations.Add(new ItemRegistration());

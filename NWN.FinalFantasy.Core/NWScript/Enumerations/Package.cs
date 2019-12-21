@@ -139,6 +139,10 @@
         Ranger = 136,
         WhiteMage = 137,
         BlackMage = 138,
+        Miner = 155,
+        Botanist = 156,
+        Carpenter = 157,
+        Blacksmith = 158,
         Invalid = 255,
 
     }

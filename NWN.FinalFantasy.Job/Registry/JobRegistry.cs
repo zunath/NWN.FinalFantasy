@@ -20,6 +20,10 @@ namespace NWN.FinalFantasy.Job.Registry
             _jobs[ClassType.Ranger] = new Ranger();
             _jobs[ClassType.WhiteMage] = new WhiteMage();
             _jobs[ClassType.BlackMage] = new BlackMage();
+            _jobs[ClassType.Miner] = new Miner();
+            _jobs[ClassType.Botanist] = new Botanist();
+            _jobs[ClassType.Carpenter] = new Carpenter();
+            _jobs[ClassType.Blacksmith] = new Blacksmith();
         }
 
         /// <summary>

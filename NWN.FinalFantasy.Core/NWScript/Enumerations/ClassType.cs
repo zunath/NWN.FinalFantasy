@@ -24,6 +24,10 @@
         Scholar = 69,
         Geomancer = 70,
         RuneFencer = 71,
+        Miner = 72,
+        Botanist = 73,
+        Carpenter = 74,
+        Blacksmith = 75,
         Invalid = 255
     }
 }

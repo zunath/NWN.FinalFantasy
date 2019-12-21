@@ -1,0 +1,16 @@
+﻿[
+  {
+    "ID": 1,
+    "Name": "Chair",
+    "ItemResref": "chair",
+    "Quantity": 1,
+    "Level": 1,
+    "IsActive": true,
+    "Components": [
+      {
+        "Resref": "component1",
+        "Quantity": 1
+      }
+    ]
+  }
+]

@@ -15,6 +15,7 @@ namespace NWN.FinalFantasy.Job.Registry
             _ratingCharts[ProficiencyRating.C] = new RatingC();
             _ratingCharts[ProficiencyRating.D] = new RatingD();
             _ratingCharts[ProficiencyRating.E] = new RatingE();
+            _ratingCharts[ProficiencyRating.Zero] = new RatingZero();
         }
 
         public static RatingChart Get(ProficiencyRating rating)

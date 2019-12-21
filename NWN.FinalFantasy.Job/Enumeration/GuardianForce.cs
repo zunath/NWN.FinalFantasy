@@ -2,6 +2,7 @@
 {
     internal enum GuardianForce
     {
+        None,           // Crafting Jobs
         Ifrit,          // Warrior
         Titan,          // Monk 
         Fenrir,         // Thief

@@ -31,7 +31,7 @@ namespace NWN.FinalFantasy.Core.NWNX
         /// <param name="tag0_value">The tag's value for which to filter.</param>
         public static void PushPerfScope(string name, string tag0_tag = "", string tag0_value = "")
         {
-            string sFunc = "PUSH_PERF_SCOPE";
+            string sFunc = "PushPerfScope";
 
             NWNX_PushArgumentString(NWNX_Profiler, sFunc, name);
 
@@ -50,7 +50,7 @@ namespace NWN.FinalFantasy.Core.NWNX
         /// </summary>
         public static void PopPerfScope()
         {
-            string sFunc = "POP_PERF_SCOPE";
+            string sFunc = "PopPerfScope";
 
             NWNX_CallFunction(NWNX_Profiler, sFunc);
         }

@@ -2,7 +2,7 @@
 
 namespace NWN.FinalFantasy.Service
 {
-    public static class Skill
+    public static partial class Skill
     {
     }
 }

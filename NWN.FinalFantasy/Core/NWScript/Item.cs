@@ -314,11 +314,11 @@ namespace NWN.FinalFantasy.Core.NWScript
         ///   Get the base item type (BASE_ITEM_*) of oItem.
         ///   * Returns BASE_ITEM_INVALID if oItem is an invalid item.
         /// </summary>
-        public static int GetBaseItemType(uint oItem)
+        public static BaseItem GetBaseItemType(uint oItem)
         {
             Internal.NativeFunctions.StackPushObject(oItem);
             Internal.NativeFunctions.CallBuiltIn(397);
-            return Internal.NativeFunctions.StackPopInteger();
+            return (BaseItem)Internal.NativeFunctions.StackPopInteger();
         }
 
         /// <summary>

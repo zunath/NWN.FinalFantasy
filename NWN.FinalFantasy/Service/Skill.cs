@@ -30,10 +30,34 @@ namespace NWN.FinalFantasy.Service
             var requiredXP = GetRequiredXP(pcSkill.Rank);
             var receivedRankUp = false;
 
+            int debtRemoved = 0;
+            if (dbPlayer.XPDebt > 0)
+            {
+                if (xp >= dbPlayer.XPDebt)
+                {
+                    debtRemoved = dbPlayer.XPDebt;
+                    xp -= dbPlayer.XPDebt;
+                }
+                else
+                {
+                    debtRemoved = xp;
+                    xp = 0;
+                }
+            }
+            
             // todo: skill decay
 
             pcSkill.XP += xp;
-            SendMessageToPC(player, $"You earned {details.Name} skill experience. ({xp})");
+
+            if (debtRemoved > 0)
+            {
+                SendMessageToPC(player, $"{debtRemoved} XP was removed from your debt. (Remaining: {dbPlayer.XPDebt})");
+            }
+
+            if (xp > 0)
+            {
+                SendMessageToPC(player, $"You earned {details.Name} skill experience. ({xp})");
+            }
 
             // Skill is at cap and player would level up.
             // Reduce XP to required amount minus 1 XP.

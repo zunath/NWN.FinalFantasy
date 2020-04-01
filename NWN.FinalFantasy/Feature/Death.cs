@@ -132,8 +132,12 @@ namespace NWN.FinalFantasy.Feature
         /// <param name="player">The player who we're applying penalties to</param>
         private static int ApplyPenalties(uint player)
         {
-            // todo: implement XP debt
-            return 0;
+            var playerId = GetObjectUUID(player);
+            var dbPlayer = DB.Get<Player>(playerId);
+            dbPlayer.XPDebt = dbPlayer.TotalSPAcquired * 50;
+            DB.Set(playerId, dbPlayer);
+
+            return dbPlayer.XPDebt;
         }
 
         /// <summary>

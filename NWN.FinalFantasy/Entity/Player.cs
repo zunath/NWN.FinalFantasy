@@ -35,6 +35,7 @@ namespace NWN.FinalFantasy.Entity
         public int UnallocatedSP { get; set; }
         public int TotalSPAcquired { get; set; }
         public int RegenerationTick { get; set; }
+        public int XPDebt { get; set; }
         public bool IsDeleted { get; set; }
 
         public RoleplayProgress RoleplayProgress { get; set; }

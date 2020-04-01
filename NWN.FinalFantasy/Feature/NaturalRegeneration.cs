@@ -36,8 +36,12 @@ namespace NWN.FinalFantasy.Feature
 
                     Stat.RestoreMP(dbPlayer, mpAmount);
                     Stat.RestoreStamina(dbPlayer, staminaAmount);
-                    
-                    ApplyEffectToObject(DurationType.Instant, EffectHeal(hpAmount), player);
+
+                    if (hpAmount > 0)
+                    {
+                        ApplyEffectToObject(DurationType.Instant, EffectHeal(hpAmount), player);
+                    }
+
                     dbPlayer.RegenerationTick = 0;
                 }
 

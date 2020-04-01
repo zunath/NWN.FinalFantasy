@@ -1596,6 +1596,14 @@ namespace NWN.FinalFantasy.Core.NWScript
         }
 
         /// <summary>
+        /// Delete oObject's local boolean variable sVarName
+        /// </summary>
+        public static void DeleteLocalBool(uint oObject, string sVarName)
+        {
+            DeleteLocalInt(oObject, sVarName);
+        }
+
+        /// <summary>
         ///   Delete oObject's local float variable sVarName
         /// </summary>
         public static void DeleteLocalFloat(uint oObject, string sVarName)

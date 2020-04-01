@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using NWN.FinalFantasy.Enumeration;
 
 namespace NWN.FinalFantasy.Entity
 {
@@ -9,6 +10,7 @@ namespace NWN.FinalFantasy.Entity
             MapPins = new Dictionary<string, List<MapPin>>();
             MapProgressions = new Dictionary<string, string>();
             RoleplayProgress = new RoleplayProgress();
+            Skills = new Dictionary<SkillType, PlayerSkill>();
         }
 
         public int Version { get; set; }
@@ -30,11 +32,14 @@ namespace NWN.FinalFantasy.Entity
         public float RespawnLocationOrientation { get; set; }
         public string RespawnAreaResref { get; set; }
         public int UnallocatedXP { get; set; }
+        public int UnallocatedSP { get; set; }
+        public int TotalSPAcquired { get; set; }
         public bool IsDeleted { get; set; }
 
         public RoleplayProgress RoleplayProgress { get; set; }
         public Dictionary<string, List<MapPin>> MapPins { get; set; }
         public Dictionary<string, string> MapProgressions { get; set; }
+        public Dictionary<SkillType, PlayerSkill> Skills { get; set; }
     }
 
     public class MapPin
@@ -50,5 +55,11 @@ namespace NWN.FinalFantasy.Entity
         public int RPPoints { get; set; }
         public ulong TotalRPExpGained { get; set; }
         public ulong SpamMessageCount { get; set; }
+    }
+
+    public class PlayerSkill
+    {
+        public int Rank { get; set; }
+        public int XP { get; set; }
     }
 }

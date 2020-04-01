@@ -1,5 +1,4 @@
 ﻿using System;
-using NWN.FinalFantasy.Core.NWScript.Enum;
 
 namespace NWN.FinalFantasy.Enumeration
 {

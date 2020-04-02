@@ -239,7 +239,7 @@ namespace NWN.FinalFantasy.Core.NWScript.Enum.Item
         SpecialWalk = 79,
         HealersKit = 80,
         WeightIncrease = 81,
-        Onhitcastspell = 82,
+        OnHitCastSpell = 82,
         Visualeffect = 83,
         ArcaneSpellFailure = 84,
         Material = 85,

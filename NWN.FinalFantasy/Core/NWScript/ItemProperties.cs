@@ -40,11 +40,11 @@ namespace NWN.FinalFantasy.Core.NWScript
         /// <summary>
         ///   if the item property is valid this will return true
         /// </summary>
-        public static int GetIsItemPropertyValid(ItemProperty ipProperty)
+        public static bool GetIsItemPropertyValid(ItemProperty ipProperty)
         {
             Internal.NativeFunctions.StackPushItemProperty(ipProperty.Handle);
             Internal.NativeFunctions.CallBuiltIn(611);
-            return Internal.NativeFunctions.StackPopInteger();
+            return Internal.NativeFunctions.StackPopInteger() == 1;
         }
 
         /// <summary>
@@ -71,21 +71,21 @@ namespace NWN.FinalFantasy.Core.NWScript
         /// <summary>
         ///   will return the item property type (ie. holy avenger)
         /// </summary>
-        public static int GetItemPropertyType(ItemProperty ip)
+        public static ItemPropertyType GetItemPropertyType(ItemProperty ip)
         {
             Internal.NativeFunctions.StackPushItemProperty(ip.Handle);
             Internal.NativeFunctions.CallBuiltIn(614);
-            return Internal.NativeFunctions.StackPopInteger();
+            return (ItemPropertyType)Internal.NativeFunctions.StackPopInteger();
         }
 
         /// <summary>
         ///   will return the duration type of the item property
         /// </summary>
-        public static int GetItemPropertyDurationType(ItemProperty ip)
+        public static DurationType GetItemPropertyDurationType(ItemProperty ip)
         {
             Internal.NativeFunctions.StackPushItemProperty(ip.Handle);
             Internal.NativeFunctions.CallBuiltIn(615);
-            return Internal.NativeFunctions.StackPopInteger();
+            return (DurationType)Internal.NativeFunctions.StackPopInteger();
         }
 
         /// <summary>

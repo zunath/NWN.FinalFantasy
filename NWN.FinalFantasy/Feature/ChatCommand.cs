@@ -81,6 +81,7 @@ namespace NWN.FinalFantasy.Feature
         [NWNEventHandler("mod_load")]
         public static void OnModuleLoad()
         {
+            Console.WriteLine("Loading chat commands");
             LoadChatCommands();
             BuildHelpText();
         }

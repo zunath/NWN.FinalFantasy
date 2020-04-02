@@ -18,6 +18,7 @@ namespace NWN.FinalFantasy.Service
         [NWNEventHandler("mod_load")]
         public static void CacheData()
         {
+            Console.WriteLine("Caching skill data.");
             // Initialize the list of categories.
             var categories = Enum.GetValues(typeof(SkillCategoryType)).Cast<SkillCategoryType>();
             foreach (var category in categories)

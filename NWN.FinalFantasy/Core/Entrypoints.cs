@@ -30,7 +30,7 @@ namespace NWN.FinalFantasy.Core
         {
             if (Scripts.ContainsKey(script))
             {
-                foreach(var action in Scripts[script])
+                foreach (var action in Scripts[script])
                 {
                     try
                     {
@@ -51,7 +51,9 @@ namespace NWN.FinalFantasy.Core
 
         public static void OnStart()
         {
+            Console.WriteLine("Registering scripts...");
             Scripts = GetHandlersFromAssembly();
+            Console.WriteLine("Scripts registered successfully.");
         }
 
         public static Dictionary<string, List<Action>> GetHandlersFromAssembly()
@@ -69,7 +71,6 @@ namespace NWN.FinalFantasy.Core
                 foreach (var attr in mi.GetCustomAttributes(typeof(NWNEventHandler), false))
                 {
                     var script = ((NWNEventHandler)attr).Script;
-                    Console.WriteLine($"Registered script: {script}");
                     if (script.Length > MaxCharsInScriptName || script.Length == 0)
                     {
                         Console.WriteLine($"Script name '{script}' is invalid on method {mi.Name}.");
@@ -80,6 +81,7 @@ namespace NWN.FinalFantasy.Core
                         result[script] = new List<Action>();
 
                     result[script].Add(del);
+                    Console.WriteLine($"Registered method '{del.Method.Name}' to script: {script}");
                 }
             }
 

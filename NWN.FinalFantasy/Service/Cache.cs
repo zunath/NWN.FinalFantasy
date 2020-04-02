@@ -21,6 +21,7 @@ namespace NWN.FinalFantasy.Service
         [NWNEventHandler("mod_load")]
         public static void OnModuleLoad()
         {
+            Console.WriteLine("Caching areas by resref.");
             CacheAreasByResref();
         }
 

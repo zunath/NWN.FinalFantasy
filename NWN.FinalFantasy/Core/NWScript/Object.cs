@@ -465,11 +465,11 @@ namespace NWN.FinalFantasy.Core.NWScript
         ///   * Returns TRUE for creatures and stores, and checks to see if an item or placeable object is a container.
         ///   * Returns FALSE for all other object types.
         /// </summary>
-        public static int GetHasInventory(uint oObject)
+        public static bool GetHasInventory(uint oObject)
         {
             Internal.NativeFunctions.StackPushObject(oObject);
             Internal.NativeFunctions.CallBuiltIn(570);
-            return Internal.NativeFunctions.StackPopInteger();
+            return Internal.NativeFunctions.StackPopInteger() == 1;
         }
 
         /// <summary>

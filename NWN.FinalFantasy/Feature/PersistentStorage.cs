@@ -22,7 +22,7 @@ namespace NWN.FinalFantasy.Feature
         public static void AddItemToPublicStorage()
         {
             var container = OBJECT_SELF;
-            if (GetResRef(container) != "public_p_storage") return;
+            if (GetResRef(container) != "public_p_storage" || GetLocalBool(container, "IS_DESERIALIZING")) return;
 
             var storageId = GetStorageID();
             var key = $"PublicStorage:{storageId}";
@@ -77,7 +77,7 @@ namespace NWN.FinalFantasy.Feature
         public static void AddItemToBankStorage()
         {
             var container = OBJECT_SELF;
-            if (GetResRef(container) != "bank_chest") return;
+            if (GetResRef(container) != "bank_chest" || GetLocalBool(container, "IS_DESERIALIZING")) return;
 
             var item = Object.StringToObject(Events.GetEventData("ITEM"));
             var player = GetItemPossessor(item);
@@ -279,29 +279,27 @@ namespace NWN.FinalFantasy.Feature
         /// <param name="key">The unique identifier under which this container's items are stored.</param>
         protected static void OpenStorage(string key)
         {
+            var container = OBJECT_SELF;
+
+            SetLocalBool(container, "IS_DESERIALIZING", true);
             var player = GetLastOpenedBy();
             if (!GetIsPC(player) || GetIsDM(player)) return;
 
-            var container = OBJECT_SELF;
             var items = DB.GetList<InventoryItem>(key) ?? new EntityList<InventoryItem>();
 
             // Prevent the OnAddItem event from firing while we're loading the inventory.
             IsLoading = true;
             foreach (var entity in items.Entities)
             {
-                // todo: There's not a way to move the deserialized item into the container's inventory at this time
-                // todo: CopyItem won't work here because it changes the UUID.
-                // todo: Need a feature added to NWNX to move the item into a container after deserialization.
                 var deserializedItem = Object.Deserialize(entity.Data);
-                CopyItem(deserializedItem, container);
-                
-                DestroyObject(deserializedItem);
+                Object.AcquireItem(container, deserializedItem);
             }
 
             IsLoading = false;
 
             SetLocked(container, true);
             SendMessageToPC(player, "Move away from the container to close it.");
+            DeleteLocalBool(container, "IS_DESERIALIZING");
         }
     }
 }

@@ -361,7 +361,13 @@ namespace NWN.FinalFantasy.Core.NWNX
             Internal.NativeFunctions.nwnxCallFunction();
         }
 
-        // Get if position is inside object obj's geometry.
+        /// <summary>
+        /// Get if vPosition is inside oTrigger's geometry.
+        /// The Z value of vPosition is ignored.
+        /// oTrigger The trigger.
+        /// vPosition The position.
+        /// TRUE if vPosition is inside oTrigger's geometry.
+        /// </summary>
         public static bool GetPositionIsInTrigger(uint obj, Vector position)
         {
             Internal.NativeFunctions.nwnxSetFunction(PLUGIN_NAME, "GetPositionIsInTrigger");
@@ -372,6 +378,38 @@ namespace NWN.FinalFantasy.Core.NWNX
             Internal.NativeFunctions.nwnxCallFunction();
             return Internal.NativeFunctions.nwnxPopInt() != 0;
         }
+
+        /// <summary>
+        /// Gets the given object's internal type (NWNX_OBJECT_TYPE_INTERNAL_*)
+        /// oObject The object.
+        /// The object's type (NWNX_OBJECT_TYPE_INTERNAL_*)
+        /// </summary>
+        public static int GetInternalObjectType(uint oObject)
+        {
+            Internal.NativeFunctions.nwnxSetFunction(PLUGIN_NAME, "GetInternalObjectType");
+            Internal.NativeFunctions.nwnxPushObject(oObject);
+            Internal.NativeFunctions.nwnxCallFunction();
+
+            return Internal.NativeFunctions.nwnxPopInt();
+        }
+
+        /// <summary>
+        /// Have oObject acquire oItem.
+        /// Useful to give deserialized items to an object, may not work if oItem is already possessed by an object.
+        /// oObject The object receiving oItem, must be a Creature, Placeable, Store or Item
+        /// oItem The item.
+        /// TRUE on success.
+        /// </summary>
+        public static int AcquireItem(uint oObject, uint oItem)
+        {
+            Internal.NativeFunctions.nwnxSetFunction(PLUGIN_NAME, "AcquireItem");
+            Internal.NativeFunctions.nwnxPushObject(oItem);
+            Internal.NativeFunctions.nwnxPushObject(oObject);
+            Internal.NativeFunctions.nwnxCallFunction();
+
+            return Internal.NativeFunctions.nwnxPopInt();
+        }
+
         public struct LocalVariable
         {
             public int Type;

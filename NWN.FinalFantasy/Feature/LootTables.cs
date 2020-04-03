@@ -10,7 +10,7 @@ namespace NWN.FinalFantasy.Feature
 {
     public class LootTables
     {
-        [NWNEventHandler("crea_death")]
+        [NWNEventHandler("crea_spawn")]
         public static void SpawnLoot()
         {
             var creature = OBJECT_SELF;

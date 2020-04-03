@@ -18,8 +18,6 @@ namespace NWN.FinalFantasy.Feature
 
             foreach (var entry in lootTableEntries)
             {
-                Console.WriteLine("entry = " + entry);
-
                 var data = entry.Split(',');
                 string tableName = data[0].Trim();
                 int chance = 100;
@@ -60,7 +58,6 @@ namespace NWN.FinalFantasy.Feature
                     var item = table.GetRandomItem();
                     var quantity = Random.Next(item.MaxQuantity) + 1;
 
-                    Console.WriteLine($"spawning: {item.Resref} x{quantity} on creature '{GetName(creature)}'");
                     CreateItemOnObject(item.Resref, creature, quantity);
                 }
             }

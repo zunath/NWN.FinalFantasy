@@ -24,6 +24,7 @@ namespace NWN.FinalFantasy.Core
 
         public static void OnMainLoop(ulong frame)
         {
+
         }
 
         public static int OnRunScript(string script, uint oidSelf)

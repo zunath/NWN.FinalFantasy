@@ -1,4 +1,6 @@
 ﻿using System;
+using NWN.FinalFantasy.Core.NWScript.Enum;
+using static NWN.FinalFantasy.Core.NWScript.NWScript;
 
 namespace NWN.FinalFantasy.Service
 {
@@ -52,5 +54,50 @@ namespace NWN.FinalFantasy.Service
         public static int ColorHealthBar = Convert.ToInt32("0x8B0000FF", 16);
         public static int ColorManaBar = Convert.ToInt32("0x00008BFF", 16);
         public static int ColorStaminaBar = Convert.ToInt32("0x008B00FF", 16);
+
+
+        public static void DrawWindow(uint player, int startId, ScreenAnchor anchor, int x, int y, int width, int height, float lifeTime = 10.0f)
+        {
+            string top = WindowTopLeft;
+            string middle = WindowMiddleLeft;
+            string bottom = WindowBottomLeft;
+
+            for (int i = 0; i < width; i++)
+            {
+                top += WindowTopMiddle;
+                middle += WindowMiddleBlank;
+                bottom += WindowBottomMiddle;
+            }
+
+            top += WindowTopRight;
+            middle += WindowMiddleRight;
+            bottom += WindowBottomRight;
+
+            Draw(player, top, x, y, anchor, startId++, lifeTime);
+            
+            for (var i = 0; i < height; i++)
+            {
+                Draw(player, middle, x, ++y, anchor, startId++, lifeTime);
+            }
+
+            Draw(player, bottom, x, ++y, anchor, startId, lifeTime);
+        }
+
+        private static void Draw(uint player, string message, int x, int y, ScreenAnchor anchor, int id, float lifeTime = 10.0f)
+        {
+            PostString(player, message, x, y, anchor, lifeTime, ColorWhite, ColorWhite, id, FontName);
+        }
+
+        /// <summary>
+        /// Gets the modified X coordinate of where to place a string within the center of a window.
+        /// </summary>
+        /// <param name="text">The text to place in the center.</param>
+        /// <param name="windowX">The X position of the window.</param>
+        /// <param name="windowWidth">The width of the window.</param>
+        /// <returns>The X coordinate to place a string so that it will be in the center of the window.</returns>
+        public static int CenterStringInWindow(string text, int windowX, int windowWidth)
+        {
+            return (windowX + (windowWidth / 2)) - ((text.Length + 2) / 2);
+        }
     }
 }

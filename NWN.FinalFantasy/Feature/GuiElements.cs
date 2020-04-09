@@ -57,25 +57,28 @@ namespace NWN.FinalFantasy.Feature
             var mpBar = BuildBar(currentMP, maxMP, 22);
             var stmBar = BuildBar(currentSTM, maxSTM, 22);
 
+            const int windowX = 4;
+            const int windowY = 4;
+
             // Draw order is backwards. The top-most layer needs to be drawn first.
-            var centerWindowX = Gui.CenterStringInWindow(backgroundBar, 16, 25);
+            var centerWindowX = Gui.CenterStringInWindow(backgroundBar, windowX, 25);
 
             // Draw the text
-            PostString(player, $"HP: {currentHP} / {maxHP}", centerWindowX + 9, 1, ScreenAnchor.TopRight, 10.0f, Gui.ColorWhite, Gui.ColorWhite, HPTextGuiID, Gui.TextName);
-            PostString(player, $"MP: {currentMP} / {maxMP}", centerWindowX + 9, 2, ScreenAnchor.TopRight, 10.0f, Gui.ColorWhite, Gui.ColorWhite, MPTextGuiID, Gui.TextName);
-            PostString(player, $"STM: {currentSTM} / {maxSTM}", centerWindowX + 9, 3, ScreenAnchor.TopRight, 10.0f, Gui.ColorWhite, Gui.ColorWhite, STMTextGuiID, Gui.TextName);
+            PostString(player, $"HP: {currentHP} / {maxHP}", centerWindowX + 9, windowY + 1, ScreenAnchor.TopRight, 10.0f, Gui.ColorWhite, Gui.ColorWhite, HPTextGuiID, Gui.TextName);
+            PostString(player, $"MP: {currentMP} / {maxMP}", centerWindowX + 9, windowY + 2, ScreenAnchor.TopRight, 10.0f, Gui.ColorWhite, Gui.ColorWhite, MPTextGuiID, Gui.TextName);
+            PostString(player, $"STM: {currentSTM} / {maxSTM}", centerWindowX + 9, windowY + 3, ScreenAnchor.TopRight, 10.0f, Gui.ColorWhite, Gui.ColorWhite, STMTextGuiID, Gui.TextName);
 
             // Draw the bars
-            PostString(player, hpBar, centerWindowX + 2, 1, ScreenAnchor.TopRight, 10.0f, Gui.ColorHealthBar, Gui.ColorHealthBar, HPGuiID, Gui.FontName);
-            PostString(player, mpBar, centerWindowX + 2, 2, ScreenAnchor.TopRight, 10.0f, Gui.ColorManaBar, Gui.ColorManaBar, MPGuiID, Gui.FontName);
-            PostString(player, stmBar, centerWindowX + 2, 3, ScreenAnchor.TopRight, 10.0f, Gui.ColorStaminaBar, Gui.ColorStaminaBar, STMGuiID, Gui.FontName);
+            PostString(player, hpBar, centerWindowX + 2, windowY + 1, ScreenAnchor.TopRight, 10.0f, Gui.ColorHealthBar, Gui.ColorHealthBar, HPGuiID, Gui.FontName);
+            PostString(player, mpBar, centerWindowX + 2, windowY + 2, ScreenAnchor.TopRight, 10.0f, Gui.ColorManaBar, Gui.ColorManaBar, MPGuiID, Gui.FontName);
+            PostString(player, stmBar, centerWindowX + 2, windowY + 3, ScreenAnchor.TopRight, 10.0f, Gui.ColorStaminaBar, Gui.ColorStaminaBar, STMGuiID, Gui.FontName);
 
             // Draw the backgrounds
-            PostString(player, backgroundBar, centerWindowX + 2, 1, ScreenAnchor.TopRight, 10.0f, Gui.ColorBlack, Gui.ColorBlack, HPBackgroundGuiID, Gui.FontName);
-            PostString(player, backgroundBar, centerWindowX + 2, 2, ScreenAnchor.TopRight, 10.0f, Gui.ColorBlack, Gui.ColorBlack, MPBackgroundGuiID, Gui.FontName);
-            PostString(player, backgroundBar, centerWindowX + 2, 3, ScreenAnchor.TopRight, 10.0f, Gui.ColorBlack, Gui.ColorBlack, STMBackgroundGuiID, Gui.FontName);
+            PostString(player, backgroundBar, centerWindowX + 2, windowY + 1, ScreenAnchor.TopRight, 10.0f, Gui.ColorBlack, Gui.ColorBlack, HPBackgroundGuiID, Gui.FontName);
+            PostString(player, backgroundBar, centerWindowX + 2, windowY + 2, ScreenAnchor.TopRight, 10.0f, Gui.ColorBlack, Gui.ColorBlack, MPBackgroundGuiID, Gui.FontName);
+            PostString(player, backgroundBar, centerWindowX + 2, windowY + 3, ScreenAnchor.TopRight, 10.0f, Gui.ColorBlack, Gui.ColorBlack, STMBackgroundGuiID, Gui.FontName);
 
-            Gui.DrawWindow(player, WindowId, ScreenAnchor.TopRight, 16, 0, 23, 3);
+            Gui.DrawWindow(player, WindowId, ScreenAnchor.TopRight, windowX, windowY, 23, 3);
 
         }
 

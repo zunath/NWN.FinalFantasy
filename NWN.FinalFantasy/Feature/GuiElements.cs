@@ -94,9 +94,19 @@ namespace NWN.FinalFantasy.Feature
             var currentNumber = Math.Ceiling(current / unitsPerWidth);
             string bar = string.Empty;
 
-            for(var x = 0; x < currentNumber; x++)
+            // When the anchor is at the top-right, the drawing is backwards.
+            // We still need to add spaces to the end of the bar to ensure it's showing the
+            // empty space.
+            for(var x = 0; x < width; x++)
             {
-                bar += Gui.BlankWhite;
+                if (x < currentNumber)
+                {
+                    bar += Gui.BlankWhite;
+                }
+                else
+                {
+                    bar += " ";
+                }
             }
 
             return bar;

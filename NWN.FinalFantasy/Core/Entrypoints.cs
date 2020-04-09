@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using NWN.FinalFantasy.Extension;
+using static NWN.FinalFantasy.Core.NWScript.NWScript;
 
 namespace NWN.FinalFantasy.Core
 {
@@ -14,8 +15,9 @@ namespace NWN.FinalFantasy.Core
         public const int ScriptNotHandled = -1;
 
         public static Dictionary<string, List<Action>> Scripts;
-
         public string Script;
+
+        private static DateTime _last1SecondIntervalCall = DateTime.UtcNow;
 
         public NWNEventHandler(string script)
         {
@@ -24,10 +26,29 @@ namespace NWN.FinalFantasy.Core
 
         public static void OnMainLoop(ulong frame)
         {
-
+            RunOneSecondPCIntervalEvent();
         }
 
-        public static int OnRunScript(string script, uint oidSelf)
+        /// <summary>
+        /// Fires an event on every player every second.
+        /// We do it this way so we don't run into a situation
+        /// where we iterate over the player list more than once per second
+        /// </summary>
+        private static void RunOneSecondPCIntervalEvent()
+        {
+            var now = DateTime.UtcNow;
+            var delta = now - _last1SecondIntervalCall;
+            if (delta.Seconds < 1) return;
+            _last1SecondIntervalCall = now;
+
+            for (var player = GetFirstPC(); GetIsObjectValid(player); player = GetNextPC())
+            {
+                Internal.OBJECT_SELF = player;
+                RunScripts("interval_pc_1s");
+            }
+        }
+
+        private static bool RunScripts(string script)
         {
             if (Scripts.ContainsKey(script))
             {
@@ -44,10 +65,15 @@ namespace NWN.FinalFantasy.Core
                     }
                 }
 
-                return ScriptHandled;
+                return true;
             }
 
-            return ScriptNotHandled;
+            return false;
+        }
+
+        public static int OnRunScript(string script, uint oidSelf)
+        {
+            return RunScripts(script) ? ScriptHandled : ScriptNotHandled;
         }
 
         public static void OnStart()

@@ -16,37 +16,35 @@ namespace NWN.FinalFantasy.Feature
         /// <summary>
         /// Handles processing natural HP, MP, and Stamina regeneration.
         /// </summary>
-        [NWNEventHandler("mod_heartbeat")]
+        [NWNEventHandler("interval_pc_6s")]
         public static void HandleNaturalRegeneration()
         {
-            for(var player = GetFirstPC(); GetIsObjectValid(player); player = GetNextPC())
+            var player = OBJECT_SELF;
+            var playerId = GetObjectUUID(player);
+            var dbPlayer = DB.Get<Player>(playerId);
+            dbPlayer.RegenerationTick++;
+
+            if (dbPlayer.RegenerationTick >= NumberRequiredTicks)
             {
-                var playerId = GetObjectUUID(player);
-                var dbPlayer = DB.Get<Player>(playerId);
-                dbPlayer.RegenerationTick++;
+                var conModifier = GetAbilityModifier(Ability.Constitution, player);
+                var chaModifier = GetAbilityModifier(Ability.Charisma, player);
+                var strModifier = GetAbilityModifier(Ability.Strength, player);
+                var hpAmount = BaseNaturalHPRegeneration + (conModifier > 0 ? conModifier : 0);
+                var mpAmount = BaseNaturalMPRegeneration + (chaModifier > 0 ? chaModifier : 0);
+                var staminaAmount = BaseNaturalStaminaRegeneration + (strModifier > 0 ? strModifier : 0);
 
-                if(dbPlayer.RegenerationTick >= NumberRequiredTicks)
+                Stat.RestoreMP(dbPlayer, mpAmount);
+                Stat.RestoreStamina(dbPlayer, staminaAmount);
+
+                if (hpAmount > 0)
                 {
-                    var conModifier = GetAbilityModifier(Ability.Constitution, player);
-                    var chaModifier = GetAbilityModifier(Ability.Charisma, player);
-                    var strModifier = GetAbilityModifier(Ability.Strength, player);
-                    var hpAmount = BaseNaturalHPRegeneration + (conModifier > 0 ? conModifier : 0);
-                    var mpAmount = BaseNaturalMPRegeneration + (chaModifier > 0 ? chaModifier : 0);
-                    var staminaAmount = BaseNaturalStaminaRegeneration + (strModifier > 0 ? strModifier : 0);
-
-                    Stat.RestoreMP(dbPlayer, mpAmount);
-                    Stat.RestoreStamina(dbPlayer, staminaAmount);
-
-                    if (hpAmount > 0)
-                    {
-                        ApplyEffectToObject(DurationType.Instant, EffectHeal(hpAmount), player);
-                    }
-
-                    dbPlayer.RegenerationTick = 0;
+                    ApplyEffectToObject(DurationType.Instant, EffectHeal(hpAmount), player);
                 }
 
-                DB.Set(playerId, dbPlayer);
+                dbPlayer.RegenerationTick = 0;
             }
+
+            DB.Set(playerId, dbPlayer);
         }
     }
 }

@@ -11,7 +11,7 @@ namespace NWN.FinalFantasy.Core
 
         private static ulong NextEventId;
         private static readonly Dictionary<ulong, Closure> Closures = new Dictionary<ulong, Closure>();
-        public static uint OBJECT_SELF { get; private set; } = OBJECT_INVALID;
+        public static uint OBJECT_SELF { get; set; } = OBJECT_INVALID;
 
         public static void OnMainLoop(ulong frame)
         {

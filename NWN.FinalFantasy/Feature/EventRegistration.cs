@@ -28,6 +28,15 @@ namespace NWN.FinalFantasy.Feature
             HookApplicationEvents();
         }
 
+        [NWNEventHandler("mod_heartbeat")]
+        public static void ExecuteHeartbeatEvent()
+        {
+            for (var player = GetFirstPC(); GetIsObjectValid(player); player = GetNextPC())
+            {
+                ExecuteScript("interval_pc_6s", player);
+            }
+        }
+
         /// <summary>
         /// Hooks module-wide scripts.
         /// </summary>

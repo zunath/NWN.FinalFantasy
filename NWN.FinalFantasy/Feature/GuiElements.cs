@@ -26,13 +26,10 @@ namespace NWN.FinalFantasy.Feature
         /// <summary>
         /// On module heartbeat, draws all GUI elements on every player's screen.
         /// </summary>
-        [NWNEventHandler("mod_heartbeat")]
+        [NWNEventHandler("interval_pc_1s")]
         public static void DrawGuiElements()
         {
-            for (var player = GetFirstPC(); GetIsObjectValid(player); player = GetNextPC())
-            {
-                DrawStatusComponent(player);
-            }
+            DrawStatusComponent(OBJECT_SELF);
         }
 
         /// <summary>

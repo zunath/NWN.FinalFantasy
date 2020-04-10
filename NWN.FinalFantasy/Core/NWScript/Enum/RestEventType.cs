@@ -1,6 +1,6 @@
 namespace NWN.FinalFantasy.Core.NWScript.Enum
 {
-    public enum RestEventTypeRest
+    public enum RestEventType
     {
         Invalid,
         Started,

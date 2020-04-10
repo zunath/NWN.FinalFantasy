@@ -51,7 +51,7 @@ namespace NWN.FinalFantasy.Feature
         public static void SaveLocationOnRest()
         {
             var player = GetLastPCRested();
-            if (!GetIsPC(player) || GetIsDM(player) || GetLastRestEventType() != RestEventTypeRest.Started) return;
+            if (!GetIsPC(player) || GetIsDM(player) || GetLastRestEventType() != RestEventType.Started) return;
 
             PerformSave(player);
         }

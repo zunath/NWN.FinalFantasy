@@ -10,18 +10,21 @@ namespace NWN.FinalFantasy.Core
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
     public class NWNEventHandler : Attribute
     {
-        public const int MaxCharsInScriptName = 16;
-        public const int ScriptHandled = 0;
-        public const int ScriptNotHandled = -1;
+        private const int MaxCharsInScriptName = 16;
+        private const int ScriptHandled = 0;
+        private const int ScriptNotHandled = -1;
 
-        public static Dictionary<string, List<Action>> Scripts;
-        public string Script;
+        private delegate int ConditionalScriptDelegate();
+
+        private static Dictionary<string, List<Action>> _scripts;
+        private static Dictionary<string, List<ConditionalScriptDelegate>> _conditionalScripts;
+        private readonly string _script;
 
         private static DateTime _last1SecondIntervalCall = DateTime.UtcNow;
 
         public NWNEventHandler(string script)
         {
-            Script = script;
+            _script = script;
         }
 
         public static void OnMainLoop(ulong frame)
@@ -48,11 +51,18 @@ namespace NWN.FinalFantasy.Core
             }
         }
 
-        private static bool RunScripts(string script)
+        private static int RunScripts(string script)
         {
-            if (Scripts.ContainsKey(script))
+            if (_conditionalScripts.ContainsKey(script))
             {
-                foreach (var action in Scripts[script])
+                foreach (var action in _conditionalScripts[script])
+                {
+                    return action.Invoke();
+                }
+            }
+            else if (_scripts.ContainsKey(script))
+            {
+                foreach (var action in _scripts[script])
                 {
                     try
                     {
@@ -65,27 +75,32 @@ namespace NWN.FinalFantasy.Core
                     }
                 }
 
-                return true;
+                return ScriptHandled;
             }
 
-            return false;
+            return ScriptNotHandled;
         }
 
         public static int OnRunScript(string script, uint oidSelf)
         {
-            return RunScripts(script) ? ScriptHandled : ScriptNotHandled;
+            var retVal = RunScripts(script);
+
+            if (retVal == -1) return ScriptNotHandled;
+            else return retVal;
         }
 
         public static void OnStart()
         {
             Console.WriteLine("Registering scripts...");
-            Scripts = GetHandlersFromAssembly();
+            LoadHandlersFromAssembly();
             Console.WriteLine("Scripts registered successfully.");
         }
 
-        public static Dictionary<string, List<Action>> GetHandlersFromAssembly()
+        public static void LoadHandlersFromAssembly()
         {
-            var result = new Dictionary<string, List<Action>>();
+            _scripts = new Dictionary<string, List<Action>>();
+            _conditionalScripts = new Dictionary<string, List<ConditionalScriptDelegate>>();
+
             var handlers = Assembly.GetExecutingAssembly()
                 .GetTypes()
                 .SelectMany(t => t.GetMethods())
@@ -94,25 +109,42 @@ namespace NWN.FinalFantasy.Core
 
             foreach (var mi in handlers)
             {
-                var del = (Action)mi.CreateDelegate(typeof(Action));
                 foreach (var attr in mi.GetCustomAttributes(typeof(NWNEventHandler), false))
                 {
-                    var script = ((NWNEventHandler)attr).Script;
+                    var script = ((NWNEventHandler)attr)._script;
                     if (script.Length > MaxCharsInScriptName || script.Length == 0)
                     {
                         Console.WriteLine($"Script name '{script}' is invalid on method {mi.Name}.");
                         throw new ApplicationException();
                     }
 
-                    if(!result.ContainsKey(script))
-                        result[script] = new List<Action>();
+                    // If the return type is an int, it is assumed to be a conditional script.
+                    if (mi.ReturnType == typeof(int))
+                    {
+                        var del = (ConditionalScriptDelegate)mi.CreateDelegate(typeof(ConditionalScriptDelegate));
 
-                    result[script].Add(del);
-                    Console.WriteLine($"Registered method '{del.Method.Name}' to script: {script}");
+                        if (!_conditionalScripts.ContainsKey(script))
+                            _conditionalScripts[script] = new List<ConditionalScriptDelegate>();
+
+                        _conditionalScripts[script].Add(del);
+
+                        Console.WriteLine($"Registered method '{del.Method.Name}' to conditional script: {script}");
+                    }
+                    // Otherwise it's a normal script.
+                    else
+                    {
+                        var del = (Action)mi.CreateDelegate(typeof(Action));
+
+                        if (!_scripts.ContainsKey(script))
+                            _scripts[script] = new List<Action>();
+
+                        _scripts[script].Add(del);
+
+                        Console.WriteLine($"Registered method '{del.Method.Name}' to script: {script}");
+                    }
+
                 }
             }
-
-            return result;
         }
     }
 }

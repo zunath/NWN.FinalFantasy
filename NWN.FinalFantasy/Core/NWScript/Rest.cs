@@ -36,10 +36,10 @@ namespace NWN.FinalFantasy.Core.NWScript
         ///   Determine the type (REST_EVENTTYPE_REST_*) of the last rest event (as
         ///   returned from the OnPCRested module event).
         /// </summary>
-        public static RestEventTypeRest GetLastRestEventType()
+        public static RestEventType GetLastRestEventType()
         {
             Internal.NativeFunctions.CallBuiltIn(508);
-            return (RestEventTypeRest)Internal.NativeFunctions.StackPopInteger();
+            return (RestEventType)Internal.NativeFunctions.StackPopInteger();
         }
 
         /// <summary>

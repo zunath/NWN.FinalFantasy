@@ -270,8 +270,12 @@ namespace NWN.FinalFantasy.Service
             if (!HasPlayerDialog(playerId)) return;
 
             var dialog = LoadPlayerDialog(playerId);
-            var convo = GetConversation(dialog.ActiveDialogName);
-            convo.EndDialog();
+
+            foreach (var endAction in dialog.EndActions)
+            {
+                endAction();
+            }
+
             RemovePlayerDialog(playerId);
             DeleteLocalInt(player, "DIALOG_SYSTEM_INITIALIZE_RAN");
 
@@ -334,13 +338,20 @@ namespace NWN.FinalFantasy.Service
             {
                 if (GetLocalInt(player, "DIALOG_SYSTEM_INITIALIZE_RAN") != 1)
                 {
-                    convo.Initialize();
+                    foreach (var initializationAction in dialog.InitializationActions)
+                    {
+                        initializationAction();
+                    }
+
                     SetLocalInt(player, "DIALOG_SYSTEM_INITIALIZE_RAN", 1);
                 }
 
                 if (dialog.IsEnding)
                 {
-                    convo.EndDialog();
+                    foreach (var endAction in dialog.EndActions)
+                    {
+                        endAction();
+                    }
                     RemovePlayerDialog(playerId);
                     DeleteLocalInt(player, "DIALOG_SYSTEM_INITIALIZE_RAN");
                     return false;
@@ -377,12 +388,7 @@ namespace NWN.FinalFantasy.Service
             }
             else if (selectionNumber == NumberOfResponsesPerPage + 3) // Back
             {
-                string currentPageName = dialog.CurrentPageName;
                 var previous = dialog.NavigationStack.Pop();
-
-                // This might be a little confusing but we're passing the active page as the "old page" to the Back() method.
-                // This is because we need to run any dialog-specific clean up prior to moving the conversation backwards.
-                convo.Back(player, currentPageName, previous.PageName);
 
                 // Previous page was in a different conversation. Switch to it.
                 if (previous.DialogName != dialog.ActiveDialogName)
@@ -393,9 +399,12 @@ namespace NWN.FinalFantasy.Service
 
                     dialog.CurrentPageName = previous.PageName;
                     dialog.PageOffset = 0;
-                    // ActiveDialogName will have changed by this point. Get the new conversation.
-                    convo = GetConversation(dialog.ActiveDialogName);
-                    convo.Initialize();
+                    
+                    foreach (var initializationAction in dialog.InitializationActions)
+                    {
+                        initializationAction();
+                    }
+
                     SetLocalInt(player, "DIALOG_SYSTEM_INITIALIZE_RAN", 1);
                 }
                 // Otherwise it's in the same conversation. Switch to that.
@@ -407,7 +416,7 @@ namespace NWN.FinalFantasy.Service
             }
             else if (selectionNumber != NumberOfResponsesPerPage + 4) // End
             {
-                convo.DoAction(player, dialog.CurrentPageName, responseID + 1);
+                dialog.Pages[dialog.CurrentPageName].Responses[responseID].Action.Invoke();
             }
         }
 

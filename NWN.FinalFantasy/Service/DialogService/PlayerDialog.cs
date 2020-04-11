@@ -6,7 +6,9 @@ namespace NWN.FinalFantasy.Service.DialogService
 {
     public class PlayerDialog
     {
-        private Dictionary<string, DialogPage> Pages { get; set; }
+        public List<Action> InitializationActions { get; set; }
+        public List<Action> EndActions { get; set; }
+        public Dictionary<string, DialogPage> Pages { get; private set; }
         public string CurrentPageName { get; set; }
         public Stack<DialogNavigation> NavigationStack { get; set; }
         public int PageOffset { get; set; }
@@ -20,6 +22,8 @@ namespace NWN.FinalFantasy.Service.DialogService
 
         public PlayerDialog(string defaultPageName)
         {
+            InitializationActions = new List<Action>();
+            EndActions = new List<Action>();
             Pages = new Dictionary<string, DialogPage>();
             CurrentPageName = string.Empty;
             NavigationStack = new Stack<DialogNavigation>();
@@ -30,13 +34,16 @@ namespace NWN.FinalFantasy.Service.DialogService
             EnableBackButton = true;
         }
 
-        public void AddPage(string pageName, DialogPage page)
+        public DialogPage AddPage(string header, string pageName = "MainPage")
         {
+            var page = new DialogPage(header);
             Pages.Add(pageName, page);
             if (Pages.Count == 1)
             {
                 CurrentPageName = pageName;
             }
+
+            return page;
         }
 
         public DialogPage CurrentPage => Pages[CurrentPageName];

@@ -1,7 +1,9 @@
-﻿using NWN.FinalFantasy.Entity;
+﻿using NWN.FinalFantasy.Core.NWScript.Enum;
+using NWN.FinalFantasy.Entity;
 using NWN.FinalFantasy.Service;
 using NWN.FinalFantasy.Service.DialogService;
 using static NWN.FinalFantasy.Core.NWScript.NWScript;
+using Skill = NWN.FinalFantasy.Service.Skill;
 
 namespace NWN.FinalFantasy.Feature.DialogDefinition
 {
@@ -9,39 +11,28 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
     {
         public override PlayerDialog SetUp(uint player)
         {
-            PlayerDialog dialog = new PlayerDialog("MainPage");
-            DialogPage mainPage = new DialogPage(
-                BuildMainPageHeader(player),
-                "View Skills",
-                "View Perks",
-                "View Blueprints",
-                "View Key Items",
-                "Modify Item Appearance",
-                "Open Trash Can (Destroy Items)");
+            var dialog = DialogBuilder.Create()
+                .AddPage(BuildMainPageHeader(player))
+                .AddResponse("View Skills", () => SwitchConversation("ViewSkills"))
+                .AddResponse("View Perks", () => SwitchConversation("ViewPerks"))
+                .AddResponse("View Blueprints", () => SwitchConversation("ViewBlueprints"))
+                .AddResponse("View Key Items", () => SwitchConversation("KeyItems"))
+                .AddResponse("Modify Item Appearance", () => SwitchConversation("ModifyItemAppearance"))
+                .AddResponse("Open Trash Can (Destroy Items)", () =>
+                {
+                    EndConversation();
+                    var location = GetLocation(player);
+                    var trashCan = CreateObject(ObjectType.Placeable, "trash_can", location);
 
-            dialog.AddPage("MainPage", mainPage);
+                    AssignCommand(player, () => ActionInteractObject(trashCan));
+                    DelayCommand(0.2f, () => SetUseableFlag(trashCan, false));
+                })
+                .Build();
 
             return dialog;
         }
 
-        public override void Initialize()
-        {
-        }
-
-        public override void DoAction(uint player, string pageName, int responseID)
-        {
-        }
-
-        public override void Back(uint player, string beforeMovePage, string afterMovePage)
-        {
-        }
-
-        public override void EndDialog()
-        {
-        }
-
-
-        private string BuildMainPageHeader(uint player)
+        private static string BuildMainPageHeader(uint player)
         {
             var playerId = GetObjectUUID(player);
             var dbPlayer = DB.Get<Player>(playerId);

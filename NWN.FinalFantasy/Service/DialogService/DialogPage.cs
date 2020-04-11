@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace NWN.FinalFantasy.Service.DialogService
 {
@@ -15,15 +14,16 @@ namespace NWN.FinalFantasy.Service.DialogService
             Header = string.Empty;
         }
 
-        public DialogPage(string header, params string[] responseOptions)
+        public DialogPage(string header)
         {
             Responses = new List<DialogResponse>();
             Header = header;
+        }
 
-            foreach (var response in responseOptions)
-            {
-                Responses.Add(new DialogResponse(response));
-            }
+        public DialogPage AddResponse(string text, Action action)
+        {
+            Responses.Add(new DialogResponse(text, action));
+            return this;
         }
 
         public int NumberOfResponses => Responses.Count;

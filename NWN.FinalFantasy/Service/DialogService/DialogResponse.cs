@@ -1,19 +1,24 @@
-﻿namespace NWN.FinalFantasy.Service.DialogService
+﻿using System;
+
+namespace NWN.FinalFantasy.Service.DialogService
 {
     public class DialogResponse
     {
         public string Text { get; set; }
         public bool IsActive { get; set; }
-        public object CustomData { get; set; }
-
-        public DialogResponse(string text, bool isVisible = true, object customData = null)
+        public Action Action { get; set; }
+        public object Data { get; set; }
+        
+        public DialogResponse(
+            string text, 
+            Action action, 
+            bool isVisible = true,
+            object data = null)
         {
             Text = text;
             IsActive = isVisible;
-            CustomData = customData;
+            Action = action;
+            Data = data;
         }
-
-        public bool HasCustomData => CustomData != null;
-
     }
 }

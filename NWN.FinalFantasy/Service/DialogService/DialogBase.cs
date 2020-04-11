@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using static NWN.FinalFantasy.Core.NWScript.NWScript;
 
 namespace NWN.FinalFantasy.Service.DialogService
@@ -105,13 +106,13 @@ namespace NWN.FinalFantasy.Service.DialogService
             page.Responses[responseID - 1].IsActive = isVisible;
         }
 
-        protected void AddResponseToPage(string pageName, string text, bool isVisible = true, object customData = null)
+        protected void AddResponseToPage(string pageName, string text, Action action, bool isVisible = true, object customData = null)
         {
             var player = GetPC();
             var playerId = GetObjectUUID(player);
             var dialog = Dialog.LoadPlayerDialog(playerId);
             DialogPage page = dialog.GetPageByName(pageName);
-            page.Responses.Add(new DialogResponse(text, isVisible, customData));
+            page.Responses.Add(new DialogResponse(text, action, isVisible, customData));
         }
 
         protected void AddResponseToPage(string pageName, DialogResponse response)
@@ -153,8 +154,11 @@ namespace NWN.FinalFantasy.Service.DialogService
             dialog.ResetPage();
             ChangePage(dialog.CurrentPageName, false);
 
-            var conversation = Dialog.GetConversation(dialog.ActiveDialogName);
-            conversation.Initialize();
+            foreach (var initializationAction in dialog.InitializationActions)
+            {
+                initializationAction();
+            }
+
             SetLocalInt(player, "DIALOG_SYSTEM_INITIALIZE_RAN", 1);
         }
 
@@ -199,13 +203,5 @@ namespace NWN.FinalFantasy.Service.DialogService
         }
 
         public abstract PlayerDialog SetUp(uint player);
-
-        public abstract void Initialize();
-
-        public abstract void DoAction(uint player, string pageName, int responseID);
-
-        public abstract void Back(uint player, string beforeMovePage, string afterMovePage);
-
-        public abstract void EndDialog();
     }
 }

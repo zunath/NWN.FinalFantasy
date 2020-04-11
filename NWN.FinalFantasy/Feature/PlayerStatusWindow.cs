@@ -7,7 +7,7 @@ using static NWN.FinalFantasy.Core.NWScript.NWScript;
 
 namespace NWN.FinalFantasy.Feature
 {
-    public class GuiElements
+    public class PlayerStatusWindow
     {
         private const int HPGuiID = 1;
         private const int HPBackgroundGuiID = 2;

@@ -1,6 +1,6 @@
 ﻿using System;
-using NWN.FinalFantasy.Core.NWScript;
 using NWN.FinalFantasy.Core.NWScript.Enum;
+using NWN.FinalFantasy.Feature;
 
 namespace NWN.FinalFantasy.Service.SpawnService
 {
@@ -10,7 +10,7 @@ namespace NWN.FinalFantasy.Service.SpawnService
 
         public SpawnTable()
         {
-            RespawnDelayMinutes = 5;
+            RespawnDelayMinutes = Spawning.DefaultRespawnMinutes;
         }
 
         /// <summary>

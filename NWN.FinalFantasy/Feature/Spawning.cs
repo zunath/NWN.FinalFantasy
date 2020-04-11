@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using NWN.FinalFantasy.Core;
+using NWN.FinalFantasy.Core.NWNX;
 using NWN.FinalFantasy.Core.NWScript.Enum;
 using NWN.FinalFantasy.Service;
 using NWN.FinalFantasy.Service.SpawnService;
@@ -12,6 +13,9 @@ namespace NWN.FinalFantasy.Feature
 {
     public static class Spawning
     {
+        public const int DespawnMinutes = 20;
+        public const int DefaultRespawnMinutes = 5;
+
         private class SpawnDetail
         {
             public string SerializedObject { get; set; }
@@ -24,6 +28,12 @@ namespace NWN.FinalFantasy.Feature
             public int RespawnDelayMinutes { get; set; }
         }
 
+        private class ActiveSpawn
+        {
+            public Guid SpawnDetailId { get; set; }
+            public uint SpawnObject { get; set; }
+        }
+
         private class QueuedSpawn
         {
             public DateTime RespawnTime { get; set; }
@@ -33,9 +43,10 @@ namespace NWN.FinalFantasy.Feature
         private static readonly Dictionary<Guid, SpawnDetail> _spawns = new Dictionary<Guid, SpawnDetail>();
         private static readonly List<QueuedSpawn> _queuedSpawns = new List<QueuedSpawn>();
         private static readonly Dictionary<uint, List<QueuedSpawn>> _queuedSpawnsByArea = new Dictionary<uint, List<QueuedSpawn>>();
+        private static readonly Dictionary<uint, DateTime> _queuedAreaDespawns = new Dictionary<uint, DateTime>();
         private static readonly Dictionary<int, SpawnTable> _spawnTables = new Dictionary<int, SpawnTable>();
         private static readonly Dictionary<uint, List<Guid>> _allSpawnsByArea = new Dictionary<uint, List<Guid>>();
-        private static readonly Dictionary<uint, List<Guid>> _activeSpawnsByArea = new Dictionary<uint, List<Guid>>();
+        private static readonly Dictionary<uint, List<ActiveSpawn>> _activeSpawnsByArea = new Dictionary<uint, List<ActiveSpawn>>();
 
         [NWNEventHandler("mod_load")]
         public static void CacheData()
@@ -147,11 +158,6 @@ namespace NWN.FinalFantasy.Feature
                             _allSpawnsByArea[area].Add(id);
                         }
                     }
-                    // Anything else isn't processed.
-                    else
-                    {
-                        continue;
-                    }
                 }
             }
         }
@@ -168,7 +174,7 @@ namespace NWN.FinalFantasy.Feature
             if (!_allSpawnsByArea.ContainsKey(area)) return;
 
             if (!_activeSpawnsByArea.ContainsKey(area))
-                _activeSpawnsByArea[area] = new List<Guid>();
+                _activeSpawnsByArea[area] = new List<ActiveSpawn>();
 
             if (!_queuedSpawnsByArea.ContainsKey(area))
                 _queuedSpawnsByArea[area] = new List<QueuedSpawn>();
@@ -187,6 +193,30 @@ namespace NWN.FinalFantasy.Feature
             }
         }
 
+        /// <summary>
+        /// When the last player in an area leaves, a despawn request is queued up.
+        /// The heartbeat processor will despawn all objects when this happens
+        /// </summary>
+        [NWNEventHandler("area_exit")]
+        public static void QueueDespawnArea()
+        {
+            var player = GetExitingObject();
+            if (!GetIsPC(player) && !GetIsDM(player)) return;
+            
+            var area = OBJECT_SELF;
+            var playerCount = Area.GetNumberOfPlayersInArea(area);
+            if (playerCount > 0) return;
+
+            var now = DateTime.UtcNow;
+            _queuedAreaDespawns[area] = now.AddMinutes(DespawnMinutes);
+        }
+
+        /// <summary>
+        /// Creates a queued spawn record which is picked up by the processor.
+        /// The spawn object will be created when the respawn time has passed.
+        /// </summary>
+        /// <param name="spawnDetailId">The ID of the spawn detail.</param>
+        /// <param name="respawnTime">The time the spawn will be created.</param>
         private static void CreateQueuedSpawn(Guid spawnDetailId, DateTime respawnTime)
         {
             var queuedSpawn = new QueuedSpawn
@@ -203,6 +233,10 @@ namespace NWN.FinalFantasy.Feature
             _queuedSpawnsByArea[spawnDetail.Area].Add(queuedSpawn);
         }
 
+        /// <summary>
+        /// Removes a queued spawn.
+        /// </summary>
+        /// <param name="queuedSpawn">The queued spawn to remove.</param>
         private static void RemoveQueuedSpawn(QueuedSpawn queuedSpawn)
         {
             var spawnDetail = _spawns[queuedSpawn.SpawnDetailId];
@@ -228,10 +262,20 @@ namespace NWN.FinalFantasy.Feature
         }
 
         /// <summary>
+        /// On each module heartbeat, process queued spawns and
+        /// process dequeue area event requests.
+        /// </summary>
+        [NWNEventHandler("mod_heartbeat")]
+        public static void ProcessSpawnSystem()
+        {
+            ProcessQueuedSpawns();
+            ProcessDespawnAreas();
+        }
+
+        /// <summary>
         /// On each module heartbeat, iterate over the list of queued spawns.
         /// If enough time has elapsed and spawn table rules are met, spawn the object and remove it from the queue.
         /// </summary>
-        [NWNEventHandler("mod_heartbeat")]
         public static void ProcessQueuedSpawns()
         {
             var now = DateTime.UtcNow;
@@ -242,19 +286,65 @@ namespace NWN.FinalFantasy.Feature
                 if (now > queuedSpawn.RespawnTime)
                 {
                     var detail = _spawns[queuedSpawn.SpawnDetailId];
-                    var success = SpawnObject(queuedSpawn.SpawnDetailId, detail);
+                    var spawnedObject = SpawnObject(queuedSpawn.SpawnDetailId, detail);
 
                     // A valid spawn wasn't found because the spawn table didn't provide a resref.
                     // Either the table is configured wrong or the requirements for that specific table weren't met.
                     // In this case, we bump the next respawn time and move to the next queued respawn.
-                    if (!success)
+                    if (spawnedObject == OBJECT_INVALID)
                     {
                         queuedSpawn.RespawnTime = now.AddMinutes(detail.RespawnDelayMinutes);
                         continue;
                     }
 
-                    _activeSpawnsByArea[detail.Area].Add(queuedSpawn.SpawnDetailId);
+                    var activeSpawn = new ActiveSpawn
+                    {
+                        SpawnDetailId = queuedSpawn.SpawnDetailId,
+                        SpawnObject = spawnedObject
+                    };
+
+                    _activeSpawnsByArea[detail.Area].Add(activeSpawn);
                     RemoveQueuedSpawn(queuedSpawn);
+                }
+            }
+        }
+
+        /// <summary>
+        /// On each module heartbeat, iterate over the list of areas which are scheduled to
+        /// be despawned. If players have since entered the area, remove it from the queue list.
+        /// </summary>
+        private static void ProcessDespawnAreas()
+        {
+            var now = DateTime.UtcNow;
+            for (var index = _queuedAreaDespawns.Count - 1; index >= 0; index--)
+            {
+                var (area, despawnTime) = _queuedAreaDespawns.ElementAt(index);
+                // Players have entered this area. Remove it and move to the next entry.
+                if (Area.GetNumberOfPlayersInArea(area) > 0)
+                {
+                    _queuedAreaDespawns.Remove(area);
+                    continue;
+                }
+
+                if (now > despawnTime)
+                {
+                    // Destroy active spawned objects from the module.
+                    foreach (var activeSpawn in _activeSpawnsByArea[area])
+                    {
+                        DestroyObject(activeSpawn.SpawnObject);
+                    }
+
+                    if (!_queuedSpawnsByArea.ContainsKey(area))
+                        _queuedSpawnsByArea[area] = new List<QueuedSpawn>();
+
+                    // Removing all spawn Ids from the master queue list.
+                    var spawnIds = _queuedSpawnsByArea[area].Select(s => s.SpawnDetailId);
+                    _queuedSpawns.RemoveAll(x => spawnIds.Contains(x.SpawnDetailId));
+
+                    // Remove area from the various cache collections.
+                    _queuedSpawnsByArea.Remove(area);
+                    _activeSpawnsByArea.Remove(area);
+                    _queuedAreaDespawns.Remove(area);
                 }
             }
         }
@@ -266,7 +356,7 @@ namespace NWN.FinalFantasy.Feature
         /// </summary>
         /// <param name="spawnId">The ID of the spawn</param>
         /// <param name="detail">The details of the spawn</param>
-        private static bool SpawnObject(Guid spawnId, SpawnDetail detail)
+        private static uint SpawnObject(Guid spawnId, SpawnDetail detail)
         {
             // Hand-placed spawns are stored as a serialized string.
             // Deserialize and add it to the area.
@@ -279,7 +369,7 @@ namespace NWN.FinalFantasy.Feature
                 AssignCommand(deserialized, () => SetFacing(detail.Facing));
                 SetLocalString(deserialized, "SPAWN_ID", spawnId.ToString());
 
-                return true;
+                return deserialized;
             }
             // Spawn tables have their own logic which must be run to determine the spawn to use.
             // Create the object at the stored location.
@@ -292,7 +382,7 @@ namespace NWN.FinalFantasy.Feature
                 // In this case, exit early.
                 if (string.IsNullOrWhiteSpace(resref))
                 {
-                    return false;
+                    return OBJECT_INVALID;
                 }
 
                 var position = new Vector(detail.X, detail.Y, detail.Z);
@@ -301,10 +391,10 @@ namespace NWN.FinalFantasy.Feature
                 var spawn = CreateObject(objectType, resref, location);
                 SetLocalString(spawn, "SPAWN_ID", spawnId.ToString());
 
-                return true;
+                return spawn;
             }
 
-            return true;
+            return OBJECT_INVALID;
         }
     }
 }

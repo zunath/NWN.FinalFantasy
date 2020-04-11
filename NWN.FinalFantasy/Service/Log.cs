@@ -12,7 +12,8 @@ namespace NWN.FinalFantasy.Service
         Chat,
         DM,
         DMAuthorization,
-        Death
+        Death,
+        Server
     }
 
     public static class Log

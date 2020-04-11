@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using NWN.FinalFantasy.Core.NWScript.Enum;
 
 namespace NWN.FinalFantasy.Service.SpawnService
@@ -71,6 +73,49 @@ namespace NWN.FinalFantasy.Service.SpawnService
             if (frequency < 1) frequency = 1;
 
             ActiveSpawn.Weight = frequency;
+            return this;
+        }
+
+        /// <summary>
+        /// Specifies that this spawn object can only spawn on the provided days of week.
+        /// If no days are specified, spawn will be unrestricted and can spawn on any day.
+        /// These are real world days in UTC time.
+        /// </summary>
+        /// <param name="restrictedDaysOfWeek">The days which the spawn may appear.</param>
+        /// <returns>A spawn table builder with the configured settings.</returns>
+        public SpawnTableBuilder OnDayOfWeek(params DayOfWeek[] restrictedDaysOfWeek)
+        {
+            ActiveSpawn.RealWorldDayOfWeekRestriction = restrictedDaysOfWeek.ToList();
+            return this;
+        }
+
+        /// <summary>
+        /// Specifies that this spawn object can only spawn between the provided hours of day.
+        /// The day value of these timespans should NOT be used or spawns will not be created.
+        /// </summary>
+        /// <param name="start">The starting timespan</param>
+        /// <param name="end">The ending timespan</param>
+        /// <returns>A spawn table builder with the configured settings.</returns>
+        public SpawnTableBuilder BetweenRealWorldHours(TimeSpan start, TimeSpan end)
+        {
+            ActiveSpawn.RealWorldStartRestriction = start;
+            ActiveSpawn.RealWorldEndRestriction = end;
+
+            return this;
+        }
+
+        /// <summary>
+        /// Specifies that this spawn object can only spawn between the provided start and end
+        /// game hours.
+        /// </summary>
+        /// <param name="startHour">The starting game hour</param>
+        /// <param name="endHour">The ending game hour</param>
+        /// <returns>A spawn table builder with the configured settings.</returns>
+        public SpawnTableBuilder BetweenGameHours(int startHour, int endHour)
+        {
+            ActiveSpawn.GameHourStartRestriction = startHour;
+            ActiveSpawn.GameHourEndRestriction = endHour;
+
             return this;
         }
 

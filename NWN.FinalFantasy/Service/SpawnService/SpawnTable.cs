@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using NWN.FinalFantasy.Core.NWScript.Enum;
 using NWN.FinalFantasy.Feature;
+using static NWN.FinalFantasy.Core.NWScript.NWScript;
 
 namespace NWN.FinalFantasy.Service.SpawnService
 {
@@ -26,6 +27,9 @@ namespace NWN.FinalFantasy.Service.SpawnService
         public Tuple<ObjectType, string> GetNextSpawnResref()
         {
             var selectedObject = SelectRandomSpawnObject();
+            if (selectedObject == null)
+                return new Tuple<ObjectType, string>(ObjectType.All, string.Empty);
+
             return new Tuple<ObjectType, string>(selectedObject.Type, selectedObject.Resref);
         }
 
@@ -35,9 +39,55 @@ namespace NWN.FinalFantasy.Service.SpawnService
         /// <returns></returns>
         private SpawnObject SelectRandomSpawnObject()
         {
-            var weights = Spawns.Select(s => s.Weight).ToArray();
+            var filteredList = FilterSpawnObjects();
+            if (filteredList.Count <= 0) return null;
+
+            var weights = filteredList.Select(s => s.Weight).ToArray();
             var index = Random.GetRandomWeightedIndex(weights);
-            return Spawns.ElementAt(index);
+            return filteredList.ElementAt(index);
+        }
+
+        /// <summary>
+        /// Filters the list of spawn objects based on criteria such as
+        /// the time of game day, the real-world day, etc.
+        /// It is possible for this list to be empty so account for that accordingly.
+        /// </summary>
+        /// <returns>A filtered list of spawn objects.</returns>
+        private List<SpawnObject> FilterSpawnObjects()
+        {
+            var list = Spawns.ToList();
+            var now = DateTime.UtcNow;
+            var dayOfWeek = now.DayOfWeek;
+            var timeOfDay = now.TimeOfDay;
+            var gameHour = GetTimeHour();
+
+            for (var index = list.Count - 1; index >= 0; index--)
+            {
+                var obj = list.ElementAt(index);
+
+                // Day of week restriction
+                if (obj.RealWorldDayOfWeekRestriction.Count > 0 &&
+                    !obj.RealWorldDayOfWeekRestriction.Contains(dayOfWeek))
+                {
+                    list.RemoveAt(index);
+                }
+
+                // Real world time range restriction
+                if ((obj.RealWorldStartRestriction != null && obj.RealWorldEndRestriction != null) &&
+                    !(timeOfDay >= obj.RealWorldStartRestriction && timeOfDay <= obj.RealWorldEndRestriction))
+                {
+                    list.RemoveAt(index);
+                }
+
+                // Game hour restriction
+                if ((obj.GameHourStartRestriction != -1 && obj.GameHourEndRestriction != -1) &&
+                    !(gameHour >= obj.GameHourStartRestriction && gameHour <= obj.GameHourEndRestriction))
+                {
+                    list.RemoveAt(index);
+                }
+            }
+
+            return list;
         }
     }
 }

@@ -19,7 +19,7 @@ namespace NWN.FinalFantasy.Service.SpawnService
         /// <param name="spawnTableId">The spawn table Id to create the table with</param>
         /// <param name="name">The name of the spawn table. This is purely for the programmer's benefit. Not used by the system.</param>
         /// <returns>A spawn table builder with the configured settings.</returns>
-        public static SpawnTableBuilder Create(int spawnTableId, string name = null)
+        public SpawnTableBuilder Create(int spawnTableId, string name = null)
         {
             if (string.IsNullOrWhiteSpace(name))
                 name = $"Spawn Table {spawnTableId}";

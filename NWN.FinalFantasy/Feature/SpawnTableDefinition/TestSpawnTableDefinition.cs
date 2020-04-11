@@ -10,7 +10,8 @@ namespace NWN.FinalFantasy.Feature.SpawnTableDefinition
     {
         public Dictionary<int, SpawnTable> BuildSpawnTables()
         {
-            var builder = SpawnTableBuilder
+            var builder = new SpawnTableBuilder()
+
                 .Create(1, "Goblin Spawns")
                 .AddSpawn(ObjectType.Creature, "nw_goblina")
                 .WithFrequency(50)
@@ -20,7 +21,10 @@ namespace NWN.FinalFantasy.Feature.SpawnTableDefinition
                 .AddSpawn(ObjectType.Creature, "nw_hobgoblin001")
                 .WithFrequency(50)
                 .OnDayOfWeek(DayOfWeek.Saturday)
-                .BetweenGameHours(13, 14);
+                .BetweenGameHours(13, 14)
+                
+                .Create(2, "Another spawn")
+                .AddSpawn(ObjectType.Creature, "nw_goblina");
 
             return builder.Build();
         }

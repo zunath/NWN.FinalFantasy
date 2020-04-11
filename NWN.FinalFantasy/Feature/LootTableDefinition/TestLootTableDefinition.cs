@@ -1,16 +1,17 @@
-﻿using NWN.FinalFantasy.Core;
-using NWN.FinalFantasy.Service;
+﻿using System.Collections.Generic;
+using NWN.FinalFantasy.Service.LootService;
 
 namespace NWN.FinalFantasy.Feature.LootTableDefinition
 {
-    public static class TestLootTableDefinition
+    public class TestLootTableDefinition: ILootTableDefinition
     {
-        [NWNEventHandler("mod_load")]
-        public static void RegisterTables()
+        public Dictionary<string, LootTable> BuildLootTables()
         {
-            var table = new LootTable();
-            table.AddItem("nw_waxgr001", 50, 1);
-            Loot.AddLootTable("myLoot", table);
+            var builder = new LootTableBuilder()
+                .Create("myLoot")
+                .AddItem("nw_waxgr001", 50);
+
+            return builder.Build();
         }
     }
 }

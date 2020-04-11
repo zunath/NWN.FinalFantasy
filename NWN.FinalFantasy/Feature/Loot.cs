@@ -1,15 +1,50 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using NWN.FinalFantasy.Core;
-using NWN.FinalFantasy.Core.NWNX;
 using NWN.FinalFantasy.Service;
+using NWN.FinalFantasy.Service.LootService;
 using static NWN.FinalFantasy.Core.NWScript.NWScript;
 using Random = NWN.FinalFantasy.Service.Random;
 
 namespace NWN.FinalFantasy.Feature
 {
-    public class LootTables
+    public class Loot
     {
+        private static readonly Dictionary<string, LootTable> LootTables = new Dictionary<string, LootTable>();
+
+        [NWNEventHandler("mod_load")]
+        public static void RegisterLootTables()
+        {
+            // Get all implementations of spawn table definitions.
+            var types = AppDomain.CurrentDomain.GetAssemblies()
+                .SelectMany(s => s.GetTypes())
+                .Where(w => typeof(ILootTableDefinition).IsAssignableFrom(w) && !w.IsInterface && !w.IsAbstract);
+
+            foreach (var type in types)
+            {
+                var instance = (ILootTableDefinition)Activator.CreateInstance(type);
+                var builtTables = instance.BuildLootTables();
+
+                foreach (var table in builtTables)
+                {
+                    if (string.IsNullOrWhiteSpace(table.Key))
+                    {
+                        Log.Write(LogGroup.Error, $"Loot table {table.Key} has an invalid key. Values must not be null or white space.");
+                        continue;
+                    }
+
+                    if (LootTables.ContainsKey(table.Key))
+                    {
+                        Log.Write(LogGroup.Error, $"Loot table {table.Key} has already been registered. Please make sure all spawn tables use a unique ID.");
+                        continue;
+                    }
+
+                    LootTables[table.Key] = table.Value;
+                }
+            }
+        }
+
         [NWNEventHandler("crea_spawn")]
         public static void SpawnLoot()
         {
@@ -50,7 +85,7 @@ namespace NWN.FinalFantasy.Feature
                 if (attempts <= 0)
                     attempts = 1;
 
-                var table = Loot.GetLootTableByName(tableName);
+                var table = GetLootTableByName(tableName);
                 for (int x = 1; x <= attempts; x++)
                 {
                     if (Random.D100(1) > chance) continue;
@@ -61,6 +96,20 @@ namespace NWN.FinalFantasy.Feature
                     CreateItemOnObject(item.Resref, creature, quantity);
                 }
             }
+        }
+
+        /// <summary>
+        /// Retrieves a loot table by its unique name.
+        /// If name is not registered, an exception will be raised.
+        /// </summary>
+        /// <param name="name">The name of the loot table to retrieve.</param>
+        /// <returns>A loot table matching the specified name.</returns>
+        public static LootTable GetLootTableByName(string name)
+        {
+            if (!LootTables.ContainsKey(name))
+                throw new Exception($"Loot table '{name}' is not registered. Did you enter the right name?");
+
+            return LootTables[name];
         }
 
         /// <summary>

@@ -24,11 +24,10 @@ namespace NWN.FinalFantasy.Service.SpawnService
             if (string.IsNullOrWhiteSpace(name))
                 name = $"Spawn Table {spawnTableId}";
 
-            var builder = new SpawnTableBuilder();
-            builder.ActiveTable = new SpawnTable(name);
-            builder.SpawnTables[spawnTableId] = builder.ActiveTable;
+            ActiveTable = new SpawnTable(name);
+            SpawnTables[spawnTableId] = ActiveTable;
 
-            return builder;
+            return this;
         }
 
         /// <summary>

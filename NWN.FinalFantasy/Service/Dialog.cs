@@ -94,6 +94,12 @@ namespace NWN.FinalFantasy.Service
 
         }
 
+        [NWNEventHandler("dialog_action_0")]
+        public static void NodeAction0()
+        {
+            ActionsTaken(0);
+        }
+
         [NWNEventHandler("dialog_action_1")]
         public static void NodeAction1()
         {
@@ -148,10 +154,22 @@ namespace NWN.FinalFantasy.Service
             ActionsTaken(9);
         }
 
-        [NWNEventHandler("dialog_action_1")]
+        [NWNEventHandler("dialog_action_10")]
         public static void NodeAction10()
         {
             ActionsTaken(10);
+        }
+
+        [NWNEventHandler("dialog_action_11")]
+        public static void NodeAction11()
+        {
+            ActionsTaken(11);
+        }
+
+        [NWNEventHandler("dialog_appears_0")]
+        public static int NodeAppears0()
+        {
+            return AppearsWhen(2, 0) ? 1 : 0;
         }
 
         [NWNEventHandler("dialog_appears_1")]

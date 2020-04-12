@@ -70,6 +70,7 @@ namespace NWN.FinalFantasy.Service.SpawnService
                     !obj.RealWorldDayOfWeekRestriction.Contains(dayOfWeek))
                 {
                     list.RemoveAt(index);
+                    continue;
                 }
 
                 // Real world time range restriction
@@ -77,6 +78,7 @@ namespace NWN.FinalFantasy.Service.SpawnService
                     !(timeOfDay >= obj.RealWorldStartRestriction && timeOfDay <= obj.RealWorldEndRestriction))
                 {
                     list.RemoveAt(index);
+                    continue;
                 }
 
                 // Game hour restriction
@@ -84,6 +86,7 @@ namespace NWN.FinalFantasy.Service.SpawnService
                     !(gameHour >= obj.GameHourStartRestriction && gameHour <= obj.GameHourEndRestriction))
                 {
                     list.RemoveAt(index);
+                    continue;
                 }
             }
 

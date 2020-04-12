@@ -10,6 +10,7 @@ namespace NWN.FinalFantasy.Service.DialogService
         private readonly List<DialogPage> _pages = new List<DialogPage>();
         private readonly List<Action> _initializationActions = new List<Action>();
         private readonly List<Action> _endActions = new List<Action>();
+        private object _dataModel;
 
         public static DialogBuilder Create()
         {
@@ -24,6 +25,13 @@ namespace NWN.FinalFantasy.Service.DialogService
         public DialogBuilder AddInitializationAction(Action initializationAction)
         {
             _initializationActions.Add(initializationAction);
+
+            return this;
+        }
+
+        public DialogBuilder WithDataModel(object dataModel)
+        {
+            _dataModel = dataModel;
 
             return this;
         }
@@ -46,6 +54,8 @@ namespace NWN.FinalFantasy.Service.DialogService
 
         public DialogBuilder AddResponse(string text, Action action)
         {
+            Console.WriteLine($"firing addresponse = text = {text}");
+
             _activePage.AddResponse(text, action);
             return this;
         }
@@ -55,7 +65,8 @@ namespace NWN.FinalFantasy.Service.DialogService
             var dialog = new PlayerDialog(_defaultPageName)
             {
                 InitializationActions = _initializationActions,
-                EndActions = _endActions
+                EndActions = _endActions,
+                DataModel = _dataModel
             };
 
             var pageCount = 0;

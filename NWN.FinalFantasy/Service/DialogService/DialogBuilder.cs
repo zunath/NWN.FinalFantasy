@@ -6,19 +6,15 @@ namespace NWN.FinalFantasy.Service.DialogService
     public class DialogBuilder
     {
         private string _defaultPageName;
-        private readonly List<DialogPage> _pages = new List<DialogPage>();
+        private readonly Dictionary<string, DialogPage> _pages = new Dictionary<string, DialogPage>();
         private readonly List<Action> _initializationActions = new List<Action>();
+        private readonly List<Action<string, string>> _backActions = new List<Action<string, string>>();
         private readonly List<Action> _endActions = new List<Action>();
         private object _dataModel;
 
         public static DialogBuilder Create()
         {
-            var builder = new DialogBuilder
-            {
-                _defaultPageName = "Page_1"
-            };
-
-            return builder;
+            return new DialogBuilder();
         }
 
         public DialogBuilder AddInitializationAction(Action initializationAction)
@@ -35,6 +31,13 @@ namespace NWN.FinalFantasy.Service.DialogService
             return this;
         }
 
+        public DialogBuilder AddBackAction(Action<string, string> backAction)
+        {
+            _backActions.Add(backAction);
+
+            return this;
+        }
+
         public DialogBuilder AddEndAction(Action endAction)
         {
             _endActions.Add(endAction);
@@ -42,18 +45,13 @@ namespace NWN.FinalFantasy.Service.DialogService
             return this;
         }
 
-        public DialogBuilder AddPage(string header)
-        {
-            var newPage = new DialogPage(page => page.Header = header);
-            _pages.Add(newPage);
-
-            return this;
-        }
-
-        public DialogBuilder AddPage(Action<DialogPage> initAction)
+        public DialogBuilder AddPage(string pageId, Action<DialogPage> initAction)
         {
             var newPage = new DialogPage(initAction);
-            _pages.Add(newPage);
+            _pages.Add(pageId, newPage);
+
+            if (string.IsNullOrWhiteSpace(_defaultPageName))
+                _defaultPageName = pageId;
 
             return this;
         }
@@ -63,15 +61,14 @@ namespace NWN.FinalFantasy.Service.DialogService
             var dialog = new PlayerDialog(_defaultPageName)
             {
                 InitializationActions = _initializationActions,
+                BackActions = _backActions,
                 EndActions = _endActions,
                 DataModel = _dataModel
             };
 
-            var pageCount = 0;
-            foreach (var page in _pages)
+            foreach (var (pageId, page) in _pages)
             {
-                pageCount++;
-                var dialogPage = dialog.AddPage(page, $"Page_{pageCount}");
+                var dialogPage = dialog.AddPage(page, pageId);
                 dialogPage.Responses = page.Responses;
             }
 

@@ -307,7 +307,6 @@ namespace NWN.FinalFantasy.Service
             if (!hasDialog) return false;
             var dialog = LoadPlayerDialog(playerId);
 
-
             var page = dialog.CurrentPage;
 
             // Always reset the page's information and then rerun the init method.
@@ -397,7 +396,6 @@ namespace NWN.FinalFantasy.Service
             var playerId = GetObjectUUID(player);
             var dialog = LoadPlayerDialog(playerId);
 
-            var convo = GetConversation(dialog.ActiveDialogName);
             int selectionNumber = nodeId + 1;
             int responseID = nodeId + (NumberOfResponsesPerPage * dialog.PageOffset);
 
@@ -411,7 +409,16 @@ namespace NWN.FinalFantasy.Service
             }
             else if (selectionNumber == NumberOfResponsesPerPage + 3) // Back
             {
+                string currentPageName = dialog.CurrentPageName;
                 var previous = dialog.NavigationStack.Pop();
+
+                // This might be a little confusing but we're passing the active page as the "old page" to the Back() method.
+                // This is because we need to run any dialog-specific clean up prior to moving the conversation backwards.
+                foreach (var action in dialog.BackActions)
+                {
+                    action(currentPageName, previous.PageName);
+                }
+
 
                 // Previous page was in a different conversation. Switch to it.
                 if (previous.DialogName != dialog.ActiveDialogName)
@@ -527,7 +534,7 @@ namespace NWN.FinalFantasy.Service
             // Couldn't find an open dialog file. Throw error.
             if (dialog.DialogNumber <= 0)
             {
-                Console.WriteLine("ERROR: Unable to locate a free dialog. Add more dialog files, update their custom tokens, and update DialogService.cs");
+                Console.WriteLine("ERROR: Unable to locate a free dialog. Add more dialog files, update their custom tokens, and update Dialog.cs");
                 return;
             }
 

@@ -63,5 +63,6 @@ namespace NWN.FinalFantasy.Entity
     {
         public int Rank { get; set; }
         public int XP { get; set; }
+        public bool IsLocked { get; set; }
     }
 }

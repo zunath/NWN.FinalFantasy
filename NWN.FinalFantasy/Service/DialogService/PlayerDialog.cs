@@ -7,6 +7,7 @@ namespace NWN.FinalFantasy.Service.DialogService
     public class PlayerDialog
     {
         public List<Action> InitializationActions { get; set; }
+        public List<Action<string, string>> BackActions { get; set; }
         public List<Action> EndActions { get; set; }
         public Dictionary<string, DialogPage> Pages { get; private set; }
         public string CurrentPageName { get; set; }
@@ -23,6 +24,7 @@ namespace NWN.FinalFantasy.Service.DialogService
         public PlayerDialog(string defaultPageName)
         {
             InitializationActions = new List<Action>();
+            BackActions = new List<Action<string, string>>();
             EndActions = new List<Action>();
             Pages = new Dictionary<string, DialogPage>();
             CurrentPageName = string.Empty;

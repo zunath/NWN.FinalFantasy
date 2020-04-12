@@ -10,15 +10,21 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
 {
     public class RestMenuDialog : DialogBase
     {
+        private const string MainPageId = "MAIN_PAGE";
+
         public override PlayerDialog SetUp(uint player)
         {
             var dialog = DialogBuilder.Create()
-                .AddPage(MainPageInit)
+                .AddPage(MainPageId, MainPageInit)
                 .Build();
 
             return dialog;
         }
 
+        /// <summary>
+        /// Builds the Main Page.
+        /// </summary>
+        /// <param name="page">The page to build.</param>
         private void MainPageInit(DialogPage page)
         {
             var player = GetPC();

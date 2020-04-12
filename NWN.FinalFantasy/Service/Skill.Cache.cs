@@ -56,6 +56,25 @@ namespace NWN.FinalFantasy.Service
         }
 
         /// <summary>
+        /// Retrieves a list of available skill categories.
+        /// </summary>
+        /// <returns>A list of available skill categories</returns>
+        public static Dictionary<SkillCategoryType, SkillCategoryAttribute> GetSkillCategories()
+        {
+            return _categories.ToDictionary(x => x.Key, y => y.Value);
+        }
+
+        /// <summary>
+        /// Retrieves all skills by a given category.
+        /// </summary>
+        /// <param name="category">The category of skills to retrieve.</param>
+        /// <returns>A dictionary containing skills in the specified category.</returns>
+        public static Dictionary<SkillType, SkillAttribute> GetSkillsByCategory(SkillCategoryType category)
+        {
+            return _skillsByCategory[category].ToDictionary(x => x, y => _skills[y]);
+        }
+
+        /// <summary>
         /// Retrieves details about a specific skill.
         /// </summary>
         /// <param name="skillType">The skill whose details we will retrieve.</param>
@@ -63,6 +82,16 @@ namespace NWN.FinalFantasy.Service
         public static SkillAttribute GetSkillDetails(SkillType skillType)
         {
             return _skills[skillType];
+        }
+
+        /// <summary>
+        /// Retrieves details about a specific skill category.
+        /// </summary>
+        /// <param name="category">The category whose details we will retrieve.</param>
+        /// <returns>An object containing details about a skill category.</returns>
+        public static SkillCategoryAttribute GetSkillCategoryDetails(SkillCategoryType category)
+        {
+            return _categories[category];
         }
     }
 }

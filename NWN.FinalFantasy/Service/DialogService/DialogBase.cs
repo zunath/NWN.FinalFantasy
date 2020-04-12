@@ -28,15 +28,6 @@ namespace NWN.FinalFantasy.Service.DialogService
             return dialog.DataModel as T;
         }
 
-        protected void SetDataModel<T>(T value)
-            where T: class
-        {
-            var player = GetPC();
-            var playerId = GetObjectUUID(player);
-            var dialog = Dialog.LoadPlayerDialog(playerId);
-            dialog.DataModel = value;
-        }
-
         protected void ChangePage(string pageName, bool updateNavigationStack = true)
         {
             var player = GetPC();

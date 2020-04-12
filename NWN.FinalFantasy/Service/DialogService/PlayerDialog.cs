@@ -34,9 +34,8 @@ namespace NWN.FinalFantasy.Service.DialogService
             EnableBackButton = true;
         }
 
-        public DialogPage AddPage(string header, string pageName = "MainPage")
+        public DialogPage AddPage(DialogPage page, string pageName = "MainPage")
         {
-            var page = new DialogPage(header);
             Pages.Add(pageName, page);
             if (Pages.Count == 1)
             {

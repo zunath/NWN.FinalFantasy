@@ -6,18 +6,14 @@ namespace NWN.FinalFantasy.Service.DialogService
     public class DialogPage
     {
         public string Header { get; set; }
+        public Action<DialogPage> PageInit { get; set; }
         public List<DialogResponse> Responses { get; set; }
 
-        public DialogPage()
+        public DialogPage(Action<DialogPage> pageInit)
         {
+            PageInit = pageInit;
             Responses = new List<DialogResponse>();
             Header = string.Empty;
-        }
-
-        public DialogPage(string header)
-        {
-            Responses = new List<DialogResponse>();
-            Header = header;
         }
 
         public DialogPage AddResponse(string text, Action action)

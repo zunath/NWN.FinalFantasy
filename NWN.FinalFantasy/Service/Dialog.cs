@@ -309,7 +309,12 @@ namespace NWN.FinalFantasy.Service
 
 
             var page = dialog.CurrentPage;
-            var convo = GetConversation(dialog.ActiveDialogName);
+
+            // Always reset the page's information and then rerun the init method.
+            page.Header = string.Empty;
+            page.Responses.Clear();
+            page.PageInit?.Invoke(page);
+
             int currentSelectionNumber = nodeId + 1;
             bool displayNode = false;
             string newNodeText = string.Empty;

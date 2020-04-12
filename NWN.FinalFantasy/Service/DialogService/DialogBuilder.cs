@@ -6,7 +6,6 @@ namespace NWN.FinalFantasy.Service.DialogService
     public class DialogBuilder
     {
         private string _defaultPageName;
-        private DialogPage _activePage;
         private readonly List<DialogPage> _pages = new List<DialogPage>();
         private readonly List<Action> _initializationActions = new List<Action>();
         private readonly List<Action> _endActions = new List<Action>();
@@ -45,18 +44,17 @@ namespace NWN.FinalFantasy.Service.DialogService
 
         public DialogBuilder AddPage(string header)
         {
-            var newPage = new DialogPage(header);
+            var newPage = new DialogPage(page => page.Header = header);
             _pages.Add(newPage);
-            _activePage = newPage;
 
             return this;
         }
 
-        public DialogBuilder AddResponse(string text, Action action)
+        public DialogBuilder AddPage(Action<DialogPage> initAction)
         {
-            Console.WriteLine($"firing addresponse = text = {text}");
+            var newPage = new DialogPage(initAction);
+            _pages.Add(newPage);
 
-            _activePage.AddResponse(text, action);
             return this;
         }
 
@@ -73,7 +71,7 @@ namespace NWN.FinalFantasy.Service.DialogService
             foreach (var page in _pages)
             {
                 pageCount++;
-                var dialogPage = dialog.AddPage(page.Header, $"Page_{pageCount}");
+                var dialogPage = dialog.AddPage(page, $"Page_{pageCount}");
                 dialogPage.Responses = page.Responses;
             }
 

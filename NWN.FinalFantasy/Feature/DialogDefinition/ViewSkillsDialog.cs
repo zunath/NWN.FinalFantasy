@@ -22,17 +22,23 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
                 .WithDataModel(new Model())
                 .AddPage("Please select a skill category.")
                 .AddPage("Please select a skill.")
-                .AddPage("<SET LATER>") // Distribute Roleplay XP
-                .AddPage("<SET LATER>") // Roleplay XP Amount Distribution
+                .AddPage(DistributeRPXPInit) // Distribute Roleplay XP
+                .AddPage(DistributeRPXPAmountInit) // Roleplay XP Amount Distribution
                 
                 ;
 
             return null;
         }
 
-        private void LoadCategoryPage()
+        private void DistributeRPXPInit(DialogPage page)
         {
 
         }
+
+        private void DistributeRPXPAmountInit(DialogPage page)
+        {
+
+        }
+
     }
 }

@@ -54,7 +54,7 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
 
             page.Header = "Please select a skill category.";
 
-            var categories = Skill.GetActiveSkillCategories();
+            var categories = Skill.GetAllActiveSkillCategories();
             foreach (var (type, details) in categories)
             {
                 page.AddResponse(details.Name, () =>

@@ -46,23 +46,22 @@ namespace NWN.FinalFantasy.Service
                 {
                     _activeSkillsByCategory[category] = new List<SkillType>();
                 }
-
             }
 
             // Organize skills to make later reads quicker.
             var skills = Enum.GetValues(typeof(SkillType)).Cast<SkillType>();
-            foreach (var skill in skills)
+            foreach (var skillType in skills)
             {
-                var skillDetail = skill.GetAttribute<SkillType, SkillAttribute>();
+                var skillDetail = skillType.GetAttribute<SkillType, SkillAttribute>();
                 var categoryDetail = _allCategories[skillDetail.Category];
 
                 // Add to the skills cache
-                _allSkills[skill] = skillDetail;
+                _allSkills[skillType] = skillDetail;
 
                 // Add to contributing cache if the skill contributes towards the skill cap.
                 if (skillDetail.ContributesToSkillCap)
                 {
-                    _allSkillsContributingToCap[skill] = skillDetail;
+                    _allSkillsContributingToCap[skillType] = skillDetail;
                     _allCategoriesWithSkillContributing[skillDetail.Category] = categoryDetail;
 
                     if (categoryDetail.IsActive)
@@ -72,19 +71,19 @@ namespace NWN.FinalFantasy.Service
 
                     if (skillDetail.IsActive)
                     {
-                        _activeSkillsContributingToCap[skill] = skillDetail;
+                        _activeSkillsContributingToCap[skillType] = skillDetail;
                     }
                 }
 
                 // Add to active cache if the skill is active
                 if (skillDetail.IsActive)
                 {
-                    _activeSkills[skill] = skillDetail;
+                    _activeSkills[skillType] = skillDetail;
 
                     if(!_activeSkillsByCategory.ContainsKey(skillDetail.Category))
                         _activeSkillsByCategory[skillDetail.Category] = new List<SkillType>();
 
-                    _activeSkillsByCategory[skillDetail.Category].Add(skill);
+                    _activeSkillsByCategory[skillDetail.Category].Add(skillType);
                 }
 
                 // Add to active category cache if the skill and category are both active.
@@ -94,7 +93,7 @@ namespace NWN.FinalFantasy.Service
                 }
 
                 // Add to the skills by category cache.
-                _allSkillsByCategory[skillDetail.Category].Add(skill);
+                _allSkillsByCategory[skillDetail.Category].Add(skillType);
             }
             Console.WriteLine("Skill data cached successfully.");
         }
@@ -148,7 +147,7 @@ namespace NWN.FinalFantasy.Service
         /// Retrieves a list of all skill categories, excluding inactive ones.
         /// </summary>
         /// <returns>A list of active skill categories.</returns>
-        public static Dictionary<SkillCategoryType, SkillCategoryAttribute> GetActiveSkillCategories()
+        public static Dictionary<SkillCategoryType, SkillCategoryAttribute> GetAllActiveSkillCategories()
         {
             return _activeCategories.ToDictionary(x => x.Key, y => y.Value);
         }

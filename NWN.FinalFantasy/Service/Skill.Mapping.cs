@@ -31,6 +31,7 @@ namespace NWN.FinalFantasy.Service
             _itemToSkillMapping[BaseItem.QuarterStaff] = SkillType.Staff;
             _itemToSkillMapping[BaseItem.LightMace] = SkillType.Rod;
             _itemToSkillMapping[BaseItem.Longbow] = SkillType.Longbow;
+            Console.WriteLine("Completed item to skill mappings successfully.");
         }
 
         /// <summary>

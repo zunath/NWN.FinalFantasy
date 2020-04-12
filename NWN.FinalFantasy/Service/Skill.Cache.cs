@@ -9,12 +9,27 @@ namespace NWN.FinalFantasy.Service
 {
     public static partial class Skill
     {
-        private static readonly HashSet<SkillCategoryType> _categoriesWithSkillContributing = new HashSet<SkillCategoryType>();
-        private static readonly Dictionary<SkillCategoryType, SkillCategoryAttribute> _categories = new Dictionary<SkillCategoryType, SkillCategoryAttribute>();
-        private static readonly Dictionary<SkillCategoryType, List<SkillType>> _skillsByCategory = new Dictionary<SkillCategoryType, List<SkillType>>();
-        private static readonly Dictionary<SkillType, SkillAttribute> _skills = new Dictionary<SkillType, SkillAttribute>();
-        private static readonly Dictionary<SkillType, SkillAttribute> _skillsContributingToCap = new Dictionary<SkillType, SkillAttribute>();
+        // All categories, including inactive
+        private static readonly Dictionary<SkillCategoryType, SkillCategoryAttribute> _allCategories = new Dictionary<SkillCategoryType, SkillCategoryAttribute>();
+        private static readonly Dictionary<SkillCategoryType, SkillCategoryAttribute> _allCategoriesWithSkillContributing = new Dictionary<SkillCategoryType, SkillCategoryAttribute>();
 
+        // Active categories only
+        private static readonly Dictionary<SkillCategoryType, SkillCategoryAttribute> _activeCategories = new Dictionary<SkillCategoryType, SkillCategoryAttribute>();
+        private static readonly Dictionary<SkillCategoryType, SkillCategoryAttribute> _activeCategoriesWithSkillContributing = new Dictionary<SkillCategoryType, SkillCategoryAttribute>();
+
+        // All skills, including inactive
+        private static readonly Dictionary<SkillType, SkillAttribute> _allSkills = new Dictionary<SkillType, SkillAttribute>();
+        private static readonly Dictionary<SkillCategoryType, List<SkillType>> _allSkillsByCategory = new Dictionary<SkillCategoryType, List<SkillType>>();
+        private static readonly Dictionary<SkillType, SkillAttribute> _allSkillsContributingToCap = new Dictionary<SkillType, SkillAttribute>();
+
+        // Active skills only
+        private static readonly Dictionary<SkillType, SkillAttribute> _activeSkills = new Dictionary<SkillType, SkillAttribute>();
+        private static readonly Dictionary<SkillCategoryType, List<SkillType>> _activeSkillsByCategory = new Dictionary<SkillCategoryType, List<SkillType>>();
+        private static readonly Dictionary<SkillType, SkillAttribute> _activeSkillsContributingToCap = new Dictionary<SkillType, SkillAttribute>();
+
+        /// <summary>
+        /// When the module loads, skills and categories are organized into dictionaries for quick look-ups later on.
+        /// </summary>
         [NWNEventHandler("mod_load")]
         public static void CacheData()
         {
@@ -23,55 +38,157 @@ namespace NWN.FinalFantasy.Service
             var categories = Enum.GetValues(typeof(SkillCategoryType)).Cast<SkillCategoryType>();
             foreach (var category in categories)
             {
-                _categories[category] = category.GetAttribute<SkillCategoryType, SkillCategoryAttribute>();
-                _skillsByCategory[category] = new List<SkillType>();
+                var categoryDetail = category.GetAttribute<SkillCategoryType, SkillCategoryAttribute>();
+                _allCategories[category] = categoryDetail;
+                _allSkillsByCategory[category] = new List<SkillType>();
+
+                if (categoryDetail.IsActive)
+                {
+                    _activeSkillsByCategory[category] = new List<SkillType>();
+                }
+
             }
 
             // Organize skills to make later reads quicker.
             var skills = Enum.GetValues(typeof(SkillType)).Cast<SkillType>();
             foreach (var skill in skills)
             {
-                var attr = skill.GetAttribute<SkillType, SkillAttribute>();
-                _skills[skill] = attr;
+                var skillDetail = skill.GetAttribute<SkillType, SkillAttribute>();
+                var categoryDetail = _allCategories[skillDetail.Category];
 
-                if (attr.ContributesToSkillCap)
+                // Add to the skills cache
+                _allSkills[skill] = skillDetail;
+
+                // Add to contributing cache if the skill contributes towards the skill cap.
+                if (skillDetail.ContributesToSkillCap)
                 {
-                    _skillsContributingToCap[skill] = attr;
+                    _allSkillsContributingToCap[skill] = skillDetail;
+                    _allCategoriesWithSkillContributing[skillDetail.Category] = categoryDetail;
 
-                    if (!_categoriesWithSkillContributing.Contains(attr.Category))
-                        _categoriesWithSkillContributing.Add(attr.Category);
+                    if (categoryDetail.IsActive)
+                    {
+                        _activeCategoriesWithSkillContributing[skillDetail.Category] = categoryDetail;
+                    }
+
+                    if (skillDetail.IsActive)
+                    {
+                        _activeSkillsContributingToCap[skill] = skillDetail;
+                    }
                 }
 
-                _skillsByCategory[attr.Category].Add(skill);
+                // Add to active cache if the skill is active
+                if (skillDetail.IsActive)
+                {
+                    _activeSkills[skill] = skillDetail;
+
+                    if(!_activeSkillsByCategory.ContainsKey(skillDetail.Category))
+                        _activeSkillsByCategory[skillDetail.Category] = new List<SkillType>();
+
+                    _activeSkillsByCategory[skillDetail.Category].Add(skill);
+                }
+
+                // Add to active category cache if the skill and category are both active.
+                if (skillDetail.IsActive && categoryDetail.IsActive)
+                {
+                    _activeCategories[skillDetail.Category] = categoryDetail;
+                }
+
+                // Add to the skills by category cache.
+                _allSkillsByCategory[skillDetail.Category].Add(skill);
             }
+            Console.WriteLine("Skill data cached successfully.");
         }
 
         /// <summary>
-        /// Retrieves a list of available skills.
+        /// Retrieves a list of all skills, including inactive ones.
         /// </summary>
-        /// <returns>A list of available skills.</returns>
-        public static Dictionary<SkillType, SkillAttribute> GetSkills()
+        /// <returns>A list of all skills.</returns>
+        public static Dictionary<SkillType, SkillAttribute> GetAllSkills()
         {
-            return _skills.ToDictionary(x => x.Key, y => y.Value);
+            return _allSkills.ToDictionary(x => x.Key, y => y.Value);
         }
 
         /// <summary>
-        /// Retrieves a list of available skill categories.
+        /// Retrieves a list of all skills, excluding inactive ones.
         /// </summary>
-        /// <returns>A list of available skill categories</returns>
-        public static Dictionary<SkillCategoryType, SkillCategoryAttribute> GetSkillCategories()
+        /// <returns>A list of active skills.</returns>
+        public static Dictionary<SkillType, SkillAttribute> GetAllActiveSkills()
         {
-            return _categories.ToDictionary(x => x.Key, y => y.Value);
+            return _activeSkills.ToDictionary(x => x.Key, y => y.Value);
         }
 
         /// <summary>
-        /// Retrieves all skills by a given category.
+        /// Retrieves a list of all skills which contribute towards the skill cap.
+        /// </summary>
+        /// <returns>A list of skills contributing towards the skill cap.</returns>
+        public static Dictionary<SkillType, SkillAttribute> GetAllContributingSkills()
+        {
+            return _allSkillsContributingToCap.ToDictionary(x => x.Key, y => y.Value);
+        }
+
+        /// <summary>
+        /// Retrieves a list of active skills which contribute towards the skill cap.
+        /// </summary>
+        /// <returns>A list of active skills contributing towards the skill cap.</returns>
+        public static Dictionary<SkillType, SkillAttribute> GetActiveContributingSkills()
+        {
+            return _activeSkillsContributingToCap.ToDictionary(x => x.Key, y => y.Value);
+        }
+
+        /// <summary>
+        /// Retrieves a list of all skill categories, including inactive ones.
+        /// </summary>
+        /// <returns>A list of all skill categories</returns>
+        public static Dictionary<SkillCategoryType, SkillCategoryAttribute> GetAllSkillCategories()
+        {
+            return _allCategories.ToDictionary(x => x.Key, y => y.Value);
+        }
+
+        /// <summary>
+        /// Retrieves a list of all skill categories, excluding inactive ones.
+        /// </summary>
+        /// <returns>A list of active skill categories.</returns>
+        public static Dictionary<SkillCategoryType, SkillCategoryAttribute> GetActiveSkillCategories()
+        {
+            return _activeCategories.ToDictionary(x => x.Key, y => y.Value);
+        }
+
+        /// <summary>
+        /// Retrieves a list of all skill categories which have skills that contribute towards the skill cap.
+        /// </summary>
+        /// <returns>A list of skill categories which have skills that contribute towards the skill cap.</returns>
+        public static Dictionary<SkillCategoryType, SkillCategoryAttribute> GetAllContributingSkillCategories()
+        {
+            return _allCategoriesWithSkillContributing.ToDictionary(x => x.Key, y => y.Value);
+        }
+
+        /// <summary>
+        /// Retrieves a list of active skill categories which have skills that contribute towards the skill cap.
+        /// </summary>
+        /// <returns>A list of skill categores which have skills that contribute towards the skill cap.</returns>
+        public static Dictionary<SkillCategoryType, SkillCategoryAttribute> GetActiveContributingSkillCategories()
+        {
+            return _activeCategoriesWithSkillContributing.ToDictionary(x => x.Key, y => y.Value);
+        }
+
+        /// <summary>
+        /// Retrieves all skills by a given category, including inactive ones.
         /// </summary>
         /// <param name="category">The category of skills to retrieve.</param>
         /// <returns>A dictionary containing skills in the specified category.</returns>
-        public static Dictionary<SkillType, SkillAttribute> GetSkillsByCategory(SkillCategoryType category)
+        public static Dictionary<SkillType, SkillAttribute> GetAllSkillsByCategory(SkillCategoryType category)
         {
-            return _skillsByCategory[category].ToDictionary(x => x, y => _skills[y]);
+            return _allSkillsByCategory[category].ToDictionary(x => x, y => _allSkills[y]);
+        }
+
+        /// <summary>
+        /// Retrieves active skills by a given category, excluding inactive ones.
+        /// </summary>
+        /// <param name="category">The category of skills to retrieve.</param>
+        /// <returns>A dictionary containing active skills in the specified category.</returns>
+        public static Dictionary<SkillType, SkillAttribute> GetActiveSkillsByCategory(SkillCategoryType category)
+        {
+            return _activeSkillsByCategory[category].ToDictionary(x => x, y => _activeSkills[y]);
         }
 
         /// <summary>
@@ -81,7 +198,7 @@ namespace NWN.FinalFantasy.Service
         /// <returns>An object containing details about a skill.</returns>
         public static SkillAttribute GetSkillDetails(SkillType skillType)
         {
-            return _skills[skillType];
+            return _allSkills[skillType];
         }
 
         /// <summary>
@@ -91,7 +208,7 @@ namespace NWN.FinalFantasy.Service
         /// <returns>An object containing details about a skill category.</returns>
         public static SkillCategoryAttribute GetSkillCategoryDetails(SkillCategoryType category)
         {
-            return _categories[category];
+            return _allCategories[category];
         }
     }
 }

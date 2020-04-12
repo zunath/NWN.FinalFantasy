@@ -18,7 +18,7 @@ namespace NWN.FinalFantasy.Feature
 
             var playerId = GetObjectUUID(player);
             var dbPlayer = DB.Get<Player>(playerId);
-            foreach (var skill in Skill.GetSkills())
+            foreach (var skill in Skill.GetAllSkills())
             {
                 if (!dbPlayer.Skills.ContainsKey(skill.Key))
                 {

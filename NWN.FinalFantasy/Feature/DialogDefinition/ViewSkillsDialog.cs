@@ -54,7 +54,7 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
 
             page.Header = "Please select a skill category.";
 
-            var categories = Skill.GetSkillCategories();
+            var categories = Skill.GetActiveSkillCategories();
             foreach (var (type, details) in categories)
             {
                 page.AddResponse(details.Name, () =>
@@ -81,7 +81,7 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
             var categoryDetails = Skill.GetSkillCategoryDetails(model.SelectedCategory);
             page.Header = $"{ColorToken.Green("Selected Category: ")}{categoryDetails.Name}\n\n Please select a skill.";
 
-            var skills = Skill.GetSkillsByCategory(model.SelectedCategory);
+            var skills = Skill.GetActiveSkillsByCategory(model.SelectedCategory);
             foreach (var (type, details) in skills)
             {
                 page.AddResponse(details.Name, () =>

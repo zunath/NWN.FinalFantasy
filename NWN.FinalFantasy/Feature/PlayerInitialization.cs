@@ -38,6 +38,7 @@ namespace NWN.FinalFantasy.Feature
             GrantBasicFeats(player);
             InitializeHotBar(player);
 
+            dbPlayer.UnallocatedSP = 10;
             dbPlayer.Version = 1;
             DB.Set(playerId, dbPlayer);
         }

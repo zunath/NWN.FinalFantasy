@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using NWN.FinalFantasy.Core;
 
 namespace NWN.FinalFantasy.Service
 {
@@ -109,6 +110,18 @@ namespace NWN.FinalFantasy.Service
             { 99, 280000 },
             { 100, 400000 }
         };
+        private static readonly Dictionary<int, int> _skillTotalXP = new Dictionary<int, int>();
+
+        [NWNEventHandler("mod_load")]
+        public static void CalculateTotalXP()
+        {
+            var totalXP = 0;
+            foreach (var (level, xp) in _skillXPRequirements)
+            {
+                totalXP += xp;
+                _skillTotalXP[level] = totalXP;
+            }
+        }
 
         /// <summary>
         /// Gets the amount of XP required to reach the next level.
@@ -121,6 +134,19 @@ namespace NWN.FinalFantasy.Service
                 throw new Exception($"Level {level} not registered in the SkillXPRequirements dictionary.");
 
             return _skillXPRequirements[level];
+        }
+
+        /// <summary>
+        /// Gets the total amount of XP attained at this level, excluding the XP needed to reach the next level.
+        /// </summary>
+        /// <param name="level">The level to retrieve.</param>
+        /// <returns>The total amount of XP attained at this level</returns>
+        public static int GetTotalXP(int level)
+        {
+            if (!_skillTotalXP.ContainsKey(level))
+                throw new Exception($"Level {level} not registered in the SkillTotalXP dictionary.");
+
+            return _skillTotalXP[level];
         }
     }
 }

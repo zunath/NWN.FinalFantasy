@@ -54,6 +54,7 @@ namespace NWN.FinalFantasy.Service
 
                 foreach (var (perkType, perkDetail) in perks)
                 {
+                    Console.WriteLine($"Registering perk: {perkDetail.Name}");
                     var categoryDetail = _allCategories[perkDetail.Category];
 
                     // Add to the perks cache
@@ -120,6 +121,24 @@ namespace NWN.FinalFantasy.Service
             return _activeCategories.ToDictionary(x => x.Key, y => y.Value);
         }
 
+        /// <summary>
+        /// Retrieves details about an individual perk.
+        /// </summary>
+        /// <param name="perkType">The type of perk to retrieve.</param>
+        /// <returns>An object containing a perk's details.</returns>
+        public static PerkDetail GetPerkDetails(PerkType perkType)
+        {
+            return _allPerks[perkType];
+        }
 
+        /// <summary>
+        /// Retrieves details about an individual perk category.
+        /// </summary>
+        /// <param name="categoryType">The type of category to retrieve.</param>
+        /// <returns>An object containing a perk category's details.</returns>
+        public static PerkCategoryAttribute GetPerkCategoryDetails(PerkCategoryType categoryType)
+        {
+            return _allCategories[categoryType];
+        }
     }
 }

@@ -309,10 +309,14 @@ namespace NWN.FinalFantasy.Service
 
             var page = dialog.CurrentPage;
 
-            // Always reset the page's information and then rerun the init method.
-            page.Header = string.Empty;
-            page.Responses.Clear();
-            page.PageInit?.Invoke(page);
+            // The AppearsWhen call happens for every node.
+            // We only want to load the header and responses time so ensure it only happens for the first node.
+            if (nodeType == 1 && nodeId == 0)
+            {
+                page.Header = string.Empty;
+                page.Responses.Clear();
+                page.PageInit?.Invoke(page);
+            }
 
             int currentSelectionNumber = nodeId + 1;
             bool displayNode = false;

@@ -8,6 +8,7 @@ namespace NWN.FinalFantasy.Service.PerkService
     public interface IPerkPurchaseRequirement
     {
         bool CheckRequirements(uint player);
+        string RequirementText { get; }
     }
 
     public interface IPerkActivationRequirement
@@ -34,6 +35,15 @@ namespace NWN.FinalFantasy.Service.PerkService
             var rank = skill.Rank;
 
             return rank >= _requiredRank;
+        }
+
+        public string RequirementText
+        {
+            get
+            {
+                var skillDetails = Skill.GetSkillDetails(_type);
+                return $"{skillDetails.Name} rank {_requiredRank}";
+            }
         }
 
         public void AfterActivationAction(uint player)

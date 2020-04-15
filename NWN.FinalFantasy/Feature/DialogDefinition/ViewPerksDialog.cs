@@ -143,11 +143,11 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
 
                 foreach (var req in requirements)
                 {
-                    var meetsRequirement = req.CheckRequirements(player);
-                    var reqText = meetsRequirement ? ColorToken.Green(req.RequirementText) : ColorToken.Red(req.RequirementText);
+                    var requirementMet = string.IsNullOrWhiteSpace(req.CheckRequirements(player));
+                    var reqText = requirementMet ? ColorToken.Green(req.RequirementText) : ColorToken.Red(req.RequirementText);
                     text += reqText;
 
-                    if (!meetsRequirement) meetsRequirements = false;
+                    if (!requirementMet) meetsRequirements = false;
                 }
 
                 return text;
@@ -279,7 +279,7 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
 
                 foreach (var req in perkLevel.PurchaseRequirements)
                 {
-                    var meetsRequirement = req.CheckRequirements(player);
+                    var meetsRequirement = string.IsNullOrWhiteSpace(req.CheckRequirements(player));
                     if (!meetsRequirement)
                         meetsRequirements = false;
                 }
@@ -287,18 +287,6 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
                 if(meetsRequirements)
                     yield return perk;
             }
-        }
-
-        [NWNEventHandler("test")]
-        public static void Test()
-        {
-            var player = GetLastUsedBy();
-            var playerId = GetObjectUUID(player);
-            var dbPlayer = DB.Get<Player>(playerId);
-            dbPlayer.UnallocatedSP = 9999;
-
-            DB.Set(playerId, dbPlayer);
-            SendMessageToPC(player, "Gave 9999 SP");
         }
     }
 }

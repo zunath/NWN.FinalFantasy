@@ -7,15 +7,20 @@ namespace NWN.FinalFantasy.Service.PerkService
 {
     public interface IPerkPurchaseRequirement
     {
-        bool CheckRequirements(uint player);
+        string CheckRequirements(uint player);
         string RequirementText { get; }
     }
 
     public interface IPerkActivationRequirement
     {
+        bool UsedToCalculateEffectiveLevel { get; }
+        string CheckRequirements(uint player);
         void AfterActivationAction(uint player);
     }
 
+    /// <summary>
+    /// Adds a minimum skill level as a requirement to purchase or activate a perk.
+    /// </summary>
     public class PerkSkillRequirement : IPerkPurchaseRequirement, IPerkActivationRequirement
     {
         private readonly SkillType _type;
@@ -27,14 +32,18 @@ namespace NWN.FinalFantasy.Service.PerkService
             _requiredRank = requiredRank;
         }
 
-        public bool CheckRequirements(uint player)
+        public bool UsedToCalculateEffectiveLevel => true;
+
+        public string CheckRequirements(uint player)
         {
             var playerId = GetObjectUUID(player);
             var dbPlayer = DB.Get<Player>(playerId);
             var skill = dbPlayer.Skills[_type];
             var rank = skill.Rank;
 
-            return rank >= _requiredRank;
+            if (rank >= _requiredRank) return string.Empty;
+
+            return $"Your skill rank is too low. (Your rank is {rank} versus required rank {_requiredRank})";
         }
 
         public string RequirementText
@@ -51,6 +60,9 @@ namespace NWN.FinalFantasy.Service.PerkService
         }
     }
 
+    /// <summary>
+    /// Adds an MP requirement to activate a perk.
+    /// </summary>
     public class PerkMPRequirement : IPerkActivationRequirement
     {
         private readonly int _requiredMP;
@@ -60,12 +72,19 @@ namespace NWN.FinalFantasy.Service.PerkService
             _requiredMP = requiredMP;
         }
 
-        public bool CheckRequirements(uint player)
+        public bool UsedToCalculateEffectiveLevel => false;
+
+        public string CheckRequirements(uint player)
         {
+            // NPCs and DMs are assumed to be able to activate.
+            if (!GetIsPC(player) || GetIsDM(player)) return string.Empty;
+
             var playerId = GetObjectUUID(player);
             var dbPlayer = DB.Get<Player>(playerId);
 
-            return dbPlayer.MP > _requiredMP;
+            if (dbPlayer.MP > _requiredMP) return string.Empty;
+
+            return $"Not enough MP. (Required: {_requiredMP})";
         }
 
         public void AfterActivationAction(uint player)
@@ -78,6 +97,9 @@ namespace NWN.FinalFantasy.Service.PerkService
         }
     }
 
+    /// <summary>
+    /// Adds a stamina requirement to activate a perk.
+    /// </summary>
     public class PerkStaminaRequirement : IPerkActivationRequirement
     {
         private readonly int _requiredSTM;
@@ -87,12 +109,18 @@ namespace NWN.FinalFantasy.Service.PerkService
             _requiredSTM = requiredSTM;
         }
 
-        public bool CheckRequirements(uint player)
+        public bool UsedToCalculateEffectiveLevel => false;
+
+        public string CheckRequirements(uint player)
         {
+            // NPCs and DMs are assumed to be able to activate.
+            if (!GetIsPC(player) || GetIsDM(player)) return string.Empty;
+
             var playerId = GetObjectUUID(player);
             var dbPlayer = DB.Get<Player>(playerId);
 
-            return dbPlayer.Stamina > _requiredSTM;
+            if (dbPlayer.Stamina > _requiredSTM) return string.Empty;
+            return $"Not enough stamina. (Required: {_requiredSTM})";
         }
 
         public void AfterActivationAction(uint player)

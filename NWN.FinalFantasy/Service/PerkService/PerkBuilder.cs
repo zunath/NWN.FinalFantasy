@@ -73,22 +73,6 @@ namespace NWN.FinalFantasy.Service.PerkService
         }
 
         /// <summary>
-        /// Adds an action to run when a specific trigger is executed.
-        /// </summary>
-        /// <param name="triggerType">The type of trigger to capture</param>
-        /// <param name="action">The action to run when the trigger is executed.</param>
-        /// <returns>A perk builder with the configured options</returns>
-        public PerkBuilder AddTriggerAction(PerkTriggerType triggerType, Action action)
-        {
-            if(!_activePerk.TriggerActions.ContainsKey(triggerType))
-                _activePerk.TriggerActions[triggerType] = new List<Action>();
-
-            _activePerk.TriggerActions[triggerType].Add(action);
-
-            return this;
-        }
-
-        /// <summary>
         /// Creates a new perk level on the active perk we're building.
         /// </summary>
         /// <param name="level">The new perk level.</param>
@@ -97,6 +81,46 @@ namespace NWN.FinalFantasy.Service.PerkService
         {
             _activeLevel = new PerkLevel();
             _activePerk.PerkLevels[level] = _activeLevel;
+
+            return this;
+        }
+
+        /// <summary>
+        /// Assigns a recast group on the active perk we're building.
+        /// Calling this more than once will replace the previous recast group.
+        /// </summary>
+        /// <param name="recastGroup">The recast group to set.</param>
+        /// <returns>A perk builder with the configured options</returns>
+        public PerkBuilder UsesRecastGroup(RecastGroup recastGroup)
+        {
+            _activePerk.RecastGroup = recastGroup;
+
+            return this;
+        }
+
+        /// <summary>
+        /// Assigns an activation type on the active perk we're building.
+        /// Calling this more than once will replace the previous activation type.
+        /// </summary>
+        /// <param name="activationType">The activation type to set.</param>
+        /// <returns>A perk builder with the configured options</returns>
+        public PerkBuilder UsesActivationType(PerkActivationType activationType)
+        {
+            _activePerk.ActivationType = activationType;
+
+            return this;
+        }
+
+        /// <summary>
+        /// Assigns an activation delay on the active perk we're building.
+        /// This is typically used for casting times.
+        /// Calling this more than once will replace the previous activation type.
+        /// </summary>
+        /// <param name="delay">The amount of time to delay, in seconds.</param>
+        /// <returns>A perk builder with the configured options</returns>
+        public PerkBuilder HasActivationDelay(float delay)
+        {
+            _activePerk.ActivationDelay = delay;
 
             return this;
         }
@@ -133,6 +157,7 @@ namespace NWN.FinalFantasy.Service.PerkService
         {
             var requirement = new PerkSkillRequirement(skill, requiredRank);
             _activeLevel.PurchaseRequirements.Add(requirement);
+            _activeLevel.EffectiveLevelRequirements.Add(requirement);
             _activeLevel.ActivationRequirements.Add(requirement);
 
             return this;

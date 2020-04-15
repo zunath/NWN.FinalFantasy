@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using NWN.FinalFantasy.Enumeration;
 using NWN.FinalFantasy.Service.PerkService;
 
@@ -13,6 +14,7 @@ namespace NWN.FinalFantasy.Entity
             RoleplayProgress = new RoleplayProgress();
             Skills = new Dictionary<SkillType, PlayerSkill>();
             Perks = new Dictionary<PerkType, int>();
+            RecastTimes = new Dictionary<RecastGroup, DateTime>();
         }
 
         public int Version { get; set; }
@@ -45,6 +47,7 @@ namespace NWN.FinalFantasy.Entity
         public Dictionary<string, string> MapProgressions { get; set; }
         public Dictionary<SkillType, PlayerSkill> Skills { get; set; }
         public Dictionary<PerkType, int> Perks { get; set; }
+        public Dictionary<RecastGroup, DateTime> RecastTimes { get; set; }
     }
 
     public class MapPin

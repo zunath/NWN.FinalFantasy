@@ -179,12 +179,12 @@ namespace NWN.FinalFantasy.Core.NWScript
         ///   PLEASE NOTE: This is an expensive function and may
         ///   degrade performance if used frequently.
         /// </summary>
-        public static int LineOfSightObject(uint oSource, uint oTarget)
+        public static bool LineOfSightObject(uint oSource, uint oTarget)
         {
             Internal.NativeFunctions.StackPushObject(oTarget);
             Internal.NativeFunctions.StackPushObject(oSource);
             Internal.NativeFunctions.CallBuiltIn(752);
-            return Internal.NativeFunctions.StackPopInteger();
+            return Internal.NativeFunctions.StackPopInteger() == 1;
         }
 
         /// <summary>
@@ -195,12 +195,12 @@ namespace NWN.FinalFantasy.Core.NWScript
         ///   PLEASE NOTE: This is an expensive function and may
         ///   degrade performance if used frequently.
         /// </summary>
-        public static int LineOfSightVector(Vector? vSource, Vector? vTarget)
+        public static bool LineOfSightVector(Vector? vSource, Vector? vTarget)
         {
             Internal.NativeFunctions.StackPushVector(vTarget.HasValue ? vTarget.Value : new Vector());
             Internal.NativeFunctions.StackPushVector(vSource.HasValue ? vSource.Value : new Vector());
             Internal.NativeFunctions.CallBuiltIn(753);
-            return Internal.NativeFunctions.StackPopInteger();
+            return Internal.NativeFunctions.StackPopInteger() == 1;
         }
 
         /// <summary>

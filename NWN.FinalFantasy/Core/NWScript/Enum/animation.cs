@@ -1,6 +1,5 @@
 namespace NWN.FinalFantasy.Core.NWScript.Enum
 {
-    // These are for GetFirstInPersistentObject() and GetNextInPersistentObject()
     public enum Animation
     {
         // Looping animation constants.
@@ -79,4 +78,6 @@ namespace NWN.FinalFantasy.Core.NWScript.Enum
         DoorOpen2,
         DoorDestro7
     }
+
+    // These are for GetFirstInPersistentObject() and GetNextInPersistentObject()
 }

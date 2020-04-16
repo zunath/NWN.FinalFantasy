@@ -76,9 +76,9 @@ namespace NWN.FinalFantasy.Feature
                 PostString(player, backgroundBar, centerWindowX + 2, windowY + 1, ScreenAnchor.TopRight, 10.0f, Gui.ColorBlack, Gui.ColorBlack, HPBackgroundGuiID, Gui.FontName);
                 PostString(player, backgroundBar, centerWindowX + 2, windowY + 2, ScreenAnchor.TopRight, 10.0f, Gui.ColorBlack, Gui.ColorBlack, MPBackgroundGuiID, Gui.FontName);
                 PostString(player, backgroundBar, centerWindowX + 2, windowY + 3, ScreenAnchor.TopRight, 10.0f, Gui.ColorBlack, Gui.ColorBlack, STMBackgroundGuiID, Gui.FontName);
-            }
-            Gui.DrawWindow(player, WindowId, ScreenAnchor.TopRight, windowX, windowY, 23, 3);
 
+                Gui.DrawWindow(player, WindowId, ScreenAnchor.TopRight, windowX, windowY, 23, 3);
+            }
         }
 
         [NWNEventHandler("mod_exit")]

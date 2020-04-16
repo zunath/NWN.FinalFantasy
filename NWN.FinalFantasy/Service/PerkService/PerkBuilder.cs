@@ -1,6 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using NWN.FinalFantasy.Core.NWScript.Enum;
+using NWN.FinalFantasy.Core.NWScript.Enum.VisualEffect;
 using NWN.FinalFantasy.Enumeration;
 
 namespace NWN.FinalFantasy.Service.PerkService
@@ -112,6 +112,19 @@ namespace NWN.FinalFantasy.Service.PerkService
         }
 
         /// <summary>
+        /// Assigns a visual effect to the caster of the spell. This will display while casting.
+        /// Calling this more than once will replace the previous visual effect.
+        /// </summary>
+        /// <param name="vfx">The visual effect to display.</param>
+        /// <returns>A perk builder with the configured options</returns>
+        public PerkBuilder DisplaysVisualEffectWhenActivating(VisualEffect vfx = VisualEffect.Vfx_Dur_Elemental_Shield)
+        {
+            _activePerk.ActivationVisualEffect = vfx;
+
+            return this;
+        }
+
+        /// <summary>
         /// Assigns an impact action on the active perk we're building.
         /// Calling this more than once will replace the previous action.
         /// Impact actions are fired when a perk is used. The timing of when it fires depends on the activation type.
@@ -130,13 +143,27 @@ namespace NWN.FinalFantasy.Service.PerkService
         /// <summary>
         /// Assigns an activation delay on the active perk we're building.
         /// This is typically used for casting times.
-        /// Calling this more than once will replace the previous activation type.
+        /// Calling this more than once will replace the previous activation delay.
         /// </summary>
         /// <param name="delay">The amount of time to delay, in seconds.</param>
         /// <returns>A perk builder with the configured options</returns>
         public PerkBuilder HasActivationDelay(float delay)
         {
             _activePerk.ActivationDelay = delay;
+
+            return this;
+        }
+
+        /// <summary>
+        /// Assigns a recast delay on the active perk we're building.
+        /// This prevents the ability from being used again until the specified time has passed.
+        /// Calling this more than once will replace the previous recast delay.
+        /// </summary>
+        /// <param name="delay"></param>
+        /// <returns></returns>
+        public PerkBuilder HasRecastDelay(float delay)
+        {
+            _activePerk.RecastDelay = delay;
 
             return this;
         }

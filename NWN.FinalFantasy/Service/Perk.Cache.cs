@@ -90,14 +90,14 @@ namespace NWN.FinalFantasy.Service
         }
 
         /// <summary>
-        /// Reads all of the enum values on the RecastGroup enumeration and stores their description
-        /// attribute into the cache.
+        /// Reads all of the enum values on the RecastGroup enumeration and stores their short name into the cache.
         /// </summary>
         private static void CacheRecastGroupNames()
         {
             foreach (var recast in Enum.GetValues(typeof(RecastGroup)).Cast<RecastGroup>())
             {
-                _recastDescriptions[recast] = recast.GetDescriptionAttribute();
+                var attr = recast.GetAttribute<RecastGroup, RecastGroupAttribute>();
+                _recastDescriptions[recast] = attr.ShortName;
             }
         }
 

@@ -7,7 +7,7 @@ using static NWN.FinalFantasy.Core.NWScript.NWScript;
 
 namespace NWN.FinalFantasy.Feature
 {
-    public class PlayerStatusWindow
+    public static class PlayerStatusWindow
     {
         private const int HPGuiID = 1;
         private const int HPBackgroundGuiID = 2;
@@ -56,14 +56,19 @@ namespace NWN.FinalFantasy.Feature
 
             const int windowX = 4;
             const int windowY = 4;
+            const int windowWidth = 25;
 
             // Draw order is backwards. The top-most layer needs to be drawn first.
-            var centerWindowX = Gui.CenterStringInWindow(backgroundBar, windowX, 25);
+            var centerWindowX = Gui.CenterStringInWindow(backgroundBar, windowX, windowWidth);
 
             // Draw the text
-            PostString(player, $"HP: {currentHP} / {maxHP}", centerWindowX + 9, windowY + 1, ScreenAnchor.TopRight, 10.0f, Gui.ColorWhite, Gui.ColorWhite, HPTextGuiID, Gui.TextName);
-            PostString(player, $"MP: {currentMP} / {maxMP}", centerWindowX + 9, windowY + 2, ScreenAnchor.TopRight, 10.0f, Gui.ColorWhite, Gui.ColorWhite, MPTextGuiID, Gui.TextName);
-            PostString(player, $"STM: {currentSTM} / {maxSTM}", centerWindowX + 9, windowY + 3, ScreenAnchor.TopRight, 10.0f, Gui.ColorWhite, Gui.ColorWhite, STMTextGuiID, Gui.TextName);
+            var hpText = "HP:".PadRight(5, ' ') + $"{currentHP.ToString().PadLeft(4, ' ')} / {maxHP.ToString().PadLeft(4, ' ')}";
+            var mpText = "MP:".PadRight(5, ' ') + $"{currentMP.ToString().PadLeft(4, ' ')} / {maxMP.ToString().PadLeft(4, ' ')}";
+            var stmText = "STM:".PadRight(5, ' ') + $"{currentSTM.ToString().PadLeft(4, ' ')} / {maxSTM.ToString().PadLeft(4, ' ')}";
+            
+            PostString(player, hpText, centerWindowX + 8, windowY + 1, ScreenAnchor.TopRight, 10.0f, Gui.ColorWhite, Gui.ColorWhite, HPTextGuiID, Gui.TextName);
+            PostString(player, mpText, centerWindowX + 8, windowY + 2, ScreenAnchor.TopRight, 10.0f, Gui.ColorWhite, Gui.ColorWhite, MPTextGuiID, Gui.TextName);
+            PostString(player, stmText, centerWindowX + 8, windowY + 3, ScreenAnchor.TopRight, 10.0f, Gui.ColorWhite, Gui.ColorWhite, STMTextGuiID, Gui.TextName);
 
             // Draw the bars
             PostString(player, hpBar, centerWindowX + 2, windowY + 1, ScreenAnchor.TopRight, 10.0f, Gui.ColorHealthBar, Gui.ColorHealthBar, HPGuiID, Gui.FontName);
@@ -77,7 +82,7 @@ namespace NWN.FinalFantasy.Feature
                 PostString(player, backgroundBar, centerWindowX + 2, windowY + 2, ScreenAnchor.TopRight, 10.0f, Gui.ColorBlack, Gui.ColorBlack, MPBackgroundGuiID, Gui.FontName);
                 PostString(player, backgroundBar, centerWindowX + 2, windowY + 3, ScreenAnchor.TopRight, 10.0f, Gui.ColorBlack, Gui.ColorBlack, STMBackgroundGuiID, Gui.FontName);
 
-                Gui.DrawWindow(player, WindowId, ScreenAnchor.TopRight, windowX, windowY, 23, 3);
+                Gui.DrawWindow(player, WindowId, ScreenAnchor.TopRight, windowX, windowY, windowWidth-2, 3);
             }
         }
 

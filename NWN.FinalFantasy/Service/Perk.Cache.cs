@@ -24,6 +24,9 @@ namespace NWN.FinalFantasy.Service
         private static readonly Dictionary<PerkType, PerkDetail> _activePerks = new Dictionary<PerkType, PerkDetail>();
         private static readonly Dictionary<PerkCategoryType, List<PerkType>> _activePerksByCategory = new Dictionary<PerkCategoryType, List<PerkType>>();
 
+        // Recast Group Descriptions
+        private static readonly Dictionary<RecastGroup, string> _recastDescriptions = new Dictionary<RecastGroup, string>();
+
         [NWNEventHandler("mod_load")]
         public static void CacheData()
         {
@@ -82,7 +85,33 @@ namespace NWN.FinalFantasy.Service
                 }
             }
 
+            CacheRecastGroupNames();
             Console.WriteLine("Perk data cached successfully.");
+        }
+
+        /// <summary>
+        /// Reads all of the enum values on the RecastGroup enumeration and stores their description
+        /// attribute into the cache.
+        /// </summary>
+        private static void CacheRecastGroupNames()
+        {
+            foreach (var recast in Enum.GetValues(typeof(RecastGroup)).Cast<RecastGroup>())
+            {
+                _recastDescriptions[recast] = recast.GetDescriptionAttribute();
+            }
+        }
+
+        /// <summary>
+        /// Retrieves the human-readable name of a recast group.
+        /// </summary>
+        /// <param name="recastGroup">The recast group to retrieve.</param>
+        /// <returns>The name of a recast group.</returns>
+        public static string GetRecastGroupName(RecastGroup recastGroup)
+        {
+            if(!_recastDescriptions.ContainsKey(recastGroup))
+                throw new KeyNotFoundException($"Recast group {recastGroup} has not been registered. Did you forget the Description attribute?");
+
+            return _recastDescriptions[recastGroup];
         }
 
         /// <summary>

@@ -221,7 +221,7 @@ namespace NWN.FinalFantasy.Feature
             {
                 var armorPenalty = 1.0f;
                 var penaltyMessage = string.Empty;
-                for (var slot = 0; slot < NUM_INVENTORY_SLOTS; slot++)
+                for (var slot = 0; slot < NumberOfInventorySlots; slot++)
                 {
                     var item = GetItemInSlot((InventorySlot) slot, activator);
                     if (GetItemHasItemProperty(item, ItemPropertyType.HeavyArmor))

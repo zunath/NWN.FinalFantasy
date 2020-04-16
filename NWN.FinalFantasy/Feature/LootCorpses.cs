@@ -34,7 +34,7 @@ namespace NWN.FinalFantasy.Feature
             });
 
             // Dump equipped items in container
-            for (int slot = 0; slot < NUM_INVENTORY_SLOTS; slot++)
+            for (int slot = 0; slot < NumberOfInventorySlots; slot++)
             {
                 if (slot == (int)InventorySlot.CreatureArmor ||
                     slot == (int)InventorySlot.CreatureBite ||

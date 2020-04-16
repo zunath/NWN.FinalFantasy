@@ -111,6 +111,20 @@ namespace NWN.FinalFantasy.Service
             { 100, 400000 }
         };
         private static readonly Dictionary<int, int> _skillTotalXP = new Dictionary<int, int>();
+        private static readonly Dictionary<int, int> _skillDeltaXP = new Dictionary<int, int>
+        {
+            { 6, 600 },
+            { 5, 525 },
+            { 4, 488 },
+            { 3, 450 },
+            { 2, 375 },
+            { 1, 338 },
+            { 0, 300 },
+            { -1, 225 },
+            { -2, 150 },
+            { -3, 75 },
+            { -4, 38 }
+        };
 
         [NWNEventHandler("mod_load")]
         public static void CalculateTotalXP()
@@ -147,6 +161,19 @@ namespace NWN.FinalFantasy.Service
                 throw new Exception($"Level {level} not registered in the SkillTotalXP dictionary.");
 
             return _skillTotalXP[level];
+        }
+
+        /// <summary>
+        /// Retrieves the base XP amount by the delta of a player's skill rank versus the target's level.
+        /// If delta is outside of the valid range, zero will be returned.
+        /// </summary>
+        /// <param name="delta">The delta to compare.</param>
+        /// <returns>The base XP amount based on the delta. Returns 0 if delta is outside the range.</returns>
+        public static int GetDeltaXP(int delta)
+        {
+            if (!_skillDeltaXP.ContainsKey(delta)) return 0;
+
+            return _skillDeltaXP[delta];
         }
     }
 }

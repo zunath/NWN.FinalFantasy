@@ -76,7 +76,7 @@ namespace NWN.FinalFantasy.Feature
         /// <param name="player">The player to wipe an inventory for.</param>
         private static void ClearInventory(uint player)
         {
-            for (int slot = 0; slot < NUM_INVENTORY_SLOTS; slot++)
+            for (int slot = 0; slot < NumberOfInventorySlots; slot++)
             {
                 var item = GetItemInSlot((InventorySlot)slot, player);
                 if (!GetIsObjectValid(item)) continue;

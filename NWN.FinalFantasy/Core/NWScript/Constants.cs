@@ -5,7 +5,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         public const uint OBJECT_INVALID = 0x7F000000;
 
         //  Constants
-        public const int NUM_INVENTORY_SLOTS = 18;
+        public const int NumberOfInventorySlots = 18;
         public const float PI = 3.141592f;
         public const int EVENT_SPELL_CAST_AT = 1011;
         public const int PORTRAIT_INVALID = 65535;

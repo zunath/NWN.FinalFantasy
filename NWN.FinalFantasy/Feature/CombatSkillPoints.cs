@@ -1,9 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using NWN.FinalFantasy.Core;
+using NWN.FinalFantasy.Core.NWScript.Enum;
+using NWN.FinalFantasy.Core.NWScript.Enum.Item;
+using NWN.FinalFantasy.Entity;
 using NWN.FinalFantasy.Enumeration;
 using NWN.FinalFantasy.Service;
 using static NWN.FinalFantasy.Core.NWScript.NWScript;
+using Skill = NWN.FinalFantasy.Service.Skill;
 
 namespace NWN.FinalFantasy.Feature
 {
@@ -12,19 +17,14 @@ namespace NWN.FinalFantasy.Feature
         /// <summary>
         /// Tracks the combat points earned by players during combat.
         /// </summary>
-        private static readonly Dictionary<string, Dictionary<string, Dictionary<SkillType, int>>> _creatureCombatPointTracker = new Dictionary<string, Dictionary<string, Dictionary<SkillType, int>>>();
+        private static readonly Dictionary<uint, Dictionary<uint, Dictionary<SkillType, int>>> _creatureCombatPointTracker = new Dictionary<uint, Dictionary<uint, Dictionary<SkillType, int>>>();
 
         /// <summary>
         /// Tracks the combat point lists associated with a player back to a creature.
         /// </summary>
-        private static readonly Dictionary<string, HashSet<string>> _playerToCreatureTracker = new Dictionary<string, HashSet<string>>();
+        private static readonly Dictionary<uint, HashSet<uint>> _playerToCreatureTracker = new Dictionary<uint, HashSet<uint>>();
 
 
-        [NWNEventHandler("mod_death")]
-        public static void OnPlayerDeath()
-        {
-            
-        }
 
         /// <summary>
         /// Adds a combat point to a given NPC creature for a given player and skill type.
@@ -47,24 +47,138 @@ namespace NWN.FinalFantasy.Feature
         }
 
         /// <summary>
-        /// Handles clearing an NPC out of the combat point cache.
+        /// When a creature dies, skill XP is given to all players who contributed during battle.
+        /// Then, those combat points are cleared out.
         /// </summary>
         [NWNEventHandler("crea_death")]
         public static void OnCreatureDeath()
         {
-            var npc = OBJECT_SELF;
-            var npcId = GetObjectUUID(npc);
-
-            if (_creatureCombatPointTracker.ContainsKey(npcId))
+            // Clears the combat point cache information for an NPC and all player associated.
+            static void CleanUpCombatPoints()
             {
-                // Remove references from the player-to-npc cache.
-                foreach(var playerId in _creatureCombatPointTracker[npcId].Keys)
+                var npc = OBJECT_SELF;
+
+                if (_creatureCombatPointTracker.ContainsKey(npc))
                 {
-                    RemovePlayerToNPCReferenceFromCache(playerId, npcId);
+                    // Remove references from the player-to-npc cache.
+                    foreach (var playerId in _creatureCombatPointTracker[npc].Keys)
+                    {
+                        RemovePlayerToNPCReferenceFromCache(playerId, npc);
+                    }
+
+                    _creatureCombatPointTracker.Remove(npc);
+                }
+            }
+
+            // When a creature is killed, XP is calculated based on the combat points earned by each player.
+            // This XP is distributed into skills which received the highest usage during the battle.
+            static void DistributeSkillXP()
+            {
+                // Calculates a rank range penalty. If there's a level difference greater than 10, a penalty is applied.
+                static float CalculateRankRangePenalty(int highestSkillRank, int skillRank)
+                {
+                    int levelDifference = highestSkillRank - skillRank;
+                    float levelDifferencePenalty = 1.0f;
+                    if (levelDifference > 10)
+                    {
+                        levelDifferencePenalty = 1.0f - 0.05f * (levelDifference - 10);
+                        if (levelDifferencePenalty < 0.20f) levelDifferencePenalty = 0.20f;
+                    }
+
+                    return levelDifferencePenalty;
                 }
 
-                _creatureCombatPointTracker.Remove(npcId);
+                // Calculates the number of armor points based on what the player currently has equipped.
+                static (int, int, int) CalculateArmorPoints(uint player)
+                {
+                    var lightArmorPoints = 0;
+                    var heavyArmorPoints = 0;
+                    var mysticArmorPoints = 0;
+                    for (int slot = 0; slot < NumberOfInventorySlots; slot++)
+                    {
+                        var item = GetItemInSlot((InventorySlot)slot, player);
+
+                        if (GetItemHasItemProperty(item, ItemPropertyType.LightArmor))
+                        {
+                            lightArmorPoints++;
+                        }
+                        else if (GetItemHasItemProperty(item, ItemPropertyType.HeavyArmor))
+                        {
+                            heavyArmorPoints++;
+                        }
+                        else if (GetItemHasItemProperty(item, ItemPropertyType.MysticArmor))
+                        {
+                            mysticArmorPoints++;
+                        }
+                    }
+
+                    return (lightArmorPoints, heavyArmorPoints, mysticArmorPoints);
+                }
+
+                // Applies an individual armor skill's XP portion.
+                static void ApplyArmorSkillXP(uint player, int highestRank, int baseXP, SkillType skillType, float totalPoints, int armorPoints, Dictionary<SkillType, PlayerSkill> playerSkills)
+                {
+                    var armorPercentage = armorPoints / totalPoints;
+                    var armorRank = playerSkills[skillType].Rank;
+                    var armorRangePenalty = CalculateRankRangePenalty(highestRank, armorRank);
+                    var adjustedArmorXP = baseXP * armorPercentage * armorRangePenalty;
+                    Skill.GiveSkillXP(player, SkillType.LightArmor, (int)adjustedArmorXP);
+                }
+
+                var npc = OBJECT_SELF;
+                var combatPoints = _creatureCombatPointTracker.ContainsKey(npc) ? _creatureCombatPointTracker[npc] : null;
+                if (combatPoints == null) return;
+
+                var npcLevel = (int)(GetChallengeRating(npc) * 5);
+
+                foreach (var (player, cpList) in combatPoints)
+                {
+                    if (!GetIsObjectValid(player) ||
+                        !GetIsPC(player) ||
+                        GetIsDM(player) ||
+                        GetDistanceBetween(player, npc) > 40.0f ||
+                        GetArea(player) != GetArea(npc))
+                        continue;
+
+                    var playerId = GetObjectUUID(player);
+                    var dbPlayer = DB.Get<Player>(playerId);
+
+                    // Filter the skills list down to just those with combat points (CP)
+                    var skillsWithCP = dbPlayer.Skills.Where(x => cpList.ContainsKey(x.Key)).ToDictionary(x => x.Key, y => y.Value);
+                    var highestRank = skillsWithCP
+                        .OrderByDescending(o => o.Value.Rank)
+                        .Select(s => s.Value.Rank)
+                        .First();
+
+                    // Base amount of XP is determined by the player's highest-leveled skill rank versus the creature's level.
+                    var delta = npcLevel - highestRank;
+                    var baseXP = Skill.GetDeltaXP(delta);
+                    var totalPoints = (float)cpList.Sum(s => s.Value);
+
+                    // Each skill used during combat receives a percentage of the baseXP amount depending on the number of combat points earned.
+                    foreach (var (skillType, cp) in cpList)
+                    {
+                        var percentage = cp / totalPoints;
+                        var skillRangePenalty = CalculateRankRangePenalty(highestRank, dbPlayer.Skills[skillType].Rank);
+                        var adjustedXP = baseXP * percentage * skillRangePenalty;
+
+                        Skill.GiveSkillXP(player, skillType, (int)adjustedXP);
+                    }
+
+                    // Each armor skill receives a static portion of XP based on how many pieces of each category are equipped.
+                    var (lightArmorPoints, heavyArmorPoints, mysticArmorPoints) = CalculateArmorPoints(player);
+                    totalPoints = lightArmorPoints + heavyArmorPoints + mysticArmorPoints;
+                    if (totalPoints <= 0) continue;
+
+                    ApplyArmorSkillXP(player, highestRank, baseXP, SkillType.LightArmor, totalPoints, lightArmorPoints, dbPlayer.Skills);
+                    ApplyArmorSkillXP(player, highestRank, baseXP, SkillType.HeavyArmor, totalPoints, heavyArmorPoints, dbPlayer.Skills);
+                    ApplyArmorSkillXP(player, highestRank, baseXP, SkillType.MysticArmor, totalPoints, mysticArmorPoints, dbPlayer.Skills);
+                }
+
             }
+
+            DistributeSkillXP();
+            CleanUpCombatPoints();
         }
 
         /// <summary>
@@ -87,20 +201,19 @@ namespace NWN.FinalFantasy.Feature
         /// <param name="player">The player whose cache data we're removing</param>
         private static void ClearPlayerCombatPoints(uint player)
         {
-            var playerId = GetObjectUUID(player);
-            if (!_playerToCreatureTracker.ContainsKey(playerId)) return;
+            if (!_playerToCreatureTracker.ContainsKey(player)) return;
 
             // Loop over all npcIds the player has linked to them.
-            var npcIds = _playerToCreatureTracker[playerId];
+            var npcIds = _playerToCreatureTracker[player];
             foreach (var npcId in npcIds)
             {
                 if (!_creatureCombatPointTracker.ContainsKey(npcId)) continue;
 
-                if (!_creatureCombatPointTracker[npcId].ContainsKey(playerId)) continue;
-                _creatureCombatPointTracker[npcId].Remove(playerId);
+                if (!_creatureCombatPointTracker[npcId].ContainsKey(player)) continue;
+                _creatureCombatPointTracker[npcId].Remove(player);
             }
 
-            _playerToCreatureTracker.Remove(playerId);
+            _playerToCreatureTracker.Remove(player);
         }
 
         /// <summary>
@@ -111,29 +224,27 @@ namespace NWN.FinalFantasy.Feature
         /// <param name="skill">The skill to associate with the point.</param>
         private static void AddCombatPoint(uint player, uint creature, SkillType skill)
         {
-            var playerId = GetObjectUUID(player);
-            var npcId = GetObjectUUID(creature);
-            var tracker = _creatureCombatPointTracker.ContainsKey(npcId) ?
-                _creatureCombatPointTracker[npcId] :
-                new Dictionary<string, Dictionary<SkillType, int>>();
+            var tracker = _creatureCombatPointTracker.ContainsKey(creature) ?
+                _creatureCombatPointTracker[creature] :
+                new Dictionary<uint, Dictionary<SkillType, int>>();
 
             // Add an entry for this player if it doesn't exist.
-            if (!tracker.ContainsKey(playerId))
+            if (!tracker.ContainsKey(player))
             {
-                tracker[playerId] = new Dictionary<SkillType, int>();
+                tracker[player] = new Dictionary<SkillType, int>();
                 AddPlayerToNPCReferenceToCache(player, creature);
             }
 
             // Add an entry for this skill if it doesn't exist.
-            if (!tracker[playerId].ContainsKey(skill))
+            if (!tracker[player].ContainsKey(skill))
             {
-                tracker[playerId][skill] = 0;
+                tracker[player][skill] = 0;
             }
 
             // Increment points for this player and skill by one.
-            tracker[playerId][skill]++;
+            tracker[player][skill]++;
 
-            _creatureCombatPointTracker[npcId] = tracker;
+            _creatureCombatPointTracker[creature] = tracker;
         }
 
         /// <summary>
@@ -143,32 +254,29 @@ namespace NWN.FinalFantasy.Feature
         /// <param name="creature">The creature we're referencing</param>
         private static void AddPlayerToNPCReferenceToCache(uint player, uint creature)
         {
-            var playerId = GetObjectUUID(player);
-            var npcId = GetObjectUUID(creature);
-
-            if(!_playerToCreatureTracker.ContainsKey(playerId))
+            if(!_playerToCreatureTracker.ContainsKey(player))
             {
-                _playerToCreatureTracker[playerId] = new HashSet<string>();
+                _playerToCreatureTracker[player] = new HashSet<uint>();
             }
 
-            if(!_playerToCreatureTracker[playerId].Contains(npcId))
+            if(!_playerToCreatureTracker[player].Contains(creature))
             {
-                _playerToCreatureTracker[playerId].Add(npcId);
+                _playerToCreatureTracker[player].Add(creature);
             }
         }
 
         /// <summary>
         /// Removes a player-to-npc reference from the cache.
         /// </summary>
-        /// <param name="playerId">The player whose reference we're removing</param>
-        /// <param name="npcId">The creature we're referencing</param>
-        private static void RemovePlayerToNPCReferenceFromCache(string playerId, string npcId)
+        /// <param name="player">The player whose reference we're removing</param>
+        /// <param name="npc">The creature we're referencing</param>
+        private static void RemovePlayerToNPCReferenceFromCache(uint player, uint npc)
         {
-            if (!_playerToCreatureTracker.ContainsKey(playerId)) return;
+            if (!_playerToCreatureTracker.ContainsKey(player)) return;
 
-            if (_playerToCreatureTracker[playerId].Contains(npcId))
+            if (_playerToCreatureTracker[player].Contains(npc))
             {
-                _playerToCreatureTracker[playerId].Remove(npcId);
+                _playerToCreatureTracker[player].Remove(npc);
             }
         }
     }

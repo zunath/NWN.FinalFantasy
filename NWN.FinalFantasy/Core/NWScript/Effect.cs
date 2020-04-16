@@ -442,11 +442,11 @@ namespace NWN.FinalFantasy.Core.NWScript
         ///   * Returns TRUE if eEffect is a valid effect. The effect must have been applied to
         ///   * an object or else it will return FALSE
         /// </summary>
-        public static int GetIsEffectValid(Effect eEffect)
+        public static bool GetIsEffectValid(Effect eEffect)
         {
             Internal.NativeFunctions.StackPushEffect(eEffect.Handle);
             Internal.NativeFunctions.CallBuiltIn(88);
-            return Internal.NativeFunctions.StackPopInteger();
+            return Internal.NativeFunctions.StackPopInteger() == 1;
         }
 
         /// <summary>
@@ -558,7 +558,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         ///   summoned. If zero, it will just fade in somewhere near the target.  If the value is 1
         ///   it will use the appear animation, and if it's 2 it will use appear2 (which doesn't exist for most creatures)
         /// </summary>
-        public static Effect EffectSummonCreature(string sCreatureResref, Common nVisualEffectId = Common.SparksParry,
+        public static Effect EffectSummonCreature(string sCreatureResref, VisualEffect nVisualEffectId = VisualEffect.Vfx_Com_Sparks_Parry,
             float fDelaySeconds = 0.0f, bool nUseAppearAnimation = false)
         {
             Internal.NativeFunctions.StackPushInteger(nUseAppearAnimation ? 1 : 0);
@@ -1262,7 +1262,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         ///   * Returns an effect of type EFFECT_TYPE_INVALIDEFFECT if nBeamVisualEffect is
         ///   not valid.
         /// </summary>
-        public static Effect EffectBeam(Beam nBeamVisualEffect, uint oEffector, int nBodyPart, bool bMissEffect = false)
+        public static Effect EffectBeam(VisualEffect nBeamVisualEffect, uint oEffector, int nBodyPart, bool bMissEffect = false)
         {
             Internal.NativeFunctions.StackPushInteger(bMissEffect ? 1 : 0);
             Internal.NativeFunctions.StackPushInteger(nBodyPart);

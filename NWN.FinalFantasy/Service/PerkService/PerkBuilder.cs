@@ -112,6 +112,22 @@ namespace NWN.FinalFantasy.Service.PerkService
         }
 
         /// <summary>
+        /// Assigns an impact action on the active perk we're building.
+        /// Calling this more than once will replace the previous action.
+        /// Impact actions are fired when a perk is used. The timing of when it fires depends on the activation type.
+        /// For example, "Casted" perks fire the impact action at the end of the casting phase.
+        /// While "Queued" perks fire the impact action on the next weapon hit.
+        /// </summary>
+        /// <param name="action">The action to fire when a perk impacts a target.</param>
+        /// <returns>A perk builder with the configured options</returns>
+        public PerkBuilder HasImpactAction(PerkImpactAction action)
+        {
+            _activePerk.ImpactAction = action;
+
+            return this;
+        }
+
+        /// <summary>
         /// Assigns an activation delay on the active perk we're building.
         /// This is typically used for casting times.
         /// Calling this more than once will replace the previous activation type.

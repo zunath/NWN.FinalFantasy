@@ -82,6 +82,12 @@ namespace NWN.FinalFantasy.Core.NWScript.Enum.Item
         ArcaneSpellFailure = 84,
         Material = 85,
         Quality = 86,
-        Additional = 87
+        Additional = 87,
+
+        // FFO custom item property types
+        APAbility = 100,
+        HeavyArmor = 101,
+        LightArmor = 102,
+        MysticArmor = 103
     }
 }

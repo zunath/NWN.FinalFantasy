@@ -347,12 +347,12 @@ namespace NWN.FinalFantasy.Core.NWScript
         /// <summary>
         ///   Gets the status of ACTION_MODE_* modes on a creature.
         /// </summary>
-        public static ActionMode GetActionMode(uint oCreature, ActionMode nMode)
+        public static bool GetActionMode(uint oCreature, ActionMode nMode)
         {
             Internal.NativeFunctions.StackPushInteger((int)nMode);
             Internal.NativeFunctions.StackPushObject(oCreature);
             Internal.NativeFunctions.CallBuiltIn(735);
-            return (ActionMode)Internal.NativeFunctions.StackPopInteger();
+            return Internal.NativeFunctions.StackPopInteger() == 1;
         }
 
         /// <summary>

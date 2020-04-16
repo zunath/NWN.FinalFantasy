@@ -1,8 +1,13 @@
 ﻿using System;
 using System.Globalization;
+using System.Runtime.CompilerServices;
 using NWN.FinalFantasy.Core;
+using NWN.FinalFantasy.Core.Bioware;
 using NWN.FinalFantasy.Core.NWNX;
 using NWN.FinalFantasy.Core.NWScript.Enum;
+using NWN.FinalFantasy.Core.NWScript.Enum.Item;
+using NWN.FinalFantasy.Core.NWScript.Enum.VisualEffect;
+using NWN.FinalFantasy.Enumeration;
 using NWN.FinalFantasy.Service;
 using NWN.FinalFantasy.Service.PerkService;
 using static NWN.FinalFantasy.Core.NWScript.NWScript;
@@ -12,6 +17,14 @@ namespace NWN.FinalFantasy.Feature
 {
     public static class UsePerkFeat
     {
+        private enum ActivationStatus
+        {
+            Invalid = 0,
+            Started = 1,
+            Interrupted = 2,
+            Completed = 3
+        }
+
         // Variable names for queued abilities.
         private const string ActiveAbilityName = "ACTIVE_ABILITY";
         private const string ActiveAbilityIdName = "ACTIVE_ABILITY_ID";
@@ -55,7 +68,7 @@ namespace NWN.FinalFantasy.Feature
             // All other abilities are funneled through the same process.
             else 
             {
-                ActivateAbility(activator, perk, feat, effectivePerkLevel);
+                ActivateAbility(activator, target, perk, feat, effectivePerkLevel);
             }
         }
 
@@ -197,11 +210,124 @@ namespace NWN.FinalFantasy.Feature
         /// In the event there is no casting delay, the reductions are applied immediately.
         /// </summary>
         /// <param name="activator">The creature activating the ability.</param>
+        /// <param name="target">The target of the ability</param>
         /// <param name="perk">The perk details</param>
         /// <param name="feat">The feat being activated</param>
         /// <param name="effectivePerkLevel">The activator's effective perk level</param>
-        private static void ActivateAbility(uint activator, PerkDetail perk, Feat feat, int effectivePerkLevel)
+        private static void ActivateAbility(uint activator, uint target, PerkDetail perk, Feat feat, int effectivePerkLevel)
         {
+            // Activation delay is increased if player is equipped with heavy or light armor.
+            float CalculateActivationDelay()
+            {
+                var armorPenalty = 1.0f;
+                var penaltyMessage = string.Empty;
+                for (var slot = 0; slot < NUM_INVENTORY_SLOTS; slot++)
+                {
+                    var item = GetItemInSlot((InventorySlot) slot, activator);
+                    if (GetItemHasItemProperty(item, ItemPropertyType.HeavyArmor))
+                    {
+                        armorPenalty = 2f;
+                        penaltyMessage = "Heavy armor slows your casting speed by 100%.";
+                        break;
+                    }
+                    else if (GetItemHasItemProperty(item, ItemPropertyType.LightArmor))
+                    {
+                        armorPenalty = 1.5f;
+                        penaltyMessage = "Light armor slows your casting speed by 50%.";
+                    }
+                }
+
+                // Notify player if needed.
+                if (!string.IsNullOrWhiteSpace(penaltyMessage))
+                {
+                    SendMessageToPC(activator, penaltyMessage);
+                }
+
+                return perk.ActivationDelay * armorPenalty;
+            }
+
+            // Handles displaying animation and visual effects.
+            void ProcessAnimationAndVisualEffects(float delay)
+            {
+                // Force out of stealth
+                if (GetActionMode(activator, ActionMode.Stealth))
+                    SetActionMode(activator, ActionMode.Stealth, false);
+
+                AssignCommand(activator, () => ClearAllActions());
+                BiowarePosition.TurnToFaceObject(target, activator);
+
+                // Display a casting visual effect if one has been specified.
+                if (perk.ActivationVisualEffect != VisualEffect.None)
+                {
+                    var vfx = TagEffect(EffectVisualEffect(perk.ActivationVisualEffect), "ACTIVATION_VFX");
+                    ApplyEffectToObject(DurationType.Temporary, vfx, activator, delay + 0.2f);
+                }
+
+                // Casted types play an animation of casting.
+                if (perk.ActivationType == PerkActivationType.Casted)
+                {
+                    AssignCommand(activator, () => ActionPlayAnimation(Animation.LoopingConjure1, 1.0f, delay - 0.2f));
+                }
+            }
+
+            // Recursive function which checks if player has moved since starting the casting.
+            void CheckForActivationInterruption(string activationId, Vector originalPosition)
+            {
+                if (!GetIsPC(activator)) return;
+
+                // Completed abilities should no longer run.
+                var status = GetLocalInt(activator, activationId);
+                if (status == (int) ActivationStatus.Completed || status == (int)ActivationStatus.Invalid) return;
+                
+                var currentPosition = GetPosition(activator);
+
+                if (currentPosition.X != originalPosition.X ||
+                    currentPosition.Y != originalPosition.Y ||
+                    currentPosition.Z != originalPosition.Z)
+                {
+                    for (var effect = GetFirstEffect(activator); GetIsEffectValid(effect); effect = GetNextEffect(activator))
+                    {
+                        if (GetEffectTag(effect) == "ACTIVATION_VFX")
+                        {
+                            RemoveEffect(activator, effect);
+                        }
+                    }
+
+                    Player.StopGuiTimingBar(activator, string.Empty);
+                    SendMessageToPC(activator, "Your ability has been interrupted.");
+                    return;
+                }
+
+                DelayCommand(0.5f, () => CheckForActivationInterruption(activationId, originalPosition));
+            }
+
+            // This method is called after the delay of the ability has finished.
+            void CompleteActivation(string id, float delay)
+            {
+                DeleteLocalInt(activator, id);
+
+                // Moved during casting or activator died. Cancel the activation.
+                if (GetLocalInt(activator, id) == (int) ActivationStatus.Interrupted || GetCurrentHitPoints(activator) <= 0) return;
+
+                ApplyRequirementEffects(activator, perk, effectivePerkLevel);
+                perk.ImpactAction?.Invoke(activator, target, effectivePerkLevel);
+                ApplyRecastDelay(activator, perk.RecastGroup, delay);
+            }
+
+            // Begin the main process
+            var activationId = Guid.NewGuid().ToString();
+            var activationDelay = CalculateActivationDelay();
+            var position = GetPosition(activator);
+            ProcessAnimationAndVisualEffects(activationDelay);
+            CheckForActivationInterruption(activationId, position);
+            SetLocalInt(activator, activationId, (int)ActivationStatus.Started);
+
+            if (activationDelay > 0.0f)
+            {
+                Player.StartGuiTimingBar(activator, activationDelay, string.Empty);
+            }
+
+            DelayCommand(activationDelay, () => CompleteActivation(activationId, activationDelay));
         }
 
         /// <summary>
@@ -224,8 +350,7 @@ namespace NWN.FinalFantasy.Feature
             SetLocalInt(activator, ActiveAbilityEffectivePerkLevelName, effectivePerkLevel);
 
             ApplyRequirementEffects(activator, perk, effectivePerkLevel);
-
-            // todo: apply a cooldown
+            ApplyRecastDelay(activator, perk.RecastGroup, perk.RecastDelay);
 
             // Activator must attack within 30 seconds after queueing or else it wears off.
             DelayCommand(30.0f, () =>
@@ -244,9 +369,82 @@ namespace NWN.FinalFantasy.Feature
             });
         }
 
-        // todo: onhit event which fires off the queued weapon ability
+        /// <summary>
+        /// When a player's weapon hits a target, if an ability is queued, that ability will be executed.
+        /// </summary>
+        [NWNEventHandler("item_on_hit")]
+        public static void ProcessQueuedWeaponAbility()
+        {
+            var activator = OBJECT_SELF;
+            if (!GetIsObjectValid(activator)) return;
 
+            var target = GetSpellTargetObject();
+            var item = GetSpellCastItem();
 
-        // todo: module on enter event which removes the temporary queued weapon ability variables, just in case the 30 second delay doesn't fire.
+            // If this method was triggered by our own armor (from getting hit), return. 
+            if (GetBaseItemType(item) == BaseItem.Armor) return;
+
+            var activeWeaponAbility = (PerkType)GetLocalInt(activator, ActiveAbilityName);
+            var activeAbilityEffectivePerkLevel = GetLocalInt(activator, ActiveAbilityEffectivePerkLevelName);
+
+            if (activeWeaponAbility == PerkType.Invalid) return;
+
+            var perk = Perk.GetPerkDetails(activeWeaponAbility);
+            if (!CanUsePerkFeat(activator, target, perk, activeAbilityEffectivePerkLevel))
+            {
+                return;
+            }
+
+            perk.ImpactAction?.Invoke(activator, target, activeAbilityEffectivePerkLevel);
+
+            DeleteLocalInt(activator, ActiveAbilityName);
+            DeleteLocalString(activator, ActiveAbilityIdName);
+            DeleteLocalInt(activator, ActiveAbilityFeatIdName);
+            DeleteLocalInt(activator, ActiveAbilityEffectivePerkLevelName);
+        }
+
+        /// <summary>
+        /// Whenever a player enters the server, any temporary variables related to ability execution
+        /// will be removed from their PC.
+        /// </summary>
+        [NWNEventHandler("mod_enter")]
+        public static void ClearTemporaryQueuedVariables()
+        {
+            var player = GetEnteringObject();
+
+            DeleteLocalInt(player, ActiveAbilityName);
+            DeleteLocalString(player, ActiveAbilityIdName);
+            DeleteLocalInt(player, ActiveAbilityFeatIdName);
+            DeleteLocalInt(player, ActiveAbilityEffectivePerkLevelName);
+        }
+
+        /// <summary>
+        /// Applies a recast delay on a specific recast group.
+        /// If group is invalid or delay amount is less than or equal to zero, nothing will happen.
+        /// </summary>
+        /// <param name="activator">The activator of the ability.</param>
+        /// <param name="group">The recast group to put this delay under.</param>
+        /// <param name="delaySeconds">The number of seconds to delay.</param>
+        private static void ApplyRecastDelay(uint activator, RecastGroup group, float delaySeconds)
+        {
+            if (!GetIsObjectValid(activator) || group == RecastGroup.Invalid || delaySeconds <= 0.0f) return;
+
+            var recastDate = DateTime.UtcNow.AddSeconds(delaySeconds);
+
+            // NPCs and DM-possessed NPCs
+            if (!GetIsPC(activator) || GetIsDMPossessed(activator))
+            {
+                var recastDateString = recastDate.ToString("yyyy-MM-dd hh:mm:ss");
+                SetLocalString(activator, $"ABILITY_RECAST_ID_{(int)group}", recastDateString);
+            }
+            // Players
+            else if (GetIsPC(activator) && !GetIsDM(activator))
+            {
+                var playerId = GetObjectUUID(activator);
+                var dbPlayer = DB.Get<Entity.Player>(playerId);
+                dbPlayer.RecastTimes[group] = recastDate;
+            }
+
+        }
     }
 }

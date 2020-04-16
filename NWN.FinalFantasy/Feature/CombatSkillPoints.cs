@@ -29,7 +29,7 @@ namespace NWN.FinalFantasy.Feature
         /// <summary>
         /// Adds a combat point to a given NPC creature for a given player and skill type.
         /// </summary>
-        [NWNEventHandler("onhit_skill")]
+        [NWNEventHandler("item_on_hit")]
         public static void OnHitCastSpell()
         {
             var player = OBJECT_SELF;

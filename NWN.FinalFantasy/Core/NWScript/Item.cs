@@ -328,12 +328,12 @@ namespace NWN.FinalFantasy.Core.NWScript
         ///   * Returns FALSE if oItem is not a valid item, or if oItem does not have
         ///   nProperty.
         /// </summary>
-        public static int GetItemHasItemProperty(uint oItem, ItemPropertyType nProperty)
+        public static bool GetItemHasItemProperty(uint oItem, ItemPropertyType nProperty)
         {
             Internal.NativeFunctions.StackPushInteger((int)nProperty);
             Internal.NativeFunctions.StackPushObject(oItem);
             Internal.NativeFunctions.CallBuiltIn(398);
-            return Internal.NativeFunctions.StackPopInteger();
+            return Internal.NativeFunctions.StackPopInteger() == 1;
         }
 
         /// <summary>

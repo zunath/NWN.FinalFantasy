@@ -1,15 +1,31 @@
 ﻿using System;
+using NWN.FinalFantasy.Core;
+using NWN.FinalFantasy.Core.NWNX;
 using NWN.FinalFantasy.Core.NWScript.Enum;
-using NWN.FinalFantasy.Entity;
 using NWN.FinalFantasy.Service;
 using NWN.FinalFantasy.Service.DialogService;
 using static NWN.FinalFantasy.Core.NWScript.NWScript;
+using Dialog = NWN.FinalFantasy.Service.Dialog;
+using Object = NWN.FinalFantasy.Core.NWNX.Object;
+using Player = NWN.FinalFantasy.Entity.Player;
 using Skill = NWN.FinalFantasy.Service.Skill;
 
 namespace NWN.FinalFantasy.Feature.DialogDefinition
 {
     public class RestMenuDialog : DialogBase
     {
+        /// <summary>
+        /// When a player uses the "Open Rest Menu" feat, open the rest menu dialog conversation.
+        /// </summary>
+        [NWNEventHandler("feat_use_bef")]
+        public static void UseOpenRestMenuFeat()
+        {
+            var feat = (Feat)Convert.ToInt32(Events.GetEventData("FEAT_ID"));
+            if (feat != Feat.OpenRestMenu) return;
+
+            Dialog.StartConversation(OBJECT_SELF, OBJECT_SELF, "RestMenuDialog");
+        }
+
         private const string MainPageId = "MAIN_PAGE";
 
         public override PlayerDialog SetUp(uint player)

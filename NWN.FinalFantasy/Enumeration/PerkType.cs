@@ -8,7 +8,7 @@
         MysticArmorProficiency = 3,
         ShieldProficiency = 4,
         LongswordProficiency = 5,
-        PowerGloveProficiency = 6,
+        KnucklesProficiency = 6,
         DaggerProficiency = 7,
         StaffProficiency = 8,
         RodProficiency = 9,

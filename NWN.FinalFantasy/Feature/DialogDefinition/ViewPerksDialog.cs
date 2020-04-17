@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Drawing;
+﻿using System.Collections.Generic;
 using System.Linq;
-using NWN.FinalFantasy.Core;
 using NWN.FinalFantasy.Core.NWNX;
 using NWN.FinalFantasy.Core.NWNX.Enum;
 using NWN.FinalFantasy.Core.NWScript.Enum;
@@ -91,9 +87,9 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
 
         private void PerkListPageInit(DialogPage page)
         {
+            var model = GetDataModel<Model>();
             void SelectPerk(PerkType perk)
             {
-                var model = GetDataModel<Model>();
                 model.SelectedPerk = perk;
 
                 ChangePage(PerkDetailsPageId);
@@ -102,7 +98,8 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
             page.Header = "Please select a perk.";
 
             var player = GetPC();
-            var perksAvailable = GetPerksAvailableToPC(player);
+            var perksAvailable = GetPerksAvailableToPC(player)
+                .Where(x => x.Category == model.SelectedCategory);
             foreach (var perk in perksAvailable)
             {
                 page.AddResponse(perk.Name, () => SelectPerk(perk.Type));

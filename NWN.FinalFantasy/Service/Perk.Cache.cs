@@ -28,8 +28,8 @@ namespace NWN.FinalFantasy.Service
         private static readonly Dictionary<RecastGroup, string> _recastDescriptions = new Dictionary<RecastGroup, string>();
 
         // Trigger Actions
-        private static readonly Dictionary<PerkType, List<PerkTriggerEquippedUnequippedAction>> _equipTriggers = new Dictionary<PerkType, List<PerkTriggerEquippedUnequippedAction>>();
-        private static readonly Dictionary<PerkType, List<PerkTriggerEquippedUnequippedAction>> _unequipTriggers = new Dictionary<PerkType, List<PerkTriggerEquippedUnequippedAction>>();
+        private static readonly Dictionary<PerkType, List<PerkTriggerEquippedAction>> _equipTriggers = new Dictionary<PerkType, List<PerkTriggerEquippedAction>>();
+        private static readonly Dictionary<PerkType, List<PerkTriggerUnequippedAction>> _unequipTriggers = new Dictionary<PerkType, List<PerkTriggerUnequippedAction>>();
         private static readonly Dictionary<PerkType, List<PerkTriggerPurchasedRefundedAction>> _purchaseTriggers = new Dictionary<PerkType, List<PerkTriggerPurchasedRefundedAction>>();
         private static readonly Dictionary<PerkType, List<PerkTriggerPurchasedRefundedAction>> _refundTriggers = new Dictionary<PerkType, List<PerkTriggerPurchasedRefundedAction>>();
 
@@ -108,7 +108,7 @@ namespace NWN.FinalFantasy.Service
             if (perk.EquippedTriggers.Count > 0)
             {
                 if(!_equipTriggers.ContainsKey(perk.Type))
-                    _equipTriggers[perk.Type] = new List<PerkTriggerEquippedUnequippedAction>();
+                    _equipTriggers[perk.Type] = new List<PerkTriggerEquippedAction>();
 
                 _equipTriggers[perk.Type].AddRange(perk.EquippedTriggers);
             }
@@ -117,7 +117,7 @@ namespace NWN.FinalFantasy.Service
             if (perk.UnequippedTriggers.Count > 0)
             {
                 if(!_unequipTriggers.ContainsKey(perk.Type))
-                    _unequipTriggers[perk.Type] = new List<PerkTriggerEquippedUnequippedAction>();
+                    _unequipTriggers[perk.Type] = new List<PerkTriggerUnequippedAction>();
 
                 _unequipTriggers[perk.Type].AddRange(perk.UnequippedTriggers);
             }
@@ -139,6 +139,42 @@ namespace NWN.FinalFantasy.Service
 
                 _refundTriggers[perk.Type].AddRange(perk.RefundedTriggers);
             }
+        }
+
+        /// <summary>
+        /// Retrieves all of the equip triggers registered by perks.
+        /// </summary>
+        /// <returns></returns>
+        public static Dictionary<PerkType, List<PerkTriggerEquippedAction>> GetAllEquipTriggers()
+        {
+            return _equipTriggers.ToDictionary(x => x.Key, y => y.Value);
+        }
+
+        /// <summary>
+        /// Retrieves all of the unequip triggers registered by perks.
+        /// </summary>
+        /// <returns></returns>
+        public static Dictionary<PerkType, List<PerkTriggerUnequippedAction>> GetAllUnequipTriggers()
+        {
+            return _unequipTriggers.ToDictionary(x => x.Key, y => y.Value);
+        }
+
+        /// <summary>
+        /// Retrieves all of the purchase triggers registered by perks.
+        /// </summary>
+        /// <returns></returns>
+        public static Dictionary<PerkType, List<PerkTriggerPurchasedRefundedAction>> GetAllPurchaseTriggers()
+        {
+            return _purchaseTriggers.ToDictionary(x => x.Key, y => y.Value);
+        }
+
+        /// <summary>
+        /// Retrieves all of the refund triggers registered by perks.
+        /// </summary>
+        /// <returns></returns>
+        public static Dictionary<PerkType, List<PerkTriggerPurchasedRefundedAction>> GetAllRefundTriggers()
+        {
+            return _refundTriggers.ToDictionary(x => x.Key, y => y.Value);
         }
 
         /// <summary>

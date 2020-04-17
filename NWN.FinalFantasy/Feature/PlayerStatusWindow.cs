@@ -44,9 +44,9 @@ namespace NWN.FinalFantasy.Feature
             var currentHP = GetCurrentHitPoints(player);
             var maxHP = GetMaxHitPoints(player);
             var currentMP = dbPlayer.MP;
-            var maxMP = dbPlayer.MaxMP;
+            var maxMP = Stat.GetMaxMP(player, dbPlayer);
             var currentSTM = dbPlayer.Stamina;
-            var maxSTM = dbPlayer.MaxStamina;
+            var maxSTM = Stat.GetMaxStamina(player, dbPlayer);
 
 
             var backgroundBar = BuildBar(1, 1, 22);

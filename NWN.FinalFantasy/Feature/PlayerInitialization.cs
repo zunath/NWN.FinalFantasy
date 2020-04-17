@@ -37,10 +37,8 @@ namespace NWN.FinalFantasy.Feature
             ClearFeats(player);
             GrantBasicFeats(player);
             InitializeHotBar(player);
+            AdjustStats(player, dbPlayer);
 
-            dbPlayer.UnallocatedSP = 10;
-            dbPlayer.Version = 1;
-            Stat.AdjustMaxHP(dbPlayer, player, 20);
             DB.Set(playerId, dbPlayer);
         }
 
@@ -167,6 +165,23 @@ namespace NWN.FinalFantasy.Feature
             //NWNXPlayer.SetQuickBarSlot(player, 1, structure);
             //NWNXPlayer.SetQuickBarSlot(player, 2, renameCraftedItem);
             Core.NWNX.Player.SetQuickBarSlot(player, 3, chatCommandTargeter);
+        }
+
+        /// <summary>
+        /// Modifies the player's unallocated SP, version, max HP, and other assorted stats.
+        /// </summary>
+        /// <param name="player">The player object</param>
+        /// <param name="dbPlayer">The player entity.</param>
+        private static void AdjustStats(uint player, Player dbPlayer)
+        {
+            dbPlayer.UnallocatedSP = 10;
+            dbPlayer.Version = 1;
+            Stat.AdjustMaxHP(dbPlayer, player, 20);
+            Stat.AdjustMaxMP(dbPlayer, 5);
+            Stat.AdjustMaxSTM(dbPlayer, 20);
+            Stat.AdjustBAB(dbPlayer, player, 1);
+            dbPlayer.MP = Stat.GetMaxMP(player, dbPlayer);
+            dbPlayer.Stamina = Stat.GetMaxStamina(player, dbPlayer);
         }
     }
 }

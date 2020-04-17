@@ -235,7 +235,7 @@ namespace NWN.FinalFantasy.Service.PerkService
         /// </summary>
         /// <param name="equipAction">The action to run when an item is equipped.</param>
         /// <returns>A perk builder with the configured options</returns>
-        public PerkBuilder TriggerEquippedItem(PerkTriggerEquippedUnequippedAction equipAction)
+        public PerkBuilder TriggerEquippedItem(PerkTriggerEquippedAction equipAction)
         {
             _activePerk.EquippedTriggers.Add(equipAction);
             return this;
@@ -246,9 +246,9 @@ namespace NWN.FinalFantasy.Service.PerkService
         /// </summary>
         /// <param name="unequipAction">The action to run when an item is unequipped.</param>
         /// <returns>A perk builder with the configured options</returns>
-        public PerkBuilder TriggerUnequippedItem(PerkTriggerEquippedUnequippedAction unequipAction)
+        public PerkBuilder TriggerUnequippedItem(PerkTriggerUnequippedAction unequipAction)
         {
-            _activePerk.EquippedTriggers.Add(unequipAction);
+            _activePerk.UnequippedTriggers.Add(unequipAction);
             return this;
         }
 

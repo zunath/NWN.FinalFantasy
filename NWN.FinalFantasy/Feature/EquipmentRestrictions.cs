@@ -40,7 +40,11 @@ namespace NWN.FinalFantasy.Feature
             var item = Object.StringToObject(Events.GetEventData("ITEM"));
 
             var error = CanItemBeUsed(creature, item);
-            if (string.IsNullOrWhiteSpace(error)) return;
+            if (string.IsNullOrWhiteSpace(error))
+            {
+                ApplyEquipTriggers();
+                return;
+            }
 
             SendMessageToPC(creature, ColorToken.Red(error));
             Events.SkipEvent();
@@ -123,5 +127,57 @@ namespace NWN.FinalFantasy.Feature
 
             return string.Empty;
         }
+
+
+        /// <summary>
+        /// When an item is equipped, if any of a player's perks has an Equipped Trigger, run those actions now.
+        /// </summary>
+        private static void ApplyEquipTriggers()
+        {
+            var player = OBJECT_SELF;
+            if (!GetIsPC(player) || GetIsDM(player)) return;
+
+            var playerId = GetObjectUUID(player);
+            var dbPlayer = DB.Get<Player>(playerId);
+            var item = Object.StringToObject(Events.GetEventData("ITEM"));
+            var slot = (InventorySlot)Convert.ToInt32(Events.GetEventData("SLOT"));
+
+            foreach (var (perkType, actionList) in Perk.GetAllEquipTriggers())
+            {
+                var playerPerkLevel = Perk.GetEffectivePerkLevel(player, perkType);
+                if (playerPerkLevel <= 0) continue;
+
+                foreach (var action in actionList)
+                {
+                    action(player, item, slot, perkType, playerPerkLevel);
+                }
+            }
+        }
+
+        /// <summary>
+        /// When an item is unequipped, if any of a player's perks has an Unequipped Trigger, run those actions now.
+        /// </summary>
+        [NWNEventHandler("item_uneqp_aft")]
+        public static void ApplyUnequipTriggers()
+        {
+            var player = OBJECT_SELF;
+            if (!GetIsPC(player) || GetIsDM(player)) return;
+
+            var playerId = GetObjectUUID(player);
+            var dbPlayer = DB.Get<Player>(playerId);
+            var item = Object.StringToObject(Events.GetEventData("ITEM"));
+
+            foreach (var (perkType, actionList) in Perk.GetAllUnequipTriggers())
+            {
+                var playerPerkLevel = Perk.GetEffectivePerkLevel(player, perkType);
+                if (playerPerkLevel <= 0) continue;
+
+                foreach (var action in actionList)
+                {
+                    action(player, item, perkType, playerPerkLevel);
+                }
+            }
+        }
+
     }
 }

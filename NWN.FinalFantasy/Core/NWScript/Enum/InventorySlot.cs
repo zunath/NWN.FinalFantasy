@@ -2,6 +2,7 @@
 {
     public enum InventorySlot
     {
+        Invalid = -1,
         Head = 0,
         Chest = 1,
         Boots = 2,

@@ -25,6 +25,12 @@
         CircleOfScorn = 19,
         HPBoostKnight = 20,
         KatanaProficiency = 21,
-        DualWield = 22
+        DualWield = 22,
+        KnucklesMastery = 23,
+        DaggerMastery = 24,
+        StaffMastery = 25,
+        RodMastery = 26,
+        LongbowMastery = 27,
+        KatanaMastery = 28
     }
 }

@@ -33,10 +33,10 @@ namespace NWN.FinalFantasy.Feature
                 var mpAmount = BaseNaturalMPRegeneration + (chaModifier > 0 ? chaModifier : 0);
                 var staminaAmount = BaseNaturalStaminaRegeneration + (strModifier > 0 ? strModifier : 0);
 
-                Stat.RestoreMP(dbPlayer, mpAmount);
-                Stat.RestoreStamina(dbPlayer, staminaAmount);
+                Stat.RestoreMP(player, dbPlayer, mpAmount);
+                Stat.RestoreStamina(player, dbPlayer, staminaAmount);
 
-                if (hpAmount > 0)
+                if (hpAmount > 0 && GetCurrentHitPoints(player) < GetMaxHitPoints(player))
                 {
                     ApplyEffectToObject(DurationType.Instant, EffectHeal(hpAmount), player);
                 }

@@ -2,6 +2,7 @@
 using System.Linq;
 using NWN.FinalFantasy.Core;
 using NWN.FinalFantasy.Core.NWNX;
+using NWN.FinalFantasy.Core.NWScript.Enum;
 using NWN.FinalFantasy.Enumeration;
 using static NWN.FinalFantasy.Core.NWScript.NWScript;
 using Object = NWN.FinalFantasy.Core.NWNX.Object;
@@ -88,56 +89,6 @@ namespace NWN.FinalFantasy.Service
 
             // Otherwise none of the perk level requirements passed. Player's effective level is zero.
             return 0;
-        }
-
-        /// <summary>
-        /// When an item is equipped, if any of a player's perks has an Equipped Trigger,
-        /// run those actions now.
-        /// </summary>
-        [NWNEventHandler("item_eqp_bef")]
-        public static void ApplyEquipTriggers()
-        {
-            var player = OBJECT_SELF;
-            if (!GetIsPC(player) || GetIsDM(player)) return;
-
-            RunEquipUnequipTriggers(player, true);
-        }
-
-        /// <summary>
-        /// When an item is unequipped, if any of a player's perks has an Unequipped Trigger,
-        /// run those actions now.
-        /// </summary>
-        [NWNEventHandler("item_uneqp_bef")]
-        public static void ApplyUnequipTriggers()
-        {
-            var player = OBJECT_SELF;
-            if (!GetIsPC(player) || GetIsDM(player)) return;
-
-            RunEquipUnequipTriggers(player, false);
-        }
-
-        /// <summary>
-        /// Executes the equip and unequip triggers for all perks, if player has at least one effective level in them.
-        /// </summary>
-        /// <param name="player">The player object</param>
-        /// <param name="isEquip">If true, use the Equipped trigger list, otherwise use the Unequipped trigger list.</param>
-        private static void RunEquipUnequipTriggers(uint player, bool isEquip)
-        {
-            var playerId = GetObjectUUID(player);
-            var dbPlayer = DB.Get<Player>(playerId);
-            var item = Object.StringToObject(Events.GetEventData("ITEM"));
-            var set = isEquip ? _equipTriggers : _unequipTriggers;
-
-            foreach (var (perkType, actionList) in set)
-            {
-                var playerPerkLevel = GetPlayerPerkLevel(player, dbPlayer, perkType);
-                if (playerPerkLevel <= 0) continue;
-
-                foreach (var action in actionList)
-                {
-                    action(player, item, perkType, playerPerkLevel);
-                }
-            }
         }
     }
 }

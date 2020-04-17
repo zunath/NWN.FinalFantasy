@@ -25,6 +25,7 @@ namespace NWN.FinalFantasy.Entity
         public int HP { get; set; }
         public int MP { get; set; }
         public int Stamina { get; set; }
+        public int BAB { get; set; }
         public string LocationAreaResref { get; set; }
         public float LocationX { get; set; }
         public float LocationY { get; set; }

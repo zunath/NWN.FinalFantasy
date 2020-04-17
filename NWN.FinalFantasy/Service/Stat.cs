@@ -8,19 +8,76 @@ namespace NWN.FinalFantasy.Service
     public class Stat
     {
         /// <summary>
+        /// Retrieves the maximum hit points on a player.
+        /// This will include any base NWN calculations used when determining max HP.
+        /// </summary>
+        /// <param name="player">The player object</param>
+        /// <returns>The max amount of HP</returns>
+        public static int GetMaxHP(uint player)
+        {
+            return GetMaxHitPoints(player);
+        }
+
+        /// <summary>
+        /// Retrieves the maximum MP on a player.
+        /// INT and WIS modifiers will be checked. The higher one is used for calculations.
+        /// Each modifier grants +2 to max MP.
+        /// </summary>
+        /// <param name="player">The player object</param>
+        /// <param name="dbPlayer">The player entity. If this is not set, a call to the DB will be made.</param>
+        /// <returns>The max amount of MP</returns>
+        public static int GetMaxMP(uint player, Player dbPlayer = null)
+        {
+            if (dbPlayer == null)
+            {
+                var playerId = GetObjectUUID(player);
+                dbPlayer = DB.Get<Player>(playerId);
+            }
+            var baseMP = dbPlayer.MaxMP;
+            var intModifier = GetAbilityModifier(Ability.Intelligence, player);
+            var wisModifier = GetAbilityModifier(Ability.Wisdom, player);
+            var modifier = intModifier > wisModifier ? intModifier : wisModifier;
+
+            return baseMP + (modifier * 2);
+        }
+
+        /// <summary>
+        /// Retrieves the maximum STM on a player.
+        /// CON modifier will be checked. Each modifier grants +2 to max STM.
+        /// </summary>
+        /// <param name="player">The player object</param>
+        /// <param name="dbPlayer">The player entity. If this is not set, a call to the DB will be made.</param>
+        /// <returns>The max amount of STM</returns>
+        public static int GetMaxStamina(uint player, Player dbPlayer = null)
+        {
+            if (dbPlayer == null)
+            {
+                var playerId = GetObjectUUID(player);
+                dbPlayer = DB.Get<Player>(playerId);
+            }
+
+            var baseStamina = dbPlayer.MaxStamina;
+            var conModifier = GetAbilityModifier(Ability.Constitution, player);
+
+            return baseStamina + (conModifier * 2);
+        }
+
+        /// <summary>
         /// Restores an entity's MP by a specified amount.
         /// This method will not persist the changes so be sure you call DB.Set after calling this.
         /// </summary>
+        /// <param name="player">The player to modify.</param>
         /// <param name="entity">The entity to modify.</param>
         /// <param name="amount">The amount of MP to restore.</param>
-        public static void RestoreMP(Player entity, int amount)
+        public static void RestoreMP(uint player, Player entity, int amount)
         {
             if (amount <= 0) return;
 
+            var maxMP = GetMaxMP(player);
             entity.MP += amount;
 
-            if (entity.MP > entity.MaxMP)
-                entity.MP = entity.MaxMP;
+            if (entity.MP > maxMP)
+                entity.MP = maxMP;
         }
 
         /// <summary>
@@ -46,14 +103,15 @@ namespace NWN.FinalFantasy.Service
         /// </summary>
         /// <param name="entity">The entity to modify.</param>
         /// <param name="amount">The amount of Stamina to restore.</param>
-        public static void RestoreStamina(Player entity, int amount)
+        public static void RestoreStamina(uint player, Player entity, int amount)
         {
             if (amount <= 0) return;
 
+            var maxStamina = GetMaxStamina(player, entity);
             entity.Stamina += amount;
 
-            if (entity.Stamina > entity.MaxStamina)
-                entity.Stamina = entity.MaxStamina;
+            if (entity.Stamina > maxStamina)
+                entity.Stamina = maxStamina;
         }
 
         /// <summary>
@@ -169,5 +227,24 @@ namespace NWN.FinalFantasy.Service
             if (entity.Stamina < 0)
                 entity.Stamina = 0;
         }
+
+        /// <summary>
+        /// Modifies a player's Base Attack Bonus (BAB) by a certain amount.
+        /// This method will not persist the changes so be sure you call DB.Set after calling this.
+        /// </summary>
+        /// <param name="entity">The entity to modify.</param>
+        /// <param name="player">The player to modify.</param>
+        /// <param name="adjustBy">The amount to adjust by</param>
+        public static void AdjustBAB(Player entity, uint player, int adjustBy)
+        {
+            entity.BAB += adjustBy;
+
+            if (entity.BAB < 1)
+                entity.BAB = 1;
+
+            SendMessageToPC(player, $"new BAB = {entity.BAB}");
+            Creature.SetBaseAttackBonus(player, entity.BAB);
+        }
+
     }
 }

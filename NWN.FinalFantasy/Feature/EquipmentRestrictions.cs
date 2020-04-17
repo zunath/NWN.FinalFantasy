@@ -157,15 +157,13 @@ namespace NWN.FinalFantasy.Feature
         /// <summary>
         /// When an item is unequipped, if any of a player's perks has an Unequipped Trigger, run those actions now.
         /// </summary>
-        [NWNEventHandler("item_uneqp_aft")]
+        [NWNEventHandler("mod_unequip")]
         public static void ApplyUnequipTriggers()
         {
-            var player = OBJECT_SELF;
+            var player = GetPCItemLastUnequippedBy();
             if (!GetIsPC(player) || GetIsDM(player)) return;
 
-            var playerId = GetObjectUUID(player);
-            var dbPlayer = DB.Get<Player>(playerId);
-            var item = Object.StringToObject(Events.GetEventData("ITEM"));
+            var item = GetPCItemLastUnequipped();
 
             foreach (var (perkType, actionList) in Perk.GetAllUnequipTriggers())
             {

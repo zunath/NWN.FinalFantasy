@@ -242,7 +242,6 @@ namespace NWN.FinalFantasy.Service
             if (entity.BAB < 1)
                 entity.BAB = 1;
 
-            SendMessageToPC(player, $"new BAB = {entity.BAB}");
             Creature.SetBaseAttackBonus(player, entity.BAB);
         }
 

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using NWN.FinalFantasy.Core.NWScript.Enum;
 using NWN.FinalFantasy.Core.NWScript.Enum.Item;
 using NWN.FinalFantasy.Entity;
@@ -25,12 +26,11 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
             return builder.Build();
         }
 
-        private static void ModifyBAB(uint player, uint item, InventorySlot inventorySlot, int level, bool isApplying, BaseItem requiredItemType)
+        private static void ModifyBAB(uint player, uint item, InventorySlot inventorySlot, int level, bool isApplying, BaseItem requiredItemType, InventorySlot requiredSlot)
         {
             var baseItemType = GetBaseItemType(item);
             if (baseItemType != requiredItemType) return;
-            if (inventorySlot != InventorySlot.RightHand && 
-                inventorySlot != InventorySlot.Invalid) return;
+            if (inventorySlot != requiredSlot) return;
 
             var amount = isApplying ? level : -level;
             var playerId = GetObjectUUID(player);
@@ -47,11 +47,11 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .Description("Grants increased BAB when equipped with a longsword.")
                 .TriggerEquippedItem((player, item, inventorySlot, type, level) =>
                 {
-                    ModifyBAB(player, item, inventorySlot, level, true, BaseItem.Longsword);
+                    ModifyBAB(player, item, inventorySlot, level, true, BaseItem.Longsword, InventorySlot.RightHand);
                 })
                 .TriggerUnequippedItem((player, item, type, level) =>
                 {
-                    ModifyBAB(player, item, InventorySlot.Invalid, level, false, BaseItem.Longsword);
+                    ModifyBAB(player, item, InventorySlot.Invalid, level, false, BaseItem.Longsword, InventorySlot.Invalid);
                 })
 
                 .AddPerkLevel(1)
@@ -78,20 +78,42 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
             builder.Create(PerkCategoryType.Monk, PerkType.KnucklesMastery)
                 .Name("Knuckles Mastery")
                 .Description("Grants increased BAB when equipped with knuckles.")
+
+                // Knuckles BAB calculations work a little backwards compared to the other item types.
+                // We want to add BAB when the player is newly bare-handed.
+                // We want to remove BAB when the player equips any item into their right or left hands.
                 .TriggerEquippedItem((player, item, inventorySlot, type, level) =>
                 {
-                    ModifyBAB(player, item, inventorySlot, level, true, BaseItem.Gloves);
+                    // There are items in the right or left hands right now. Exit early
+                    if (GetIsObjectValid(GetItemInSlot(InventorySlot.RightHand, player)) ||
+                        GetIsObjectValid(GetItemInSlot(InventorySlot.LeftHand, player))) return;
+
+                    // Nothing was equipped, but we're about to put an item in either hand.
+                    // For this scenario, we need to reduce the BAB because the player is about to have a weapon equipped.
+                    if(inventorySlot == InventorySlot.RightHand || inventorySlot == InventorySlot.LeftHand)
+                        ModifyBAB(player, item, InventorySlot.Invalid, level, false, GetBaseItemType(item), InventorySlot.Invalid);
                 })
                 .TriggerUnequippedItem((player, item, type, level) =>
                 {
-                    ModifyBAB(player, item, InventorySlot.Invalid, level, false, BaseItem.Gloves);
+                    var rightHand = GetItemInSlot(InventorySlot.RightHand, player);
+                    var leftHand = GetItemInSlot(InventorySlot.LeftHand, player);
+                    var rightValid = GetIsObjectValid(rightHand);
+                    var leftValid = GetIsObjectValid(leftHand);
+
+                    // The item being removed is in either the right or left hand and the OTHER hand is empty.
+                    // We need to apply the BAB bonus.
+                    if ((rightHand == item && !leftValid) ||
+                        (leftHand == item && !rightValid))
+                    {
+                        ModifyBAB(player, item, InventorySlot.Invalid, level, true, GetBaseItemType(item), InventorySlot.Invalid);
+                    }
                 })
 
                 .AddPerkLevel(1)
                 .Description("Grants +1 BAB when equipped with knuckles.")
-                .Price(8)
-                .RequirementSkill(SkillType.Knuckles, 30)
-                .RequirementSkill(SkillType.Chi, 25)
+                //.Price(8)
+                //.RequirementSkill(SkillType.Knuckles, 30)
+                //.RequirementSkill(SkillType.Chi, 25)
 
                 .AddPerkLevel(2)
                 .Description("Grants +2 BAB when equipped with knuckles.")
@@ -114,11 +136,11 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .Description("Grants increased BAB when equipped with a dagger.")
                 .TriggerEquippedItem((player, item, inventorySlot, type, level) =>
                 {
-                    ModifyBAB(player, item, inventorySlot, level, true, BaseItem.Dagger);
+                    ModifyBAB(player, item, inventorySlot, level, true, BaseItem.Dagger, InventorySlot.RightHand);
                 })
                 .TriggerUnequippedItem((player, item, type, level) =>
                 {
-                    ModifyBAB(player, item, InventorySlot.Invalid, level, false, BaseItem.Dagger);
+                    ModifyBAB(player, item, InventorySlot.Invalid, level, false, BaseItem.Dagger, InventorySlot.Invalid);
                 })
 
                 .AddPerkLevel(1)
@@ -148,11 +170,11 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .Description("Grants increased BAB when equipped with a staff.")
                 .TriggerEquippedItem((player, item, inventorySlot, type, level) =>
                 {
-                    ModifyBAB(player, item, inventorySlot, level, true, BaseItem.QuarterStaff);
+                    ModifyBAB(player, item, inventorySlot, level, true, BaseItem.QuarterStaff, InventorySlot.RightHand);
                 })
                 .TriggerUnequippedItem((player, item, type, level) =>
                 {
-                    ModifyBAB(player, item, InventorySlot.Invalid, level, false, BaseItem.QuarterStaff);
+                    ModifyBAB(player, item, InventorySlot.Invalid, level, false, BaseItem.QuarterStaff, InventorySlot.Invalid);
                 })
 
                 .AddPerkLevel(1)
@@ -182,11 +204,11 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .Description("Grants increased BAB when equipped with a rod.")
                 .TriggerEquippedItem((player, item, inventorySlot, type, level) =>
                 {
-                    ModifyBAB(player, item, inventorySlot, level, true, BaseItem.LightMace);
+                    ModifyBAB(player, item, inventorySlot, level, true, BaseItem.LightMace, InventorySlot.RightHand);
                 })
                 .TriggerUnequippedItem((player, item, type, level) =>
                 {
-                    ModifyBAB(player, item, InventorySlot.Invalid, level, false, BaseItem.LightMace);
+                    ModifyBAB(player, item, InventorySlot.Invalid, level, false, BaseItem.LightMace, InventorySlot.Invalid);
                 })
 
                 .AddPerkLevel(1)
@@ -216,11 +238,11 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .Description("Grants increased BAB when equipped with a longbow.")
                 .TriggerEquippedItem((player, item, inventorySlot, type, level) =>
                 {
-                    ModifyBAB(player, item, inventorySlot, level, true, BaseItem.Longbow);
+                    ModifyBAB(player, item, inventorySlot, level, true, BaseItem.Longbow, InventorySlot.RightHand);
                 })
                 .TriggerUnequippedItem((player, item, type, level) =>
                 {
-                    ModifyBAB(player, item, InventorySlot.Invalid, level, false, BaseItem.Longbow);
+                    ModifyBAB(player, item, InventorySlot.Invalid, level, false, BaseItem.Longbow, InventorySlot.Invalid);
                 })
 
                 .AddPerkLevel(1)
@@ -249,11 +271,11 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .Description("Grants increased BAB when equipped with a katana.")
                 .TriggerEquippedItem((player, item, inventorySlot, type, level) =>
                 {
-                    ModifyBAB(player, item, inventorySlot, level, true, BaseItem.Katana);
+                    ModifyBAB(player, item, inventorySlot, level, true, BaseItem.Katana, InventorySlot.RightHand);
                 })
                 .TriggerUnequippedItem((player, item, type, level) =>
                 {
-                    ModifyBAB(player, item, InventorySlot.Invalid, level, false, BaseItem.Katana);
+                    ModifyBAB(player, item, InventorySlot.Invalid, level, false, BaseItem.Katana, InventorySlot.Invalid);
                 })
 
                 .AddPerkLevel(1)

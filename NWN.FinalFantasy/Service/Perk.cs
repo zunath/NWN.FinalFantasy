@@ -82,7 +82,6 @@ namespace NWN.FinalFantasy.Service
 
                 foreach (var req in detail.EffectiveLevelRequirements)
                 {
-                    Console.WriteLine($"checking req");
                     if (string.IsNullOrWhiteSpace(req.CheckRequirements(player))) return level;
                 }
             }

@@ -1,3 +1,5 @@
+using System;
+
 namespace NWN.FinalFantasy.Core.NWNX
 {
     public static class Events

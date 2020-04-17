@@ -19,7 +19,9 @@ namespace NWN.FinalFantasy.Enumeration
         [PerkCategory("White Mage", true)]
         WhiteMage = 6,
         [PerkCategory("Ranger", true)]
-        Ranger = 7
+        Ranger = 7,
+        [PerkCategory("Ninja", true)]
+        Ninja = 8,
     }
 
     public class PerkCategoryAttribute : Attribute

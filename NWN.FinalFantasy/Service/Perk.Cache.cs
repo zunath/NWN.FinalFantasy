@@ -27,6 +27,12 @@ namespace NWN.FinalFantasy.Service
         // Recast Group Descriptions
         private static readonly Dictionary<RecastGroup, string> _recastDescriptions = new Dictionary<RecastGroup, string>();
 
+        // Trigger Actions
+        private static readonly Dictionary<PerkType, List<PerkTriggerEquippedUnequippedAction>> _equipTriggers = new Dictionary<PerkType, List<PerkTriggerEquippedUnequippedAction>>();
+        private static readonly Dictionary<PerkType, List<PerkTriggerEquippedUnequippedAction>> _unequipTriggers = new Dictionary<PerkType, List<PerkTriggerEquippedUnequippedAction>>();
+        private static readonly Dictionary<PerkType, List<PerkTriggerPurchasedRefundedAction>> _purchaseTriggers = new Dictionary<PerkType, List<PerkTriggerPurchasedRefundedAction>>();
+        private static readonly Dictionary<PerkType, List<PerkTriggerPurchasedRefundedAction>> _refundTriggers = new Dictionary<PerkType, List<PerkTriggerPurchasedRefundedAction>>();
+
         [NWNEventHandler("mod_load")]
         public static void CacheData()
         {
@@ -72,6 +78,9 @@ namespace NWN.FinalFantasy.Service
                             _activePerksByCategory[perkDetail.Category] = new List<PerkType>();
 
                         _activePerksByCategory[perkDetail.Category].Add(perkType);
+
+                        // Add appropriate trigger entries if this perk is active and has them.
+                        CacheTriggers(perkDetail);
                     }
 
                     // Add to active category cache if the perk and category are both active.
@@ -87,6 +96,49 @@ namespace NWN.FinalFantasy.Service
 
             CacheRecastGroupNames();
             Console.WriteLine("Perk data cached successfully.");
+        }
+
+        /// <summary>
+        /// Handles organizing triggers so future activation is quicker.
+        /// </summary>
+        /// <param name="perk">The perk to cache triggers for.</param>
+        private static void CacheTriggers(PerkDetail perk)
+        {
+            // Equipped Triggers: Fires when an item is equipped.
+            if (perk.EquippedTriggers.Count > 0)
+            {
+                if(!_equipTriggers.ContainsKey(perk.Type))
+                    _equipTriggers[perk.Type] = new List<PerkTriggerEquippedUnequippedAction>();
+
+                _equipTriggers[perk.Type].AddRange(perk.EquippedTriggers);
+            }
+
+            // Unequipped Triggers: Fires when an item is unequipped.
+            if (perk.UnequippedTriggers.Count > 0)
+            {
+                if(!_unequipTriggers.ContainsKey(perk.Type))
+                    _unequipTriggers[perk.Type] = new List<PerkTriggerEquippedUnequippedAction>();
+
+                _unequipTriggers[perk.Type].AddRange(perk.UnequippedTriggers);
+            }
+
+            // Purchased Triggers: Fires when a perk is purchased.
+            if (perk.PurchasedTriggers.Count > 0)
+            {
+                if(!_purchaseTriggers.ContainsKey(perk.Type))
+                    _purchaseTriggers[perk.Type] = new List<PerkTriggerPurchasedRefundedAction>();
+
+                _purchaseTriggers[perk.Type].AddRange(perk.PurchasedTriggers);
+            }
+
+            // Refunded Triggers: Fires when a perk is refunded.
+            if (perk.PurchasedTriggers.Count > 0)
+            {
+                if(!_refundTriggers.ContainsKey(perk.Type))
+                    _refundTriggers[perk.Type] = new List<PerkTriggerPurchasedRefundedAction>();
+
+                _refundTriggers[perk.Type].AddRange(perk.RefundedTriggers);
+            }
         }
 
         /// <summary>

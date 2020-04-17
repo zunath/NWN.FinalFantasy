@@ -210,7 +210,7 @@ namespace NWN.FinalFantasy.Service.PerkService
         /// Adds an MP requirement to use the perk at this level.
         /// </summary>
         /// <param name="requiredMP">The amount of MP needed to use this perk at this level.</param>
-        /// <returns></returns>
+        /// <returns>A perk builder with the configured options</returns>
         public PerkBuilder RequirementMP(int requiredMP)
         {
             var requirement = new PerkMPRequirement(requiredMP);
@@ -222,11 +222,55 @@ namespace NWN.FinalFantasy.Service.PerkService
         /// Adds a stamina requirement to use the perk at this level.
         /// </summary>
         /// <param name="requiredSTM">The amount of STM needed to use this perk at this level.</param>
-        /// <returns></returns>
+        /// <returns>A perk builder with the configured options</returns>
         public PerkBuilder RequirementStamina(int requiredSTM)
         {
             var requirement = new PerkStaminaRequirement(requiredSTM);
             _activeLevel.ActivationRequirements.Add(requirement);
+            return this;
+        }
+
+        /// <summary>
+        /// Adds an action to run when an item is equipped and the player has this perk.
+        /// </summary>
+        /// <param name="equipAction">The action to run when an item is equipped.</param>
+        /// <returns>A perk builder with the configured options</returns>
+        public PerkBuilder TriggerEquippedItem(PerkTriggerEquippedUnequippedAction equipAction)
+        {
+            _activePerk.EquippedTriggers.Add(equipAction);
+            return this;
+        }
+
+        /// <summary>
+        /// Adds an action to run when an item is unequipped and the player has this perk.
+        /// </summary>
+        /// <param name="unequipAction">The action to run when an item is unequipped.</param>
+        /// <returns>A perk builder with the configured options</returns>
+        public PerkBuilder TriggerUnequippedItem(PerkTriggerEquippedUnequippedAction unequipAction)
+        {
+            _activePerk.EquippedTriggers.Add(unequipAction);
+            return this;
+        }
+
+        /// <summary>
+        /// Adds an action to run when this perk is purchased.
+        /// </summary>
+        /// <param name="purchaseAction">The action to run when this perk is purchased.</param>
+        /// <returns>A perk builder with the configured options</returns>
+        public PerkBuilder TriggerPurchase(PerkTriggerPurchasedRefundedAction purchaseAction)
+        {
+            _activePerk.PurchasedTriggers.Add(purchaseAction);
+            return this;
+        }
+
+        /// <summary>
+        /// Adds an action to run when this perk is refunded.
+        /// </summary>
+        /// <param name="refundAction">The action to run when this perk is refunded.</param>
+        /// <returns>A perk builder with the configured options</returns>
+        public PerkBuilder TriggerRefund(PerkTriggerPurchasedRefundedAction refundAction)
+        {
+            _activePerk.RefundedTriggers.Add(refundAction);
             return this;
         }
 

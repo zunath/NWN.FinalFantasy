@@ -35,7 +35,11 @@ namespace NWN.FinalFantasy.Enumeration
         [Skill(SkillCategoryType.Ranged, "Longbow", 100, true, "Ability to use longbows.", true)]
         Longbow = 14,
         [Skill(SkillCategoryType.Ability, "Archery", 100, true, "Ability to use barrage, aim, and other archery-related actions.", true)]
-        Archery = 15
+        Archery = 15,
+        [Skill(SkillCategoryType.Melee, "Katana", 100, true, "Ability to use katanas.", true)]
+        Katana = 16,
+        [Skill(SkillCategoryType.Ability, "Ninjitsu", 100, true, "Ability to use utsusemi, raiton, and other ninja-related actions.", true)]
+        Ninjitsu = 17
 
     }
 

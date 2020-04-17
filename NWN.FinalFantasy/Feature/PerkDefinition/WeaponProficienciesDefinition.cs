@@ -15,6 +15,7 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
             StaffProficiency(builder);
             RodProficiency(builder);
             LongbowProficiency(builder);
+            KatanaProficiency(builder);
 
             return builder.Build();
         }
@@ -357,6 +358,62 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .Description("Grants the ability to equip tier 10 longbows.")
                 .Price(2)
                 .RequirementSkill(SkillType.Longbow, 90);
+        }
+
+        private static void KatanaProficiency(PerkBuilder builder)
+        {
+            builder.Create(PerkCategoryType.Ninja, PerkType.KatanaProficiency)
+                .Name("Katana Proficiency")
+                .Description("Grants the ability to equip katanas.")
+
+                .AddPerkLevel(1)
+                .Description("Grants the ability to equip tier 1 katanas.")
+                .Price(2)
+
+                .AddPerkLevel(2)
+                .Description("Grants the ability to equip tier 2 katanas.")
+                .Price(2)
+                .RequirementSkill(SkillType.Katana, 10)
+
+                .AddPerkLevel(3)
+                .Description("Grants the ability to equip tier 3 katanas.")
+                .Price(2)
+                .RequirementSkill(SkillType.Katana, 20)
+
+                .AddPerkLevel(4)
+                .Description("Grants the ability to equip tier 4 katanas.")
+                .Price(2)
+                .RequirementSkill(SkillType.Katana, 30)
+
+                .AddPerkLevel(5)
+                .Description("Grants the ability to equip tier 5 katanas.")
+                .Price(2)
+                .RequirementSkill(SkillType.Katana, 40)
+
+                .AddPerkLevel(6)
+                .Description("Grants the ability to equip tier 6 katanas.")
+                .Price(2)
+                .RequirementSkill(SkillType.Katana, 50)
+
+                .AddPerkLevel(7)
+                .Description("Grants the ability to equip tier 7 katanas.")
+                .Price(2)
+                .RequirementSkill(SkillType.Katana, 60)
+
+                .AddPerkLevel(8)
+                .Description("Grants the ability to equip tier 8 katanas.")
+                .Price(2)
+                .RequirementSkill(SkillType.Katana, 70)
+
+                .AddPerkLevel(9)
+                .Description("Grants the ability to equip tier 9 katanas.")
+                .Price(2)
+                .RequirementSkill(SkillType.Katana, 80)
+
+                .AddPerkLevel(10)
+                .Description("Grants the ability to equip tier 10 katanas.")
+                .Price(2)
+                .RequirementSkill(SkillType.Katana, 90);
         }
     }
 }

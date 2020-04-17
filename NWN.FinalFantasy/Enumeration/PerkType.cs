@@ -23,6 +23,8 @@
         Defender = 17,
         Ironclad = 18,
         CircleOfScorn = 19,
-        HPBoostKnight = 20
+        HPBoostKnight = 20,
+        KatanaProficiency = 21,
+        DualWield = 22
     }
 }

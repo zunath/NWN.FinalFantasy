@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using NWN.FinalFantasy.Core.NWNX;
 using NWN.FinalFantasy.Core.NWNX.Enum;
@@ -144,7 +145,7 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
                 {
                     var requirementMet = string.IsNullOrWhiteSpace(req.CheckRequirements(player));
                     var reqText = requirementMet ? ColorToken.Green(req.RequirementText) : ColorToken.Red(req.RequirementText);
-                    text += reqText;
+                    text += reqText + "\n";
 
                     if (!requirementMet) meetsRequirements = false;
                 }
@@ -189,6 +190,7 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
                 DB.Set(playerId, dbPlayer);
 
                 GrantFeats();
+                ApplyPurchasePerkTriggers(dbPlayer.Perks[model.SelectedPerk]);
             }
 
             void GrantFeats()
@@ -229,6 +231,18 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
                     Core.NWNX.Player.SetQuickBarSlot(player, 9, qbs);
                 else if (Core.NWNX.Player.GetQuickBarSlot(player, 10).ObjectType == QuickBarSlotType.Empty)
                     Core.NWNX.Player.SetQuickBarSlot(player, 10, qbs);
+            }
+
+            // Applies any Purchase triggers associated with this perk.
+            void ApplyPurchasePerkTriggers(int perkLevel)
+            {
+                if (perkDetail.PurchasedTriggers.Count > 0)
+                {
+                    foreach (var action in perkDetail.PurchasedTriggers)
+                    {
+                        action(player, model.SelectedPerk, perkLevel);
+                    }
+                }
             }
 
             var currentPerkLevelDetails = BuildPerkSection(true, currentLevel);

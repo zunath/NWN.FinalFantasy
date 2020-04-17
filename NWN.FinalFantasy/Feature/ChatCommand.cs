@@ -10,6 +10,7 @@ using NWN.FinalFantasy.Entity;
 using NWN.FinalFantasy.Feature.ChatCommandDefinition;
 using NWN.FinalFantasy.Service;
 using static NWN.FinalFantasy.Core.NWScript.NWScript;
+using Object = NWN.FinalFantasy.Core.NWNX.Object;
 using Player = NWN.FinalFantasy.Core.NWNX.Player;
 
 namespace NWN.FinalFantasy.Feature
@@ -773,6 +774,39 @@ namespace NWN.FinalFantasy.Feature
                     HelpTextAdmin += ColorToken.Green("/" + text) + ColorToken.White(": " + definition.Description) + "\n";
                 }
             }
+        }
+
+
+        /// <summary>
+        /// When a player uses the "Open Rest Menu" feat, open the rest menu dialog conversation.
+        /// </summary>
+        [NWNEventHandler("feat_use_bef")]
+        public static void UseOpenRestMenuFeat()
+        {
+            var player = OBJECT_SELF;
+            var feat = (Feat)Convert.ToInt32(Events.GetEventData("FEAT_ID"));
+            if (feat != Feat.ChatCommandTargeter) return;
+
+            var target = Object.StringToObject(Events.GetEventData("TARGET_OBJECT_ID"));
+            var area = Object.StringToObject(Events.GetEventData("AREA_OBJECT_ID"));
+            var targetX = (float)Convert.ToDouble(Events.GetEventData("TARGET_POSITION_X"));
+            var targetY = (float)Convert.ToDouble(Events.GetEventData("TARGET_POSITION_Y"));
+            var targetZ = (float)Convert.ToDouble(Events.GetEventData("TARGET_POSITION_Z"));
+
+            var targetLocation = Location(area, new Vector(targetX, targetY, targetZ), 0.0f);
+            var command = GetLocalString(player, "CHAT_COMMAND");
+            var args = GetLocalString(player, "CHAT_COMMAND_ARGS");
+
+            if (string.IsNullOrWhiteSpace(command))
+            {
+                SendMessageToPC(player, "Please enter a chat command and then use this feat. Type /help to learn more about the available chat commands.");
+                return;
+            }
+
+            ProcessChatCommand(command, player, target, targetLocation, args);
+
+            DeleteLocalString(player, "CHAT_COMMAND");
+            DeleteLocalString(player, "CHAT_COMMAND_ARGS");
         }
     }
 }

@@ -76,8 +76,12 @@ namespace NWN.FinalFantasy.Service
             // The first perk level the player passes requirements on is the player's effective level.
             foreach (var (level, detail) in perkLevels)
             {
+                // No requirements set for this perk level. Return the level.
+                if (detail.EffectiveLevelRequirements.Count <= 0) return level;
+
                 foreach (var req in detail.EffectiveLevelRequirements)
                 {
+                    Console.WriteLine($"checking req");
                     if (string.IsNullOrWhiteSpace(req.CheckRequirements(player))) return level;
                 }
             }

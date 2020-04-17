@@ -1,5 +1,9 @@
-﻿using NWN.FinalFantasy.Core;
+﻿using System;
+using System.Diagnostics;
+using System.Linq;
+using NWN.FinalFantasy.Core;
 using NWN.FinalFantasy.Core.NWNX;
+using NWN.FinalFantasy.Core.NWScript.Enum;
 using NWN.FinalFantasy.Core.NWScript.Enum.Item;
 using NWN.FinalFantasy.Enumeration;
 using NWN.FinalFantasy.Service;
@@ -40,6 +44,50 @@ namespace NWN.FinalFantasy.Feature
 
             SendMessageToPC(creature, ColorToken.Red(error));
             Events.SkipEvent();
+        }
+
+        /// <summary>
+        /// When an item is equipped, check if the item is going to be dual wielded. If it is, ensure player has
+        /// at least level 1 of the Dual Wield perk. If they don't, skip the equip event with an error message.
+        /// </summary>
+        [NWNEventHandler("item_eqp_bef")]
+        public static void ValidateDualWield()
+        {
+            var creature = OBJECT_SELF;
+            var item = Object.StringToObject(Events.GetEventData("ITEM"));
+            var slot = (InventorySlot)Convert.ToInt32(Events.GetEventData("SLOT"));
+
+            // Not equipping to the left hand, or there's nothing equipped in the right hand.
+            if (slot != InventorySlot.LeftHand) return;
+            if (!GetIsObjectValid(GetItemInSlot(InventorySlot.RightHand, creature))) return;
+            
+            var baseItem = GetBaseItemType(item);
+            var dualWieldWeapons = new[]
+            {
+                BaseItem.ShortSword,
+                BaseItem.Longsword,
+                BaseItem.BattleAxe,
+                BaseItem.BastardSword,
+                BaseItem.LightFlail,
+                BaseItem.LightMace,
+                BaseItem.Dagger,
+                BaseItem.Club,
+                BaseItem.HandAxe,
+                BaseItem.Kama,
+                BaseItem.Katana,
+                BaseItem.Kukri,
+                BaseItem.Rapier,
+                BaseItem.Scimitar,
+                BaseItem.Sickle
+            };
+            if (!dualWieldWeapons.Contains(baseItem)) return;
+
+            var dualWieldLevel = Perk.GetEffectivePerkLevel(creature, PerkType.DualWield);
+            if (dualWieldLevel <= 0)
+            {
+                SendMessageToPC(creature, ColorToken.Red("Equipping two weapons requires the Dual Wield perk."));
+                Events.SkipEvent();
+            }
         }
 
         /// <summary>

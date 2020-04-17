@@ -74,13 +74,15 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
             page.Header = "Please select a category.";
 
             var player = GetPC();
-            var perksAvailable = GetPerksAvailableToPC(player);
+            var categoriesAvailable = GetPerksAvailableToPC(player)
+                .Select(s => s.Category)
+                .Distinct();
             
-            foreach(var perk in perksAvailable)
+            foreach(var category in categoriesAvailable)
             {
-                var categoryDetail = Perk.GetPerkCategoryDetails(perk.Category);
+                var categoryDetail = Perk.GetPerkCategoryDetails(category);
 
-                page.AddResponse(categoryDetail.Name, () => SelectCategory(perk.Category));
+                page.AddResponse(categoryDetail.Name, () => SelectCategory(category));
             }
 
         }

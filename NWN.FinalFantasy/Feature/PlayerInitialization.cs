@@ -40,6 +40,7 @@ namespace NWN.FinalFantasy.Feature
 
             dbPlayer.UnallocatedSP = 10;
             dbPlayer.Version = 1;
+            Stat.AdjustMaxHP(dbPlayer, player, 20);
             DB.Set(playerId, dbPlayer);
         }
 

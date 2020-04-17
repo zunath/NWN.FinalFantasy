@@ -86,6 +86,9 @@ namespace NWN.FinalFantasy.Core.NWScript.Enum.Item
 
         // FFO custom item property types
         UseLimitationPerk = 100,
-        ArmorType = 101
+        ArmorType = 101,
+        HPBonus = 102,
+        MPBonus = 103,
+        STMBonus = 104
     }
 }

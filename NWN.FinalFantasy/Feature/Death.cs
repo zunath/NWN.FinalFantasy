@@ -69,7 +69,7 @@ namespace NWN.FinalFantasy.Feature
             if (!GetIsPC(player) || GetIsDM(player)) return;
 
             var playerId = GetObjectUUID(player);
-            var dbPlayer = DB.Get<Player>(playerId);
+            var dbPlayer = DB.Get<Player>(playerId) ?? new Player();
 
             // Already have a respawn point, no need to set the default one.
             if (!string.IsNullOrWhiteSpace(dbPlayer.RespawnAreaResref)) return;

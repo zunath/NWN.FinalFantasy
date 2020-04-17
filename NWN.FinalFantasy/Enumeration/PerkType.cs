@@ -3,18 +3,26 @@
     public enum PerkType
     {
         Invalid = 0,
-        LongswordProficiency = 1,
-        HeavyArmor = 2,
-        ShieldBash = 3,
-        Provoke = 4,
-        Cleave = 5,
-        SpikedDefense = 6,
-        ShieldProficiency = 7,
-        Cover = 8,
-        LongswordMastery = 9,
-        Defender = 10,
-        Ironclad = 11,
-        CircleOfScorn = 12,
-        HPBoostKnight = 13
+        HeavyArmorProficiency = 1,
+        LightArmorProficiency = 2,
+        MysticArmorProficiency = 3,
+        ShieldProficiency = 4,
+        LongswordProficiency = 5,
+        PowerGloveProficiency = 6,
+        DaggerProficiency = 7,
+        StaffProficiency = 8,
+        RodProficiency = 9,
+        LongbowProficiency = 10,
+
+        ShieldBash = 11,
+        Provoke = 12,
+        Cleave = 13,
+        SpikedDefense = 14,
+        Cover = 15,
+        LongswordMastery = 16,
+        Defender = 17,
+        Ironclad = 18,
+        CircleOfScorn = 19,
+        HPBoostKnight = 20
     }
 }

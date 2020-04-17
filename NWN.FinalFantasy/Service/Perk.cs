@@ -1,9 +1,6 @@
-﻿using System;
-using System.Globalization;
-using System.Linq;
+﻿using System.Linq;
 using NWN.FinalFantasy.Entity;
 using NWN.FinalFantasy.Enumeration;
-using NWN.FinalFantasy.Service.PerkService;
 using static NWN.FinalFantasy.Core.NWScript.NWScript;
 
 namespace NWN.FinalFantasy.Service

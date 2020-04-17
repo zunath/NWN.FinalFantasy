@@ -104,9 +104,13 @@ namespace NWN.FinalFantasy.Feature
             Events.SubscribeEvent("NWNX_ON_EXAMINE_OBJECT_BEFORE", "examine_bef");
             Events.SubscribeEvent("NWNX_ON_EXAMINE_OBJECT_AFTER", "examine_aft");
 
+            // Validate Use Item events
+            Events.SubscribeEvent("NWNX_ON_VALIDATE_USE_ITEM_BEFORE", "item_valid_bef");
+            Events.SubscribeEvent("NWNX_ON_VALIDATE_USE_ITEM_AFTER", "item_valid_aft");
+
             // Use Item events
-            Events.SubscribeEvent("NWNX_ON_USE_ITEM_BEFORE", "useitem_bef");
-            Events.SubscribeEvent("NWNX_ON_USE_ITEM_AFTER", "useitem_aft");
+            Events.SubscribeEvent("NWNX_ON_USE_ITEM_BEFORE", "item_use_bef");
+            Events.SubscribeEvent("NWNX_ON_USE_ITEM_AFTER", "item_use_aft");
 
             // Item Container events
             Events.SubscribeEvent("NWNX_ON_ITEM_INVENTORY_OPEN_BEFORE", "inv_open_bef");

@@ -219,22 +219,35 @@ namespace NWN.FinalFantasy.Feature
             // Activation delay is increased if player is equipped with heavy or light armor.
             float CalculateActivationDelay()
             {
+                const float HeavyArmorPenalty = 2.0f;
+                const float LightArmorPenalty = 1.5f;
+
                 var armorPenalty = 1.0f;
                 var penaltyMessage = string.Empty;
                 for (var slot = 0; slot < NumberOfInventorySlots; slot++)
                 {
                     var item = GetItemInSlot((InventorySlot) slot, activator);
-                    if (GetItemHasItemProperty(item, ItemPropertyType.HeavyArmor))
+
+                    for (var ip = GetFirstItemProperty(item); GetIsItemPropertyValid(ip); ip = GetNextItemProperty(item))
                     {
-                        armorPenalty = 2f;
-                        penaltyMessage = "Heavy armor slows your casting speed by 100%.";
-                        break;
+                        if (GetItemPropertyType(ip) != ItemPropertyType.ArmorType) continue;
+
+                        var armorType = (ArmorType)GetItemPropertySubType(ip);
+                        if (armorType == ArmorType.Heavy)
+                        {
+                            armorPenalty = HeavyArmorPenalty;
+                            penaltyMessage = "Heavy armor slows your casting speed by 100%.";
+                            break;
+                        }
+                        else if (armorType == ArmorType.Light)
+                        {
+                            armorPenalty = LightArmorPenalty;
+                            penaltyMessage = "Light armor slows your casting speed by 50%.";
+                        }
                     }
-                    else if (GetItemHasItemProperty(item, ItemPropertyType.LightArmor))
-                    {
-                        armorPenalty = 1.5f;
-                        penaltyMessage = "Light armor slows your casting speed by 50%.";
-                    }
+
+                    // If we found heavy armor, we can exit early. Anything else requires us to iterate over the rest of the items.
+                    if (armorPenalty >= HeavyArmorPenalty) break;
                 }
 
                 // Notify player if needed.

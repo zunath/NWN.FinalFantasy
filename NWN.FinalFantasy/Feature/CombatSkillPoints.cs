@@ -98,17 +98,17 @@ namespace NWN.FinalFantasy.Feature
                     {
                         var item = GetItemInSlot((InventorySlot)slot, player);
 
-                        if (GetItemHasItemProperty(item, ItemPropertyType.LightArmor))
+                        for (var ip = GetFirstItemProperty(item); GetIsItemPropertyValid(ip); ip = GetNextItemProperty(item))
                         {
-                            lightArmorPoints++;
-                        }
-                        else if (GetItemHasItemProperty(item, ItemPropertyType.HeavyArmor))
-                        {
-                            heavyArmorPoints++;
-                        }
-                        else if (GetItemHasItemProperty(item, ItemPropertyType.MysticArmor))
-                        {
-                            mysticArmorPoints++;
+                            if (GetItemPropertyType(ip) != ItemPropertyType.ArmorType) continue;
+
+                            var armorType = (ArmorType)GetItemPropertySubType(ip);
+                            if (armorType == ArmorType.Light)
+                                lightArmorPoints++;
+                            else if (armorType == ArmorType.Heavy)
+                                heavyArmorPoints++;
+                            else if (armorType == ArmorType.Mystic)
+                                mysticArmorPoints++;
                         }
                     }
 
@@ -122,7 +122,7 @@ namespace NWN.FinalFantasy.Feature
                     var armorRank = playerSkills[skillType].Rank;
                     var armorRangePenalty = CalculateRankRangePenalty(highestRank, armorRank);
                     var adjustedArmorXP = baseXP * armorPercentage * armorRangePenalty;
-                    Skill.GiveSkillXP(player, SkillType.LightArmor, (int)adjustedArmorXP);
+                    Skill.GiveSkillXP(player, skillType, (int)adjustedArmorXP);
                 }
 
                 var npc = OBJECT_SELF;

@@ -43,6 +43,8 @@ namespace NWN.FinalFantasy.Feature
             var target = Object.StringToObject(Events.GetEventData("TARGET_OBJECT_ID"));
             var feat = (Feat)Convert.ToInt32(Events.GetEventData("FEAT_ID"));
             var perkType = Perk.GetPerkByFeat(feat);
+            if (perkType == PerkType.Invalid) return;
+
             var perk = Perk.GetPerkDetails(perkType);
 
             // Feat isn't registered to a perk.

@@ -31,18 +31,16 @@ namespace NWN.FinalFantasy.Service
 
         /// <summary>
         /// Retrieves a perk type which is mapped to the specified feat.
-        /// If feat is not mapped, an exception will be raised.
+        /// If feat is not mapped, PerkType.Invalid will be returned.
         /// </summary>
         /// <param name="feat">The feat to search for.</param>
         /// <returns>The PerkType associated with a feat.</returns>
         public static PerkType GetPerkByFeat(Feat feat)
         {
-            if(!_featsToPerks.ContainsKey(feat))
-                throw new KeyNotFoundException($"Feat {feat} has not been registered in the Perk.Feat.cs file. It must be registered first.");
+            if (!_featsToPerks.ContainsKey(feat))
+                return PerkType.Invalid;
 
             return _featsToPerks[feat];
         }
-
-
     }
 }

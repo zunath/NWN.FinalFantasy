@@ -24,7 +24,31 @@ namespace NWN.FinalFantasy.Feature
         /// </summary>
         private static readonly Dictionary<uint, HashSet<uint>> _playerToCreatureTracker = new Dictionary<uint, HashSet<uint>>();
 
+        /// <summary>
+        /// Tracks the mapping of right hand weapon + armor to a specific skill.
+        /// </summary>
+        private static readonly Dictionary<Tuple<BaseItem, ArmorType>, SkillType> _weaponAndArmorSkillMapping = new Dictionary<Tuple<BaseItem, ArmorType>, SkillType>();
 
+        /// <summary>
+        /// Adds mappings for a right hand weapon + armor to a specific skill.
+        /// These skills receive XP in a similar manner to armor upon killing enemies.
+        /// </summary>
+        [NWNEventHandler("mod_load")]
+        public static void MapWeaponAndArmorToSkills()
+        {
+            // Knight: Longsword + Heavy = Chivalry
+            _weaponAndArmorSkillMapping[new Tuple<BaseItem, ArmorType>(BaseItem.Longsword, ArmorType.Heavy)] = SkillType.Chivalry;
+            // Monk: Knuckles + Light = Chi
+            _weaponAndArmorSkillMapping[new Tuple<BaseItem, ArmorType>(BaseItem.Gloves, ArmorType.Light)] = SkillType.Chi;
+            // Thief: Dagger + Light = Thievery
+            _weaponAndArmorSkillMapping[new Tuple<BaseItem, ArmorType>(BaseItem.Dagger, ArmorType.Light)] = SkillType.Thievery;
+            // Black Mage: Staff + Mystic = Black Magic
+            _weaponAndArmorSkillMapping[new Tuple<BaseItem, ArmorType>(BaseItem.QuarterStaff, ArmorType.Mystic)] = SkillType.BlackMagic;
+            // White Mage: Rod + Mystic = White Magic
+            _weaponAndArmorSkillMapping[new Tuple<BaseItem, ArmorType>(BaseItem.LightMace, ArmorType.Mystic)] = SkillType.WhiteMagic;
+            // Ranger: Longbow + Light = Archery
+            _weaponAndArmorSkillMapping[new Tuple<BaseItem, ArmorType>(BaseItem.Longbow, ArmorType.Light)] = SkillType.Archery;
+        }
 
         /// <summary>
         /// Adds a combat point to a given NPC creature for a given player and skill type.
@@ -116,13 +140,41 @@ namespace NWN.FinalFantasy.Feature
                 }
 
                 // Applies an individual armor skill's XP portion.
-                static void ApplyArmorSkillXP(uint player, int highestRank, int baseXP, SkillType skillType, float totalPoints, int armorPoints, Dictionary<SkillType, PlayerSkill> playerSkills)
+                static int CalculateAdjustedXP(int highestRank, int baseXP, SkillType skillType, float totalPoints, int points, Dictionary<SkillType, PlayerSkill> playerSkills)
                 {
-                    var armorPercentage = armorPoints / totalPoints;
-                    var armorRank = playerSkills[skillType].Rank;
-                    var armorRangePenalty = CalculateRankRangePenalty(highestRank, armorRank);
-                    var adjustedArmorXP = baseXP * armorPercentage * armorRangePenalty;
-                    Skill.GiveSkillXP(player, skillType, (int)adjustedArmorXP);
+                    var percentage = points / totalPoints;
+                    var skillRank = playerSkills[skillType].Rank;
+                    var rangePenalty = CalculateRankRangePenalty(highestRank, skillRank);
+                    var adjustedXP = baseXP * percentage * rangePenalty;
+                    return (int) adjustedXP;
+                }
+
+                // Applies an XP bonus to a support skill if the proper weapon and armor are chosen.
+                static void ApplyJobBonusSkillXP(uint player, int highestRank, int baseXP, Dictionary<SkillType, PlayerSkill> playerSkills)
+                {
+                    // Get item in right hand or gloves, if empty.
+                    var weapon = GetItemInSlot(InventorySlot.RightHand, player);
+                    if (!GetIsObjectValid(weapon))
+                        weapon = GetItemInSlot(InventorySlot.Arms, player);
+                    var armor = GetItemInSlot(InventorySlot.Chest, player);
+                    if (!GetIsObjectValid(armor)) return;
+
+                    var armorType = ArmorType.Invalid;
+                    for (var ip = GetFirstItemProperty(armor); GetIsItemPropertyValid(ip); ip = GetNextItemProperty(armor))
+                    {
+                        if (GetItemPropertyType(ip) != ItemPropertyType.ArmorType) continue;
+
+                        armorType = (ArmorType) GetItemPropertySubType(ip);
+                        break;
+                    }
+
+                    var baseItem = GetBaseItemType(weapon);
+                    var key = new Tuple<BaseItem, ArmorType>(baseItem, armorType);
+                    if (!_weaponAndArmorSkillMapping.ContainsKey(key)) return;
+
+                    var skill = _weaponAndArmorSkillMapping[key];
+                    var xp = CalculateAdjustedXP(highestRank, baseXP, skill, 2, 1, playerSkills);
+                    Skill.GiveSkillXP(player, skill, xp);
                 }
 
                 var npc = OBJECT_SELF;
@@ -170,9 +222,16 @@ namespace NWN.FinalFantasy.Feature
                     totalPoints = lightArmorPoints + heavyArmorPoints + mysticArmorPoints;
                     if (totalPoints <= 0) continue;
 
-                    ApplyArmorSkillXP(player, highestRank, baseXP, SkillType.LightArmor, totalPoints, lightArmorPoints, dbPlayer.Skills);
-                    ApplyArmorSkillXP(player, highestRank, baseXP, SkillType.HeavyArmor, totalPoints, heavyArmorPoints, dbPlayer.Skills);
-                    ApplyArmorSkillXP(player, highestRank, baseXP, SkillType.MysticArmor, totalPoints, mysticArmorPoints, dbPlayer.Skills);
+                    var xp = CalculateAdjustedXP(highestRank, baseXP, SkillType.HeavyArmor, totalPoints, heavyArmorPoints, dbPlayer.Skills);
+                    Skill.GiveSkillXP(player, SkillType.HeavyArmor, xp);
+
+                    xp = CalculateAdjustedXP(highestRank, baseXP, SkillType.LightArmor, totalPoints, lightArmorPoints, dbPlayer.Skills);
+                    Skill.GiveSkillXP(player, SkillType.LightArmor, xp);
+
+                    xp = CalculateAdjustedXP(highestRank, baseXP, SkillType.MysticArmor, totalPoints, mysticArmorPoints, dbPlayer.Skills);
+                    Skill.GiveSkillXP(player, SkillType.MysticArmor, xp);
+
+                    ApplyJobBonusSkillXP(player, highestRank, baseXP, dbPlayer.Skills);
                 }
 
             }

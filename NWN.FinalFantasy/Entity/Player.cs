@@ -17,6 +17,8 @@ namespace NWN.FinalFantasy.Entity
             RecastTimes = new Dictionary<RecastGroup, DateTime>();
         }
 
+        public override string KeyPrefix => "Player";
+
         public int Version { get; set; }
         public string Name { get; set; }
         public int MaxHP { get; set; }

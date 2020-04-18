@@ -12,5 +12,6 @@ namespace NWN.FinalFantasy.Entity
 
         public int MigrationVersion { get; set; }
         public DateTime LastRestart { get; set; }
+        public override string KeyPrefix => "ServerConfiguration";
     }
 }

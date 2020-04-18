@@ -26,7 +26,7 @@ namespace NWN.FinalFantasy.Feature
 
             var storageId = GetStorageID();
             var key = $"PublicStorage:{storageId}";
-            AddItem(key);
+            AddItem(storageId, "PublicStorage");
         }
 
         /// <summary>
@@ -37,8 +37,7 @@ namespace NWN.FinalFantasy.Feature
         public static void RemoveItemFromPublicStorage()
         {
             var storageId = GetStorageID();
-            var key = $"PublicStorage:{storageId}";
-            RemoveItem(key);
+            RemoveItem(storageId, "PublicStorage");
         }
 
         /// <summary>
@@ -49,8 +48,7 @@ namespace NWN.FinalFantasy.Feature
         public static void OpenStorage()
         {
             var storageId = GetStorageID();
-            var key = $"PublicStorage:{storageId}";
-            OpenStorage(key);
+            OpenStorage(storageId, "PublicStorage");
         }
 
         /// <summary>
@@ -83,8 +81,8 @@ namespace NWN.FinalFantasy.Feature
             var player = GetItemPossessor(item);
             var playerId = GetObjectUUID(player);
             var storageId = GetStorageID();
-            var key = $"Bank:{storageId}:{playerId}";
-            AddItem(key);
+            var key = $"{storageId}:{playerId}";
+            AddItem(key, "Bank");
         }
 
         /// <summary>
@@ -98,8 +96,8 @@ namespace NWN.FinalFantasy.Feature
             var player = GetItemPossessor(item);
             var playerId = GetObjectUUID(player);
             var storageId = GetStorageID();
-            var key = $"Bank:{storageId}:{playerId}";
-            RemoveItem(key);
+            var key = $"{storageId}:{playerId}";
+            RemoveItem(key, "Bank");
         }
 
         /// <summary>
@@ -114,8 +112,8 @@ namespace NWN.FinalFantasy.Feature
 
             var playerId = GetObjectUUID(player);
             var storageId = GetStorageID();
-            var key = $"Bank:{storageId}:{playerId}";
-            OpenStorage(key);
+            var key = $"{storageId}:{playerId}";
+            OpenStorage(key, "Bank");
         }
 
         /// <summary>
@@ -181,7 +179,8 @@ namespace NWN.FinalFantasy.Feature
         /// Adds an item to the database under the specified key.
         /// </summary>
         /// <param name="key">The unique identifier under which this item list will be stored.</param>
-        protected static void AddItem(string key)
+        /// <param name="keyPrefix">The prefix to store the data under.</param>
+        protected static void AddItem(string key, string keyPrefix)
         {
             // We don't want to serialize the item if we're loading its inventory.
             if (IsLoading) return;
@@ -216,11 +215,11 @@ namespace NWN.FinalFantasy.Feature
                 return;
             }
 
-            var items = DB.GetList<InventoryItem>(key) ?? new EntityList<InventoryItem>();
+            var items = DB.GetList<InventoryItem>(key, keyPrefix) ?? new EntityList<InventoryItem>();
             var itemID = Guid.Parse(GetObjectUUID(item));
             var data = Object.Serialize(item);
 
-            items.Entities.Add(new InventoryItem
+            items.Add(new InventoryItem
             {
                 ID = itemID,
                 Data = data,
@@ -230,7 +229,7 @@ namespace NWN.FinalFantasy.Feature
                 Tag = GetTag(item)
             });
 
-            DB.Set(key, items);
+            DB.SetList(key, items, keyPrefix);
             SendItemLimitMessage(player, true);
         }
 
@@ -251,7 +250,8 @@ namespace NWN.FinalFantasy.Feature
         /// Removes an item from the database by the specified key.
         /// </summary>
         /// <param name="key">The unique identifier for this item list.</param>
-        protected static void RemoveItem(string key)
+        /// <param name="keyPrefix">The key prefix to remove from.</param>
+        protected static void RemoveItem(string key, string keyPrefix)
         {
             var player = GetLastDisturbed();
             var type = GetInventoryDisturbType();
@@ -261,15 +261,15 @@ namespace NWN.FinalFantasy.Feature
             var playerID = GetObjectUUID(player);
 
             var storageID = GetStorageID();
-            var items = DB.GetList<InventoryItem>(key);
+            var items = DB.GetList<InventoryItem>(key, keyPrefix);
             var item = GetInventoryDisturbItem();
             var itemID = Guid.Parse(GetObjectUUID(item));
-            var existing = items.Entities.FirstOrDefault(x => x.ID == itemID);
+            var existing = items.FirstOrDefault(x => x.ID == itemID);
             if (existing == null)
                 throw new Exception($"Could not locate item with ID '{itemID} from database for storage '{storageID}', player ID '{playerID}' and itemID '{itemID}'");
 
-            items.Entities.Remove(existing);
-            DB.Set(key, items);
+            items.Remove(existing);
+            DB.SetList(key, items, keyPrefix);
             SendItemLimitMessage(player, false);
         }
 
@@ -277,7 +277,8 @@ namespace NWN.FinalFantasy.Feature
         /// Handles loading items into the container's inventory.
         /// </summary>
         /// <param name="key">The unique identifier under which this container's items are stored.</param>
-        protected static void OpenStorage(string key)
+        /// <param name="keyPrefix">The key prefix to look for this data under.</param>
+        protected static void OpenStorage(string key, string keyPrefix)
         {
             var container = OBJECT_SELF;
 
@@ -285,11 +286,11 @@ namespace NWN.FinalFantasy.Feature
             var player = GetLastOpenedBy();
             if (!GetIsPC(player) || GetIsDM(player)) return;
 
-            var items = DB.GetList<InventoryItem>(key) ?? new EntityList<InventoryItem>();
+            var items = DB.GetList<InventoryItem>(key, keyPrefix) ?? new EntityList<InventoryItem>();
 
             // Prevent the OnAddItem event from firing while we're loading the inventory.
             IsLoading = true;
-            foreach (var entity in items.Entities)
+            foreach (var entity in items)
             {
                 var deserializedItem = Object.Deserialize(entity.Data);
                 Object.AcquireItem(container, deserializedItem);

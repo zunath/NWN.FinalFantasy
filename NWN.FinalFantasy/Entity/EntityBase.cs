@@ -6,6 +6,7 @@ namespace NWN.FinalFantasy.Entity
     {
         public Guid ID { get; set; }
         public DateTime DateCreated { get; set; }
+        public abstract string KeyPrefix { get; }
 
         protected EntityBase()
         {

@@ -55,6 +55,7 @@ namespace NWN.FinalFantasy.Service
 
             if (debtRemoved > 0)
             {
+                dbPlayer.XPDebt = dbPlayer.XPDebt - debtRemoved;
                 SendMessageToPC(player, $"{debtRemoved} XP was removed from your debt. (Remaining: {dbPlayer.XPDebt})");
             }
 

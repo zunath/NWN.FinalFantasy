@@ -6,7 +6,6 @@ using NWN.FinalFantasy.Service;
 using NWN.FinalFantasy.Service.DialogService;
 using static NWN.FinalFantasy.Core.NWScript.NWScript;
 using Dialog = NWN.FinalFantasy.Service.Dialog;
-using Object = NWN.FinalFantasy.Core.NWNX.Object;
 using Player = NWN.FinalFantasy.Entity.Player;
 using Skill = NWN.FinalFantasy.Service.Skill;
 

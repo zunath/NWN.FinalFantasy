@@ -1,11 +1,6 @@
-﻿using System;
-using System.Linq;
-using NWN.FinalFantasy.Core;
-using NWN.FinalFantasy.Core.NWNX;
-using NWN.FinalFantasy.Core.NWScript.Enum;
+﻿using System.Linq;
 using NWN.FinalFantasy.Enumeration;
 using static NWN.FinalFantasy.Core.NWScript.NWScript;
-using Object = NWN.FinalFantasy.Core.NWNX.Object;
 using Player = NWN.FinalFantasy.Entity.Player;
 
 namespace NWN.FinalFantasy.Service

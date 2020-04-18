@@ -15,6 +15,7 @@ namespace NWN.FinalFantasy.Entity
             Skills = new Dictionary<SkillType, PlayerSkill>();
             Perks = new Dictionary<PerkType, int>();
             RecastTimes = new Dictionary<RecastGroup, DateTime>();
+            Quests = new Dictionary<string, PlayerQuest>();
         }
 
         public override string KeyPrefix => "Player";
@@ -51,6 +52,7 @@ namespace NWN.FinalFantasy.Entity
         public Dictionary<SkillType, PlayerSkill> Skills { get; set; }
         public Dictionary<PerkType, int> Perks { get; set; }
         public Dictionary<RecastGroup, DateTime> RecastTimes { get; set; }
+        public Dictionary<string, PlayerQuest> Quests { get; set; }
     }
 
     public class MapPin
@@ -73,5 +75,14 @@ namespace NWN.FinalFantasy.Entity
         public int Rank { get; set; }
         public int XP { get; set; }
         public bool IsLocked { get; set; }
+    }
+
+    public class PlayerQuest
+    {
+        public int CurrentState { get; set; }
+        public int TimesCompleted { get; set; }
+
+        public Dictionary<NPCGroupType, int> KillProgresses { get; set; } = new Dictionary<NPCGroupType, int>();
+        public Dictionary<string, int> ItemProgresses { get; set; } = new Dictionary<string, int>();
     }
 }

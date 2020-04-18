@@ -6,6 +6,8 @@ namespace NWN.FinalFantasy.Enumeration
     {
         [NPCGroup("Invalid")]
         Invalid = 0,
+        [NPCGroup("GOBLINZZZ")]
+        TestGroup = 1,
     }
 
     public class NPCGroupAttribute : Attribute

@@ -29,6 +29,7 @@ namespace NWN.FinalFantasy.Service.QuestService
 
             _activeQuest = new QuestDetail
             {
+                QuestId = questId,
                 Name = name,
                 JournalTag = journalTag
             };
@@ -148,7 +149,7 @@ namespace NWN.FinalFantasy.Service.QuestService
         public QuestBuilder AddState()
         {
             _activeState = new QuestStateDetail();
-            var index = _activeQuest.States.Count;
+            var index = _activeQuest.States.Count + 1;
             _activeQuest.States[index] = _activeState;
 
             return this;

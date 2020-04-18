@@ -80,12 +80,12 @@ namespace NWN.FinalFantasy.Service.QuestService
 
     public class KillTargetObjective : IQuestObjective
     {
-        private readonly NPCGroupType _group;
+        public NPCGroupType Group { get; }
         private readonly int _amount;
 
         public KillTargetObjective(NPCGroupType group, int amount)
         {
-            _group = group;
+            Group = group;
             _amount = amount;
         }
 
@@ -95,7 +95,7 @@ namespace NWN.FinalFantasy.Service.QuestService
             var dbPlayer = DB.Get<Player>(playerId);
             var quest = dbPlayer.Quests.ContainsKey(questId) ? dbPlayer.Quests[questId] : new PlayerQuest();
             
-            quest.KillProgresses[_group] = _amount;
+            quest.KillProgresses[Group] = _amount;
             dbPlayer.Quests[questId] = quest;
             DB.Set(playerId, dbPlayer);
         }
@@ -107,18 +107,18 @@ namespace NWN.FinalFantasy.Service.QuestService
             var quest = dbPlayer.Quests.ContainsKey(questId) ? dbPlayer.Quests[questId] : null;
 
             if (quest == null) return;
-            if (!quest.KillProgresses.ContainsKey(_group)) return;
-            if (quest.KillProgresses[_group] <= 0) return;
+            if (!quest.KillProgresses.ContainsKey(Group)) return;
+            if (quest.KillProgresses[Group] <= 0) return;
 
-            quest.KillProgresses[_group]--;
+            quest.KillProgresses[Group]--;
             DB.Set(playerId, dbPlayer);
 
-            var npcGroup = Quest.GetNPCGroup(_group);
+            var npcGroup = Quest.GetNPCGroup(Group);
             var questDetail = Quest.GetQuestById(questId);
 
-            var statusMessage = $"[{questDetail.Name}] {npcGroup.Name} remaining: {quest.KillProgresses[_group]}";
+            var statusMessage = $"[{questDetail.Name}] {npcGroup.Name} remaining: {quest.KillProgresses[Group]}";
 
-            if (quest.KillProgresses[_group] <= 0)
+            if (quest.KillProgresses[Group] <= 0)
             {
                 statusMessage += $" {ColorToken.Green("{COMPLETE}")}";
             }

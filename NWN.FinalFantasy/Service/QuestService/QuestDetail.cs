@@ -113,7 +113,7 @@ namespace NWN.FinalFantasy.Service.QuestService
             // Has the player even accepted this quest?
             var playerId = GetObjectUUID(player);
             var dbPlayer = DB.Get<Player>(playerId);
-            var quest = dbPlayer.Quests.ContainsKey(playerId) ? dbPlayer.Quests[QuestId] : null;
+            var quest = dbPlayer.Quests.ContainsKey(QuestId) ? dbPlayer.Quests[QuestId] : null;
 
             if (quest == null) return false;
 
@@ -125,7 +125,9 @@ namespace NWN.FinalFantasy.Service.QuestService
             foreach (var objective in state.GetObjectives())
             {
                 if (!objective.IsComplete(player, QuestId))
+                {
                     return false;
+                }
             }
 
             // Met all requirements. We can complete this quest.
@@ -245,6 +247,14 @@ namespace NWN.FinalFantasy.Service.QuestService
             if (questStatus.TimesCompleted > 0 && !IsRepeatable) return;
 
             var currentState = GetState(questStatus.CurrentState);
+
+            // Check quest objectives. If not complete, exit early.
+            foreach (var objective in currentState.GetObjectives())
+            {
+                if (!objective.IsComplete(player, QuestId))
+                    return;
+            }
+
             var lastState = GetStates().Last();
 
             // If this is the last state, the assumption is that it's time to complete the quest.

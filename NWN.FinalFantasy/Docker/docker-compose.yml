@@ -11,6 +11,7 @@ services:
         networks:
             ffo_network:
                 ipv4_address: 172.22.0.100
+                
     redis-commander:
         container_name: redis-commander
         hostname: redis-commander
@@ -26,6 +27,43 @@ services:
             ffo_network:
                 ipv4_address: 172.22.0.99
 
+    influxdb:
+        hostname: influxdb
+        image: influxdb:1.7
+        restart: unless-stopped
+        environment:
+            - INFLUXDB_DB=metrics
+            - INFLUXDB_ADMIN_USER=admin
+            - INFLUXDB_ADMIN_PASSWORD=admin
+            - INFLUXDB_USER=docker
+            - INFLUXDB_USER_PASSWORD=docker
+            - INFLUXDB_UDP_ENABLED=true
+            - INFLUXDB_UDP_BIND_ADDRESS=:8089
+            - INFLUXDB_UDP_DATABASE=metrics
+        volumes:
+        - ${PWD-.}/NWServer/Data/influxdb:/var/lib/influxdb
+        logging:
+            driver: "none"
+        networks:
+            ffo_network:
+                ipv4_address: 172.22.0.102
+            
+    grafana:
+        hostname: grafana
+        image: grafana/grafana:6.0.1
+        restart: unless-stopped
+        environment:
+            - GF_SECURITY_ADMIN_PASSWORD=admin
+        ports:
+            - "3000:3000"
+        depends_on:
+            - influxdb
+        volumes:
+            - ./grafana-provisioning:/etc/grafana/provisioning
+        networks:
+            ffo_network:
+                ipv4_address: 172.22.0.103
+            
     ffo-server:
         hostname: nwnx-server
         image: nwnxee/unified:latest

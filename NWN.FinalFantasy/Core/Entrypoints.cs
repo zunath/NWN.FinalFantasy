@@ -39,15 +39,18 @@ namespace NWN.FinalFantasy.Core
         /// </summary>
         private static void RunOneSecondPCIntervalEvent()
         {
-            var now = DateTime.UtcNow;
-            var delta = now - _last1SecondIntervalCall;
-            if (delta.Seconds < 1) return;
-            _last1SecondIntervalCall = now;
-
-            for (var player = GetFirstPC(); GetIsObjectValid(player); player = GetNextPC())
+            using (new Metrics(nameof(RunOneSecondPCIntervalEvent)))
             {
-                Internal.OBJECT_SELF = player;
-                RunScripts("interval_pc_1s");
+                var now = DateTime.UtcNow;
+                var delta = now - _last1SecondIntervalCall;
+                if (delta.Seconds < 1) return;
+                _last1SecondIntervalCall = now;
+
+                for (var player = GetFirstPC(); GetIsObjectValid(player); player = GetNextPC())
+                {
+                    Internal.OBJECT_SELF = player;
+                    RunScripts("interval_pc_1s");
+                }
             }
         }
 
@@ -57,7 +60,10 @@ namespace NWN.FinalFantasy.Core
             {
                 foreach (var action in _conditionalScripts[script])
                 {
-                    return action.Invoke();
+                    using (new Metrics(action.Method.Name))
+                    {
+                        return action.Invoke();
+                    }
                 }
             }
             else if (_scripts.ContainsKey(script))
@@ -66,7 +72,10 @@ namespace NWN.FinalFantasy.Core
                 {
                     try
                     {
-                        action();
+                        using (new Metrics(action.Method.Name))
+                        {
+                            action();
+                        }
                     }
                     catch (Exception ex)
                     {

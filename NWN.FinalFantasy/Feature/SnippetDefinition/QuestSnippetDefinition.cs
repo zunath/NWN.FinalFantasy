@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using NWN.FinalFantasy.Core.NWScript.Enum;
 using NWN.FinalFantasy.Entity;
 using NWN.FinalFantasy.Service;
@@ -31,6 +32,48 @@ namespace NWN.FinalFantasy.Feature.SnippetDefinition
             var dbPlayer = DB.Get<Player>(playerId);
 
             return dbPlayer.Quests.ContainsKey(questId);
+        }
+
+        /// <summary>
+        /// Snippet which checks if a player is on one or more states of a quest.
+        /// </summary>
+        /// <returns></returns>
+        [Snippet("condition-on-quest-state")]
+        public static bool ConditionOnQuestState(uint player, string[] args)
+        {
+            if (args.Length < 2)
+            {
+                const string Error = "'condition-on-quest-state' requires a questId argument and at least one stateNumber argument.";
+                SendMessageToPC(player, Error);
+                Log.Write(LogGroup.Error, Error);
+                return false;
+            }
+
+            var questId = args[0];
+            var playerId = GetObjectUUID(player);
+            var dbPlayer = DB.Get<Player>(playerId);
+            if (!dbPlayer.Quests.ContainsKey(questId)) return false;
+
+            // Try to parse each Id. If it parses, check the player's current state.
+            // If they're on this quest state, return true. Otherwise move to the next argument.
+            for (int index = 1; index < args.Length; index++)
+            {
+                if (int.TryParse(args[index], out var stateId))
+                {
+                    if (dbPlayer.Quests[questId].CurrentState == stateId)
+                        return true;
+                }
+                else
+                {
+                    var error = $"Could not read stateNumber {index + 1} in the 'condition-on-quest-state' snippet.";
+                    SendMessageToPC(player, error);
+                    Log.Write(LogGroup.Error, error);
+
+                    return false;
+                }
+            }
+
+            return false;
         }
 
         /// <summary>

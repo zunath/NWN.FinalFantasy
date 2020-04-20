@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using NWN.FinalFantasy.Core;
-using NWN.FinalFantasy.Entity;
 using NWN.FinalFantasy.Enumeration;
 using NWN.FinalFantasy.Extension;
 using NWN.FinalFantasy.Service.QuestService;
@@ -102,6 +101,20 @@ namespace NWN.FinalFantasy.Service
         }
 
         /// <summary>
+        /// Retrieves the quests associated with an NPC group.
+        /// If no quests are associated with this NPC group, an empty list will be returned.
+        /// </summary>
+        /// <param name="npcGroupType">The NPC group to search for</param>
+        /// <returns>A list of quests associated with an NPC group.</returns>
+        public static List<string> GetQuestsAssociatedWithNPCGroup(NPCGroupType npcGroupType)
+        {
+            if(!_npcsWithKillQuests.ContainsKey(npcGroupType))
+                return new List<string>();
+
+            return _npcsWithKillQuests[npcGroupType];
+        }
+            
+        /// <summary>
         /// Makes a player accept a quest by the specified Id.
         /// If the quest Id is invalid, an exception will be thrown.
         /// </summary>
@@ -122,57 +135,6 @@ namespace NWN.FinalFantasy.Service
         public static void AdvanceQuest(uint player, uint questSource, string questId)
         {
             _quests[questId].Advance(player, questSource);
-        }
-
-        /// <summary>
-        /// When an NPC is killed, any objectives for quests a player currently has active will be updated.
-        /// </summary>
-        [NWNEventHandler("crea_death")]
-        public static void ProgressKillTargetObjectives()
-        {
-            var creature = OBJECT_SELF;
-            var npcGroupType = (NPCGroupType)GetLocalInt(creature, "QUEST_NPC_GROUP_ID");
-            if (npcGroupType == NPCGroupType.Invalid) return;
-            if (!_npcsWithKillQuests.ContainsKey(npcGroupType)) return;
-
-            var killer = GetLastKiller();
-            var possibleQuests = _npcsWithKillQuests[npcGroupType];
-
-            // Iterate over every player in the killer's party.
-            // Every player who needs this NPCGroupType for a quest will have their objective advanced.
-            for (var member = GetFirstFactionMember(killer); GetIsObjectValid(member); member = GetNextFactionMember(killer))
-            {
-                if (!GetIsPC(member) || GetIsDM(member)) continue;
-
-                var playerId = GetObjectUUID(member);
-                var dbPlayer = DB.Get<Player>(playerId);
-
-                // Need to iterate over every possible quest this creature is a part of.
-                foreach (var questId in possibleQuests)
-                {
-                    // Players who don't have the quest are skipped.
-                    if (!dbPlayer.Quests.ContainsKey(questId)) continue;
-
-                    var quest = dbPlayer.Quests[questId];
-                    var questDetail = GetQuestById(questId);
-                    var questState = questDetail.States[quest.CurrentState];
-
-                    // Iterate over all of the quest states which call for killing this enemy.
-                    foreach (var objective in questState.GetObjectives())
-                    {
-                        // Only kill target objectives matching this NPC group ID are processed.
-                        if (objective is KillTargetObjective killTargetObjective)
-                        {
-                            if (killTargetObjective.Group != npcGroupType) continue;
-
-                            killTargetObjective.Advance(member, questId);
-                        }
-                    }
-
-                    // Attempt to advance the quest detail. It's possible this will fail because objectives aren't all done. This is OK.
-                    questDetail.Advance(member, creature);
-                }
-            }
         }
     }
 }

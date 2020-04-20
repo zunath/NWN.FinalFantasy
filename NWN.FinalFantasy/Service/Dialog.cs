@@ -167,87 +167,87 @@ namespace NWN.FinalFantasy.Service
         }
 
         [NWNEventHandler("dialog_appears_0")]
-        public static int NodeAppears0()
+        public static bool NodeAppears0()
         {
-            return AppearsWhen(2, 0) ? 1 : 0;
+            return AppearsWhen(2, 0);
         }
 
         [NWNEventHandler("dialog_appears_1")]
-        public static int NodeAppears1()
+        public static bool NodeAppears1()
         {
-            return AppearsWhen(2, 1) ? 1 : 0;
+            return AppearsWhen(2, 1);
         }
 
         [NWNEventHandler("dialog_appears_2")]
-        public static int NodeAppears2()
+        public static bool NodeAppears2()
         {
-            return AppearsWhen(2, 2) ? 1 : 0;
+            return AppearsWhen(2, 2);
         }
 
         [NWNEventHandler("dialog_appears_3")]
-        public static int NodeAppears3()
+        public static bool NodeAppears3()
         {
-            return AppearsWhen(2, 3) ? 1 : 0;
+            return AppearsWhen(2, 3);
         }
 
         [NWNEventHandler("dialog_appears_4")]
-        public static int NodeAppears4()
+        public static bool NodeAppears4()
         {
-            return AppearsWhen(2, 4) ? 1 : 0;
+            return AppearsWhen(2, 4);
         }
 
         [NWNEventHandler("dialog_appears_5")]
-        public static int NodeAppears5()
+        public static bool NodeAppears5()
         {
-            return AppearsWhen(2, 5) ? 1 : 0;
+            return AppearsWhen(2, 5);
         }
 
         [NWNEventHandler("dialog_appears_6")]
-        public static int NodeAppears6()
+        public static bool NodeAppears6()
         {
-            return AppearsWhen(2, 6) ? 1 : 0;
+            return AppearsWhen(2, 6);
         }
 
         [NWNEventHandler("dialog_appears_7")]
-        public static int NodeAppears7()
+        public static bool NodeAppears7()
         {
-            return AppearsWhen(2, 7) ? 1 : 0;
+            return AppearsWhen(2, 7);
         }
 
         [NWNEventHandler("dialog_appears_8")]
-        public static int NodeAppears8()
+        public static bool NodeAppears8()
         {
-            return AppearsWhen(2, 8) ? 1 : 0;
+            return AppearsWhen(2, 8);
         }
 
         [NWNEventHandler("dialog_appears_9")]
-        public static int NodeAppears9()
+        public static bool NodeAppears9()
         {
-            return AppearsWhen(2, 9) ? 1 : 0;
+            return AppearsWhen(2, 9);
         }
 
         [NWNEventHandler("dialog_appears10")]
-        public static int NodeAppears10()
+        public static bool NodeAppears10()
         {
-            return AppearsWhen(2, 10) ? 1 : 0;
+            return AppearsWhen(2, 10);
         }
 
         [NWNEventHandler("dialog_appears11")]
-        public static int NodeAppears11()
+        public static bool NodeAppears11()
         {
-            return AppearsWhen(2, 11) ? 1 : 0;
+            return AppearsWhen(2, 11);
         }
 
         [NWNEventHandler("dialog_appears_h")]
-        public static int HeaderAppearsWhen()
+        public static bool HeaderAppearsWhen()
         {
-            return AppearsWhen(1, 0) ? 1 : 0;
+            return AppearsWhen(1, 0);
         }
 
         [NWNEventHandler("dialog_appears_n")]
-        public static int NextAppearsWhen()
+        public static bool NextAppearsWhen()
         {
-            return AppearsWhen(3, 12) ? 1 : 0;
+            return AppearsWhen(3, 12);
         }
 
         [NWNEventHandler("dialog_action_n")]
@@ -257,9 +257,9 @@ namespace NWN.FinalFantasy.Service
         }
 
         [NWNEventHandler("dialog_appears_p")]
-        public static int PreviousAppearsWhen()
+        public static bool PreviousAppearsWhen()
         {
-            return AppearsWhen(4, 13) ? 1 : 0;
+            return AppearsWhen(4, 13);
         }
 
         [NWNEventHandler("dialog_action_p")]
@@ -269,9 +269,9 @@ namespace NWN.FinalFantasy.Service
         }
 
         [NWNEventHandler("dialog_appears_b")]
-        public static int BackAppearsWhen()
+        public static bool BackAppearsWhen()
         {
-            return AppearsWhen(5, 14) ? 1 : 0;
+            return AppearsWhen(5, 14);
         }
 
         [NWNEventHandler("dialog_action_b")]

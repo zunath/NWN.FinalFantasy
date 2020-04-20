@@ -68,8 +68,6 @@ namespace NWN.FinalFantasy.Service
             {
                 var item = CreateItemOnObject(resref, storageContainer);
                 ItemNamesByResref[resref] = GetName(item);
-
-                Console.WriteLine("Caching item name: " + GetName(item));
                 DestroyObject(item);
 
                 resref = Util.GetNextResRef();

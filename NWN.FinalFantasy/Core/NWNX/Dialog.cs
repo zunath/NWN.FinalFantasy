@@ -52,6 +52,7 @@ namespace NWN.FinalFantasy.Core.NWNX
             Internal.NativeFunctions.nwnxSetFunction(PLUGIN_NAME, "SetCurrentNodeText");
             Internal.NativeFunctions.nwnxPushInt((int)gender);
             Internal.NativeFunctions.nwnxPushInt((int)language);
+            Internal.NativeFunctions.nwnxPushString(text);
             Internal.NativeFunctions.nwnxCallFunction();
         }
 

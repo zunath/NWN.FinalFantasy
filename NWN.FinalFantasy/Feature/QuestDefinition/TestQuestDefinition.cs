@@ -9,7 +9,7 @@ namespace NWN.FinalFantasy.Feature.QuestDefinition
         public Dictionary<string, QuestDetail> BuildQuests()
         {
             var builder = new QuestBuilder()
-                .Create("testQuest", "Test Quest", "test_quest")
+                .Create("myQuestId", "Test Quest", "test_quest")
                 .AddState()
                 .AddKillObjective(NPCGroupType.TestGroup, 2);
 

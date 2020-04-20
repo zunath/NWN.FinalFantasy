@@ -14,7 +14,7 @@ namespace NWN.FinalFantasy.Core
         private const int ScriptHandled = 0;
         private const int ScriptNotHandled = -1;
 
-        private delegate int ConditionalScriptDelegate();
+        private delegate bool ConditionalScriptDelegate();
 
         private static Dictionary<string, List<Action>> _scripts;
         private static Dictionary<string, List<ConditionalScriptDelegate>> _conditionalScripts;
@@ -58,13 +58,20 @@ namespace NWN.FinalFantasy.Core
         {
             if (_conditionalScripts.ContainsKey(script))
             {
+                // Always default conditional scripts to true. If one or more of the actions return a false,
+                // we will return a false (even if others are true).
+                // This ensures all actions get fired when the script is called.
+                var result = true;
                 foreach (var action in _conditionalScripts[script])
                 {
                     using (new Metrics(action.Method.Name))
                     {
-                        return action.Invoke();
+                        var actionResult = action.Invoke();
+                        if (result) result = actionResult;
                     }
                 }
+
+                return result ? 1 : 0;
             }
             else if (_scripts.ContainsKey(script))
             {
@@ -127,8 +134,8 @@ namespace NWN.FinalFantasy.Core
                         throw new ApplicationException();
                     }
 
-                    // If the return type is an int, it is assumed to be a conditional script.
-                    if (mi.ReturnType == typeof(int))
+                    // If the return type is a bool, it is assumed to be a conditional script.
+                    if (mi.ReturnType == typeof(bool))
                     {
                         var del = (ConditionalScriptDelegate)mi.CreateDelegate(typeof(ConditionalScriptDelegate));
 

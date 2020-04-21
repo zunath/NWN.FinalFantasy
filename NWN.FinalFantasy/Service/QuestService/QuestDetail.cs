@@ -44,16 +44,16 @@ namespace NWN.FinalFantasy.Service.QuestService
         /// <returns>The quest state at a specified index</returns>
         protected QuestStateDetail GetState(int state)
         {
-            return GetStates().ElementAt(state - 1);
+            return States[state];
         }
 
         /// <summary>
         /// Retrieves the list of quest states ordered by their sequence.
         /// </summary>
         /// <returns>A list of quest states ordered by their sequence</returns>
-        protected IEnumerable<QuestStateDetail> GetStates()
+        protected Dictionary<int, QuestStateDetail> GetStates()
         {
-            return States.OrderBy(o => o.Key).Select(x => x.Value);
+            return States.OrderBy(o => o.Key).ToDictionary(x => x.Key, y => y.Value);
         }
 
         /// <summary>
@@ -198,6 +198,7 @@ namespace NWN.FinalFantasy.Service.QuestService
 
             // Retrieve the first quest state for this quest.
             quest.CurrentState = 1;
+            quest.DateLastCompleted = null;
             dbPlayer.Quests[QuestId] = quest;
             DB.Set(playerId, dbPlayer);
 
@@ -258,7 +259,7 @@ namespace NWN.FinalFantasy.Service.QuestService
             var lastState = GetStates().Last();
 
             // If this is the last state, the assumption is that it's time to complete the quest.
-            if (currentState == lastState)
+            if (questStatus.CurrentState == lastState.Key)
             {
                 RequestRewardSelectionFromPC(player, questSource);
             }
@@ -333,6 +334,9 @@ namespace NWN.FinalFantasy.Service.QuestService
                 selectedReward.GiveReward(player);
             }
 
+            quest.ItemProgresses.Clear();
+            quest.KillProgresses.Clear();
+            quest.DateLastCompleted = DateTime.UtcNow;
             dbPlayer.Quests[QuestId] = quest;
             DB.Set(playerId, dbPlayer);
 

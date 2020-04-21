@@ -51,7 +51,6 @@ namespace NWN.FinalFantasy.Service
                     var name = ((SnippetAttribute)attr).Name.ToLower();
                     if (name.StartsWith("action"))
                     {
-                        Console.WriteLine();
                         _actionsTakenCommands[name] = (ActionsTakenDelegate)mi.CreateDelegate(typeof(ActionsTakenDelegate));
                     }
                     else if (name.StartsWith("condition"))

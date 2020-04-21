@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using NWN.FinalFantasy.Core.NWScript.Enum;
 using NWN.FinalFantasy.Entity;
 using NWN.FinalFantasy.Service;
@@ -10,6 +9,32 @@ namespace NWN.FinalFantasy.Feature.SnippetDefinition
 {
     public static class QuestSnippetDefinition
     {
+        /// <summary>
+        /// Snippet which checks whether a player has completed a quest.
+        /// </summary>
+        /// <param name="player"></param>
+        /// <param name="args"></param>
+        /// <returns></returns>
+        [Snippet("condition-completed-quest")]
+        public static bool ConditionHasCompletedQuest(uint player, string[] args)
+        {
+            if (args.Length <= 0)
+            {
+                const string Error = "'condition-completed-quest' requires a questId argument.";
+                SendMessageToPC(player, Error);
+                Log.Write(LogGroup.Error, Error);
+                return false;
+            }
+
+            var questId = args[0];
+            var playerId = GetObjectUUID(player);
+            var dbPlayer = DB.Get<Player>(playerId);
+
+            if (!dbPlayer.Quests.ContainsKey(questId)) return false;
+
+            return dbPlayer.Quests[questId].DateLastCompleted != null;
+        }
+
         /// <summary>
         /// Snippet which checks whether a player has a quest.
         /// </summary>
@@ -61,7 +86,9 @@ namespace NWN.FinalFantasy.Feature.SnippetDefinition
                 if (int.TryParse(args[index], out var stateId))
                 {
                     if (dbPlayer.Quests[questId].CurrentState == stateId)
+                    {
                         return true;
+                    }
                 }
                 else
                 {

@@ -280,6 +280,9 @@ namespace NWN.FinalFantasy.Service
             ActionsTaken(14);
         }
 
+        /// <summary>
+        /// Fires when the "End Dialog" node is clicked.
+        /// </summary>
         [NWNEventHandler("dialog_end")]
         public static void End()
         {
@@ -299,6 +302,14 @@ namespace NWN.FinalFantasy.Service
 
         }
 
+        /// <summary>
+        /// This fires any time the "Appears When" event fires on a node.
+        /// This handles showing/hiding nodes depending on the rules set up by the conversation.
+        /// It will also handle pagination with the Next/Previous buttons.
+        /// </summary>
+        /// <param name="nodeType">The type of node we're working with.</param>
+        /// <param name="nodeId">The Id number of the node.</param>
+        /// <returns>true if the node is visible, false otherwise</returns>
         private static bool AppearsWhen(int nodeType, int nodeId)
         {
             var player = GetPCSpeaker();
@@ -394,6 +405,11 @@ namespace NWN.FinalFantasy.Service
             return displayNode;
         }
 
+        /// <summary>
+        /// This fires any time an "Action Taken" node is clicked on by the player.
+        /// This executes the specific node actions such as next page, previous page, back, etc.
+        /// </summary>
+        /// <param name="nodeId">The Id of the node selected.</param>
         private static void ActionsTaken(int nodeId)
         {
             var player = GetPCSpeaker();
@@ -454,7 +470,28 @@ namespace NWN.FinalFantasy.Service
             }
         }
 
+        /// <summary>
+        /// When an object executes this script, the custom dialog specified on their local variables
+        /// will be started.
+        /// </summary>
+        [NWNEventHandler("start_convo")]
+        public static void StartConversationEvent()
+        {
+            var self = OBJECT_SELF;
+            var conversation = GetLocalString(self, "CONVERSATION");
 
+            if (string.IsNullOrWhiteSpace(conversation)) return;
+
+            var talker = GetLastUsedBy();
+            StartConversation(talker, self, conversation);
+        }
+
+        /// <summary>
+        /// Begins a new conversation for a player.
+        /// </summary>
+        /// <param name="player">The player to start the conversation for.</param>
+        /// <param name="talkTo">The creature to speak to.</param>
+        /// <param name="class">The name of the conversation class.</param>
         public static void StartConversation(uint player, uint talkTo, string @class)
         {
             var playerId = GetObjectUUID(player);
@@ -467,7 +504,7 @@ namespace NWN.FinalFantasy.Service
                 !GetIsPC(talkTo) &&
                 !GetIsDM(talkTo))
             {
-                BeginConversation("dialog" + dialog.DialogNumber, OBJECT_INVALID);
+                BeginConversation("dialog" + dialog.DialogNumber);
             }
             // Everything else
             else
@@ -476,12 +513,21 @@ namespace NWN.FinalFantasy.Service
             }
         }
 
-
+        /// <summary>
+        /// Checks whether a player has an active dialog in cache.
+        /// </summary>
+        /// <param name="playerId">The player's unique Id.</param>
+        /// <returns>true if the player has the dialog, false otherwise</returns>
         public static bool HasPlayerDialog(string playerId)
         {
             return PlayerDialogs.ContainsKey(playerId);
         }
 
+        /// <summary>
+        /// Loads a specific player's cached dialog information.
+        /// </summary>
+        /// <param name="playerId">The player's unique Id</param>
+        /// <returns>The cached player dialog object.</returns>
         public static PlayerDialog LoadPlayerDialog(string playerId)
         {
             if (!PlayerDialogs.ContainsKey(playerId)) throw new Exception(nameof(playerId) + " '" + playerId + "' could not be found. Be sure to call " + nameof(LoadConversation) + " first.");
@@ -489,6 +535,10 @@ namespace NWN.FinalFantasy.Service
             return PlayerDialogs[playerId];
         }
 
+        /// <summary>
+        /// Removes a player's dialog from the cache.
+        /// </summary>
+        /// <param name="playerId">The player's unique Id.</param>
         public static void RemovePlayerDialog(string playerId)
         {
             var dialog = PlayerDialogs[playerId];
@@ -497,6 +547,13 @@ namespace NWN.FinalFantasy.Service
             PlayerDialogs.Remove(playerId);
         }
 
+        /// <summary>
+        /// Loads a conversation for a player.
+        /// </summary>
+        /// <param name="player">The player to load the conversation for.</param>
+        /// <param name="talkTo">The creature to talk to.</param>
+        /// <param name="class">The conversation name to start.</param>
+        /// <param name="dialogNumber">The dialog number the player's conversation is tied to.</param>
         public static void LoadConversation(uint player, uint talkTo, string @class, int dialogNumber)
         {
             if (string.IsNullOrWhiteSpace(@class)) throw new ArgumentException(nameof(@class), nameof(@class) + " cannot be null, empty, or whitespace.");
@@ -519,7 +576,12 @@ namespace NWN.FinalFantasy.Service
             StorePlayerDialog(playerId, dialog);
         }
 
-        private static void StorePlayerDialog(string globalID, PlayerDialog dialog)
+        /// <summary>
+        /// Stores a player's active dialog into the cache.
+        /// </summary>
+        /// <param name="playerId">The player's unique Id</param>
+        /// <param name="dialog">The dialog to store.</param>
+        private static void StorePlayerDialog(string playerId, PlayerDialog dialog)
         {
             if (dialog.DialogNumber <= 0)
             {
@@ -542,10 +604,13 @@ namespace NWN.FinalFantasy.Service
                 return;
             }
 
-            PlayerDialogs[globalID] = dialog;
+            PlayerDialogs[playerId] = dialog;
         }
 
-
+        /// <summary>
+        /// Ends a conversation and cleans up related cache data.
+        /// </summary>
+        /// <param name="player">The player to end the conversation for.</param>
         public static void EndConversation(uint player)
         {
             var playerId = GetObjectUUID(player);

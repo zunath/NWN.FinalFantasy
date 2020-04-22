@@ -111,9 +111,9 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
 
                 .AddPerkLevel(1)
                 .Description("Grants +1 BAB when equipped with knuckles.")
-                //.Price(8)
-                //.RequirementSkill(SkillType.Knuckles, 30)
-                //.RequirementSkill(SkillType.Chi, 25)
+                .Price(8)
+                .RequirementSkill(SkillType.Knuckles, 30)
+                .RequirementSkill(SkillType.Chi, 25)
 
                 .AddPerkLevel(2)
                 .Description("Grants +2 BAB when equipped with knuckles.")

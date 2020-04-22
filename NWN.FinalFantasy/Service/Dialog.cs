@@ -322,7 +322,7 @@ namespace NWN.FinalFantasy.Service
 
             // The AppearsWhen call happens for every node.
             // We only want to load the header and responses time so ensure it only happens for the first node.
-            if (nodeType == 1 && nodeId == 0)
+            if (!dialog.IsEnding && nodeType == 1 && nodeId == 0)
             {
                 page.Header = string.Empty;
                 page.Responses.Clear();

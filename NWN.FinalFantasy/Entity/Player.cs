@@ -45,6 +45,7 @@ namespace NWN.FinalFantasy.Entity
         public int RegenerationTick { get; set; }
         public int XPDebt { get; set; }
         public bool IsDeleted { get; set; }
+        public DateTime? DatePerkRefundAvailable { get; set; }
 
         public RoleplayProgress RoleplayProgress { get; set; }
         public Dictionary<string, List<MapPin>> MapPins { get; set; }

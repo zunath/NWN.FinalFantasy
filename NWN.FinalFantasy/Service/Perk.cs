@@ -1,6 +1,10 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
+using NWN.FinalFantasy.Core;
+using NWN.FinalFantasy.Core.NWNX;
 using NWN.FinalFantasy.Enumeration;
 using static NWN.FinalFantasy.Core.NWScript.NWScript;
+using Object = NWN.FinalFantasy.Core.NWNX.Object;
 using Player = NWN.FinalFantasy.Entity.Player;
 
 namespace NWN.FinalFantasy.Service
@@ -83,6 +87,26 @@ namespace NWN.FinalFantasy.Service
 
             // Otherwise none of the perk level requirements passed. Player's effective level is zero.
             return 0;
+        }
+
+        /// <summary>
+        /// When a perk refund tome is used, start the perk refund conversation.
+        /// </summary>
+        [NWNEventHandler("item_use_bef")]
+        public static void UsePerkRefundTome()
+        {
+            var player = OBJECT_SELF;
+            if (!GetIsPC(player) || GetIsDM(player)) return;
+            var item = Object.StringToObject(Events.GetEventData("ITEM_OBJECT_ID"));
+            if (GetResRef(item) != "refund_tome") return;
+
+            SetLocalObject(player, "PERK_REFUND_OBJECT", item);
+            AssignCommand(player, () => ClearAllActions());
+            Dialog.StartConversation(player, player, "PerkRefundDialog");
+
+            // Don't display the "You cannot use this item" message. Skip the event.
+            Events.SetEventResult("1"); 
+            Events.SkipEvent();
         }
     }
 }

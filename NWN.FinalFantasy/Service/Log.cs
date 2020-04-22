@@ -13,7 +13,8 @@ namespace NWN.FinalFantasy.Service
         DM,
         DMAuthorization,
         Death,
-        Server
+        Server,
+        PerkRefund
     }
 
     public static class Log

@@ -9,6 +9,7 @@ namespace NWN.FinalFantasy.Entity
     {
         public Player()
         {
+            Settings = new PlayerSettings();
             MapPins = new Dictionary<string, List<MapPin>>();
             MapProgressions = new Dictionary<string, string>();
             RoleplayProgress = new RoleplayProgress();
@@ -47,6 +48,7 @@ namespace NWN.FinalFantasy.Entity
         public bool IsDeleted { get; set; }
         public DateTime? DatePerkRefundAvailable { get; set; }
 
+        public PlayerSettings Settings { get; set; }
         public RoleplayProgress RoleplayProgress { get; set; }
         public Dictionary<string, List<MapPin>> MapPins { get; set; }
         public Dictionary<string, string> MapProgressions { get; set; }
@@ -86,5 +88,10 @@ namespace NWN.FinalFantasy.Entity
 
         public Dictionary<NPCGroupType, int> KillProgresses { get; set; } = new Dictionary<NPCGroupType, int>();
         public Dictionary<string, int> ItemProgresses { get; set; } = new Dictionary<string, int>();
+    }
+
+    public class PlayerSettings
+    {
+        public int? BattleThemeId { get; set; }
     }
 }

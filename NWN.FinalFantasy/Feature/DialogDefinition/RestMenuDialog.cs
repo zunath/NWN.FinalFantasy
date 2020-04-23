@@ -60,8 +60,8 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
             page.AddResponse("View Skills", () => SwitchConversation("ViewSkillsDialog"));
             page.AddResponse("View Perks", () => SwitchConversation("ViewPerksDialog"));
             page.AddResponse("View Blueprints", () => SwitchConversation("ViewBlueprintsDialog"));
-            page.AddResponse("View Key Items", () => SwitchConversation("KeyItemsDialog"));
             page.AddResponse("Modify Item Appearance", () => SwitchConversation("ModifyItemAppearanceDialog"));
+            page.AddResponse("Player Settings", () => SwitchConversation("PlayerSettingsDialog"));
             page.AddResponse("Open Trash Can (Destroy Items)", () =>
             {
                 EndConversation();

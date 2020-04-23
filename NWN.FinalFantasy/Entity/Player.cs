@@ -93,5 +93,11 @@ namespace NWN.FinalFantasy.Entity
     public class PlayerSettings
     {
         public int? BattleThemeId { get; set; }
+        public bool DisplayAchievementNotification { get; set; }
+
+        public PlayerSettings()
+        {
+            DisplayAchievementNotification = true;
+        }
     }
 }

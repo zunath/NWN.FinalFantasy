@@ -33,9 +33,20 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
 
         private void MainPageInit(DialogPage page)
         {
-            page.Header = "You may adjust your personal character settings here.";
+            var player = GetPC();
+            var playerId = GetObjectUUID(player);
+            var dbPlayer = DB.Get<Player>(playerId);
+            var toggleAchievementNotificationText = dbPlayer.Settings.DisplayAchievementNotification ? "Disable Achievement Notification" : "Enable Achievement Notification";
+
+            page.Header =
+                ColorToken.Green("Achievement Notifications: ") + (dbPlayer.Settings.DisplayAchievementNotification ? "ENABLED" : "DISABLED") + "\n" +
+                "\nYou may adjust your personal character settings here.";
 
             page.AddResponse("Change Battle Theme", () => ChangePage(ChangeBattleThemeId));
+            page.AddResponse(toggleAchievementNotificationText, () =>
+            {
+                dbPlayer.Settings.DisplayAchievementNotification = !dbPlayer.Settings.DisplayAchievementNotification;
+            });
         }
 
         private void ChangeBattleThemeInit(DialogPage page)

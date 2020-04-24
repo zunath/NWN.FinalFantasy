@@ -5,9 +5,7 @@ namespace NWN.FinalFantasy.Enumeration
     public enum AchievementType
     {
         [Achievement("Invalid", "Invalid", false)]
-        Invalid = 0,
-        [Achievement("Test Achievement", "This is a test description.", true)]
-        TestAchievement = 1,
+        Invalid = 0
 
     }
 

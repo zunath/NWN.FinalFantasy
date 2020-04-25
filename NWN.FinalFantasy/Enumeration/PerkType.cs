@@ -1,5 +1,6 @@
 ﻿namespace NWN.FinalFantasy.Enumeration
 {
+    // Note: These IDs are tied to 2DAs. Don't reassign ID numbers unless you also update the 2DA files.
     public enum PerkType
     {
         Invalid = 0,
@@ -31,6 +32,17 @@
         StaffMastery = 25,
         RodMastery = 26,
         LongbowMastery = 27,
-        KatanaMastery = 28
+        KatanaMastery = 28,
+
+        // todo to add:
+        RapierProficiency = 29,
+        RapierMastery = 30,
+        GunbladeProficiency = 31,
+        GunbladeMastery = 32,
+        RifleProficiency = 33,
+        RifleMastery = 34,
+        GreatSwordProficiency = 35,
+        GreatSwordMastery = 36,
+
     }
 }

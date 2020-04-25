@@ -14,8 +14,12 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
             DaggerProficiency(builder);
             StaffProficiency(builder);
             RodProficiency(builder);
+            RapierProficiency(builder);
             LongbowProficiency(builder);
             KatanaProficiency(builder);
+            GunbladeProficiency(builder);
+            RifleProficiency(builder);
+            GreatSwordProficiency(builder);
 
             return builder.Build();
         }
@@ -48,32 +52,7 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .AddPerkLevel(5)
                 .Description("Grants the ability to equip tier 5 longswords.")
                 .Price(2)
-                .RequirementSkill(SkillType.Longsword, 40)
-                
-                .AddPerkLevel(6)
-                .Description("Grants the ability to equip tier 6 longswords.")
-                .Price(2)
-                .RequirementSkill(SkillType.Longsword, 50)
-                
-                .AddPerkLevel(7)
-                .Description("Grants the ability to equip tier 7 longswords.")
-                .Price(2)
-                .RequirementSkill(SkillType.Longsword, 60)
-                
-                .AddPerkLevel(8)
-                .Description("Grants the ability to equip tier 8 longswords.")
-                .Price(2)
-                .RequirementSkill(SkillType.Longsword, 70)
-                
-                .AddPerkLevel(9)
-                .Description("Grants the ability to equip tier 9 longswords.")
-                .Price(2)
-                .RequirementSkill(SkillType.Longsword, 80)
-                
-                .AddPerkLevel(10)
-                .Description("Grants the ability to equip tier 10 longswords.")
-                .Price(2)
-                .RequirementSkill(SkillType.Longsword, 90);
+                .RequirementSkill(SkillType.Longsword, 40);
         }
 
         private static void KnucklesProficiency(PerkBuilder builder)
@@ -104,32 +83,7 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .AddPerkLevel(5)
                 .Description("Grants the ability to equip tier 5 knuckles.")
                 .Price(2)
-                .RequirementSkill(SkillType.Knuckles, 40)
-
-                .AddPerkLevel(6)
-                .Description("Grants the ability to equip tier 6 knuckles.")
-                .Price(2)
-                .RequirementSkill(SkillType.Knuckles, 50)
-
-                .AddPerkLevel(7)
-                .Description("Grants the ability to equip tier 7 knuckles.")
-                .Price(2)
-                .RequirementSkill(SkillType.Knuckles, 60)
-
-                .AddPerkLevel(8)
-                .Description("Grants the ability to equip tier 8 knuckles.")
-                .Price(2)
-                .RequirementSkill(SkillType.Knuckles, 70)
-
-                .AddPerkLevel(9)
-                .Description("Grants the ability to equip tier 9 knuckles.")
-                .Price(2)
-                .RequirementSkill(SkillType.Knuckles, 80)
-
-                .AddPerkLevel(10)
-                .Description("Grants the ability to equip tier 10 knuckles.")
-                .Price(2)
-                .RequirementSkill(SkillType.Knuckles, 90);
+                .RequirementSkill(SkillType.Knuckles, 40);
         }
 
 
@@ -161,32 +115,7 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .AddPerkLevel(5)
                 .Description("Grants the ability to equip tier 5 daggers.")
                 .Price(2)
-                .RequirementSkill(SkillType.Dagger, 40)
-
-                .AddPerkLevel(6)
-                .Description("Grants the ability to equip tier 6 daggers.")
-                .Price(2)
-                .RequirementSkill(SkillType.Dagger, 50)
-
-                .AddPerkLevel(7)
-                .Description("Grants the ability to equip tier 7 daggers.")
-                .Price(2)
-                .RequirementSkill(SkillType.Dagger, 60)
-
-                .AddPerkLevel(8)
-                .Description("Grants the ability to equip tier 8 daggers.")
-                .Price(2)
-                .RequirementSkill(SkillType.Dagger, 70)
-
-                .AddPerkLevel(9)
-                .Description("Grants the ability to equip tier 9 daggers.")
-                .Price(2)
-                .RequirementSkill(SkillType.Dagger, 80)
-
-                .AddPerkLevel(10)
-                .Description("Grants the ability to equip tier 10 daggers.")
-                .Price(2)
-                .RequirementSkill(SkillType.Dagger, 90);
+                .RequirementSkill(SkillType.Dagger, 40);
         }
 
 
@@ -218,32 +147,7 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .AddPerkLevel(5)
                 .Description("Grants the ability to equip tier 5 staves.")
                 .Price(2)
-                .RequirementSkill(SkillType.Staff, 40)
-
-                .AddPerkLevel(6)
-                .Description("Grants the ability to equip tier 6 staves.")
-                .Price(2)
-                .RequirementSkill(SkillType.Staff, 50)
-
-                .AddPerkLevel(7)
-                .Description("Grants the ability to equip tier 7 staves.")
-                .Price(2)
-                .RequirementSkill(SkillType.Staff, 60)
-
-                .AddPerkLevel(8)
-                .Description("Grants the ability to equip tier 8 staves.")
-                .Price(2)
-                .RequirementSkill(SkillType.Staff, 70)
-
-                .AddPerkLevel(9)
-                .Description("Grants the ability to equip tier 9 staves.")
-                .Price(2)
-                .RequirementSkill(SkillType.Staff, 80)
-
-                .AddPerkLevel(10)
-                .Description("Grants the ability to equip tier 10 staves.")
-                .Price(2)
-                .RequirementSkill(SkillType.Staff, 90);
+                .RequirementSkill(SkillType.Staff, 40);
         }
 
 
@@ -275,34 +179,39 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .AddPerkLevel(5)
                 .Description("Grants the ability to equip tier 5 rods.")
                 .Price(2)
-                .RequirementSkill(SkillType.Rod, 40)
-
-                .AddPerkLevel(6)
-                .Description("Grants the ability to equip tier 6 rods.")
-                .Price(2)
-                .RequirementSkill(SkillType.Rod, 50)
-
-                .AddPerkLevel(7)
-                .Description("Grants the ability to equip tier 7 rods.")
-                .Price(2)
-                .RequirementSkill(SkillType.Rod, 60)
-
-                .AddPerkLevel(8)
-                .Description("Grants the ability to equip tier 8 rods.")
-                .Price(2)
-                .RequirementSkill(SkillType.Rod, 70)
-
-                .AddPerkLevel(9)
-                .Description("Grants the ability to equip tier 9 rods.")
-                .Price(2)
-                .RequirementSkill(SkillType.Rod, 80)
-
-                .AddPerkLevel(10)
-                .Description("Grants the ability to equip tier 10 rods.")
-                .Price(2)
-                .RequirementSkill(SkillType.Rod, 90);
+                .RequirementSkill(SkillType.Rod, 40);
         }
 
+        private static void RapierProficiency(PerkBuilder builder)
+        {
+            builder.Create(PerkCategoryType.RedMage, PerkType.RapierProficiency)
+                .Name("Rapier Proficiency")
+                .Description("Grants the ability to equip rapiers.")
+
+                .AddPerkLevel(1)
+                .Description("Grants the ability to equip tier 1 rapiers.")
+                .Price(2)
+
+                .AddPerkLevel(2)
+                .Description("Grants the ability to equip tier 2 rapiers.")
+                .Price(2)
+                .RequirementSkill(SkillType.Rapier, 10)
+
+                .AddPerkLevel(3)
+                .Description("Grants the ability to equip tier 3 rapiers.")
+                .Price(2)
+                .RequirementSkill(SkillType.Rapier, 20)
+
+                .AddPerkLevel(4)
+                .Description("Grants the ability to equip tier 4 rapiers.")
+                .Price(2)
+                .RequirementSkill(SkillType.Rapier, 30)
+
+                .AddPerkLevel(5)
+                .Description("Grants the ability to equip tier 5 rapiers.")
+                .Price(2)
+                .RequirementSkill(SkillType.Rapier, 40);
+        }
 
         private static void LongbowProficiency(PerkBuilder builder)
         {
@@ -332,32 +241,7 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .AddPerkLevel(5)
                 .Description("Grants the ability to equip tier 5 longbows.")
                 .Price(2)
-                .RequirementSkill(SkillType.Longbow, 40)
-
-                .AddPerkLevel(6)
-                .Description("Grants the ability to equip tier 6 longbows.")
-                .Price(2)
-                .RequirementSkill(SkillType.Longbow, 50)
-
-                .AddPerkLevel(7)
-                .Description("Grants the ability to equip tier 7 longbows.")
-                .Price(2)
-                .RequirementSkill(SkillType.Longbow, 60)
-
-                .AddPerkLevel(8)
-                .Description("Grants the ability to equip tier 8 longbows.")
-                .Price(2)
-                .RequirementSkill(SkillType.Longbow, 70)
-
-                .AddPerkLevel(9)
-                .Description("Grants the ability to equip tier 9 longbows.")
-                .Price(2)
-                .RequirementSkill(SkillType.Longbow, 80)
-
-                .AddPerkLevel(10)
-                .Description("Grants the ability to equip tier 10 longbows.")
-                .Price(2)
-                .RequirementSkill(SkillType.Longbow, 90);
+                .RequirementSkill(SkillType.Longbow, 40);
         }
 
         private static void KatanaProficiency(PerkBuilder builder)
@@ -388,32 +272,103 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .AddPerkLevel(5)
                 .Description("Grants the ability to equip tier 5 katanas.")
                 .Price(2)
-                .RequirementSkill(SkillType.Katana, 40)
+                .RequirementSkill(SkillType.Katana, 40);
+        }
 
-                .AddPerkLevel(6)
-                .Description("Grants the ability to equip tier 6 katanas.")
-                .Price(2)
-                .RequirementSkill(SkillType.Katana, 50)
 
-                .AddPerkLevel(7)
-                .Description("Grants the ability to equip tier 7 katanas.")
-                .Price(2)
-                .RequirementSkill(SkillType.Katana, 60)
+        private static void GunbladeProficiency(PerkBuilder builder)
+        {
+            builder.Create(PerkCategoryType.Specialist, PerkType.GunbladeProficiency)
+                .Name("Gunblade Proficiency")
+                .Description("Grants the ability to equip gunblades.")
 
-                .AddPerkLevel(8)
-                .Description("Grants the ability to equip tier 8 katanas.")
+                .AddPerkLevel(1)
+                .Description("Grants the ability to equip tier 1 gunblades.")
                 .Price(2)
-                .RequirementSkill(SkillType.Katana, 70)
 
-                .AddPerkLevel(9)
-                .Description("Grants the ability to equip tier 9 katanas.")
+                .AddPerkLevel(2)
+                .Description("Grants the ability to equip tier 2 gunblades.")
                 .Price(2)
-                .RequirementSkill(SkillType.Katana, 80)
+                .RequirementSkill(SkillType.Gunblade, 10)
 
-                .AddPerkLevel(10)
-                .Description("Grants the ability to equip tier 10 katanas.")
+                .AddPerkLevel(3)
+                .Description("Grants the ability to equip tier 3 gunblades.")
                 .Price(2)
-                .RequirementSkill(SkillType.Katana, 90);
+                .RequirementSkill(SkillType.Gunblade, 20)
+
+                .AddPerkLevel(4)
+                .Description("Grants the ability to equip tier 4 gunblades.")
+                .Price(2)
+                .RequirementSkill(SkillType.Gunblade, 30)
+
+                .AddPerkLevel(5)
+                .Description("Grants the ability to equip tier 5 gunblades.")
+                .Price(2)
+                .RequirementSkill(SkillType.Gunblade, 40);
+        }
+
+
+        private static void RifleProficiency(PerkBuilder builder)
+        {
+            builder.Create(PerkCategoryType.Sniper, PerkType.RifleProficiency)
+                .Name("Rifle Proficiency")
+                .Description("Grants the ability to equip rifles.")
+
+                .AddPerkLevel(1)
+                .Description("Grants the ability to equip tier 1 rifles.")
+                .Price(2)
+
+                .AddPerkLevel(2)
+                .Description("Grants the ability to equip tier 2 rifles.")
+                .Price(2)
+                .RequirementSkill(SkillType.Rifle, 10)
+
+                .AddPerkLevel(3)
+                .Description("Grants the ability to equip tier 3 rifles.")
+                .Price(2)
+                .RequirementSkill(SkillType.Rifle, 20)
+
+                .AddPerkLevel(4)
+                .Description("Grants the ability to equip tier 4 rifles.")
+                .Price(2)
+                .RequirementSkill(SkillType.Rifle, 30)
+
+                .AddPerkLevel(5)
+                .Description("Grants the ability to equip tier 5 rifles.")
+                .Price(2)
+                .RequirementSkill(SkillType.Rifle, 40);
+        }
+
+
+        private static void GreatSwordProficiency(PerkBuilder builder)
+        {
+            builder.Create(PerkCategoryType.DarkKnight, PerkType.GreatSwordProficiency)
+                .Name("Great Sword Proficiency")
+                .Description("Grants the ability to equip great swords.")
+
+                .AddPerkLevel(1)
+                .Description("Grants the ability to equip tier 1 great swords.")
+                .Price(2)
+
+                .AddPerkLevel(2)
+                .Description("Grants the ability to equip tier 2 great swords.")
+                .Price(2)
+                .RequirementSkill(SkillType.GreatSword, 10)
+
+                .AddPerkLevel(3)
+                .Description("Grants the ability to equip tier 3 great swords.")
+                .Price(2)
+                .RequirementSkill(SkillType.GreatSword, 20)
+
+                .AddPerkLevel(4)
+                .Description("Grants the ability to equip tier 4 great swords.")
+                .Price(2)
+                .RequirementSkill(SkillType.GreatSword, 30)
+
+                .AddPerkLevel(5)
+                .Description("Grants the ability to equip tier 5 great swords.")
+                .Price(2)
+                .RequirementSkill(SkillType.GreatSword, 40);
         }
     }
 }

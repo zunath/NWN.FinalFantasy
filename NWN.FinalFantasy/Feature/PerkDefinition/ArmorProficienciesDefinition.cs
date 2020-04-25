@@ -45,32 +45,7 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .AddPerkLevel(5)
                 .Description("Grants the ability to equip tier 5 heavy armor.")
                 .Price(2)
-                .RequirementSkill(SkillType.HeavyArmor, 40)
-
-                .AddPerkLevel(6)
-                .Description("Grants the ability to equip tier 6 heavy armor.")
-                .Price(2)
-                .RequirementSkill(SkillType.HeavyArmor, 50)
-
-                .AddPerkLevel(7)
-                .Description("Grants the ability to equip tier 7 heavy armor.")
-                .Price(2)
-                .RequirementSkill(SkillType.HeavyArmor, 60)
-
-                .AddPerkLevel(8)
-                .Description("Grants the ability to equip tier 8 heavy armor.")
-                .Price(2)
-                .RequirementSkill(SkillType.HeavyArmor, 70)
-
-                .AddPerkLevel(9)
-                .Description("Grants the ability to equip tier 9 heavy armor.")
-                .Price(2)
-                .RequirementSkill(SkillType.HeavyArmor, 80)
-
-                .AddPerkLevel(10)
-                .Description("Grants the ability to equip tier 10 heavy armor.")
-                .Price(2)
-                .RequirementSkill(SkillType.HeavyArmor, 90);
+                .RequirementSkill(SkillType.HeavyArmor, 40);
         }
 
         private static void LightArmorProficiency(PerkBuilder builder)
@@ -101,32 +76,7 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .AddPerkLevel(5)
                 .Description("Grants the ability to equip tier 5 light armor.")
                 .Price(2)
-                .RequirementSkill(SkillType.LightArmor, 40)
-
-                .AddPerkLevel(6)
-                .Description("Grants the ability to equip tier 6 light armor.")
-                .Price(2)
-                .RequirementSkill(SkillType.LightArmor, 50)
-
-                .AddPerkLevel(7)
-                .Description("Grants the ability to equip tier 7 light armor.")
-                .Price(2)
-                .RequirementSkill(SkillType.LightArmor, 60)
-
-                .AddPerkLevel(8)
-                .Description("Grants the ability to equip tier 8 light armor.")
-                .Price(2)
-                .RequirementSkill(SkillType.LightArmor, 70)
-
-                .AddPerkLevel(9)
-                .Description("Grants the ability to equip tier 9 light armor.")
-                .Price(2)
-                .RequirementSkill(SkillType.LightArmor, 80)
-
-                .AddPerkLevel(10)
-                .Description("Grants the ability to equip tier 10 light armor.")
-                .Price(2)
-                .RequirementSkill(SkillType.LightArmor, 90);
+                .RequirementSkill(SkillType.LightArmor, 40);
         }
 
         private static void MysticArmorProficiency(PerkBuilder builder)
@@ -157,32 +107,7 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .AddPerkLevel(5)
                 .Description("Grants the ability to equip tier 5 mystic armor.")
                 .Price(2)
-                .RequirementSkill(SkillType.MysticArmor, 40)
-
-                .AddPerkLevel(6)
-                .Description("Grants the ability to equip tier 6 mystic armor.")
-                .Price(2)
-                .RequirementSkill(SkillType.MysticArmor, 50)
-
-                .AddPerkLevel(7)
-                .Description("Grants the ability to equip tier 7 mystic armor.")
-                .Price(2)
-                .RequirementSkill(SkillType.MysticArmor, 60)
-
-                .AddPerkLevel(8)
-                .Description("Grants the ability to equip tier 8 mystic armor.")
-                .Price(2)
-                .RequirementSkill(SkillType.MysticArmor, 70)
-
-                .AddPerkLevel(9)
-                .Description("Grants the ability to equip tier 9 mystic armor.")
-                .Price(2)
-                .RequirementSkill(SkillType.MysticArmor, 80)
-
-                .AddPerkLevel(10)
-                .Description("Grants the ability to equip tier 10 mystic armor.")
-                .Price(2)
-                .RequirementSkill(SkillType.MysticArmor, 90);
+                .RequirementSkill(SkillType.MysticArmor, 40);
         }
     }
 

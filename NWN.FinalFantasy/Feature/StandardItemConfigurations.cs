@@ -50,7 +50,7 @@ namespace NWN.FinalFantasy.Feature
                     BaseItem.Grenade,
                     BaseItem.Halberd,
                     BaseItem.HandAxe,
-                    BaseItem.HeavyCrossbow,
+                    BaseItem.Rifle,
                     BaseItem.HeavyFlail,
                     BaseItem.Helmet,
                     BaseItem.Kama,

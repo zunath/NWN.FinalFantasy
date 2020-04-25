@@ -18,10 +18,18 @@ namespace NWN.FinalFantasy.Enumeration
         BlackMage = 5,
         [PerkCategory("White Mage", true)]
         WhiteMage = 6,
+        [PerkCategory("Red Mage", true)]
+        RedMage = 7,
         [PerkCategory("Ranger", true)]
-        Ranger = 7,
+        Ranger = 8,
         [PerkCategory("Ninja", true)]
-        Ninja = 8,
+        Ninja = 9,
+        [PerkCategory("Specialist", true)]
+        Specialist = 10,
+        [PerkCategory("Sniper", true)]
+        Sniper = 11,
+        [PerkCategory("Dark Knight", true)]
+        DarkKnight = 12
     }
 
     public class PerkCategoryAttribute : Attribute

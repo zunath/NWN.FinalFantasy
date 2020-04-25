@@ -11,7 +11,17 @@ namespace NWN.FinalFantasy.Service
         /// <summary>
         /// This is the maximum number of skill points a single character can have at any time.
         /// </summary>
-        public const int SkillCap = 500;
+        public const int SkillCap = 250;
+
+        /// <summary>
+        /// This determines how much of a primary stat is granted to a player when a skill levels up.
+        /// </summary>
+        public const float PrimaryStatIncrease = 0.1f;
+
+        /// <summary>
+        /// This determines how much of a secondary stat is granted to a player when a skill levels up.
+        /// </summary>
+        public const float SecondaryStatIncrease = 0.05f;
 
         /// <summary>
         /// Gives XP towards a specific skill to a player.

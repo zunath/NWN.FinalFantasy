@@ -8,7 +8,7 @@ namespace NWN.FinalFantasy.Core.NWScript.Enum.Item
         BastardSword = 3,
         LightFlail = 4,
         WarHammer = 5,
-        HeavyCrossbow = 6,
+        Rifle = 6, // Heavy Crossbow replaced with Rifle
         LightCrossbow = 7,
         Longbow = 8,
         LightMace = 9,
@@ -96,6 +96,9 @@ namespace NWN.FinalFantasy.Core.NWScript.Enum.Item
         CraftMaterialSmall = 110,
         Whip = 111,
         CraftBase = 112,
+
+        Gunblade = 113, // todo: setup
+
         Invalid = 255
     }
 }

@@ -6,15 +6,13 @@ namespace NWN.FinalFantasy.Enumeration
     {
         [SkillCategory("Invalid", false, 0)]
         Invalid = 0,
-        [SkillCategory("Melee", true, 1)]
-        Melee = 1,
-        [SkillCategory("Ranged", true, 2)]
-        Ranged = 2,
-        [SkillCategory("Armor", true, 3)]
+        [SkillCategory("Weapon", true, 1)]
+        Weapon = 1,
+        [SkillCategory("Armor", true, 2)]
         Armor = 3,
-        [SkillCategory("Crafting", true, 4)]
+        [SkillCategory("Crafting", true, 3)]
         Crafting = 4,
-        [SkillCategory("Ability", true, 5)]
+        [SkillCategory("Ability", true, 4)]
         Ability = 5
     }
 

@@ -10,10 +10,10 @@ namespace NWN.FinalFantasy.Enumeration
         Weapon = 1,
         [SkillCategory("Armor", true, 2)]
         Armor = 3,
-        [SkillCategory("Crafting", true, 3)]
-        Crafting = 4,
-        [SkillCategory("Ability", true, 4)]
-        Ability = 5
+        [SkillCategory("Ability", true, 3)]
+        Ability = 4,
+        [SkillCategory("Crafting", true, 4)]
+        Crafting = 5,
     }
 
     public class SkillCategoryAttribute : Attribute

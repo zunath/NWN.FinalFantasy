@@ -62,7 +62,23 @@ namespace NWN.FinalFantasy.Enumeration
         [Skill(SkillCategoryType.Weapon, "Rapier", 50, true, "Ability to use rapiers.", true, Ability.Dexterity, Ability.Intelligence)]
         Rapier = 24,
         [Skill(SkillCategoryType.Weapon, "Great Sword", 50, true, "Ability to use great swords.", true, Ability.Strength, Ability.Intelligence)]
-        GreatSword = 25
+        GreatSword = 25,
+
+        // Crafting
+        [Skill(SkillCategoryType.Crafting, "Blacksmithing", 50, true, "Ability to create metal-based weapons and heavy armors.", true, Ability.Invalid, Ability.Invalid)]
+        Blacksmithing = 26,
+        [Skill(SkillCategoryType.Crafting, "Leathercraft", 50, true, "Ability to create leather-based items and light armors.", true, Ability.Invalid, Ability.Invalid)]
+        Leathercraft = 27,
+        [Skill(SkillCategoryType.Crafting, "Alchemy", 50, true, "Ability to create magic-based weapons and mystic armors.", true, Ability.Invalid, Ability.Invalid)]
+        Alchemy = 28,
+        [Skill(SkillCategoryType.Crafting, "Carpentry", 50, true, "Ability to create wood-based weapons and furniture.", true, Ability.Invalid, Ability.Invalid)]
+        Carpentry = 29,
+        [Skill(SkillCategoryType.Crafting, "Cooking", 50, true, "Ability to create food items which grant temporary buffs when consumed.", true, Ability.Invalid, Ability.Invalid)]
+        Cooking = 30,
+        [Skill(SkillCategoryType.Crafting, "Mining", 50, true, "Ability to gather raw ore and refine it.", true, Ability.Invalid, Ability.Invalid)]
+        Mining = 31,
+        [Skill(SkillCategoryType.Crafting, "Botany", 50, true, "Ability to gather raw lumber and refine it.", true, Ability.Invalid, Ability.Invalid)]
+        Botany = 32,
 
     }
 

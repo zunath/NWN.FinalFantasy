@@ -207,6 +207,19 @@ namespace NWN.FinalFantasy.Service.PerkService
         }
 
         /// <summary>
+        /// Adds a quest requirement to purchase the perk.
+        /// </summary>
+        /// <param name="questId">The quest Id to require.</param>
+        /// <returns>A perk builder with the configured options.</returns>
+        public PerkBuilder RequirementQuest(string questId)
+        {
+            var requirement = new PerkQuestRequirement(questId);
+            _activeLevel.PurchaseRequirements.Add(requirement);
+
+            return this;
+        }
+
+        /// <summary>
         /// Adds an MP requirement to use the perk at this level.
         /// </summary>
         /// <param name="requiredMP">The amount of MP needed to use this perk at this level.</param>

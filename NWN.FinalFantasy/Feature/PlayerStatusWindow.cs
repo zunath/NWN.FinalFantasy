@@ -9,17 +9,17 @@ namespace NWN.FinalFantasy.Feature
 {
     public static class PlayerStatusWindow
     {
-        private const int HPGuiID = 1;
-        private const int HPBackgroundGuiID = 2;
-        private const int HPTextGuiID = 3;
+        private const int HPTextGuiID = 1;
+        private const int MPTextGuiID = 2;
+        private const int STMTextGuiID = 3;
 
-        private const int MPGuiID = 4;
-        private const int MPBackgroundGuiID = 5;
-        private const int MPTextGuiID = 6;
+        private const int HPGuiID = 4;
+        private const int MPGuiID = 5;
+        private const int STMGuiID = 6;
 
-        private const int STMGuiID = 7;
-        private const int STMBackgroundGuiID = 8;
-        private const int STMTextGuiID = 9;
+        private const int HPBackgroundGuiID = 7;
+        private const int MPBackgroundGuiID = 8;
+        private const int STMBackgroundGuiID = 9;
 
         private const int WindowId = 10;
 

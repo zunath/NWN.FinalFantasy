@@ -94,7 +94,7 @@
         Manafont = 84,
         Protect = 85,
         TransferMP = 86,
-        TransferSTM = 87,
+        TransferStamina = 87,
         PiercingStab = 88,
         Blind = 89,
         RecoveryStab = 90,

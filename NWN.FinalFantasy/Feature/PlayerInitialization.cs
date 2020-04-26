@@ -177,9 +177,8 @@ namespace NWN.FinalFantasy.Feature
             dbPlayer.UnallocatedSP = 10;
             dbPlayer.Version = 1;
             dbPlayer.Name = GetName(player);
-            Stat.AdjustMaxHP(dbPlayer, player, 20);
-            Stat.AdjustMaxMP(dbPlayer, 5);
-            Stat.AdjustMaxSTM(dbPlayer, 20);
+            Stat.AdjustMaxHP(dbPlayer, player, 5);
+            Stat.AdjustMaxSTM(dbPlayer, 10);
             Stat.AdjustBAB(dbPlayer, player, 1);
             dbPlayer.MP = Stat.GetMaxMP(player, dbPlayer);
             dbPlayer.Stamina = Stat.GetMaxStamina(player, dbPlayer);

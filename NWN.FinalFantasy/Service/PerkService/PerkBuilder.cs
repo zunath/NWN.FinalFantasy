@@ -75,10 +75,10 @@ namespace NWN.FinalFantasy.Service.PerkService
         /// <summary>
         /// Creates a new perk level on the active perk we're building.
         /// </summary>
-        /// <param name="level">The new perk level.</param>
         /// <returns>A perk builder with the configured options</returns>
-        public PerkBuilder AddPerkLevel(int level)
+        public PerkBuilder AddPerkLevel()
         {
+            var level = _activePerk.PerkLevels.Count + 1;
             _activeLevel = new PerkLevel();
             _activePerk.PerkLevels[level] = _activeLevel;
 

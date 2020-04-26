@@ -23,26 +23,26 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .Name("Heavy Armor Proficiency")
                 .Description("Grants the ability to equip heavy armor.")
 
-                .AddPerkLevel(1)
+                .AddPerkLevel()
                 .Description("Grants the ability to equip tier 1 heavy armor.")
                 .Price(2)
 
-                .AddPerkLevel(2)
+                .AddPerkLevel()
                 .Description("Grants the ability to equip tier 2 heavy armor.")
                 .Price(2)
                 .RequirementSkill(SkillType.HeavyArmor, 10)
 
-                .AddPerkLevel(3)
+                .AddPerkLevel()
                 .Description("Grants the ability to equip tier 3 heavy armor.")
                 .Price(2)
                 .RequirementSkill(SkillType.HeavyArmor, 20)
 
-                .AddPerkLevel(4)
+                .AddPerkLevel()
                 .Description("Grants the ability to equip tier 4 heavy armor.")
                 .Price(2)
                 .RequirementSkill(SkillType.HeavyArmor, 30)
 
-                .AddPerkLevel(5)
+                .AddPerkLevel()
                 .Description("Grants the ability to equip tier 5 heavy armor.")
                 .Price(2)
                 .RequirementSkill(SkillType.HeavyArmor, 40);
@@ -54,26 +54,26 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .Name("Light Armor Proficiency")
                 .Description("Grants the ability to equip light armor.")
 
-                .AddPerkLevel(1)
+                .AddPerkLevel()
                 .Description("Grants the ability to equip tier 1 light armor.")
                 .Price(2)
 
-                .AddPerkLevel(2)
+                .AddPerkLevel()
                 .Description("Grants the ability to equip tier 2 light armor.")
                 .Price(2)
                 .RequirementSkill(SkillType.LightArmor, 10)
 
-                .AddPerkLevel(3)
+                .AddPerkLevel()
                 .Description("Grants the ability to equip tier 3 light armor.")
                 .Price(2)
                 .RequirementSkill(SkillType.LightArmor, 20)
 
-                .AddPerkLevel(4)
+                .AddPerkLevel()
                 .Description("Grants the ability to equip tier 4 light armor.")
                 .Price(2)
                 .RequirementSkill(SkillType.LightArmor, 30)
 
-                .AddPerkLevel(5)
+                .AddPerkLevel()
                 .Description("Grants the ability to equip tier 5 light armor.")
                 .Price(2)
                 .RequirementSkill(SkillType.LightArmor, 40);
@@ -85,26 +85,26 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .Name("Mystic Armor Proficiency")
                 .Description("Grants the ability to equip mystic armor.")
 
-                .AddPerkLevel(1)
+                .AddPerkLevel()
                 .Description("Grants the ability to equip tier 1 mystic armor.")
                 .Price(2)
 
-                .AddPerkLevel(2)
+                .AddPerkLevel()
                 .Description("Grants the ability to equip tier 2 mystic armor.")
                 .Price(2)
                 .RequirementSkill(SkillType.MysticArmor, 10)
 
-                .AddPerkLevel(3)
+                .AddPerkLevel()
                 .Description("Grants the ability to equip tier 3 mystic armor.")
                 .Price(2)
                 .RequirementSkill(SkillType.MysticArmor, 20)
 
-                .AddPerkLevel(4)
+                .AddPerkLevel()
                 .Description("Grants the ability to equip tier 4 mystic armor.")
                 .Price(2)
                 .RequirementSkill(SkillType.MysticArmor, 30)
 
-                .AddPerkLevel(5)
+                .AddPerkLevel()
                 .Description("Grants the ability to equip tier 5 mystic armor.")
                 .Price(2)
                 .RequirementSkill(SkillType.MysticArmor, 40);

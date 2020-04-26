@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Globalization;
-using System.Runtime.CompilerServices;
 using NWN.FinalFantasy.Core;
 using NWN.FinalFantasy.Core.Bioware;
 using NWN.FinalFantasy.Core.NWNX;

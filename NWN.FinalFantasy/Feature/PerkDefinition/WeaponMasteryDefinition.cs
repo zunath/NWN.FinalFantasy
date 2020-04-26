@@ -57,19 +57,19 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                     ModifyBAB(player, item, InventorySlot.Invalid, level, false, BaseItem.Longsword, InventorySlot.Invalid);
                 })
 
-                .AddPerkLevel(1)
+                .AddPerkLevel()
                 .Description("Grants +1 BAB when equipped with a longsword.")
                 .Price(8)
                 .RequirementSkill(SkillType.Longsword, 20)
                 .RequirementSkill(SkillType.Chivalry, 25)
 
-                .AddPerkLevel(2)
+                .AddPerkLevel()
                 .Description("Grants +2 BAB when equipped with a longsword.")
                 .Price(8)
                 .RequirementSkill(SkillType.Longsword, 30)
                 .RequirementSkill(SkillType.Chivalry, 40)
 
-                .AddPerkLevel(3)
+                .AddPerkLevel()
                 .Description("Grants +3 BAB when equipped with a longsword.")
                 .Price(8)
                 .RequirementSkill(SkillType.Longsword, 40)
@@ -112,19 +112,19 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                     }
                 })
 
-                .AddPerkLevel(1)
+                .AddPerkLevel()
                 .Description("Grants +1 BAB when equipped with knuckles.")
                 .Price(8)
                 .RequirementSkill(SkillType.Knuckles, 20)
                 .RequirementSkill(SkillType.Chi, 25)
 
-                .AddPerkLevel(2)
+                .AddPerkLevel()
                 .Description("Grants +2 BAB when equipped with knuckles.")
                 .Price(8)
                 .RequirementSkill(SkillType.Knuckles, 30)
                 .RequirementSkill(SkillType.Chi, 40)
 
-                .AddPerkLevel(3)
+                .AddPerkLevel()
                 .Description("Grants +3 BAB when equipped with knuckles.")
                 .Price(8)
                 .RequirementSkill(SkillType.Knuckles, 40)
@@ -146,19 +146,19 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                     ModifyBAB(player, item, InventorySlot.Invalid, level, false, BaseItem.Dagger, InventorySlot.Invalid);
                 })
 
-                .AddPerkLevel(1)
+                .AddPerkLevel()
                 .Description("Grants +1 BAB when equipped with a dagger.")
                 .Price(8)
                 .RequirementSkill(SkillType.Dagger, 20)
                 .RequirementSkill(SkillType.Thievery, 25)
 
-                .AddPerkLevel(2)
+                .AddPerkLevel()
                 .Description("Grants +2 BAB when equipped with a dagger.")
                 .Price(8)
                 .RequirementSkill(SkillType.Dagger, 30)
                 .RequirementSkill(SkillType.Thievery, 40)
 
-                .AddPerkLevel(3)
+                .AddPerkLevel()
                 .Description("Grants +3 BAB when equipped with a dagger.")
                 .Price(8)
                 .RequirementSkill(SkillType.Dagger, 40)
@@ -180,19 +180,19 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                     ModifyBAB(player, item, InventorySlot.Invalid, level, false, BaseItem.QuarterStaff, InventorySlot.Invalid);
                 })
 
-                .AddPerkLevel(1)
+                .AddPerkLevel()
                 .Description("Grants +1 BAB when equipped with a staff.")
                 .Price(8)
                 .RequirementSkill(SkillType.Staff, 20)
                 .RequirementSkill(SkillType.BlackMagic, 25)
 
-                .AddPerkLevel(2)
+                .AddPerkLevel()
                 .Description("Grants +2 BAB when equipped with a staff.")
                 .Price(8)
                 .RequirementSkill(SkillType.Staff, 30)
                 .RequirementSkill(SkillType.BlackMagic, 40)
 
-                .AddPerkLevel(3)
+                .AddPerkLevel()
                 .Description("Grants +3 BAB when equipped with a staff.")
                 .Price(8)
                 .RequirementSkill(SkillType.Staff, 40)
@@ -214,19 +214,19 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                     ModifyBAB(player, item, InventorySlot.Invalid, level, false, BaseItem.LightMace, InventorySlot.Invalid);
                 })
 
-                .AddPerkLevel(1)
+                .AddPerkLevel()
                 .Description("Grants +1 BAB when equipped with a rod.")
                 .Price(8)
                 .RequirementSkill(SkillType.Rod, 20)
                 .RequirementSkill(SkillType.WhiteMagic, 25)
 
-                .AddPerkLevel(2)
+                .AddPerkLevel()
                 .Description("Grants +2 BAB when equipped with a rod.")
                 .Price(8)
                 .RequirementSkill(SkillType.Rod, 30)
                 .RequirementSkill(SkillType.WhiteMagic, 40)
 
-                .AddPerkLevel(3)
+                .AddPerkLevel()
                 .Description("Grants +3 BAB when equipped with a rod.")
                 .Price(8)
                 .RequirementSkill(SkillType.Rod, 40)
@@ -248,19 +248,19 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                     ModifyBAB(player, item, InventorySlot.Invalid, level, false, BaseItem.Rapier, InventorySlot.Invalid);
                 })
 
-                .AddPerkLevel(1)
+                .AddPerkLevel()
                 .Description("Grants +1 BAB when equipped with a rapier.")
                 .Price(8)
                 .RequirementSkill(SkillType.Rapier, 20)
                 .RequirementSkill(SkillType.RedMagic, 25)
 
-                .AddPerkLevel(2)
+                .AddPerkLevel()
                 .Description("Grants +2 BAB when equipped with a rapier.")
                 .Price(8)
                 .RequirementSkill(SkillType.Rapier, 30)
                 .RequirementSkill(SkillType.RedMagic, 40)
 
-                .AddPerkLevel(3)
+                .AddPerkLevel()
                 .Description("Grants +3 BAB when equipped with a rapier.")
                 .Price(8)
                 .RequirementSkill(SkillType.Rapier, 40)
@@ -282,19 +282,19 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                     ModifyBAB(player, item, InventorySlot.Invalid, level, false, BaseItem.Longbow, InventorySlot.Invalid);
                 })
 
-                .AddPerkLevel(1)
+                .AddPerkLevel()
                 .Description("Grants +1 BAB when equipped with a longbow.")
                 .Price(8)
                 .RequirementSkill(SkillType.Longbow, 20)
                 .RequirementSkill(SkillType.Archery, 25)
 
-                .AddPerkLevel(2)
+                .AddPerkLevel()
                 .Description("Grants +2 BAB when equipped with a longbow.")
                 .Price(8)
                 .RequirementSkill(SkillType.Longbow, 30)
                 .RequirementSkill(SkillType.Archery, 40)
 
-                .AddPerkLevel(3)
+                .AddPerkLevel()
                 .Description("Grants +3 BAB when equipped with a longbow.")
                 .Price(8)
                 .RequirementSkill(SkillType.Longbow, 40)
@@ -315,19 +315,19 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                     ModifyBAB(player, item, InventorySlot.Invalid, level, false, BaseItem.Katana, InventorySlot.Invalid);
                 })
 
-                .AddPerkLevel(1)
+                .AddPerkLevel()
                 .Description("Grants +1 BAB when equipped with a katana.")
                 .Price(8)
                 .RequirementSkill(SkillType.Katana, 20)
                 .RequirementSkill(SkillType.Ninjitsu, 25)
 
-                .AddPerkLevel(2)
+                .AddPerkLevel()
                 .Description("Grants +2 BAB when equipped with a katana.")
                 .Price(8)
                 .RequirementSkill(SkillType.Katana, 30)
                 .RequirementSkill(SkillType.Ninjitsu, 40)
 
-                .AddPerkLevel(3)
+                .AddPerkLevel()
                 .Description("Grants +3 BAB when equipped with a katana.")
                 .Price(8)
                 .RequirementSkill(SkillType.Katana, 40)
@@ -349,19 +349,19 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                     ModifyBAB(player, item, InventorySlot.Invalid, level, false, BaseItem.Gunblade, InventorySlot.Invalid);
                 })
 
-                .AddPerkLevel(1)
+                .AddPerkLevel()
                 .Description("Grants +1 BAB when equipped with a gunblade.")
                 .Price(8)
                 .RequirementSkill(SkillType.Gunblade, 20)
                 .RequirementSkill(SkillType.Swordplay, 25)
 
-                .AddPerkLevel(2)
+                .AddPerkLevel()
                 .Description("Grants +2 BAB when equipped with a gunblade.")
                 .Price(8)
                 .RequirementSkill(SkillType.Gunblade, 30)
                 .RequirementSkill(SkillType.Swordplay, 40)
 
-                .AddPerkLevel(3)
+                .AddPerkLevel()
                 .Description("Grants +3 BAB when equipped with a gunblade.")
                 .Price(8)
                 .RequirementSkill(SkillType.Gunblade, 40)
@@ -382,19 +382,19 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                     ModifyBAB(player, item, InventorySlot.Invalid, level, false, BaseItem.Rifle, InventorySlot.Invalid);
                 })
 
-                .AddPerkLevel(1)
+                .AddPerkLevel()
                 .Description("Grants +1 BAB when equipped with a rifle.")
                 .Price(8)
                 .RequirementSkill(SkillType.Rifle, 20)
                 .RequirementSkill(SkillType.Marksmanship, 25)
 
-                .AddPerkLevel(2)
+                .AddPerkLevel()
                 .Description("Grants +2 BAB when equipped with a rifle.")
                 .Price(8)
                 .RequirementSkill(SkillType.Rifle, 30)
                 .RequirementSkill(SkillType.Marksmanship, 40)
 
-                .AddPerkLevel(3)
+                .AddPerkLevel()
                 .Description("Grants +3 BAB when equipped with a rifle.")
                 .Price(8)
                 .RequirementSkill(SkillType.Rifle, 40)
@@ -415,19 +415,19 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                     ModifyBAB(player, item, InventorySlot.Invalid, level, false, BaseItem.GreatSword, InventorySlot.Invalid);
                 })
 
-                .AddPerkLevel(1)
+                .AddPerkLevel()
                 .Description("Grants +1 BAB when equipped with a great sword.")
                 .Price(8)
                 .RequirementSkill(SkillType.GreatSword, 20)
                 .RequirementSkill(SkillType.Darkness, 25)
 
-                .AddPerkLevel(2)
+                .AddPerkLevel()
                 .Description("Grants +2 BAB when equipped with a great sword.")
                 .Price(8)
                 .RequirementSkill(SkillType.GreatSword, 30)
                 .RequirementSkill(SkillType.Darkness, 40)
 
-                .AddPerkLevel(3)
+                .AddPerkLevel()
                 .Description("Grants +3 BAB when equipped with a great sword.")
                 .Price(8)
                 .RequirementSkill(SkillType.GreatSword, 40)

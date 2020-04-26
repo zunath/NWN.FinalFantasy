@@ -6,14 +6,29 @@ using NWN.FinalFantasy.Service.PerkService;
 
 namespace NWN.FinalFantasy.Feature.PerkDefinition
 {
-    public class NinjaPerkDefinition: IPerkListDefinition
+    public class NinjaPerkDefinition : IPerkListDefinition
     {
         public Dictionary<PerkType, PerkDetail> BuildPerks()
         {
             var builder = new PerkBuilder();
+            MijinGakure(builder);
             DualWield(builder);
 
             return builder.Build();
+        }
+
+        private static void MijinGakure(PerkBuilder builder)
+        {
+            builder.Create(PerkCategoryType.Ninja, PerkType.MijinGakure)
+                .Name("Mijin Gakure")
+                .Description("Your next attack deals 3 times the amount of damage to nearby enemies.")
+
+                .AddPerkLevel()
+                .Description("Grants the Mijin Gakure ability.")
+                .RequirementSkill(SkillType.Ninjitsu, 50)
+                .RequirementSkill(SkillType.Katana, 50)
+                .RequirementSkill(SkillType.LightArmor, 50)
+                .Price(15);
         }
 
         private static void DualWield(PerkBuilder builder)

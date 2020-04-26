@@ -27,7 +27,16 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
 
         private static void PerfectDodge(PerkBuilder builder)
         {
+            builder.Create(PerkCategoryType.Thief, PerkType.PerfectDodge)
+                .Name("Perfect Dodge")
+                .Description("Your AC is increased by 50 for 30 seconds.")
 
+                .AddPerkLevel()
+                .Description("Grants the Perfect Dodge ability.")
+                .RequirementSkill(SkillType.Thievery, 50)
+                .RequirementSkill(SkillType.Dagger, 50)
+                .RequirementSkill(SkillType.LightArmor, 50)
+                .Price(15);
         }
 
         private static void Opportunist(PerkBuilder builder)

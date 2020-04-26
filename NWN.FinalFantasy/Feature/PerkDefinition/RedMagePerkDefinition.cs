@@ -31,7 +31,16 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
 
         private static void Manafont(PerkBuilder builder)
         {
+            builder.Create(PerkCategoryType.RedMage, PerkType.Manafont)
+                .Name("Manafont")
+                .Description("Spells may be cast for free for the next 30 seconds.")
 
+                .AddPerkLevel()
+                .Description("Grants the Manafont ability.")
+                .RequirementSkill(SkillType.RedMagic, 50)
+                .RequirementSkill(SkillType.Rapier, 50)
+                .RequirementSkill(SkillType.MysticArmor, 50)
+                .Price(15);
         }
 
         private static void Protect(PerkBuilder builder)

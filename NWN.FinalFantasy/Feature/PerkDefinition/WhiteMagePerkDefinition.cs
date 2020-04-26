@@ -26,7 +26,16 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
 
         private static void Benediction(PerkBuilder builder)
         {
+            builder.Create(PerkCategoryType.WhiteMage, PerkType.Benediction)
+                .Name("Benediction")
+                .Description("You and all nearby party members are healed to full.")
 
+                .AddPerkLevel()
+                .Description("Grants the Benediction ability.")
+                .RequirementSkill(SkillType.WhiteMagic, 50)
+                .RequirementSkill(SkillType.Rod, 50)
+                .RequirementSkill(SkillType.MysticArmor, 50)
+                .Price(15);
         }
 
         private static void Cure(PerkBuilder builder)

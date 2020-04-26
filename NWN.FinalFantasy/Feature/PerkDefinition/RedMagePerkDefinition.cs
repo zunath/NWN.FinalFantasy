@@ -45,91 +45,234 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
         {
             builder.Create(PerkCategoryType.RedMage, PerkType.Protect)
                 .Name("Protect")
-                .Description("");
+                .Description("Grants protect to a single target, increasing damage resistance.")
+                
+                .AddPerkLevel()
+                .Description("Grants the Protect ability.")
+                .RequirementSkill(SkillType.RedMagic, 7)
+                .RequirementSkill(SkillType.Rapier, 10)
+                .Price(2);
         }
 
         private static void TransferMP(PerkBuilder builder)
         {
             builder.Create(PerkCategoryType.RedMage, PerkType.TransferMP)
                 .Name("Transfer MP")
-                .Description("");
+                .Description("Restores MP for a single target.")
+
+                .AddPerkLevel()
+                .Description("Restores 10 MP for a single target.")
+                .RequirementSkill(SkillType.RedMagic, 15)
+                .RequirementSkill(SkillType.Rapier, 10)
+                .Price(2)
+
+                .AddPerkLevel()
+                .Description("Restores 20 MP for a single target.")
+                .RequirementSkill(SkillType.RedMagic, 30)
+                .RequirementSkill(SkillType.Rapier, 20)
+                .Price(2);
         }
 
         private static void TransferStamina(PerkBuilder builder)
         {
             builder.Create(PerkCategoryType.RedMage, PerkType.TransferStamina)
                 .Name("Transfer Stamina")
-                .Description("");
+                .Description("Restores Stamina for a single target.")
+
+                .AddPerkLevel()
+                .Description("Restores 10 STM for a single target.")
+                .RequirementSkill(SkillType.RedMagic, 15)
+                .RequirementSkill(SkillType.Rapier, 10)
+                .Price(2)
+
+                .AddPerkLevel()
+                .Description("Restores 20 STM for a single target.")
+                .RequirementSkill(SkillType.RedMagic, 30)
+                .RequirementSkill(SkillType.Rapier, 20)
+                .Price(2);
         }
 
         private static void PiercingStab(PerkBuilder builder)
         {
             builder.Create(PerkCategoryType.RedMage, PerkType.PiercingStab)
                 .Name("Piercing Stab")
-                .Description("");
+                .Description("Your next melee attack inflicts Bleed on your target.")
+
+                .AddPerkLevel()
+                .Description("Inflicts Bleed for 30 seconds on your next attack.")
+                .RequirementSkill(SkillType.Rapier, 5)
+                .Price(2)
+
+                .AddPerkLevel()
+                .Description("Inflicts Bleed II for 30 seconds on your next attack.")
+                .RequirementSkill(SkillType.RedMagic, 10)
+                .RequirementSkill(SkillType.Rapier, 15)
+                .Price(2)
+
+                .AddPerkLevel()
+                .Description("Inflicts Bleed III for 30 seconds on your next attack.")
+                .RequirementSkill(SkillType.RedMagic, 20)
+                .RequirementSkill(SkillType.Rapier, 30)
+                .Price(2);
         }
 
         private static void Blind(PerkBuilder builder)
         {
             builder.Create(PerkCategoryType.RedMage, PerkType.Blind)
                 .Name("Blind")
-                .Description("");
+                .Description("You inflict blindness on a single target for a short period of time.")
+
+                .AddPerkLevel()
+                .Description("Inflicts blindness on a single target for 15 seconds.")
+                .RequirementSkill(SkillType.RedMagic, 10)
+                .RequirementSkill(SkillType.Rapier, 5)
+                .Price(2)
+
+                .AddPerkLevel()
+                .Description("Inflicts blindness on a single target for 30 seconds.")
+                .RequirementSkill(SkillType.RedMagic, 20)
+                .RequirementSkill(SkillType.Rapier, 10)
+                .Price(2);
         }
 
         private static void RecoveryStab(PerkBuilder builder)
         {
             builder.Create(PerkCategoryType.RedMage, PerkType.RecoveryStab)
                 .Name("Recovery Stab")
-                .Description("");
+                .Description("Your next melee attack restores HP to all nearby party members.")
+
+                .AddPerkLevel()
+                .Description("Restores 2d6 HP to all nearby party members.")
+                .RequirementSkill(SkillType.RedMagic, 15)
+                .RequirementSkill(SkillType.Rapier, 20)
+                .Price(4)
+
+                .AddPerkLevel()
+                .Description("Restores 3d8 HP to all nearby party members.")
+                .RequirementSkill(SkillType.RedMagic, 30)
+                .RequirementSkill(SkillType.Rapier, 35)
+                .Price(4)
+
+                .AddPerkLevel()
+                .Description("Restores 3d8 HP to all nearby party members and grants Regen for 20 seconds.")
+                .RequirementSkill(SkillType.RedMagic, 45)
+                .RequirementSkill(SkillType.Rapier, 45)
+                .Price(4);
         }
 
         private static void Convert(PerkBuilder builder)
         {
             builder.Create(PerkCategoryType.RedMage, PerkType.Convert)
                 .Name("Convert")
-                .Description("");
+                .Description("Your HP and MP values are switched.")
+
+                .AddPerkLevel()
+                .Description("Grants the Convert ability.")
+                .RequirementSkill(SkillType.RedMagic, 40)
+                .RequirementSkill(SkillType.Rapier, 35)
+                .Price(8);
         }
 
         private static void Refresh(PerkBuilder builder)
         {
             builder.Create(PerkCategoryType.RedMage, PerkType.Refresh)
                 .Name("Refresh")
-                .Description("");
+                .Description("Restores MP over time to a single target.")
+
+                .AddPerkLevel()
+                .Description("Grants the Refresh ability.")
+                .RequirementSkill(SkillType.RedMagic, 35)
+                .RequirementSkill(SkillType.Rapier, 20)
+                .Price(6);
         }
 
         private static void RapierFinesse(PerkBuilder builder)
         {
             builder.Create(PerkCategoryType.RedMage, PerkType.RapierFinesse)
                 .Name("Rapier Finesse")
-                .Description("");
+                .Description("You make melee attack rolls with your DEX if it is higher than your STR. Must be equipped with a rapier.")
+
+                .AddPerkLevel()
+                .Description("Grants the Rapier Finesse ability.")
+                .RequirementSkill(SkillType.RedMagic, 5)
+                .RequirementSkill(SkillType.Rapier, 10)
+                .Price(4);
         }
 
         private static void Jolt(PerkBuilder builder)
         {
             builder.Create(PerkCategoryType.RedMage, PerkType.Jolt)
                 .Name("Jolt")
-                .Description("");
+                .Description("Deals unaspected damage to a single target.")
+
+                .AddPerkLevel()
+                .Description("Deals 1d6 unaspected damage to a single target.")
+                .RequirementSkill(SkillType.RedMagic, 10)
+                .RequirementSkill(SkillType.Rapier, 5)
+                .Price(3)
+
+                .AddPerkLevel()
+                .Description("Deals 2d6 unaspected damage to a single target.")
+                .RequirementSkill(SkillType.RedMagic, 25)
+                .RequirementSkill(SkillType.Rapier, 20)
+                .Price(3)
+
+                .AddPerkLevel()
+                .Description("Deals 2d10 unaspected damage to a single target.")
+                .RequirementSkill(SkillType.RedMagic, 45)
+                .RequirementSkill(SkillType.Rapier, 35)
+                .Price(4);
         }
 
         private static void PoisonStab(PerkBuilder builder)
         {
             builder.Create(PerkCategoryType.RedMage, PerkType.PoisonStab)
                 .Name("Poison Stab")
-                .Description("");
+                .Description("Your next melee attack inflicts poison on your target.")
+
+                .AddPerkLevel()
+                .Description("Your next melee attack inflicts poison on your target.")
+                .RequirementSkill(SkillType.RedMagic, 10)
+                .RequirementSkill(SkillType.Rapier, 15)
+                .Price(3)
+
+                .AddPerkLevel()
+                .Description("Your next melee attack inflicts poison on your target.")
+                .RequirementSkill(SkillType.RedMagic, 20)
+                .RequirementSkill(SkillType.Rapier, 30)
+                .Price(4);
         }
 
         private static void ShockSpikes(PerkBuilder builder)
         {
             builder.Create(PerkCategoryType.RedMage, PerkType.ShockSpikes)
                 .Name("Shock Spikes")
-                .Description("");
+                .Description("Grants an electrical damage shield for a short period of time.")
+
+                .AddPerkLevel()
+                .Description("Grants an electrical damage shield for the next 5 minutes.")
+                .RequirementSkill(SkillType.RedMagic, 15)
+                .RequirementSkill(SkillType.Rapier, 10)
+                .Price(3)
+
+                .AddPerkLevel()
+                .Description("Grants an electrical damage shield for the next 5 minutes.")
+                .RequirementSkill(SkillType.RedMagic, 30)
+                .RequirementSkill(SkillType.Rapier, 20)
+                .Price(3);
         }
 
         private static void DeliberateStab(PerkBuilder builder)
         {
             builder.Create(PerkCategoryType.RedMage, PerkType.DeliberateStab)
                 .Name("Deliberate Stab")
-                .Description("");
+                .Description("Your next stab effect will last twice as long as normal.")
+
+                .AddPerkLevel()
+                .Description("Grants the Deliberate Stab ability.")
+                .RequirementSkill(SkillType.RedMagic, 45)
+                .RequirementSkill(SkillType.Rapier, 40)
+                .Price(6);
         }
     }
 }

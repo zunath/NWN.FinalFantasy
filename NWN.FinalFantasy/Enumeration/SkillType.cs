@@ -43,7 +43,7 @@ namespace NWN.FinalFantasy.Enumeration
         // Weapon
         [Skill(SkillCategoryType.Weapon, "Longsword", 50, true, "Ability to use longswords.", true, Ability.Strength, Ability.Constitution)]
         Longsword = 15,
-        [Skill(SkillCategoryType.Weapon, "Knuckles", 50, true, "Ability to use fist knuckle weapons.", true, Ability.Strength, Ability.Dexterity)]
+        [Skill(SkillCategoryType.Weapon, "Knuckles", 50, true, "Ability to use fist knuckle weapons.", true, Ability.Strength, Ability.Wisdom)]
         Knuckles = 16,
         [Skill(SkillCategoryType.Weapon, "Dagger", 50, true, "Ability to use daggers.", true, Ability.Dexterity, Ability.Strength)]
         Dagger = 17,

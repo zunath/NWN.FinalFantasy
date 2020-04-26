@@ -183,6 +183,13 @@ namespace NWN.FinalFantasy.Feature
             Stat.AdjustBAB(dbPlayer, player, 1);
             dbPlayer.MP = Stat.GetMaxMP(player, dbPlayer);
             dbPlayer.Stamina = Stat.GetMaxStamina(player, dbPlayer);
+
+            dbPlayer.BaseStats[Ability.Strength] = Creature.GetRawAbilityScore(player, Ability.Strength);
+            dbPlayer.BaseStats[Ability.Dexterity] = Creature.GetRawAbilityScore(player, Ability.Dexterity);
+            dbPlayer.BaseStats[Ability.Constitution] = Creature.GetRawAbilityScore(player, Ability.Constitution);
+            dbPlayer.BaseStats[Ability.Wisdom] = Creature.GetRawAbilityScore(player, Ability.Wisdom);
+            dbPlayer.BaseStats[Ability.Intelligence] = Creature.GetRawAbilityScore(player, Ability.Intelligence);
+            dbPlayer.BaseStats[Ability.Charisma] = Creature.GetRawAbilityScore(player, Ability.Charisma);
         }
     }
 }

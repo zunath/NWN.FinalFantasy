@@ -101,7 +101,7 @@ namespace NWN.FinalFantasy.Service
         /// Restores an entity's Stamina by a specified amount.
         /// This method will not persist the changes so be sure you call DB.Set after calling this.
         /// </summary>
-        /// <param name="entity">The entity to modify.</param>
+        /// <param name="player">The entity to modify.</param>
         /// <param name="amount">The amount of Stamina to restore.</param>
         public static void RestoreStamina(uint player, Player entity, int amount)
         {
@@ -245,5 +245,80 @@ namespace NWN.FinalFantasy.Service
             Creature.SetBaseAttackBonus(player, entity.BAB);
         }
 
+        /// <summary>
+        /// Modifies a player's attribute by a certain amount.
+        /// This method will not persist the changes so be sure you call DB.Set after calling this.
+        /// </summary>
+        /// <param name="entity">The entity to modify.</param>
+        /// <param name="player">The player to modify.</param>
+        /// <param name="ability">The ability to modify.</param>
+        /// <param name="adjustBy">The amount to adjust by.</param>
+        public static void AdjustAttribute(Player entity, uint player, Ability ability, float adjustBy)
+        {
+            if (!GetIsPC(player) || GetIsDM(player)) return;
+            if (ability == Ability.Invalid) return;
+            if (adjustBy == 0f) return;
+
+            entity.AdjustedStats[ability] += adjustBy;
+
+            var totalStat = (int)(entity.BaseStats[ability] + entity.AdjustedStats[ability]);
+            Creature.SetRawAbilityScore(player, ability, totalStat);
+        }
+
+        /// <summary>
+        /// This will manually recalculate all stats.
+        /// This should be used sparingly because it can be a heavy call.
+        /// This method will not persist the changes so be sure your call DB.Set after calling this.
+        /// </summary>
+        public static void RecalculateAllStats(uint player, Player dbPlayer)
+        {
+            // Reset all adjusted stat values.
+            foreach (var adjustedStat in dbPlayer.AdjustedStats)
+            {
+                dbPlayer.AdjustedStats[adjustedStat.Key] = 0.0f;
+            }
+
+            // Apply adjusted stat increases based on the player's skill ranks.
+            // We use a pre-filtered list of skills for this to cut down on the number of iterations.
+            var skills = Skill.GetAllSkillsWhichIncreaseStats();
+            foreach (var (type, value) in skills)
+            {
+                var primaryIncrease = dbPlayer.Skills[type].Rank * Skill.PrimaryStatIncrease;
+                var secondaryIncrease = dbPlayer.Skills[type].Rank * Skill.SecondaryStatIncrease;
+
+                if (value.PrimaryStat == Ability.Strength)
+                    dbPlayer.AdjustedStats[Ability.Strength] += primaryIncrease;
+                if (value.PrimaryStat == Ability.Dexterity)
+                    dbPlayer.AdjustedStats[Ability.Dexterity] += primaryIncrease;
+                if (value.PrimaryStat == Ability.Constitution)
+                    dbPlayer.AdjustedStats[Ability.Constitution] += primaryIncrease;
+                if (value.PrimaryStat == Ability.Wisdom)
+                    dbPlayer.AdjustedStats[Ability.Wisdom] += primaryIncrease;
+                if (value.PrimaryStat == Ability.Intelligence)
+                    dbPlayer.AdjustedStats[Ability.Intelligence] += primaryIncrease;
+                if (value.PrimaryStat == Ability.Charisma)
+                    dbPlayer.AdjustedStats[Ability.Charisma] += primaryIncrease;
+
+                if (value.SecondaryStat == Ability.Strength)
+                    dbPlayer.AdjustedStats[Ability.Strength] += secondaryIncrease;
+                if (value.SecondaryStat == Ability.Dexterity)
+                    dbPlayer.AdjustedStats[Ability.Dexterity] += secondaryIncrease;
+                if (value.SecondaryStat == Ability.Constitution)
+                    dbPlayer.AdjustedStats[Ability.Constitution] += secondaryIncrease;
+                if (value.SecondaryStat == Ability.Wisdom)
+                    dbPlayer.AdjustedStats[Ability.Wisdom] += secondaryIncrease;
+                if (value.SecondaryStat == Ability.Intelligence)
+                    dbPlayer.AdjustedStats[Ability.Intelligence] += secondaryIncrease;
+                if (value.SecondaryStat == Ability.Charisma)
+                    dbPlayer.AdjustedStats[Ability.Charisma] += secondaryIncrease;
+            }
+
+            // We now have all of the correct values. Apply them to the player object.
+            foreach (var (ability, amount) in dbPlayer.AdjustedStats)
+            {
+                var totalStat = (int)(dbPlayer.BaseStats[ability] + amount);
+                Creature.SetRawAbilityScore(player, ability, totalStat);
+            }
+        }
     }
 }

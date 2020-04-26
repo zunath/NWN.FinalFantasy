@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using NWN.FinalFantasy.Core.NWNX;
+using NWN.FinalFantasy.Core.NWScript.Enum;
 using NWN.FinalFantasy.Enumeration;
 using static NWN.FinalFantasy.Core.NWScript.NWScript;
 using Player = NWN.FinalFantasy.Entity.Player;
@@ -56,7 +56,7 @@ namespace NWN.FinalFantasy.Service
                 }
             }
 
-            if (!ApplyDecay(dbPlayer, playerId, skill, xp))
+            if (!ApplyDecay(dbPlayer, player, skill, xp))
             {
                 return;
             }
@@ -94,9 +94,20 @@ namespace NWN.FinalFantasy.Service
 
                 pcSkill.Rank++;
                 FloatingTextStringOnCreature($"Your {details.Name} skill level increased to rank {pcSkill.Rank}!", player, false);
-                requiredXP = GetRequiredXP(pcSkill.Rank);
 
-                if (pcSkill.Rank >= details.MaxRank && pcSkill.XP > requiredXP)
+                // Apply primary/secondary stat increases if applicable to this skill.
+                if (details.PrimaryStat != Ability.Invalid)
+                {
+                    Stat.AdjustAttribute(dbPlayer, player, details.PrimaryStat, PrimaryStatIncrease);
+                }
+
+                if (details.SecondaryStat != Ability.Invalid)
+                {
+                    Stat.AdjustAttribute(dbPlayer, player, details.SecondaryStat, SecondaryStatIncrease);
+                }
+
+                requiredXP = GetRequiredXP(pcSkill.Rank);
+                if (pcSkill.Rank >= details.MaxRank && pcSkill.XP >= requiredXP)
                 {
                     pcSkill.XP = requiredXP - 1;
                 }
@@ -119,14 +130,15 @@ namespace NWN.FinalFantasy.Service
         /// If decay was unnecessary or succeeded, true will be returned.
         /// </summary>
         /// <param name="dbPlayer">The player entity to apply skill decay to</param>
-        /// <param name="playerId">The player Id of the entity.</param>
+        /// <param name="player">The player object.</param>
         /// <param name="skill">The skill which is receiving XP. This skill will be excluded from decay.</param>
         /// <param name="xp">The amount of XP being applied.</param>
         /// <returns>true if successful or unnecessary, false otherwise</returns>
-        private static bool ApplyDecay(Player dbPlayer, string playerId, SkillType skill, int xp)
+        private static bool ApplyDecay(Player dbPlayer, uint player, SkillType skill, int xp)
         {
             if (dbPlayer.TotalSPAcquired < SkillCap) return true;
 
+            var playerId = GetObjectUUID(player);
             var skillsPossibleToDecay = dbPlayer.Skills
                 .Where(x =>
                 {
@@ -206,6 +218,11 @@ namespace NWN.FinalFantasy.Service
                 dbPlayer.Skills[decaySkill.Key].XP = decaySkill.Value.XP;
             }
 
+            // Perform a full recalc on the player's stats 
+            Stat.RecalculateAllStats(player, dbPlayer);
+
+            // Save all changes made.
+            DB.Set(playerId, dbPlayer);
             return true;
         }
     }

@@ -2,6 +2,7 @@
 using NWN.FinalFantasy.Entity;
 using NWN.FinalFantasy.Service;
 using static NWN.FinalFantasy.Core.NWScript.NWScript;
+using Skill = NWN.FinalFantasy.Service.Skill;
 
 namespace NWN.FinalFantasy.Feature
 {

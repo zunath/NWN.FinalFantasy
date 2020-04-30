@@ -797,5 +797,134 @@ namespace NWN.FinalFantasy.Core.NWNX
             Internal.NativeFunctions.nwnxPushObject(creature);
             Internal.NativeFunctions.nwnxCallFunction();
         }
+
+        /// @brief Set creature's animal companion's name
+        /// @param creature The master creature object.
+        /// @param name The name to give their animal companion.
+        public static void SetAnimalCompanionName(uint creature, string name)
+        {
+            Internal.NativeFunctions.nwnxSetFunction(PLUGIN_NAME, "SetAnimalCompanionCreatureType");
+            Internal.NativeFunctions.nwnxPushString(name);
+            Internal.NativeFunctions.nwnxPushObject(creature);
+            Internal.NativeFunctions.nwnxCallFunction();
+        }
+
+        /// @brief Set creature's familiar's name
+        /// @param creature The master creature object.
+        /// @param name The name to give their familiar.
+        public static void SetFamiliarName(uint creature, string name)
+        {
+            Internal.NativeFunctions.nwnxSetFunction(PLUGIN_NAME, "SetFamiliarCreatureType");
+            Internal.NativeFunctions.nwnxPushString(name);
+            Internal.NativeFunctions.nwnxPushObject(creature);
+            Internal.NativeFunctions.nwnxCallFunction();
+        }
+
+        /// @brief Get whether the creature can be disarmed.
+        /// @param creature The creature object.
+        /// @return TRUE if the creature can be disarmed.
+        public static int GetDisarmable(uint creature)
+        {
+            Internal.NativeFunctions.nwnxSetFunction(PLUGIN_NAME, "GetDisarmable");
+            Internal.NativeFunctions.nwnxPushObject(creature);
+            Internal.NativeFunctions.nwnxCallFunction();
+            return Internal.NativeFunctions.nwnxPopInt();
+        }
+
+        /// @brief Set whether a creature can be disarmed.
+        /// @param creature The creature object.
+        /// @param disarmable Set to TRUE if the creature can be disarmed.
+        public static void SetDisarmable(uint creature, bool isDisarmable)
+        {
+            Internal.NativeFunctions.nwnxSetFunction(PLUGIN_NAME, "SetDisarmable");
+            Internal.NativeFunctions.nwnxPushInt(isDisarmable ? 1 : 0);
+            Internal.NativeFunctions.nwnxPushObject(creature);
+            Internal.NativeFunctions.nwnxCallFunction();
+        }
+
+        /// @brief Sets one of creature's domains.
+        /// @param creature The creature object.
+        /// @param class The class id from classes.2da. (Not class index 0-2)
+        /// @param index The first or second domain.
+        /// @param domain The domain constant to set.
+        public static void SetDomain(uint creature, ClassType @class, int index, int domain)
+        {
+            Internal.NativeFunctions.nwnxSetFunction(PLUGIN_NAME, "SetDomain");
+            Internal.NativeFunctions.nwnxPushInt(domain);
+            Internal.NativeFunctions.nwnxPushInt(index);
+            Internal.NativeFunctions.nwnxPushInt((int)@class);
+            Internal.NativeFunctions.nwnxPushObject(creature);
+            Internal.NativeFunctions.nwnxCallFunction();
+        }
+
+        /// @brief Sets creature's specialist school.
+        /// @param creature The creature object.
+        /// @param class The class id from classes.2da. (Not class index 0-2)
+        /// @param school The school constant.
+        public static void SetSpecialization(uint creature, ClassType @class, int school)
+        {
+            Internal.NativeFunctions.nwnxSetFunction(PLUGIN_NAME, "SetSpecialization");
+            Internal.NativeFunctions.nwnxPushInt(school);
+            Internal.NativeFunctions.nwnxPushInt((int)@class);
+            Internal.NativeFunctions.nwnxPushObject(creature);
+            Internal.NativeFunctions.nwnxCallFunction();
+        }
+
+        /// @brief Sets oCreatures faction to be the faction with id nFactionId.
+        /// @param oCreature The creature.
+        /// @param nFactionId The faction id we want the creature to join.
+        public static void SetFaction(uint creature, int factionId)
+        {
+            Internal.NativeFunctions.nwnxSetFunction(PLUGIN_NAME, "SetFaction");
+            Internal.NativeFunctions.nwnxPushInt(factionId);
+            Internal.NativeFunctions.nwnxPushObject(creature);
+            Internal.NativeFunctions.nwnxCallFunction();
+        }
+
+        /// @brief Gets the faction id from oCreature
+        /// @param oCreature the creature we wish to query against
+        /// @return faction id as an integer, -1 when used against invalid creature or invalid object.
+        public static int GetFaction(uint creature)
+        {
+            Internal.NativeFunctions.nwnxSetFunction(PLUGIN_NAME, "GetFaction");
+            Internal.NativeFunctions.nwnxPushObject(creature);
+            Internal.NativeFunctions.nwnxCallFunction();
+            return Internal.NativeFunctions.nwnxPopInt();
+        }
+
+        /// @brief Get whether a creature is flat-footed.
+        /// @param The creature object.
+        /// @return TRUE if the creature is flat-footed.
+        public static bool GetFlatFooted(uint creature)
+        {
+            Internal.NativeFunctions.nwnxSetFunction(PLUGIN_NAME, "GetFlatFooted");
+            Internal.NativeFunctions.nwnxPushObject(creature);
+            Internal.NativeFunctions.nwnxCallFunction();
+            return Internal.NativeFunctions.nwnxPopInt() == 1;
+        }
+
+        /// @brief Serialize oCreature's quickbar to a base64 string
+        /// @param oCreature The creature.
+        /// @return A base64 string representation of oCreature's quickbar.
+        public static string SerializeQuickbar(uint creature)
+        {
+            Internal.NativeFunctions.nwnxSetFunction(PLUGIN_NAME, "SerializeQuickbar");
+            Internal.NativeFunctions.nwnxPushObject(creature);
+            Internal.NativeFunctions.nwnxCallFunction();
+            return Internal.NativeFunctions.nwnxPopString();
+        }
+
+        /// @brief Deserialize sSerializedQuickbar for oCreature
+        /// @param oCreature The creature.
+        /// @param sSerializedQuickbar A base64 string of a quickbar
+        /// @return TRUE on success
+        public static bool DeserializeQuickbar(uint creature, string serializedQuickbar)
+        {
+            Internal.NativeFunctions.nwnxSetFunction(PLUGIN_NAME, "DeserializeQuickbar");
+            Internal.NativeFunctions.nwnxPushString(serializedQuickbar);
+            Internal.NativeFunctions.nwnxPushObject(creature);
+            Internal.NativeFunctions.nwnxCallFunction();
+            return Internal.NativeFunctions.nwnxPopInt() == 1;
+        }
     }
 }

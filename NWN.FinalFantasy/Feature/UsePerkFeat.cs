@@ -9,7 +9,6 @@ using NWN.FinalFantasy.Core.NWScript.Enum.VisualEffect;
 using NWN.FinalFantasy.Enumeration;
 using NWN.FinalFantasy.Service;
 using NWN.FinalFantasy.Service.AbilityService;
-using NWN.FinalFantasy.Service.PerkService;
 using static NWN.FinalFantasy.Core.NWScript.NWScript;
 using Object = NWN.FinalFantasy.Core.NWNX.Object;
 
@@ -245,7 +244,7 @@ namespace NWN.FinalFantasy.Feature
                     SendMessageToPC(activator, penaltyMessage);
                 }
 
-                var abilityDelay = ability.ActivationDelay?.Invoke(activator, target) ?? 0.0f;
+                var abilityDelay = ability.ActivationDelay?.Invoke(activator, target, effectivePerkLevel) ?? 0.0f;
                 return abilityDelay * armorPenalty;
             }
 

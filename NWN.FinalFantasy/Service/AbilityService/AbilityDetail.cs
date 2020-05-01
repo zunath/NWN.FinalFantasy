@@ -5,7 +5,7 @@ using NWN.FinalFantasy.Enumeration;
 namespace NWN.FinalFantasy.Service.AbilityService
 {
     public delegate void AbilityImpactAction(uint activator, uint target, int effectivePerkLevel);
-    public delegate float AbilityActivationDelayAction(uint activator, uint target);
+    public delegate float AbilityActivationDelayAction(uint activator, uint target, int effectivePerkLevel);
     public delegate float AbilityRecastDelayAction(uint activator);
 
     public class AbilityDetail

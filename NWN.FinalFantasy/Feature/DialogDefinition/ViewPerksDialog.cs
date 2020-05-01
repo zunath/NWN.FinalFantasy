@@ -132,7 +132,7 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
                 return ColorToken.Green($"{currentOrNext} Bonus: ") + bonus + "\n";
             }
 
-            string BuildRequirements(List<IPerkPurchaseRequirement> requirements)
+            string BuildRequirements(List<IPerkRequirement> requirements)
             {
                 if (requirements == null) return string.Empty;
 
@@ -247,7 +247,7 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
 
             var currentPerkLevelDetails = BuildPerkSection(true, currentLevel);
             var nextPerkLevelDetails = BuildPerkSection(false, nextLevel);
-            var requirementsSection = BuildRequirements(nextLevel?.PurchaseRequirements);
+            var requirementsSection = BuildRequirements(nextLevel?.Requirements);
             page.Header = ColorToken.Green("Name: ") + perkDetail.Name + "\n" +
                           ColorToken.Green("Description: ") + perkDetail.Description + "\n" +
                           ColorToken.Green("Category: ") + categoryDetail.Name + "\n" +
@@ -290,7 +290,7 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
                 var perkLevel = perk.PerkLevels[1];
                 var meetsRequirements = true;
 
-                foreach (var req in perkLevel.PurchaseRequirements)
+                foreach (var req in perkLevel.Requirements)
                 {
                     var meetsRequirement = string.IsNullOrWhiteSpace(req.CheckRequirements(player));
                     if (!meetsRequirement)

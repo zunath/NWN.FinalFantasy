@@ -2,6 +2,7 @@ namespace NWN.FinalFantasy.Core.NWScript.Enum
 {
     public enum Feat
     {
+        Invalid = -1,
         Alertness = 0,
         Ambidexterity = 1,
         ArmorProficiencyHeavy = 2,

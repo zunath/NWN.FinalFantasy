@@ -26,9 +26,9 @@ namespace NWN.FinalFantasy.Feature
 
             if (dbPlayer.RegenerationTick >= NumberRequiredTicks)
             {
-                var conModifier = GetAbilityModifier(Ability.Constitution, player);
-                var chaModifier = GetAbilityModifier(Ability.Charisma, player);
-                var strModifier = GetAbilityModifier(Ability.Strength, player);
+                var conModifier = GetAbilityModifier(AbilityType.Constitution, player);
+                var chaModifier = GetAbilityModifier(AbilityType.Charisma, player);
+                var strModifier = GetAbilityModifier(AbilityType.Strength, player);
                 var hpAmount = BaseNaturalHPRegeneration + (conModifier > 0 ? conModifier : 0);
                 var mpAmount = BaseNaturalMPRegeneration + (chaModifier > 0 ? chaModifier : 0);
                 var staminaAmount = BaseNaturalStaminaRegeneration + (strModifier > 0 ? strModifier : 0);

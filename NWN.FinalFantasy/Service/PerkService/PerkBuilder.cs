@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using NWN.FinalFantasy.Core.NWScript.Enum;
-using NWN.FinalFantasy.Core.NWScript.Enum.VisualEffect;
 using NWN.FinalFantasy.Enumeration;
 
 namespace NWN.FinalFantasy.Service.PerkService
@@ -86,89 +85,6 @@ namespace NWN.FinalFantasy.Service.PerkService
         }
 
         /// <summary>
-        /// Assigns a recast group on the active perk we're building.
-        /// Calling this more than once will replace the previous recast group.
-        /// </summary>
-        /// <param name="recastGroup">The recast group to set.</param>
-        /// <returns>A perk builder with the configured options</returns>
-        public PerkBuilder UsesRecastGroup(RecastGroup recastGroup)
-        {
-            _activePerk.RecastGroup = recastGroup;
-
-            return this;
-        }
-
-        /// <summary>
-        /// Assigns an activation type on the active perk we're building.
-        /// Calling this more than once will replace the previous activation type.
-        /// </summary>
-        /// <param name="activationType">The activation type to set.</param>
-        /// <returns>A perk builder with the configured options</returns>
-        public PerkBuilder UsesActivationType(PerkActivationType activationType)
-        {
-            _activePerk.ActivationType = activationType;
-
-            return this;
-        }
-
-        /// <summary>
-        /// Assigns a visual effect to the caster of the spell. This will display while casting.
-        /// Calling this more than once will replace the previous visual effect.
-        /// </summary>
-        /// <param name="vfx">The visual effect to display.</param>
-        /// <returns>A perk builder with the configured options</returns>
-        public PerkBuilder DisplaysVisualEffectWhenActivating(VisualEffect vfx = VisualEffect.Vfx_Dur_Elemental_Shield)
-        {
-            _activePerk.ActivationVisualEffect = vfx;
-
-            return this;
-        }
-
-        /// <summary>
-        /// Assigns an impact action on the active perk we're building.
-        /// Calling this more than once will replace the previous action.
-        /// Impact actions are fired when a perk is used. The timing of when it fires depends on the activation type.
-        /// For example, "Casted" perks fire the impact action at the end of the casting phase.
-        /// While "Queued" perks fire the impact action on the next weapon hit.
-        /// </summary>
-        /// <param name="action">The action to fire when a perk impacts a target.</param>
-        /// <returns>A perk builder with the configured options</returns>
-        public PerkBuilder HasImpactAction(PerkImpactAction action)
-        {
-            _activePerk.ImpactAction = action;
-
-            return this;
-        }
-
-        /// <summary>
-        /// Assigns an activation delay on the active perk we're building.
-        /// This is typically used for casting times.
-        /// Calling this more than once will replace the previous activation delay.
-        /// </summary>
-        /// <param name="delay">The amount of time to delay, in seconds.</param>
-        /// <returns>A perk builder with the configured options</returns>
-        public PerkBuilder HasActivationDelay(float delay)
-        {
-            _activePerk.ActivationDelay = delay;
-
-            return this;
-        }
-
-        /// <summary>
-        /// Assigns a recast delay on the active perk we're building.
-        /// This prevents the ability from being used again until the specified time has passed.
-        /// Calling this more than once will replace the previous recast delay.
-        /// </summary>
-        /// <param name="delay"></param>
-        /// <returns></returns>
-        public PerkBuilder HasRecastDelay(float delay)
-        {
-            _activePerk.RecastDelay = delay;
-
-            return this;
-        }
-
-        /// <summary>
         /// Sets the amount of SP it costs to purchase this perk level.
         /// </summary>
         /// <param name="price">The price to purchase this perk level.</param>
@@ -199,9 +115,7 @@ namespace NWN.FinalFantasy.Service.PerkService
         public PerkBuilder RequirementSkill(SkillType skill, int requiredRank)
         {
             var requirement = new PerkSkillRequirement(skill, requiredRank);
-            _activeLevel.PurchaseRequirements.Add(requirement);
-            _activeLevel.EffectiveLevelRequirements.Add(requirement);
-            _activeLevel.ActivationRequirements.Add(requirement);
+            _activeLevel.Requirements.Add(requirement);
 
             return this;
         }
@@ -214,32 +128,8 @@ namespace NWN.FinalFantasy.Service.PerkService
         public PerkBuilder RequirementQuest(string questId)
         {
             var requirement = new PerkQuestRequirement(questId);
-            _activeLevel.PurchaseRequirements.Add(requirement);
+            _activeLevel.Requirements.Add(requirement);
 
-            return this;
-        }
-
-        /// <summary>
-        /// Adds an MP requirement to use the perk at this level.
-        /// </summary>
-        /// <param name="requiredMP">The amount of MP needed to use this perk at this level.</param>
-        /// <returns>A perk builder with the configured options</returns>
-        public PerkBuilder RequirementMP(int requiredMP)
-        {
-            var requirement = new PerkMPRequirement(requiredMP);
-            _activeLevel.ActivationRequirements.Add(requirement);
-            return this;
-        }
-
-        /// <summary>
-        /// Adds a stamina requirement to use the perk at this level.
-        /// </summary>
-        /// <param name="requiredSTM">The amount of STM needed to use this perk at this level.</param>
-        /// <returns>A perk builder with the configured options</returns>
-        public PerkBuilder RequirementStamina(int requiredSTM)
-        {
-            var requirement = new PerkStaminaRequirement(requiredSTM);
-            _activeLevel.ActivationRequirements.Add(requirement);
             return this;
         }
 

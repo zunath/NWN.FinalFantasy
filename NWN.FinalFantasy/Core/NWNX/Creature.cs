@@ -184,7 +184,7 @@ namespace NWN.FinalFantasy.Core.NWNX
         }
 
         // Sets the provided ability score of provided creature to the provided value. Does not apply racial bonuses/penalties.
-        public static void SetRawAbilityScore(uint creature, Ability ability, int value)
+        public static void SetRawAbilityScore(uint creature, AbilityType ability, int value)
         {
             Internal.NativeFunctions.nwnxSetFunction(PLUGIN_NAME, "SetRawAbilityScore");
             Internal.NativeFunctions.nwnxPushInt(value);
@@ -194,7 +194,7 @@ namespace NWN.FinalFantasy.Core.NWNX
         }
 
         // Gets the provided ability score of provided creature. Does not apply racial bonuses/penalties.
-        public static int GetRawAbilityScore(uint creature, Ability ability)
+        public static int GetRawAbilityScore(uint creature, AbilityType ability)
         {
             Internal.NativeFunctions.nwnxSetFunction(PLUGIN_NAME, "GetRawAbilityScore");
             Internal.NativeFunctions.nwnxPushInt((int)ability);
@@ -204,7 +204,7 @@ namespace NWN.FinalFantasy.Core.NWNX
         }
 
         // Adjusts the provided ability score of a provided creature. Does not apply racial bonuses/penalties.
-        public static void ModifyRawAbilityScore(uint creature, Ability ability, int modifier)
+        public static void ModifyRawAbilityScore(uint creature, AbilityType ability, int modifier)
         {
             Internal.NativeFunctions.nwnxSetFunction(PLUGIN_NAME, "ModifyRawAbilityScore");
             Internal.NativeFunctions.nwnxPushInt(modifier);
@@ -214,7 +214,7 @@ namespace NWN.FinalFantasy.Core.NWNX
         }
 
         // Gets the raw ability score a polymorphed creature had prior to polymorphing. Str/Dex/Con only.
-        public static int GetPrePolymorphAbilityScore(uint creature, Ability ability)
+        public static int GetPrePolymorphAbilityScore(uint creature, AbilityType ability)
         {
             Internal.NativeFunctions.nwnxSetFunction(PLUGIN_NAME, "GetPrePolymorphAbilityScore");
             Internal.NativeFunctions.nwnxPushInt((int)ability);

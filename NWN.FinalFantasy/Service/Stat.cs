@@ -34,8 +34,8 @@ namespace NWN.FinalFantasy.Service
                 dbPlayer = DB.Get<Player>(playerId);
             }
             var baseMP = dbPlayer.MaxMP;
-            var intModifier = GetAbilityModifier(Ability.Intelligence, player);
-            var wisModifier = GetAbilityModifier(Ability.Wisdom, player);
+            var intModifier = GetAbilityModifier(AbilityType.Intelligence, player);
+            var wisModifier = GetAbilityModifier(AbilityType.Wisdom, player);
             var modifier = intModifier > wisModifier ? intModifier : wisModifier;
 
             return baseMP + (modifier * 2);
@@ -57,7 +57,7 @@ namespace NWN.FinalFantasy.Service
             }
 
             var baseStamina = dbPlayer.MaxStamina;
-            var conModifier = GetAbilityModifier(Ability.Constitution, player);
+            var conModifier = GetAbilityModifier(AbilityType.Constitution, player);
 
             return baseStamina + (conModifier * 2);
         }
@@ -101,7 +101,8 @@ namespace NWN.FinalFantasy.Service
         /// Restores an entity's Stamina by a specified amount.
         /// This method will not persist the changes so be sure you call DB.Set after calling this.
         /// </summary>
-        /// <param name="player">The entity to modify.</param>
+        /// <param name="player">The player to modify.</param>
+        /// <param name="entity">The entity to modify.</param>
         /// <param name="amount">The amount of Stamina to restore.</param>
         public static void RestoreStamina(uint player, Player entity, int amount)
         {
@@ -253,10 +254,10 @@ namespace NWN.FinalFantasy.Service
         /// <param name="player">The player to modify.</param>
         /// <param name="ability">The ability to modify.</param>
         /// <param name="adjustBy">The amount to adjust by.</param>
-        public static void AdjustAttribute(Player entity, uint player, Ability ability, float adjustBy)
+        public static void AdjustAttribute(Player entity, uint player, AbilityType ability, float adjustBy)
         {
             if (!GetIsPC(player) || GetIsDM(player)) return;
-            if (ability == Ability.Invalid) return;
+            if (ability == AbilityType.Invalid) return;
             if (adjustBy == 0f) return;
 
             entity.AdjustedStats[ability] += adjustBy;
@@ -286,31 +287,31 @@ namespace NWN.FinalFantasy.Service
                 var primaryIncrease = dbPlayer.Skills[type].Rank * Skill.PrimaryStatIncrease;
                 var secondaryIncrease = dbPlayer.Skills[type].Rank * Skill.SecondaryStatIncrease;
 
-                if (value.PrimaryStat == Ability.Strength)
-                    dbPlayer.AdjustedStats[Ability.Strength] += primaryIncrease;
-                if (value.PrimaryStat == Ability.Dexterity)
-                    dbPlayer.AdjustedStats[Ability.Dexterity] += primaryIncrease;
-                if (value.PrimaryStat == Ability.Constitution)
-                    dbPlayer.AdjustedStats[Ability.Constitution] += primaryIncrease;
-                if (value.PrimaryStat == Ability.Wisdom)
-                    dbPlayer.AdjustedStats[Ability.Wisdom] += primaryIncrease;
-                if (value.PrimaryStat == Ability.Intelligence)
-                    dbPlayer.AdjustedStats[Ability.Intelligence] += primaryIncrease;
-                if (value.PrimaryStat == Ability.Charisma)
-                    dbPlayer.AdjustedStats[Ability.Charisma] += primaryIncrease;
+                if (value.PrimaryStat == AbilityType.Strength)
+                    dbPlayer.AdjustedStats[AbilityType.Strength] += primaryIncrease;
+                if (value.PrimaryStat == AbilityType.Dexterity)
+                    dbPlayer.AdjustedStats[AbilityType.Dexterity] += primaryIncrease;
+                if (value.PrimaryStat == AbilityType.Constitution)
+                    dbPlayer.AdjustedStats[AbilityType.Constitution] += primaryIncrease;
+                if (value.PrimaryStat == AbilityType.Wisdom)
+                    dbPlayer.AdjustedStats[AbilityType.Wisdom] += primaryIncrease;
+                if (value.PrimaryStat == AbilityType.Intelligence)
+                    dbPlayer.AdjustedStats[AbilityType.Intelligence] += primaryIncrease;
+                if (value.PrimaryStat == AbilityType.Charisma)
+                    dbPlayer.AdjustedStats[AbilityType.Charisma] += primaryIncrease;
 
-                if (value.SecondaryStat == Ability.Strength)
-                    dbPlayer.AdjustedStats[Ability.Strength] += secondaryIncrease;
-                if (value.SecondaryStat == Ability.Dexterity)
-                    dbPlayer.AdjustedStats[Ability.Dexterity] += secondaryIncrease;
-                if (value.SecondaryStat == Ability.Constitution)
-                    dbPlayer.AdjustedStats[Ability.Constitution] += secondaryIncrease;
-                if (value.SecondaryStat == Ability.Wisdom)
-                    dbPlayer.AdjustedStats[Ability.Wisdom] += secondaryIncrease;
-                if (value.SecondaryStat == Ability.Intelligence)
-                    dbPlayer.AdjustedStats[Ability.Intelligence] += secondaryIncrease;
-                if (value.SecondaryStat == Ability.Charisma)
-                    dbPlayer.AdjustedStats[Ability.Charisma] += secondaryIncrease;
+                if (value.SecondaryStat == AbilityType.Strength)
+                    dbPlayer.AdjustedStats[AbilityType.Strength] += secondaryIncrease;
+                if (value.SecondaryStat == AbilityType.Dexterity)
+                    dbPlayer.AdjustedStats[AbilityType.Dexterity] += secondaryIncrease;
+                if (value.SecondaryStat == AbilityType.Constitution)
+                    dbPlayer.AdjustedStats[AbilityType.Constitution] += secondaryIncrease;
+                if (value.SecondaryStat == AbilityType.Wisdom)
+                    dbPlayer.AdjustedStats[AbilityType.Wisdom] += secondaryIncrease;
+                if (value.SecondaryStat == AbilityType.Intelligence)
+                    dbPlayer.AdjustedStats[AbilityType.Intelligence] += secondaryIncrease;
+                if (value.SecondaryStat == AbilityType.Charisma)
+                    dbPlayer.AdjustedStats[AbilityType.Charisma] += secondaryIncrease;
             }
 
             // We now have all of the correct values. Apply them to the player object.

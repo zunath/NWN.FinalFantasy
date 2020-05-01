@@ -96,12 +96,12 @@ namespace NWN.FinalFantasy.Service
                 FloatingTextStringOnCreature($"Your {details.Name} skill level increased to rank {pcSkill.Rank}!", player, false);
 
                 // Apply primary/secondary stat increases if applicable to this skill.
-                if (details.PrimaryStat != Ability.Invalid)
+                if (details.PrimaryStat != AbilityType.Invalid)
                 {
                     Stat.AdjustAttribute(dbPlayer, player, details.PrimaryStat, PrimaryStatIncrease);
                 }
 
-                if (details.SecondaryStat != Ability.Invalid)
+                if (details.SecondaryStat != AbilityType.Invalid)
                 {
                     Stat.AdjustAttribute(dbPlayer, player, details.SecondaryStat, SecondaryStatIncrease);
                 }

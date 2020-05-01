@@ -1,6 +1,6 @@
-﻿namespace NWN.FinalFantasy.Service.PerkService
+﻿namespace NWN.FinalFantasy.Service.AbilityService
 {
-    public enum PerkActivationType
+    public enum AbilityActivationType
     {
         Invalid = 0,
         Casted = 1,

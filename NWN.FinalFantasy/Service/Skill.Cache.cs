@@ -97,7 +97,7 @@ namespace NWN.FinalFantasy.Service
                 }
 
                 // Add to the attribute cache if skill has a primary and/or secondary attribute increase.
-                if (skillDetail.PrimaryStat != Ability.Invalid || skillDetail.SecondaryStat != Ability.Invalid)
+                if (skillDetail.PrimaryStat != AbilityType.Invalid || skillDetail.SecondaryStat != AbilityType.Invalid)
                 {
                     _skillsWithAttributeIncreases[skillType] = skillDetail;
                 }

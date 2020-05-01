@@ -1,7 +1,6 @@
 using NWN.FinalFantasy.Core.NWScript.Enum;
 using NWN.FinalFantasy.Core.NWScript.Enum.Item.Property;
 using NWN.FinalFantasy.Core.NWScript.Enum.VisualEffect;
-using Ability = NWN.FinalFantasy.Core.NWScript.Enum.Ability;
 using Alignment = NWN.FinalFantasy.Core.NWScript.Enum.Alignment;
 using DamageType = NWN.FinalFantasy.Core.NWScript.Enum.DamageType;
 using RacialType = NWN.FinalFantasy.Core.NWScript.Enum.RacialType;
@@ -514,7 +513,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         ///   Create an Ability Increase effect
         ///   - bAbilityToIncrease: ABILITY_*
         /// </summary>
-        public static Effect EffectAbilityIncrease(Ability nAbilityToIncrease, int nModifyBy)
+        public static Effect EffectAbilityIncrease(AbilityType nAbilityToIncrease, int nModifyBy)
         {
             Internal.NativeFunctions.StackPushInteger(nModifyBy);
             Internal.NativeFunctions.StackPushInteger((int)nAbilityToIncrease);

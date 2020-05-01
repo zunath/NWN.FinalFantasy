@@ -830,7 +830,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         ///   bonuses (e.g. ability bonuses granted from equipped items).
         ///   Return value on error: 0
         /// </summary>
-        public static int GetAbilityScore(uint oCreature, Ability nAbilityType, bool nBaseAbilityScore = false)
+        public static int GetAbilityScore(uint oCreature, AbilityType nAbilityType, bool nBaseAbilityScore = false)
         {
             Internal.NativeFunctions.StackPushInteger(nBaseAbilityScore ? 1 : 0);
             Internal.NativeFunctions.StackPushInteger((int)nAbilityType);

@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using NWN.FinalFantasy.Core.NWScript.Enum.VisualEffect;
 using NWN.FinalFantasy.Enumeration;
-using NWN.FinalFantasy.Service.PerkService;
 
 namespace NWN.FinalFantasy.Service.AbilityService
 {

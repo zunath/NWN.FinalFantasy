@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using NWN.FinalFantasy.Core.NWScript.Enum;
 using NWN.FinalFantasy.Enumeration;
-using NWN.FinalFantasy.Service.PerkService;
+using NWN.FinalFantasy.Service.AbilityService;
 
 namespace NWN.FinalFantasy.Entity
 {

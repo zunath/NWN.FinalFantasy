@@ -1,7 +1,6 @@
 ﻿using System;
-using System.ComponentModel;
 
-namespace NWN.FinalFantasy.Service.PerkService
+namespace NWN.FinalFantasy.Service.AbilityService
 {
     // Note: Short names are what's displayed on the recast Gui element. They are limited to 14 characters.
     public enum RecastGroup

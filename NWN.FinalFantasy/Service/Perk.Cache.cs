@@ -4,6 +4,7 @@ using System.Linq;
 using NWN.FinalFantasy.Core;
 using NWN.FinalFantasy.Enumeration;
 using NWN.FinalFantasy.Extension;
+using NWN.FinalFantasy.Service.AbilityService;
 using NWN.FinalFantasy.Service.PerkService;
 
 namespace NWN.FinalFantasy.Service
@@ -23,9 +24,6 @@ namespace NWN.FinalFantasy.Service
         // Active perks only
         private static readonly Dictionary<PerkType, PerkDetail> _activePerks = new Dictionary<PerkType, PerkDetail>();
         private static readonly Dictionary<PerkCategoryType, List<PerkType>> _activePerksByCategory = new Dictionary<PerkCategoryType, List<PerkType>>();
-
-        // Recast Group Descriptions
-        private static readonly Dictionary<RecastGroup, string> _recastDescriptions = new Dictionary<RecastGroup, string>();
 
         // Trigger Actions
         private static readonly Dictionary<PerkType, List<PerkTriggerEquippedAction>> _equipTriggers = new Dictionary<PerkType, List<PerkTriggerEquippedAction>>();
@@ -94,7 +92,6 @@ namespace NWN.FinalFantasy.Service
                 }
             }
 
-            CacheRecastGroupNames();
             Console.WriteLine("Perk data cached successfully.");
         }
 
@@ -177,30 +174,6 @@ namespace NWN.FinalFantasy.Service
             return _refundTriggers.ToDictionary(x => x.Key, y => y.Value);
         }
 
-        /// <summary>
-        /// Reads all of the enum values on the RecastGroup enumeration and stores their short name into the cache.
-        /// </summary>
-        private static void CacheRecastGroupNames()
-        {
-            foreach (var recast in Enum.GetValues(typeof(RecastGroup)).Cast<RecastGroup>())
-            {
-                var attr = recast.GetAttribute<RecastGroup, RecastGroupAttribute>();
-                _recastDescriptions[recast] = attr.ShortName;
-            }
-        }
-
-        /// <summary>
-        /// Retrieves the human-readable name of a recast group.
-        /// </summary>
-        /// <param name="recastGroup">The recast group to retrieve.</param>
-        /// <returns>The name of a recast group.</returns>
-        public static string GetRecastGroupName(RecastGroup recastGroup)
-        {
-            if(!_recastDescriptions.ContainsKey(recastGroup))
-                throw new KeyNotFoundException($"Recast group {recastGroup} has not been registered. Did you forget the Description attribute?");
-
-            return _recastDescriptions[recastGroup];
-        }
 
         /// <summary>
         /// Retrieves a list of all perks, including inactive ones.

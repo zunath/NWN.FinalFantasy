@@ -245,7 +245,8 @@ namespace NWN.FinalFantasy.Feature
                     SendMessageToPC(activator, penaltyMessage);
                 }
 
-                return ability.ActivationDelay(activator, target) * armorPenalty;
+                var abilityDelay = ability.ActivationDelay?.Invoke(activator, target) ?? 0.0f;
+                return abilityDelay * armorPenalty;
             }
 
             // Handles displaying animation and visual effects.
@@ -352,7 +353,9 @@ namespace NWN.FinalFantasy.Feature
             SetLocalInt(activator, ActiveAbilityEffectivePerkLevelName, effectivePerkLevel);
 
             ApplyRequirementEffects(activator, ability);
-            ApplyRecastDelay(activator, ability.RecastGroup, ability.RecastDelay(activator));
+
+            var abilityRecastDelay = ability.RecastDelay?.Invoke(activator) ?? 0.0f;
+            ApplyRecastDelay(activator, ability.RecastGroup, abilityRecastDelay);
 
             // Activator must attack within 30 seconds after queueing or else it wears off.
             DelayCommand(30.0f, () =>

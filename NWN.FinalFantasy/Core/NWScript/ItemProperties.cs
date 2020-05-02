@@ -1,7 +1,6 @@
 using NWN.FinalFantasy.Core.NWScript.Enum;
 using NWN.FinalFantasy.Core.NWScript.Enum.Item;
 using NWN.FinalFantasy.Core.NWScript.Enum.Item.Property;
-using Ability = NWN.FinalFantasy.Core.NWScript.Enum.Ability;
 using Alignment = NWN.FinalFantasy.Core.NWScript.Enum.Item.Property.Alignment;
 using AlignmentGroup = NWN.FinalFantasy.Core.NWScript.Enum.Item.Property.AlignmentGroup;
 using DamageType = NWN.FinalFantasy.Core.NWScript.Enum.Item.Property.DamageType;
@@ -93,7 +92,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         ///   ability constant(IP_CONST_ABILITY_*) and the bonus.  The bonus should
         ///   be a positive integer between 1 and 12.
         /// </summary>
-        public static ItemProperty ItemPropertyAbilityBonus(Ability nAbility, int nBonus)
+        public static ItemProperty ItemPropertyAbilityBonus(AbilityType nAbility, int nBonus)
         {
             Internal.NativeFunctions.StackPushInteger(nBonus);
             Internal.NativeFunctions.StackPushInteger((int)nAbility);

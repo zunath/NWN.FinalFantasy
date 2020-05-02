@@ -77,9 +77,9 @@ namespace NWN.FinalFantasy.Service
             foreach (var (level, detail) in perkLevels)
             {
                 // No requirements set for this perk level. Return the level.
-                if (detail.EffectiveLevelRequirements.Count <= 0) return level;
+                if (detail.Requirements.Count <= 0) return level;
 
-                foreach (var req in detail.EffectiveLevelRequirements)
+                foreach (var req in detail.Requirements)
                 {
                     if (string.IsNullOrWhiteSpace(req.CheckRequirements(player))) return level;
                 }

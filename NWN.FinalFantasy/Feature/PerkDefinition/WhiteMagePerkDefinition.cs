@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using NWN.FinalFantasy.Core.NWScript.Enum;
 using NWN.FinalFantasy.Enumeration;
 using NWN.FinalFantasy.Service.PerkService;
 
@@ -36,7 +37,8 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .RequirementSkill(SkillType.WhiteMagic, 50)
                 .RequirementSkill(SkillType.Rod, 50)
                 .RequirementSkill(SkillType.MysticArmor, 50)
-                .Price(15);
+                .Price(15)
+                .GrantsFeat(Feat.Benediction);
         }
 
         private static void Cure(PerkBuilder builder)
@@ -48,18 +50,21 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .AddPerkLevel()
                 .Description("Grants the Cure ability.")
                 .Price(2)
+                .GrantsFeat(Feat.Cure1)
 
                 .AddPerkLevel()
                 .Description("Grants the Cure II ability.")
                 .RequirementSkill(SkillType.WhiteMagic, 15)
                 .RequirementSkill(SkillType.Rod, 10)
                 .Price(4)
+                .GrantsFeat(Feat.Cure2)
 
                 .AddPerkLevel()
                 .Description("Grants the Cure III ability.")
                 .RequirementSkill(SkillType.WhiteMagic, 30)
                 .RequirementSkill(SkillType.Rod, 20)
-                .Price(6);
+                .Price(6)
+                .GrantsFeat(Feat.Cure3);
         }
 
         private static void Poisona(PerkBuilder builder)
@@ -72,7 +77,8 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .Description("Grants the Poisona ability.")
                 .RequirementSkill(SkillType.WhiteMagic, 10)
                 .RequirementSkill(SkillType.Rod, 5)
-                .Price(3);
+                .Price(3)
+                .GrantsFeat(Feat.Poisona);
         }
 
         private static void Protectra(PerkBuilder builder)
@@ -85,7 +91,8 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .Description("Grants the Protectra ability.")
                 .RequirementSkill(SkillType.WhiteMagic, 7)
                 .RequirementSkill(SkillType.Rod, 10)
-                .Price(8);
+                .Price(8)
+                .GrantsFeat(Feat.Protectra);
         }
 
         private static void Curaga(PerkBuilder builder)
@@ -99,12 +106,14 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .RequirementSkill(SkillType.WhiteMagic, 25)
                 .RequirementSkill(SkillType.Rod, 15)
                 .Price(4)
+                .GrantsFeat(Feat.Curaga1)
 
                 .AddPerkLevel()
                 .Description("Grants the Curaga II ability.")
                 .RequirementSkill(SkillType.WhiteMagic, 40)
                 .RequirementSkill(SkillType.Rod, 30)
-                .Price(4);
+                .Price(4)
+                .GrantsFeat(Feat.Curaga2);
         }
 
         private static void Clarity(PerkBuilder builder)
@@ -137,12 +146,14 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .RequirementSkill(SkillType.WhiteMagic, 20)
                 .RequirementSkill(SkillType.Rod, 15)
                 .Price(4)
+                .GrantsFeat(Feat.Regen1)
 
                 .AddPerkLevel()
                 .Description("Grants the Regen II ability.")
                 .RequirementSkill(SkillType.WhiteMagic, 40)
                 .RequirementSkill(SkillType.Rod, 30)
-                .Price(4);
+                .Price(4)
+                .GrantsFeat(Feat.Regen2);
         }
 
         private static void Raise(PerkBuilder builder)
@@ -155,7 +166,8 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .Description("Grants the Raise ability.")
                 .RequirementSkill(SkillType.WhiteMagic, 25)
                 .RequirementSkill(SkillType.Rod, 20)
-                .Price(6);
+                .Price(6)
+                .GrantsFeat(Feat.Raise);
         }
 
         private static void CombatMage(PerkBuilder builder)
@@ -189,7 +201,8 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .AddPerkLevel()
                 .Description("Grants the Teleport-Balamb ability.")
                 .RequirementSkill(SkillType.WhiteMagic, 35)
-                .Price(4);
+                .Price(4)
+                .GrantsFeat(Feat.TeleportBalamb);
         }
 
         private static void Stone(PerkBuilder builder)
@@ -203,18 +216,21 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .RequirementSkill(SkillType.WhiteMagic, 5)
                 .RequirementSkill(SkillType.Rod, 5)
                 .Price(2)
+                .GrantsFeat(Feat.Stone1)
 
                 .AddPerkLevel()
                 .Description("Deals 2d6 earth damage to a single target.")
                 .RequirementSkill(SkillType.WhiteMagic, 20)
                 .RequirementSkill(SkillType.Rod, 15)
                 .Price(2)
+                .GrantsFeat(Feat.Stone2)
 
                 .AddPerkLevel()
                 .Description("Deals 2d10 earth damage to a single target.")
                 .RequirementSkill(SkillType.WhiteMagic, 35)
                 .RequirementSkill(SkillType.Rod, 25)
-                .Price(2);
+                .Price(2)
+                .GrantsFeat(Feat.Stone3);
         }
 
         private static void Dia(PerkBuilder builder)
@@ -228,18 +244,21 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .RequirementSkill(SkillType.WhiteMagic, 10)
                 .RequirementSkill(SkillType.Rod, 5)
                 .Price(2)
+                .GrantsFeat(Feat.Dia1)
 
                 .AddPerkLevel()
                 .Description("Grants the Dia II ability.")
                 .RequirementSkill(SkillType.WhiteMagic, 30)
                 .RequirementSkill(SkillType.Rod, 15)
                 .Price(2)
+                .GrantsFeat(Feat.Dia2)
 
                 .AddPerkLevel()
                 .Description("Grants the Dia III ability.")
                 .RequirementSkill(SkillType.WhiteMagic, 40)
                 .RequirementSkill(SkillType.Rod, 30)
-                .Price(4);
+                .Price(4)
+                .GrantsFeat(Feat.Dia3);
         }
     }
 }

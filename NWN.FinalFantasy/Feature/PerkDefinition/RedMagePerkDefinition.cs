@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using NWN.FinalFantasy.Core.NWScript.Enum;
 using NWN.FinalFantasy.Enumeration;
 using NWN.FinalFantasy.Service.PerkService;
 
@@ -38,7 +39,8 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .RequirementSkill(SkillType.RedMagic, 50)
                 .RequirementSkill(SkillType.Rapier, 50)
                 .RequirementSkill(SkillType.MysticArmor, 50)
-                .Price(15);
+                .Price(15)
+                .GrantsFeat(Feat.Manafont);
         }
 
         private static void Protect(PerkBuilder builder)
@@ -51,7 +53,8 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .Description("Grants the Protect ability.")
                 .RequirementSkill(SkillType.RedMagic, 7)
                 .RequirementSkill(SkillType.Rapier, 10)
-                .Price(2);
+                .Price(2)
+                .GrantsFeat(Feat.Protect);
         }
 
         private static void TransferMP(PerkBuilder builder)
@@ -65,12 +68,14 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .RequirementSkill(SkillType.RedMagic, 15)
                 .RequirementSkill(SkillType.Rapier, 10)
                 .Price(2)
+                .GrantsFeat(Feat.TransferMP1)
 
                 .AddPerkLevel()
                 .Description("Restores 20 MP for a single target.")
                 .RequirementSkill(SkillType.RedMagic, 30)
                 .RequirementSkill(SkillType.Rapier, 20)
-                .Price(2);
+                .Price(2)
+                .GrantsFeat(Feat.TransferMP2);
         }
 
         private static void TransferStamina(PerkBuilder builder)
@@ -84,12 +89,14 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .RequirementSkill(SkillType.RedMagic, 15)
                 .RequirementSkill(SkillType.Rapier, 10)
                 .Price(2)
+                .GrantsFeat(Feat.TransferStamina1)
 
                 .AddPerkLevel()
                 .Description("Restores 20 STM for a single target.")
                 .RequirementSkill(SkillType.RedMagic, 30)
                 .RequirementSkill(SkillType.Rapier, 20)
-                .Price(2);
+                .Price(2)
+                .GrantsFeat(Feat.TransferStamina2);
         }
 
         private static void PiercingStab(PerkBuilder builder)
@@ -102,18 +109,21 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .Description("Inflicts Bleed for 30 seconds on your next attack.")
                 .RequirementSkill(SkillType.Rapier, 5)
                 .Price(2)
+                .GrantsFeat(Feat.PiercingStab1)
 
                 .AddPerkLevel()
                 .Description("Inflicts Bleed II for 30 seconds on your next attack.")
                 .RequirementSkill(SkillType.RedMagic, 10)
                 .RequirementSkill(SkillType.Rapier, 15)
                 .Price(2)
+                .GrantsFeat(Feat.PiercingStab2)
 
                 .AddPerkLevel()
                 .Description("Inflicts Bleed III for 30 seconds on your next attack.")
                 .RequirementSkill(SkillType.RedMagic, 20)
                 .RequirementSkill(SkillType.Rapier, 30)
-                .Price(2);
+                .Price(2)
+                .GrantsFeat(Feat.PiercingStab3);
         }
 
         private static void Blind(PerkBuilder builder)
@@ -127,12 +137,14 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .RequirementSkill(SkillType.RedMagic, 10)
                 .RequirementSkill(SkillType.Rapier, 5)
                 .Price(2)
+                .GrantsFeat(Feat.Blind1)
 
                 .AddPerkLevel()
                 .Description("Inflicts blindness on a single target for 30 seconds.")
                 .RequirementSkill(SkillType.RedMagic, 20)
                 .RequirementSkill(SkillType.Rapier, 10)
-                .Price(2);
+                .Price(2)
+                .GrantsFeat(Feat.Blind2);
         }
 
         private static void RecoveryStab(PerkBuilder builder)
@@ -146,18 +158,21 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .RequirementSkill(SkillType.RedMagic, 15)
                 .RequirementSkill(SkillType.Rapier, 20)
                 .Price(4)
+                .GrantsFeat(Feat.RecoveryStab1)
 
                 .AddPerkLevel()
                 .Description("Restores 3d8 HP to all nearby party members.")
                 .RequirementSkill(SkillType.RedMagic, 30)
                 .RequirementSkill(SkillType.Rapier, 35)
                 .Price(4)
+                .GrantsFeat(Feat.RecoveryStab2)
 
                 .AddPerkLevel()
                 .Description("Restores 3d8 HP to all nearby party members and grants Regen for 20 seconds.")
                 .RequirementSkill(SkillType.RedMagic, 45)
                 .RequirementSkill(SkillType.Rapier, 45)
-                .Price(4);
+                .Price(4)
+                .GrantsFeat(Feat.RecoveryStab3);
         }
 
         private static void Convert(PerkBuilder builder)
@@ -170,7 +185,8 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .Description("Grants the Convert ability.")
                 .RequirementSkill(SkillType.RedMagic, 40)
                 .RequirementSkill(SkillType.Rapier, 35)
-                .Price(8);
+                .Price(8)
+                .GrantsFeat(Feat.Convert);
         }
 
         private static void Refresh(PerkBuilder builder)
@@ -183,7 +199,8 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .Description("Grants the Refresh ability.")
                 .RequirementSkill(SkillType.RedMagic, 35)
                 .RequirementSkill(SkillType.Rapier, 20)
-                .Price(6);
+                .Price(6)
+                .GrantsFeat(Feat.Refresh);
         }
 
         private static void RapierFinesse(PerkBuilder builder)
@@ -210,18 +227,21 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .RequirementSkill(SkillType.RedMagic, 10)
                 .RequirementSkill(SkillType.Rapier, 5)
                 .Price(3)
+                .GrantsFeat(Feat.Jolt1)
 
                 .AddPerkLevel()
                 .Description("Deals 2d6 unaspected damage to a single target.")
                 .RequirementSkill(SkillType.RedMagic, 25)
                 .RequirementSkill(SkillType.Rapier, 20)
                 .Price(3)
+                .GrantsFeat(Feat.Jolt2)
 
                 .AddPerkLevel()
                 .Description("Deals 2d10 unaspected damage to a single target.")
                 .RequirementSkill(SkillType.RedMagic, 45)
                 .RequirementSkill(SkillType.Rapier, 35)
-                .Price(4);
+                .Price(4)
+                .GrantsFeat(Feat.Jolt3);
         }
 
         private static void PoisonStab(PerkBuilder builder)
@@ -235,12 +255,14 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .RequirementSkill(SkillType.RedMagic, 10)
                 .RequirementSkill(SkillType.Rapier, 15)
                 .Price(3)
+                .GrantsFeat(Feat.PoisonStab1)
 
                 .AddPerkLevel()
                 .Description("Your next melee attack inflicts poison on your target.")
                 .RequirementSkill(SkillType.RedMagic, 20)
                 .RequirementSkill(SkillType.Rapier, 30)
-                .Price(4);
+                .Price(4)
+                .GrantsFeat(Feat.PoisonStab2);
         }
 
         private static void ShockSpikes(PerkBuilder builder)
@@ -254,12 +276,14 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .RequirementSkill(SkillType.RedMagic, 15)
                 .RequirementSkill(SkillType.Rapier, 10)
                 .Price(3)
+                .GrantsFeat(Feat.ShockSpikes1)
 
                 .AddPerkLevel()
                 .Description("Grants an electrical damage shield for the next 5 minutes.")
                 .RequirementSkill(SkillType.RedMagic, 30)
                 .RequirementSkill(SkillType.Rapier, 20)
-                .Price(3);
+                .Price(3)
+                .GrantsFeat(Feat.ShockSpikes2);
         }
 
         private static void DeliberateStab(PerkBuilder builder)
@@ -272,7 +296,8 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .Description("Grants the Deliberate Stab ability.")
                 .RequirementSkill(SkillType.RedMagic, 45)
                 .RequirementSkill(SkillType.Rapier, 40)
-                .Price(6);
+                .Price(6)
+                .GrantsFeat(Feat.DeliberateStab);
         }
     }
 }

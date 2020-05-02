@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using NWN.FinalFantasy.Core.NWScript.Enum;
 using NWN.FinalFantasy.Enumeration;
 using NWN.FinalFantasy.Service.PerkService;
 
@@ -25,7 +26,8 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .RequirementSkill(SkillType.Swordplay, 50)
                 .RequirementSkill(SkillType.Gunblade, 50)
                 .RequirementSkill(SkillType.HeavyArmor, 50)
-                .Price(15);
+                .Price(15)
+                .GrantsFeat(Feat.LionHeart);
         }
     }
 }

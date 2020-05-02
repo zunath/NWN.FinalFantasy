@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using NWN.FinalFantasy.Core.NWScript.Enum;
 using NWN.FinalFantasy.Enumeration;
 using NWN.FinalFantasy.Service.PerkService;
 
@@ -16,7 +17,7 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
             Gilfinder(builder);
             TreasureHunter(builder);
             WaspSting(builder);
-            Shadowstich(builder);
+            Shadowstitch(builder);
             LifeSteal(builder);
             SneakAttack(builder);
             Hide(builder);
@@ -36,7 +37,8 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .RequirementSkill(SkillType.Thievery, 50)
                 .RequirementSkill(SkillType.Dagger, 50)
                 .RequirementSkill(SkillType.LightArmor, 50)
-                .Price(15);
+                .Price(15)
+                .GrantsFeat(Feat.PerfectDodge);
         }
 
         private static void Opportunist(PerkBuilder builder)
@@ -49,7 +51,8 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .Description("Grants the Opportunist ability.")
                 .RequirementSkill(SkillType.Dagger, 15)
                 .RequirementSkill(SkillType.Thievery, 5)
-                .Price(4);
+                .Price(4)
+                .GrantsFeat(Feat.Opportunist);
         }
 
         private static void DaggerFinesse(PerkBuilder builder)
@@ -75,21 +78,25 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .Description("Attempt to steal from a selected target.")
                 .RequirementSkill(SkillType.Thievery, 5)
                 .Price(3)
+                .GrantsFeat(Feat.Steal1)
 
                 .AddPerkLevel()
                 .Description("Attempt to steal from a selected target.")
                 .RequirementSkill(SkillType.Thievery, 15)
                 .Price(3)
+                .GrantsFeat(Feat.Steal2)
 
                 .AddPerkLevel()
                 .Description("Attempt to steal from a selected target.")
                 .RequirementSkill(SkillType.Thievery, 30)
                 .Price(3)
+                .GrantsFeat(Feat.Steal3)
 
                 .AddPerkLevel()
                 .Description("Attempt to steal from a selected target.")
                 .RequirementSkill(SkillType.Thievery, 45)
-                .Price(3);
+                .Price(3)
+                .GrantsFeat(Feat.Steal4);
         }
 
         private static void Gilfinder(PerkBuilder builder)
@@ -136,33 +143,38 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .Description("Your next attack poisons your target for 1d4 damage.")
                 .RequirementSkill(SkillType.Dagger, 5)
                 .Price(2)
+                .GrantsFeat(Feat.WaspSting1)
 
                 .AddPerkLevel()
                 .Description("Your next attack poisons your target for 1d8 damage.")
                 .RequirementSkill(SkillType.Dagger, 15)
                 .Price(4)
+                .GrantsFeat(Feat.WaspSting2)
 
                 .AddPerkLevel()
                 .Description("Your next attack poisons your target for 2d6 damage.")
                 .RequirementSkill(SkillType.Dagger, 25)
-                .Price(6);
+                .Price(6)
+                .GrantsFeat(Feat.WaspSting3);
         }
 
-        private static void Shadowstich(PerkBuilder builder)
+        private static void Shadowstitch(PerkBuilder builder)
         {
-            builder.Create(PerkCategoryType.Thief, PerkType.Shadowstich)
-                .Name("Shadowstich")
+            builder.Create(PerkCategoryType.Thief, PerkType.Shadowstitch)
+                .Name("Shadowstitch")
                 .Description("Your next attack binds your target in place.")
 
                 .AddPerkLevel()
                 .Description("Your next attack binds your target for 12 seconds.")
                 .RequirementSkill(SkillType.Dagger, 10)
                 .Price(2)
+                .GrantsFeat(Feat.Shadowstitch1)
 
                 .AddPerkLevel()
                 .Description("Your next attack binds your target for 24 seconds.")
                 .RequirementSkill(SkillType.Dagger, 20)
-                .Price(2);
+                .Price(2)
+                .GrantsFeat(Feat.Shadowstitch2);
         }
 
         private static void LifeSteal(PerkBuilder builder)
@@ -176,12 +188,14 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .RequirementSkill(SkillType.Dagger, 25)
                 .RequirementSkill(SkillType.Thievery, 20)
                 .Price(3)
+                .GrantsFeat(Feat.LifeSteal1)
 
                 .AddPerkLevel()
                 .Description("100% of your damage will transfer to HP.")
                 .RequirementSkill(SkillType.Dagger, 50)
                 .RequirementSkill(SkillType.Thievery, 40)
-                .Price(3);
+                .Price(3)
+                .GrantsFeat(Feat.LifeSteal2);
         }
 
         private static void SneakAttack(PerkBuilder builder)
@@ -194,11 +208,13 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .Description("Damage will increase by 50%.")
                 .RequirementSkill(SkillType.Thievery, 25)
                 .Price(4)
+                .GrantsFeat(Feat.SneakAttack1)
 
                 .AddPerkLevel()
                 .Description("Damage will increase by 100%.")
                 .RequirementSkill(SkillType.Thievery, 50)
-                .Price(4);
+                .Price(4)
+                .GrantsFeat(Feat.SneakAttack2);
         }
 
         private static void Hide(PerkBuilder builder)
@@ -211,11 +227,13 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .Description("Invisibility lasts between 2 and 5 minutes.")
                 .RequirementSkill(SkillType.Thievery, 15)
                 .Price(4)
+                .GrantsFeat(Feat.Hide1)
 
                 .AddPerkLevel()
                 .Description("Invisibility lasts between 4 and 5 minutes.")
                 .RequirementSkill(SkillType.Thievery, 30)
-                .Price(2);
+                .Price(2)
+                .GrantsFeat(Feat.Hide2);
         }
 
         private static void Flee(PerkBuilder builder)
@@ -228,11 +246,13 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .Description("Movement speed increased by 40% for 30 seconds.")
                 .RequirementSkill(SkillType.Thievery, 25)
                 .Price(4)
+                .GrantsFeat(Feat.Flee1)
 
                 .AddPerkLevel()
                 .Description("Movement speed increased by 80% for 30 seconds.")
                 .RequirementSkill(SkillType.Thievery, 45)
-                .Price(4);
+                .Price(4)
+                .GrantsFeat(Feat.Flee2);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using NWN.FinalFantasy.Core.NWScript.Enum;
 using NWN.FinalFantasy.Enumeration;
 using NWN.FinalFantasy.Service.PerkService;
 
@@ -35,7 +36,8 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .RequirementSkill(SkillType.BlackMagic, 50)
                 .RequirementSkill(SkillType.Staff, 50)
                 .RequirementSkill(SkillType.MysticArmor, 50)
-                .Price(15);
+                .Price(15)
+                .GrantsFeat(Feat.ElementalSeal);
         }
 
         private static void Blizzard(PerkBuilder builder)
@@ -47,18 +49,21 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .AddPerkLevel()
                 .Description("Deals ice damage to a single target.")
                 .Price(2)
+                .GrantsFeat(Feat.Blizzard1)
 
                 .AddPerkLevel()
                 .Description("Deals ice damage to a single target and slows movement for 15 seconds.")
                 .RequirementSkill(SkillType.BlackMagic, 15)
                 .RequirementSkill(SkillType.Staff, 10)
                 .Price(3)
+                .GrantsFeat(Feat.Blizzard2)
 
                 .AddPerkLevel()
                 .Description("Deals ice damage to a single target and slows movement for 30 seconds.")
                 .RequirementSkill(SkillType.BlackMagic, 30)
                 .RequirementSkill(SkillType.Staff, 20)
-                .Price(4);
+                .Price(4)
+                .GrantsFeat(Feat.Blizzard3);
         }
 
         private static void Fire(PerkBuilder builder)
@@ -72,18 +77,21 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .RequirementSkill(SkillType.BlackMagic, 5)
                 .RequirementSkill(SkillType.Staff, 5)
                 .Price(2)
+                .GrantsFeat(Feat.Fire1)
 
                 .AddPerkLevel()
                 .Description("Deals fire damage to a single target and inflicts Burn for 15 seconds.")
                 .RequirementSkill(SkillType.BlackMagic, 20)
                 .RequirementSkill(SkillType.Staff, 15)
                 .Price(3)
+                .GrantsFeat(Feat.Fire2)
 
                 .AddPerkLevel()
                 .Description("Deals fire damage to a single target and inflicts Burn for 30 seconds.")
                 .RequirementSkill(SkillType.BlackMagic, 35)
                 .RequirementSkill(SkillType.Staff, 25)
-                .Price(4);
+                .Price(4)
+                .GrantsFeat(Feat.Fire3);
         }
 
         private static void Thunder(PerkBuilder builder)
@@ -97,18 +105,21 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .RequirementSkill(SkillType.BlackMagic, 10)
                 .RequirementSkill(SkillType.Staff, 10)
                 .Price(2)
+                .GrantsFeat(Feat.Thunder1)
 
                 .AddPerkLevel()
                 .Description("Deals electrical damage to a single target and inflicts stun for 2 seconds.")
                 .RequirementSkill(SkillType.BlackMagic, 25)
                 .RequirementSkill(SkillType.Staff, 20)
                 .Price(3)
+                .GrantsFeat(Feat.Thunder2)
 
                 .AddPerkLevel()
                 .Description("Deals electrical damage to a single target and inflicts stun for 6 seconds.")
                 .RequirementSkill(SkillType.BlackMagic, 40)
                 .RequirementSkill(SkillType.Staff, 30)
-                .Price(4);
+                .Price(4)
+                .GrantsFeat(Feat.Thunder3);
         }
 
         private static void MPBoost(PerkBuilder builder)
@@ -167,7 +178,8 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .AddPerkLevel()
                 .Description("Grants the Elemental Spread ability.")
                 .RequirementSkill(SkillType.BlackMagic, 25)
-                .Price(4);
+                .Price(4)
+                .GrantsFeat(Feat.ElementalSpread);
         }
 
         private static void Warp(PerkBuilder builder)
@@ -180,11 +192,13 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .Description("Returns your target to their home point.")
                 .RequirementSkill(SkillType.BlackMagic, 15)
                 .Price(2)
+                .GrantsFeat(Feat.Warp1)
 
                 .AddPerkLevel()
                 .Description("Returns you and your entire party to their respective home points.")
                 .RequirementSkill(SkillType.BlackMagic, 35)
-                .Price(4);
+                .Price(4)
+                .GrantsFeat(Feat.Warp2);
         }
 
         private static void Sleep(PerkBuilder builder)
@@ -197,7 +211,8 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .Description("Grants the Sleep ability.")
                 .RequirementSkill(SkillType.BlackMagic, 10)
                 .RequirementSkill(SkillType.Staff, 5)
-                .Price(2);
+                .Price(2)
+                .GrantsFeat(Feat.Sleep);
         }
 
         private static void ClearMind(PerkBuilder builder)
@@ -230,12 +245,14 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .RequirementSkill(SkillType.BlackMagic, 15)
                 .RequirementSkill(SkillType.Staff, 10)
                 .Price(3)
+                .GrantsFeat(Feat.BlazeSpikes1)
 
                 .AddPerkLevel()
                 .Description("Grants a fire damage shield to you for the next 5 minutes.")
                 .RequirementSkill(SkillType.BlackMagic, 30)
                 .RequirementSkill(SkillType.Staff, 20)
-                .Price(3);
+                .Price(3)
+                .GrantsFeat(Feat.BlazeSpikes2);
         }
     }
 }

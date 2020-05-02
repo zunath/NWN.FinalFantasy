@@ -8,7 +8,7 @@ using NWN.FinalFantasy.Core.NWScript.Enum.Item;
 using NWN.FinalFantasy.Core.NWScript.Enum.VisualEffect;
 using NWN.FinalFantasy.Enumeration;
 using NWN.FinalFantasy.Service;
-using NWN.FinalFantasy.Service.PerkService;
+using NWN.FinalFantasy.Service.AbilityService;
 using static NWN.FinalFantasy.Core.NWScript.NWScript;
 using Object = NWN.FinalFantasy.Core.NWNX.Object;
 
@@ -41,35 +41,27 @@ namespace NWN.FinalFantasy.Feature
             var activator = OBJECT_SELF;
             var target = Object.StringToObject(Events.GetEventData("TARGET_OBJECT_ID"));
             var feat = (Feat)Convert.ToInt32(Events.GetEventData("FEAT_ID"));
-            var perkType = Perk.GetPerkByFeat(feat);
-            if (perkType == PerkType.Invalid) return;
-
-            var perk = Perk.GetPerkDetails(perkType);
-
-            // Feat isn't registered to a perk.
-            if (!Perk.IsFeatRegisteredToPerk(feat))
-            {
-                return;
-            }
-
+            if (!Ability.IsFeatRegistered(feat)) return;
+            var ability = Ability.GetAbilityDetail(feat);
+            
             // Creature cannot use the feat.
-            var effectivePerkLevel = Perk.GetEffectivePerkLevel(activator, perk.Type);
-            if (!CanUsePerkFeat(activator, target, perk, effectivePerkLevel))
+            var effectivePerkLevel = Perk.GetEffectivePerkLevel(activator, ability.EffectiveLevelPerkType);
+            if (!CanUseAbility(activator, target, ability, effectivePerkLevel))
             {
                 return;
             }
 
-            Messaging.SendMessageNearbyToPlayers(activator, $"{GetName(activator)} readies {perk.Name}.");
+            Messaging.SendMessageNearbyToPlayers(activator, $"{GetName(activator)} readies {ability.Name}.");
 
             // Weapon abilties are queued for the next time the activator's attack lands on an enemy.
-            if (perk.ActivationType == PerkActivationType.Weapon)
+            if (ability.ActivationType == AbilityActivationType.Weapon)
             {
-                QueueWeaponAbility(activator, perk, feat, effectivePerkLevel);
+                QueueWeaponAbility(activator, ability, feat, effectivePerkLevel);
             }
             // All other abilities are funneled through the same process.
             else 
             {
-                ActivateAbility(activator, target, perk, feat, effectivePerkLevel);
+                ActivateAbility(activator, target, ability, effectivePerkLevel);
             }
         }
 
@@ -78,10 +70,10 @@ namespace NWN.FinalFantasy.Feature
         /// </summary>
         /// <param name="activator">The activator of the perk feat.</param>
         /// <param name="target">The target of the perk feat.</param>
-        /// <param name="perk">The perk details</param>
+        /// <param name="ability">The ability details</param>
         /// <param name="effectivePerkLevel">The activator's effective perk level.</param>
         /// <returns>true if successful, false otherwise</returns>
-        private static bool CanUsePerkFeat(uint activator, uint target, PerkDetail perk, int effectivePerkLevel)
+        private static bool CanUseAbility(uint activator, uint target, AbilityDetail ability, int effectivePerkLevel)
         {
             // Must have at least one level in the perk.
             if (effectivePerkLevel <= 0)
@@ -105,15 +97,14 @@ namespace NWN.FinalFantasy.Feature
             }
 
             // Must be within line of sight.
-            if (!LineOfSightObject(activator, target) == false)
+            if (activator != target && !LineOfSightObject(activator, target) == false)
             {
                 SendMessageToPC(activator, "You cannot see your target.");
                 return false;
             }
 
             // Perk-specific requirement checks
-            var perkLevel = perk.PerkLevels[effectivePerkLevel];
-            foreach (var req in perkLevel.ActivationRequirements)
+            foreach (var req in ability.Requirements)
             {
                 var requirementError = req.CheckRequirements(activator);
                 if (!string.IsNullOrWhiteSpace(requirementError))
@@ -124,7 +115,7 @@ namespace NWN.FinalFantasy.Feature
             }
 
             // Check if ability is on a recast timer still.
-            if (IsOnRecastDelay(activator, perk.RecastGroup))
+            if (IsOnRecastDelay(activator, ability.RecastGroup))
             {
                 return false;
             }
@@ -154,13 +145,13 @@ namespace NWN.FinalFantasy.Feature
 
                 if (now >= dbPlayer.RecastTimes[recastGroup])
                 {
-                    return true;
+                    return false;
                 }
                 else
                 {
                     string timeToWait = Time.GetTimeToWaitLongIntervals(now, dbPlayer.RecastTimes[recastGroup], false);
                     SendMessageToPC(creature, $"This ability can be used in {timeToWait}.");
-                    return false;
+                    return true;
                 }
             }
             // NPCs and DM-possessed NPCs
@@ -176,13 +167,13 @@ namespace NWN.FinalFantasy.Feature
                     var dateTime = DateTime.ParseExact(unlockDate, "yyyy-MM-dd hh:mm:ss", CultureInfo.InvariantCulture);
                     if (now >= dateTime)
                     {
-                        return true;
+                        return false;
                     }
                     else
                     {
                         string timeToWait = Time.GetTimeToWaitLongIntervals(now, dateTime, false);
                         SendMessageToPC(creature, $"This ability can be used in {timeToWait}.");
-                        return false;
+                        return true;
                     }
                 }
             }
@@ -193,13 +184,10 @@ namespace NWN.FinalFantasy.Feature
         /// Depending on the ability type, this may be called before or after the ability has finished.
         /// </summary>
         /// <param name="activator">The activator of the ability.</param>
-        /// <param name="perk">The perk details</param>
-        /// <param name="effectivePerkLevel">The effective perk level.</param>
-        private static void ApplyRequirementEffects(uint activator, PerkDetail perk, int effectivePerkLevel)
+        /// <param name="ability">The ability details</param>
+        private static void ApplyRequirementEffects(uint activator, AbilityDetail ability)
         {
-            var perkLevel = perk.PerkLevels[effectivePerkLevel];
-
-            foreach (var req in perkLevel.ActivationRequirements)
+            foreach (var req in ability.Requirements)
             {
                 req.AfterActivationAction(activator);
             }
@@ -212,10 +200,9 @@ namespace NWN.FinalFantasy.Feature
         /// </summary>
         /// <param name="activator">The creature activating the ability.</param>
         /// <param name="target">The target of the ability</param>
-        /// <param name="perk">The perk details</param>
-        /// <param name="feat">The feat being activated</param>
+        /// <param name="ability">The ability details</param>
         /// <param name="effectivePerkLevel">The activator's effective perk level</param>
-        private static void ActivateAbility(uint activator, uint target, PerkDetail perk, Feat feat, int effectivePerkLevel)
+        private static void ActivateAbility(uint activator, uint target, AbilityDetail ability, int effectivePerkLevel)
         {
             // Activation delay is increased if player is equipped with heavy or light armor.
             float CalculateActivationDelay()
@@ -257,7 +244,8 @@ namespace NWN.FinalFantasy.Feature
                     SendMessageToPC(activator, penaltyMessage);
                 }
 
-                return perk.ActivationDelay * armorPenalty;
+                var abilityDelay = ability.ActivationDelay?.Invoke(activator, target, effectivePerkLevel) ?? 0.0f;
+                return abilityDelay * armorPenalty;
             }
 
             // Handles displaying animation and visual effects.
@@ -271,14 +259,14 @@ namespace NWN.FinalFantasy.Feature
                 BiowarePosition.TurnToFaceObject(target, activator);
 
                 // Display a casting visual effect if one has been specified.
-                if (perk.ActivationVisualEffect != VisualEffect.None)
+                if (ability.ActivationVisualEffect != VisualEffect.None)
                 {
-                    var vfx = TagEffect(EffectVisualEffect(perk.ActivationVisualEffect), "ACTIVATION_VFX");
+                    var vfx = TagEffect(EffectVisualEffect(ability.ActivationVisualEffect), "ACTIVATION_VFX");
                     ApplyEffectToObject(DurationType.Temporary, vfx, activator, delay + 0.2f);
                 }
 
                 // Casted types play an animation of casting.
-                if (perk.ActivationType == PerkActivationType.Casted)
+                if (ability.ActivationType == AbilityActivationType.Casted)
                 {
                     AssignCommand(activator, () => ActionPlayAnimation(Animation.LoopingConjure1, 1.0f, delay - 0.2f));
                 }
@@ -316,21 +304,22 @@ namespace NWN.FinalFantasy.Feature
             }
 
             // This method is called after the delay of the ability has finished.
-            void CompleteActivation(string id, float delay)
+            void CompleteActivation(string id, float abilityRecastDelay)
             {
                 DeleteLocalInt(activator, id);
 
                 // Moved during casting or activator died. Cancel the activation.
                 if (GetLocalInt(activator, id) == (int) ActivationStatus.Interrupted || GetCurrentHitPoints(activator) <= 0) return;
 
-                ApplyRequirementEffects(activator, perk, effectivePerkLevel);
-                perk.ImpactAction?.Invoke(activator, target, effectivePerkLevel);
-                ApplyRecastDelay(activator, perk.RecastGroup, delay);
+                ApplyRequirementEffects(activator, ability);
+                ability.ImpactAction?.Invoke(activator, target, effectivePerkLevel);
+                ApplyRecastDelay(activator, ability.RecastGroup, abilityRecastDelay);
             }
 
             // Begin the main process
             var activationId = Guid.NewGuid().ToString();
             var activationDelay = CalculateActivationDelay();
+            var recastDelay = ability.RecastDelay(activator);
             var position = GetPosition(activator);
             ProcessAnimationAndVisualEffects(activationDelay);
             CheckForActivationInterruption(activationId, position);
@@ -341,7 +330,7 @@ namespace NWN.FinalFantasy.Feature
                 Player.StartGuiTimingBar(activator, activationDelay, string.Empty);
             }
 
-            DelayCommand(activationDelay, () => CompleteActivation(activationId, activationDelay));
+            DelayCommand(activationDelay, () => CompleteActivation(activationId, recastDelay));
         }
 
         /// <summary>
@@ -351,20 +340,22 @@ namespace NWN.FinalFantasy.Feature
         /// Requirement reductions (MP, STM, etc) are applied as soon as the ability is queued.
         /// </summary>
         /// <param name="activator">The creature activating the ability.</param>
-        /// <param name="perk">The perk details</param>
+        /// <param name="ability">The ability details</param>
         /// <param name="feat">The feat being activated</param>
         /// <param name="effectivePerkLevel">The activator's effective perk level</param>
-        private static void QueueWeaponAbility(uint activator, PerkDetail perk, Feat feat, int effectivePerkLevel)
+        private static void QueueWeaponAbility(uint activator, AbilityDetail ability, Feat feat, int effectivePerkLevel)
         {
             var abilityId = Guid.NewGuid().ToString();
             // Assign local variables which will be picked up on the next weapon OnHit event by this player.
-            SetLocalInt(activator, ActiveAbilityName, (int)perk.Type);
+            SetLocalInt(activator, ActiveAbilityName, (int)feat);
             SetLocalString(activator, ActiveAbilityIdName, abilityId);
             SetLocalInt(activator, ActiveAbilityFeatIdName, (int)feat);
             SetLocalInt(activator, ActiveAbilityEffectivePerkLevelName, effectivePerkLevel);
 
-            ApplyRequirementEffects(activator, perk, effectivePerkLevel);
-            ApplyRecastDelay(activator, perk.RecastGroup, perk.RecastDelay);
+            ApplyRequirementEffects(activator, ability);
+
+            var abilityRecastDelay = ability.RecastDelay?.Invoke(activator) ?? 0.0f;
+            ApplyRecastDelay(activator, ability.RecastGroup, abilityRecastDelay);
 
             // Activator must attack within 30 seconds after queueing or else it wears off.
             DelayCommand(30.0f, () =>
@@ -378,8 +369,8 @@ namespace NWN.FinalFantasy.Feature
                 DeleteLocalInt(activator, ActiveAbilityEffectivePerkLevelName);
 
                 // Notify the activator and nearby players
-                SendMessageToPC(activator, $"Your weapon ability {perk.Name} is no longer queued.");
-                Messaging.SendMessageNearbyToPlayers(activator, $"{GetName(activator)} not longer has weapon ability {perk.Name} readied.");
+                SendMessageToPC(activator, $"Your weapon ability {ability.Name} is no longer queued.");
+                Messaging.SendMessageNearbyToPlayers(activator, $"{GetName(activator)} no longer has weapon ability {ability.Name} readied.");
             });
         }
 
@@ -398,13 +389,13 @@ namespace NWN.FinalFantasy.Feature
             // If this method was triggered by our own armor (from getting hit), return. 
             if (GetBaseItemType(item) == BaseItem.Armor) return;
 
-            var activeWeaponAbility = (PerkType)GetLocalInt(activator, ActiveAbilityName);
+            var activeWeaponAbility = (Feat)GetLocalInt(activator, ActiveAbilityName);
             var activeAbilityEffectivePerkLevel = GetLocalInt(activator, ActiveAbilityEffectivePerkLevelName);
 
-            if (activeWeaponAbility == PerkType.Invalid) return;
+            if (!Ability.IsFeatRegistered(activeWeaponAbility)) return;
 
-            var perk = Perk.GetPerkDetails(activeWeaponAbility);
-            if (!CanUsePerkFeat(activator, target, perk, activeAbilityEffectivePerkLevel))
+            var perk = Ability.GetAbilityDetail(activeWeaponAbility);
+            if (!CanUseAbility(activator, target, perk, activeAbilityEffectivePerkLevel))
             {
                 return;
             }
@@ -457,6 +448,8 @@ namespace NWN.FinalFantasy.Feature
                 var playerId = GetObjectUUID(activator);
                 var dbPlayer = DB.Get<Entity.Player>(playerId);
                 dbPlayer.RecastTimes[group] = recastDate;
+
+                DB.Set(playerId, dbPlayer);
             }
 
         }

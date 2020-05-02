@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using NWN.FinalFantasy.Core.NWScript.Enum;
 using NWN.FinalFantasy.Enumeration;
 using NWN.FinalFantasy.Service.PerkService;
 
@@ -34,7 +35,8 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .RequirementSkill(SkillType.Chivalry, 50)
                 .RequirementSkill(SkillType.HeavyArmor, 50)
                 .RequirementSkill(SkillType.Longsword, 50)
-                .Price(15);
+                .Price(15)
+                .GrantsFeat(Feat.Invincible);
         }
 
         private static void ShieldBash(PerkBuilder builder)
@@ -46,7 +48,8 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .AddPerkLevel()
                 .Description("Grants the Shield Bash ability.")
                 .RequirementSkill(SkillType.Chivalry, 5)
-                .Price(3);
+                .Price(3)
+                .GrantsFeat(Feat.ShieldBash);
         }
 
         private static void Provoke(PerkBuilder builder)
@@ -59,11 +62,13 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .Description("Goads a single enemy into attacking you.")
                 .RequirementSkill(SkillType.Chivalry, 10)
                 .Price(3)
+                .GrantsFeat(Feat.Provoke1)
 
                 .AddPerkLevel()
                 .Description("Goads a group of enemies into attacking you.")
                 .RequirementSkill(SkillType.Chivalry, 25)
-                .Price(4);
+                .Price(4)
+                .GrantsFeat(Feat.Provoke2);
         }
 
         private static void Cleave(PerkBuilder builder)
@@ -87,7 +92,8 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .AddPerkLevel()
                 .Description("Grants the Spiked Defense ability.")
                 .RequirementSkill(SkillType.Chivalry, 15)
-                .Price(3);
+                .Price(3)
+                .GrantsFeat(Feat.SpikedDefense);
         }
 
         private static void ShieldProficiency(PerkBuilder builder)
@@ -138,24 +144,28 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .RequirementSkill(SkillType.Chivalry, 10)
                 .RequirementSkill(SkillType.Longsword, 5)
                 .Price(4)
+                .GrantsFeat(Feat.Cover1)
 
                 .AddPerkLevel()
                 .Description("15% of damage is blocked and you receive it instead.")
                 .RequirementSkill(SkillType.Chivalry, 20)
                 .RequirementSkill(SkillType.Longsword, 10)
                 .Price(4)
+                .GrantsFeat(Feat.Cover2)
 
                 .AddPerkLevel()
                 .Description("20% of damage is blocked and you receive it instead.")
                 .RequirementSkill(SkillType.Chivalry, 30)
                 .RequirementSkill(SkillType.Longsword, 15)
                 .Price(4)
+                .GrantsFeat(Feat.Cover3)
 
                 .AddPerkLevel()
                 .Description("25% of damage is blocked and you receive it instead.")
                 .RequirementSkill(SkillType.Chivalry, 40)
                 .RequirementSkill(SkillType.Longsword, 20)
-                .Price(4);
+                .Price(4)
+                .GrantsFeat(Feat.Cover4);
         }
 
         private static void Defender(PerkBuilder builder)
@@ -169,18 +179,21 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .RequirementSkill(SkillType.Chivalry, 15)
                 .RequirementSkill(SkillType.Longsword, 20)
                 .Price(3)
+                .GrantsFeat(Feat.Defender1)
 
                 .AddPerkLevel()
                 .Description("Increases the damage resistance of your party members within range by 5.")
                 .RequirementSkill(SkillType.Chivalry, 30)
                 .RequirementSkill(SkillType.Longsword, 40)
                 .Price(3)
+                .GrantsFeat(Feat.Defender2)
 
                 .AddPerkLevel()
                 .Description("Increases the damage resistance of your party members within range by 7.")
                 .RequirementSkill(SkillType.Chivalry, 45)
                 .RequirementSkill(SkillType.Longsword, 50)
-                .Price(3);
+                .Price(3)
+                .GrantsFeat(Feat.Defender3);
         }
 
         private static void Ironclad(PerkBuilder builder)
@@ -194,18 +207,21 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .RequirementSkill(SkillType.Chivalry, 10)
                 .RequirementSkill(SkillType.Longsword, 15)
                 .Price(3)
+                .GrantsFeat(Feat.Ironclad1)
 
                 .AddPerkLevel()
                 .Description("Increases your damage resistance by 6.")
                 .RequirementSkill(SkillType.Chivalry, 20)
                 .RequirementSkill(SkillType.Longsword, 25)
                 .Price(3)
+                .GrantsFeat(Feat.Ironclad2)
 
                 .AddPerkLevel()
                 .Description("Increases your damage resistance by 8.")
                 .RequirementSkill(SkillType.Chivalry, 40)
                 .RequirementSkill(SkillType.Longsword, 45)
-                .Price(3);
+                .Price(3)
+                .GrantsFeat(Feat.Ironclad3);
         }
 
         private static void CircleOfScorn(PerkBuilder builder)
@@ -219,12 +235,14 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .RequirementSkill(SkillType.Chivalry, 25)
                 .RequirementSkill(SkillType.Longsword, 25)
                 .Price(6)
+                .GrantsFeat(Feat.CircleOfScorn1)
 
                 .AddPerkLevel()
                 .Description("Delivers an attack which damages all nearby enemies")
                 .RequirementSkill(SkillType.Chivalry, 50)
                 .RequirementSkill(SkillType.Longsword, 50)
-                .Price(8);
+                .Price(8)
+                .GrantsFeat(Feat.CircleOfScorn2);
         }
     }
 }

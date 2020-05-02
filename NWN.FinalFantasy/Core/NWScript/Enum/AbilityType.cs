@@ -1,6 +1,6 @@
 namespace NWN.FinalFantasy.Core.NWScript.Enum
 {
-    public enum Ability
+    public enum AbilityType
     {
         Invalid = -1,
         // should be the same as in nwseffectlist.cpp

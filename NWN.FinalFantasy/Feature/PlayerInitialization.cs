@@ -45,12 +45,12 @@ namespace NWN.FinalFantasy.Feature
         private static void AutoLevelPlayer(uint player)
         {
             // Capture original stats before we level up the player.
-            int str = Creature.GetRawAbilityScore(player, Ability.Strength);
-            int con = Creature.GetRawAbilityScore(player, Ability.Constitution);
-            int dex = Creature.GetRawAbilityScore(player, Ability.Dexterity);
-            int @int = Creature.GetRawAbilityScore(player, Ability.Intelligence);
-            int wis = Creature.GetRawAbilityScore(player, Ability.Wisdom);
-            int cha = Creature.GetRawAbilityScore(player, Ability.Charisma);
+            int str = Creature.GetRawAbilityScore(player, AbilityType.Strength);
+            int con = Creature.GetRawAbilityScore(player, AbilityType.Constitution);
+            int dex = Creature.GetRawAbilityScore(player, AbilityType.Dexterity);
+            int @int = Creature.GetRawAbilityScore(player, AbilityType.Intelligence);
+            int wis = Creature.GetRawAbilityScore(player, AbilityType.Wisdom);
+            int cha = Creature.GetRawAbilityScore(player, AbilityType.Charisma);
 
             GiveXPToCreature(player, 10000);
 
@@ -61,12 +61,12 @@ namespace NWN.FinalFantasy.Feature
             }
 
             // Set stats back to how they were on entry.
-            Creature.SetRawAbilityScore(player, Ability.Strength, str);
-            Creature.SetRawAbilityScore(player, Ability.Constitution, con);
-            Creature.SetRawAbilityScore(player, Ability.Dexterity, dex);
-            Creature.SetRawAbilityScore(player, Ability.Intelligence, @int);
-            Creature.SetRawAbilityScore(player, Ability.Wisdom, wis);
-            Creature.SetRawAbilityScore(player, Ability.Charisma, cha);
+            Creature.SetRawAbilityScore(player, AbilityType.Strength, str);
+            Creature.SetRawAbilityScore(player, AbilityType.Constitution, con);
+            Creature.SetRawAbilityScore(player, AbilityType.Dexterity, dex);
+            Creature.SetRawAbilityScore(player, AbilityType.Intelligence, @int);
+            Creature.SetRawAbilityScore(player, AbilityType.Wisdom, wis);
+            Creature.SetRawAbilityScore(player, AbilityType.Charisma, cha);
         }
 
         /// <summary>
@@ -183,12 +183,12 @@ namespace NWN.FinalFantasy.Feature
             dbPlayer.MP = Stat.GetMaxMP(player, dbPlayer);
             dbPlayer.Stamina = Stat.GetMaxStamina(player, dbPlayer);
 
-            dbPlayer.BaseStats[Ability.Strength] = Creature.GetRawAbilityScore(player, Ability.Strength);
-            dbPlayer.BaseStats[Ability.Dexterity] = Creature.GetRawAbilityScore(player, Ability.Dexterity);
-            dbPlayer.BaseStats[Ability.Constitution] = Creature.GetRawAbilityScore(player, Ability.Constitution);
-            dbPlayer.BaseStats[Ability.Wisdom] = Creature.GetRawAbilityScore(player, Ability.Wisdom);
-            dbPlayer.BaseStats[Ability.Intelligence] = Creature.GetRawAbilityScore(player, Ability.Intelligence);
-            dbPlayer.BaseStats[Ability.Charisma] = Creature.GetRawAbilityScore(player, Ability.Charisma);
+            dbPlayer.BaseStats[AbilityType.Strength] = Creature.GetRawAbilityScore(player, AbilityType.Strength);
+            dbPlayer.BaseStats[AbilityType.Dexterity] = Creature.GetRawAbilityScore(player, AbilityType.Dexterity);
+            dbPlayer.BaseStats[AbilityType.Constitution] = Creature.GetRawAbilityScore(player, AbilityType.Constitution);
+            dbPlayer.BaseStats[AbilityType.Wisdom] = Creature.GetRawAbilityScore(player, AbilityType.Wisdom);
+            dbPlayer.BaseStats[AbilityType.Intelligence] = Creature.GetRawAbilityScore(player, AbilityType.Intelligence);
+            dbPlayer.BaseStats[AbilityType.Charisma] = Creature.GetRawAbilityScore(player, AbilityType.Charisma);
         }
     }
 }

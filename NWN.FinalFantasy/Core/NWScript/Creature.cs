@@ -974,7 +974,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         ///   - nAbility: ABILITY_*
         ///   - oCreature
         /// </summary>
-        public static int GetAbilityModifier(Ability nAbility, uint oCreature = Core.NWScript.NWScript.OBJECT_INVALID)
+        public static int GetAbilityModifier(AbilityType nAbility, uint oCreature = Core.NWScript.NWScript.OBJECT_INVALID)
         {
             Internal.NativeFunctions.StackPushObject(oCreature);
             Internal.NativeFunctions.StackPushInteger((int)nAbility);

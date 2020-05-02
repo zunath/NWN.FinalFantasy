@@ -63,7 +63,7 @@
         Gilfinder = 53,
         TreasureHunter = 54,
         WaspSting = 55,
-        Shadowstich = 56,
+        Shadowstitch = 56,
         LifeSteal = 57,
         SneakAttack = 58,
         Hide = 59,

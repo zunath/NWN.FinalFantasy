@@ -5,79 +5,79 @@ namespace NWN.FinalFantasy.Enumeration
 {
     public enum SkillType
     {
-        [Skill(SkillCategoryType.Invalid, "Unknown", 0, false, "Unused in-game.", false, Ability.Invalid, Ability.Invalid)]
+        [Skill(SkillCategoryType.Invalid, "Unknown", 0, false, "Unused in-game.", false, AbilityType.Invalid, AbilityType.Invalid)]
         Unknown = 0,
 
         // Ability
-        [Skill(SkillCategoryType.Ability, "Chivalry", 50, true, "Ability to use shield bash, cleave, and other knight-related actions.", true, Ability.Invalid, Ability.Invalid)]
+        [Skill(SkillCategoryType.Ability, "Chivalry", 50, true, "Ability to use shield bash, cleave, and other knight-related actions.", true, AbilityType.Invalid, AbilityType.Invalid)]
         Chivalry = 1,
-        [Skill(SkillCategoryType.Ability, "Chi", 50, true, "Ability to use self-buff and restoration techniques.", true, Ability.Invalid, Ability.Invalid)]
+        [Skill(SkillCategoryType.Ability, "Chi", 50, true, "Ability to use self-buff and restoration techniques.", true, AbilityType.Invalid, AbilityType.Invalid)]
         Chi = 2,
-        [Skill(SkillCategoryType.Ability, "Thievery", 50, true, "Ability to use stealth, steal, and other thievery-related actions.", true, Ability.Invalid, Ability.Invalid)]
+        [Skill(SkillCategoryType.Ability, "Thievery", 50, true, "Ability to use stealth, steal, and other thievery-related actions.", true, AbilityType.Invalid, AbilityType.Invalid)]
         Thievery = 3,
-        [Skill(SkillCategoryType.Ability, "Black Magic", 50, true, "Ability to use fire, blizzard, and other black magic-related actions.", true, Ability.Invalid, Ability.Invalid)]
+        [Skill(SkillCategoryType.Ability, "Black Magic", 50, true, "Ability to use fire, blizzard, and other black magic-related actions.", true, AbilityType.Invalid, AbilityType.Invalid)]
         BlackMagic = 4,
-        [Skill(SkillCategoryType.Ability, "White Magic", 50, true, "Ability to use cure, raise, and other white magic-related actions.", true, Ability.Invalid, Ability.Invalid)]
+        [Skill(SkillCategoryType.Ability, "White Magic", 50, true, "Ability to use cure, raise, and other white magic-related actions.", true, AbilityType.Invalid, AbilityType.Invalid)]
         WhiteMagic = 5,
-        [Skill(SkillCategoryType.Ability, "Red Magic", 50, true, "Ability to use poison, convert, and other red magic-related actions.", true, Ability.Invalid, Ability.Invalid)]
+        [Skill(SkillCategoryType.Ability, "Red Magic", 50, true, "Ability to use poison, convert, and other red magic-related actions.", true, AbilityType.Invalid, AbilityType.Invalid)]
         RedMagic = 6,
-        [Skill(SkillCategoryType.Ability, "Archery", 50, true, "Ability to use barrage, aim, and other archery-related actions.", true, Ability.Invalid, Ability.Invalid)]
+        [Skill(SkillCategoryType.Ability, "Archery", 50, true, "Ability to use barrage, aim, and other archery-related actions.", true, AbilityType.Invalid, AbilityType.Invalid)]
         Archery = 7,
-        [Skill(SkillCategoryType.Ability, "Ninjitsu", 50, true, "Ability to use utsusemi, raiton, and other ninja-related actions.", true, Ability.Invalid, Ability.Invalid)]
+        [Skill(SkillCategoryType.Ability, "Ninjitsu", 50, true, "Ability to use utsusemi, raiton, and other ninja-related actions.", true, AbilityType.Invalid, AbilityType.Invalid)]
         Ninjitsu = 8,
-        [Skill(SkillCategoryType.Ability, "Swordplay", 50, true, "Ability to use renzokuken, royal guard, and other specialist-related actions.", true, Ability.Invalid, Ability.Invalid)]
+        [Skill(SkillCategoryType.Ability, "Swordplay", 50, true, "Ability to use renzokuken, royal guard, and other specialist-related actions.", true, AbilityType.Invalid, AbilityType.Invalid)]
         Swordplay = 9,
-        [Skill(SkillCategoryType.Ability, "Marksmanship", 50, true, "Ability to use heat bullet, tranquilizer, and other sniper-related actions..", true, Ability.Invalid, Ability.Invalid)]
+        [Skill(SkillCategoryType.Ability, "Marksmanship", 50, true, "Ability to use heat bullet, tranquilizer, and other sniper-related actions..", true, AbilityType.Invalid, AbilityType.Invalid)]
         Marksmanship = 10,
-        [Skill(SkillCategoryType.Ability, "Darkness", 50, true, "Ability to use souleater, last resort, and other darkness-related actions..", true, Ability.Invalid, Ability.Invalid)]
+        [Skill(SkillCategoryType.Ability, "Darkness", 50, true, "Ability to use souleater, last resort, and other darkness-related actions..", true, AbilityType.Invalid, AbilityType.Invalid)]
         Darkness = 11,
 
         // Armor
-        [Skill(SkillCategoryType.Armor, "Heavy Armor", 50, true, "Ability to use heavy armor.", true, Ability.Constitution, Ability.Strength)]
+        [Skill(SkillCategoryType.Armor, "Heavy Armor", 50, true, "Ability to use heavy armor.", true, AbilityType.Constitution, AbilityType.Strength)]
         HeavyArmor = 12,
-        [Skill(SkillCategoryType.Armor, "Light Armor", 50, true, "Ability to use light armor.", true, Ability.Constitution, Ability.Dexterity)]
+        [Skill(SkillCategoryType.Armor, "Light Armor", 50, true, "Ability to use light armor.", true, AbilityType.Constitution, AbilityType.Dexterity)]
         LightArmor = 13,
-        [Skill(SkillCategoryType.Armor, "Mystic Armor", 50, true, "Ability to use mystic armor.", true, Ability.Charisma, Ability.Constitution)]
+        [Skill(SkillCategoryType.Armor, "Mystic Armor", 50, true, "Ability to use mystic armor.", true, AbilityType.Charisma, AbilityType.Constitution)]
         MysticArmor = 14,
 
         // Weapon
-        [Skill(SkillCategoryType.Weapon, "Longsword", 50, true, "Ability to use longswords.", true, Ability.Strength, Ability.Constitution)]
+        [Skill(SkillCategoryType.Weapon, "Longsword", 50, true, "Ability to use longswords.", true, AbilityType.Strength, AbilityType.Constitution)]
         Longsword = 15,
-        [Skill(SkillCategoryType.Weapon, "Knuckles", 50, true, "Ability to use fist knuckle weapons.", true, Ability.Strength, Ability.Wisdom)]
+        [Skill(SkillCategoryType.Weapon, "Knuckles", 50, true, "Ability to use fist knuckle weapons.", true, AbilityType.Strength, AbilityType.Wisdom)]
         Knuckles = 16,
-        [Skill(SkillCategoryType.Weapon, "Dagger", 50, true, "Ability to use daggers.", true, Ability.Dexterity, Ability.Strength)]
+        [Skill(SkillCategoryType.Weapon, "Dagger", 50, true, "Ability to use daggers.", true, AbilityType.Dexterity, AbilityType.Strength)]
         Dagger = 17,
-        [Skill(SkillCategoryType.Weapon, "Staff", 50, true, "Ability to use staves.", true, Ability.Intelligence, Ability.Charisma)]
+        [Skill(SkillCategoryType.Weapon, "Staff", 50, true, "Ability to use staves.", true, AbilityType.Intelligence, AbilityType.Charisma)]
         Staff = 18,
-        [Skill(SkillCategoryType.Weapon, "Rod", 50, true, "Ability to use rods.", true, Ability.Wisdom, Ability.Charisma)]
+        [Skill(SkillCategoryType.Weapon, "Rod", 50, true, "Ability to use rods.", true, AbilityType.Wisdom, AbilityType.Charisma)]
         Rod = 19,
-        [Skill(SkillCategoryType.Weapon, "Longbow", 50, true, "Ability to use longbows.", true, Ability.Dexterity, Ability.Wisdom)]
+        [Skill(SkillCategoryType.Weapon, "Longbow", 50, true, "Ability to use longbows.", true, AbilityType.Dexterity, AbilityType.Wisdom)]
         Longbow = 20,
-        [Skill(SkillCategoryType.Weapon, "Katana", 50, true, "Ability to use katanas.", true, Ability.Strength, Ability.Dexterity)]
+        [Skill(SkillCategoryType.Weapon, "Katana", 50, true, "Ability to use katanas.", true, AbilityType.Strength, AbilityType.Dexterity)]
         Katana = 21,
-        [Skill(SkillCategoryType.Weapon, "Gunblade", 50, true, "Ability to use gunblades.", true, Ability.Strength, Ability.Constitution)]
+        [Skill(SkillCategoryType.Weapon, "Gunblade", 50, true, "Ability to use gunblades.", true, AbilityType.Strength, AbilityType.Constitution)]
         Gunblade = 22,
-        [Skill(SkillCategoryType.Weapon, "Rifle", 50, true, "Ability to use rifles.", true, Ability.Dexterity, Ability.Constitution)]
+        [Skill(SkillCategoryType.Weapon, "Rifle", 50, true, "Ability to use rifles.", true, AbilityType.Dexterity, AbilityType.Constitution)]
         Rifle = 23,
-        [Skill(SkillCategoryType.Weapon, "Rapier", 50, true, "Ability to use rapiers.", true, Ability.Dexterity, Ability.Intelligence)]
+        [Skill(SkillCategoryType.Weapon, "Rapier", 50, true, "Ability to use rapiers.", true, AbilityType.Dexterity, AbilityType.Intelligence)]
         Rapier = 24,
-        [Skill(SkillCategoryType.Weapon, "Great Sword", 50, true, "Ability to use great swords.", true, Ability.Strength, Ability.Intelligence)]
+        [Skill(SkillCategoryType.Weapon, "Great Sword", 50, true, "Ability to use great swords.", true, AbilityType.Strength, AbilityType.Intelligence)]
         GreatSword = 25,
 
         // Crafting
-        [Skill(SkillCategoryType.Crafting, "Blacksmithing", 50, true, "Ability to create metal-based weapons and heavy armors.", true, Ability.Invalid, Ability.Invalid)]
+        [Skill(SkillCategoryType.Crafting, "Blacksmithing", 50, true, "Ability to create metal-based weapons and heavy armors.", true, AbilityType.Invalid, AbilityType.Invalid)]
         Blacksmithing = 26,
-        [Skill(SkillCategoryType.Crafting, "Leathercraft", 50, true, "Ability to create leather-based items and light armors.", true, Ability.Invalid, Ability.Invalid)]
+        [Skill(SkillCategoryType.Crafting, "Leathercraft", 50, true, "Ability to create leather-based items and light armors.", true, AbilityType.Invalid, AbilityType.Invalid)]
         Leathercraft = 27,
-        [Skill(SkillCategoryType.Crafting, "Alchemy", 50, true, "Ability to create magic-based weapons and mystic armors.", true, Ability.Invalid, Ability.Invalid)]
+        [Skill(SkillCategoryType.Crafting, "Alchemy", 50, true, "Ability to create magic-based weapons and mystic armors.", true, AbilityType.Invalid, AbilityType.Invalid)]
         Alchemy = 28,
-        [Skill(SkillCategoryType.Crafting, "Carpentry", 50, true, "Ability to create wood-based weapons and furniture.", true, Ability.Invalid, Ability.Invalid)]
+        [Skill(SkillCategoryType.Crafting, "Carpentry", 50, true, "Ability to create wood-based weapons and furniture.", true, AbilityType.Invalid, AbilityType.Invalid)]
         Carpentry = 29,
-        [Skill(SkillCategoryType.Crafting, "Cooking", 50, true, "Ability to create food items which grant temporary buffs when consumed.", true, Ability.Invalid, Ability.Invalid)]
+        [Skill(SkillCategoryType.Crafting, "Cooking", 50, true, "Ability to create food items which grant temporary buffs when consumed.", true, AbilityType.Invalid, AbilityType.Invalid)]
         Cooking = 30,
-        [Skill(SkillCategoryType.Crafting, "Mining", 50, true, "Ability to gather raw ore and refine it.", true, Ability.Invalid, Ability.Invalid)]
+        [Skill(SkillCategoryType.Crafting, "Mining", 50, true, "Ability to gather raw ore and refine it.", true, AbilityType.Invalid, AbilityType.Invalid)]
         Mining = 31,
-        [Skill(SkillCategoryType.Crafting, "Botany", 50, true, "Ability to gather raw lumber and refine it.", true, Ability.Invalid, Ability.Invalid)]
+        [Skill(SkillCategoryType.Crafting, "Botany", 50, true, "Ability to gather raw lumber and refine it.", true, AbilityType.Invalid, AbilityType.Invalid)]
         Botany = 32,
 
     }
@@ -90,8 +90,8 @@ namespace NWN.FinalFantasy.Enumeration
         public bool IsActive { get; set; }
         public string Description { get; set; }
         public bool ContributesToSkillCap { get; set; }
-        public Ability PrimaryStat { get; set; }
-        public Ability SecondaryStat { get; set; }
+        public AbilityType PrimaryStat { get; set; }
+        public AbilityType SecondaryStat { get; set; }
 
         public SkillAttribute(
             SkillCategoryType category, 
@@ -100,8 +100,8 @@ namespace NWN.FinalFantasy.Enumeration
             bool isActive, 
             string description, 
             bool contributesToSkillCap, 
-            Ability primaryStat, 
-            Ability secondaryStat)
+            AbilityType primaryStat, 
+            AbilityType secondaryStat)
         {
             Category = category;
             Name = name;

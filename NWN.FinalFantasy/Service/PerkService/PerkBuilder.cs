@@ -134,6 +134,18 @@ namespace NWN.FinalFantasy.Service.PerkService
         }
 
         /// <summary>
+        /// Adds an unlock requirement to purchase the perk.
+        /// </summary>
+        /// <returns>A perk builder with the configured options.</returns>
+        public PerkBuilder RequirementUnlocked()
+        {
+            var requirement = new PerkUnlockRequirement(_activePerk.Type);
+            _activeLevel.Requirements.Add(requirement);
+
+            return this;
+        }
+
+        /// <summary>
         /// Adds an action to run when an item is equipped and the player has this perk.
         /// </summary>
         /// <param name="equipAction">The action to run when an item is equipped.</param>

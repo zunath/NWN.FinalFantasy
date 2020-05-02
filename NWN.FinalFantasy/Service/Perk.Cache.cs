@@ -4,7 +4,6 @@ using System.Linq;
 using NWN.FinalFantasy.Core;
 using NWN.FinalFantasy.Enumeration;
 using NWN.FinalFantasy.Extension;
-using NWN.FinalFantasy.Service.AbilityService;
 using NWN.FinalFantasy.Service.PerkService;
 
 namespace NWN.FinalFantasy.Service
@@ -30,6 +29,9 @@ namespace NWN.FinalFantasy.Service
         private static readonly Dictionary<PerkType, List<PerkTriggerUnequippedAction>> _unequipTriggers = new Dictionary<PerkType, List<PerkTriggerUnequippedAction>>();
         private static readonly Dictionary<PerkType, List<PerkTriggerPurchasedRefundedAction>> _purchaseTriggers = new Dictionary<PerkType, List<PerkTriggerPurchasedRefundedAction>>();
         private static readonly Dictionary<PerkType, List<PerkTriggerPurchasedRefundedAction>> _refundTriggers = new Dictionary<PerkType, List<PerkTriggerPurchasedRefundedAction>>();
+
+        // Perks with unlock requirements
+        private static readonly Dictionary<PerkType, PerkDetail> _perksWithUnlockRequirements = new Dictionary<PerkType, PerkDetail>();
 
         [NWNEventHandler("mod_load")]
         public static void CacheData()
@@ -85,6 +87,17 @@ namespace NWN.FinalFantasy.Service
                     if (perkDetail.IsActive && categoryDetail.IsActive)
                     {
                         _activeCategories[perkDetail.Category] = categoryDetail;
+                    }
+
+                    // If the perk has an "unlock requirement", add it to that cache.
+                    foreach (var level in perkDetail.PerkLevels)
+                    {
+                        var reqExists = level.Value.Requirements.Count(x => x.GetType() == typeof(PerkUnlockRequirement)) > 0;
+                        if (reqExists)
+                        {
+                            _perksWithUnlockRequirements[perkType] = perkDetail;
+                            break;
+                        }
                     }
 
                     // Add to the perks by category cache.

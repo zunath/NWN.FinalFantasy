@@ -108,5 +108,25 @@ namespace NWN.FinalFantasy.Service
             Events.SetEventResult("1"); 
             Events.SkipEvent();
         }
+
+        /// <summary>
+        /// This will mark a perk as unlocked for a player.
+        /// If the perk does not have an "unlock requirement", nothing will happen.
+        /// This will do a DB call so be sure to refresh your entity instance after calling this.
+        /// </summary>
+        /// <param name="player">The player to unlock the perk for</param>
+        /// <param name="perkType">The type of perk to unlock for the player</param>
+        public static void UnlockPerkForPlayer(uint player, PerkType perkType)
+        {
+            if (!GetIsPC(player) || GetIsDM(player)) return;
+            if (!_perksWithUnlockRequirements.ContainsKey(perkType)) return;
+
+            var playerId = GetObjectUUID(player);
+            var dbPlayer = DB.Get<Player>(playerId);
+            if (dbPlayer.UnlockedPerks.ContainsKey(perkType)) return;
+
+            dbPlayer.UnlockedPerks[perkType] = DateTime.UtcNow;
+            DB.Set(playerId, dbPlayer);
+        }
     }
 }

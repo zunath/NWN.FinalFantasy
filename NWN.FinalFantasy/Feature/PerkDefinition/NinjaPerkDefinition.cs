@@ -28,7 +28,8 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .RequirementSkill(SkillType.Ninjitsu, 50)
                 .RequirementSkill(SkillType.Katana, 50)
                 .RequirementSkill(SkillType.LightArmor, 50)
-                .Price(15);
+                .Price(15)
+                .GrantsFeat(Feat.MijinGakure);
         }
 
         private static void DualWield(PerkBuilder builder)

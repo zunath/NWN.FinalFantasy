@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using NWN.FinalFantasy.Core.NWScript.Enum;
 using NWN.FinalFantasy.Enumeration;
 using NWN.FinalFantasy.Service.PerkService;
 
@@ -34,7 +35,8 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .RequirementSkill(SkillType.Chi, 50)
                 .RequirementSkill(SkillType.LightArmor, 50)
                 .RequirementSkill(SkillType.Knuckles, 50)
-                .Price(15);
+                .Price(15)
+                .GrantsFeat(Feat.HundredFists);
         }
 
         private static void InnerHealing(PerkBuilder builder)
@@ -47,26 +49,31 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .Description("Restores your HP by 10% of maximum.")
                 .RequirementSkill(SkillType.Chi, 5)
                 .Price(3)
+                .GrantsFeat(Feat.InnerHealing1)
 
                 .AddPerkLevel()
                 .Description("Restores your HP by 20% of maximum.")
                 .RequirementSkill(SkillType.Chi, 10)
                 .Price(3)
+                .GrantsFeat(Feat.InnerHealing2)
 
                 .AddPerkLevel()
                 .Description("Restores your HP by 30% of maximum.")
                 .RequirementSkill(SkillType.Chi, 15)
                 .Price(3)
+                .GrantsFeat(Feat.InnerHealing3)
 
                 .AddPerkLevel()
                 .Description("Restores your HP by 40% of maximum.")
                 .RequirementSkill(SkillType.Chi, 20)
                 .Price(4)
+                .GrantsFeat(Feat.InnerHealing4)
 
                 .AddPerkLevel()
                 .Description("Restores your HP by 50% of maximum.")
                 .RequirementSkill(SkillType.Chi, 25)
-                .Price(4);
+                .Price(4)
+                .GrantsFeat(Feat.InnerHealing5);
         }
 
         private static void Valor(PerkBuilder builder)
@@ -79,12 +86,14 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .Description("Restores your party members' HP by 20% of maximum.")
                 .RequirementSkill(SkillType.Chi, 35)
                 .Price(4)
+                .GrantsFeat(Feat.Valor1)
 
                 .AddPerkLevel()
                 .Description("Restores your party members' HP by 20% of maximum.")
                 .RequirementSkill(SkillType.Chi, 50)
                 .RequirementSkill(SkillType.Knuckles, 25)
-                .Price(4);
+                .Price(4)
+                .GrantsFeat(Feat.Valor2);
         }
 
         private static void MonkEvasion(PerkBuilder builder)
@@ -158,11 +167,13 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .Description("Restores the health of a single target.")
                 .RequirementSkill(SkillType.Chi, 15)
                 .Price(4)
+                .GrantsFeat(Feat.Chakra1)
 
                 .AddPerkLevel()
                 .Description("Restores the health of a single target and removes poison debuffs.")
                 .RequirementSkill(SkillType.Chi, 30)
-                .Price(4);
+                .Price(4)
+                .GrantsFeat(Feat.Chakra2);
         }
 
         private static void ElectricFist(PerkBuilder builder)
@@ -176,18 +187,21 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .RequirementSkill(SkillType.Knuckles, 10)
                 .RequirementSkill(SkillType.Chi, 5)
                 .Price(3)
+                .GrantsFeat(Feat.ElectricFist1)
 
                 .AddPerkLevel()
                 .Description("Your next melee attack will deal 2d8 electrical damage and has a 50% chance to inflict Static on your target for 30 seconds.")
                 .RequirementSkill(SkillType.Knuckles, 30)
                 .RequirementSkill(SkillType.Chi, 15)
                 .Price(5)
+                .GrantsFeat(Feat.ElectricFist2)
 
                 .AddPerkLevel()
                 .Description("Your next melee attack will deal 2d8 electrical damage and has a 100% chance to inflict Static on your target for 30 seconds.")
                 .RequirementSkill(SkillType.Knuckles, 50)
                 .RequirementSkill(SkillType.Chi, 30)
-                .Price(5);
+                .Price(5)
+                .GrantsFeat(Feat.ElectricFist3);
         }
 
         private static void SubtleBlow(PerkBuilder builder)
@@ -201,12 +215,14 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .RequirementSkill(SkillType.Knuckles, 20)
                 .RequirementSkill(SkillType.Chi, 20)
                 .Price(4)
+                .GrantsFeat(Feat.SubtleBlow1)
 
                 .AddPerkLevel()
                 .Description("Your melee attacks will restore 4 STM per hit for the next 30 seconds.")
                 .RequirementSkill(SkillType.Knuckles, 40)
                 .RequirementSkill(SkillType.Chi, 40)
-                .Price(4);
+                .Price(4)
+                .GrantsFeat(Feat.SubtleBlow2);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using NWN.FinalFantasy.Core.NWScript.Enum;
 using NWN.FinalFantasy.Enumeration;
 using NWN.FinalFantasy.Service.PerkService;
 
@@ -33,10 +34,11 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
 
                 .AddPerkLevel()
                 .Description("Grants the Benediction ability.")
-                .RequirementSkill(SkillType.WhiteMagic, 50)
-                .RequirementSkill(SkillType.Rod, 50)
-                .RequirementSkill(SkillType.MysticArmor, 50)
-                .Price(15);
+                //.RequirementSkill(SkillType.WhiteMagic, 50)
+                //.RequirementSkill(SkillType.Rod, 50)
+                //.RequirementSkill(SkillType.MysticArmor, 50)
+                //.Price(15)
+                .GrantsFeat(Feat.Benediction);
         }
 
         private static void Cure(PerkBuilder builder)

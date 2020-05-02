@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using NWN.FinalFantasy.Core.NWScript.Enum;
 using NWN.FinalFantasy.Core.NWScript.Enum.VisualEffect;
 using NWN.FinalFantasy.Enumeration;
@@ -32,24 +33,11 @@ namespace NWN.FinalFantasy.Service.AbilityService
         }
 
         /// <summary>
-        /// Assigns a recast group on the active ability we're building.
-        /// Calling this more than once will replace the previous recast group.
-        /// </summary>
-        /// <param name="recastGroup">The recast group to set.</param>
-        /// <returns>A ability builder with the configured options</returns>
-        public AbilityBuilder UsesRecastGroup(RecastGroup recastGroup)
-        {
-            _activeAbility.RecastGroup = recastGroup;
-
-            return this;
-        }
-
-        /// <summary>
         /// Assigns an activation type on the active ability we're building.
         /// Calling this more than once will replace the previous activation type.
         /// </summary>
         /// <param name="activationType">The activation type to set.</param>
-        /// <returns>A ability builder with the configured options</returns>
+        /// <returns>An ability builder with the configured options</returns>
         public AbilityBuilder UsesActivationType(AbilityActivationType activationType)
         {
             _activeAbility.ActivationType = activationType;
@@ -62,7 +50,7 @@ namespace NWN.FinalFantasy.Service.AbilityService
         /// Calling this more than once will replace the previous visual effect.
         /// </summary>
         /// <param name="vfx">The visual effect to display.</param>
-        /// <returns>A ability builder with the configured options</returns>
+        /// <returns>An ability builder with the configured options</returns>
         public AbilityBuilder DisplaysVisualEffectWhenActivating(VisualEffect vfx = VisualEffect.Vfx_Dur_Elemental_Shield)
         {
             _activeAbility.ActivationVisualEffect = vfx;
@@ -78,7 +66,7 @@ namespace NWN.FinalFantasy.Service.AbilityService
         /// While "Queued" abilitys fire the impact action on the next weapon hit.
         /// </summary>
         /// <param name="action">The action to fire when a ability impacts a target.</param>
-        /// <returns>A ability builder with the configured options</returns>
+        /// <returns>An ability builder with the configured options</returns>
         public AbilityBuilder HasImpactAction(AbilityImpactAction action)
         {
             _activeAbility.ImpactAction = action;
@@ -91,11 +79,25 @@ namespace NWN.FinalFantasy.Service.AbilityService
         /// This is typically used for casting times.
         /// Calling this more than once will replace the previous activation delay.
         /// </summary>
-        /// <param name="delay">The amount of time to delay, in seconds.</param>
-        /// <returns>A ability builder with the configured options</returns>
-        public AbilityBuilder HasActivationDelay(AbilityActivationDelayAction delay)
+        /// <param name="delayAction">An action which calculates the delay.</param>
+        /// <returns>An ability builder with the configured options</returns>
+        public AbilityBuilder HasActivationDelay(AbilityActivationDelayAction delayAction)
         {
-            _activeAbility.ActivationDelay = delay;
+            _activeAbility.ActivationDelay = delayAction;
+
+            return this;
+        }
+
+        /// <summary>
+        /// Assigns an activation delay on the active ability we're building.
+        /// This is typically used for casting times.
+        /// Calling this more than once will replace the previous activation delay.
+        /// </summary>
+        /// <param name="seconds">The amount of time to delay, in seconds</param>
+        /// <returns>An ability builder with the configured options</returns>
+        public AbilityBuilder HasActivationDelay(float seconds)
+        {
+            _activeAbility.ActivationDelay = (activator, target, level) => seconds;
 
             return this;
         }
@@ -105,11 +107,29 @@ namespace NWN.FinalFantasy.Service.AbilityService
         /// This prevents the ability from being used again until the specified time has passed.
         /// Calling this more than once will replace the previous recast delay.
         /// </summary>
-        /// <param name="delay"></param>
-        /// <returns></returns>
-        public AbilityBuilder HasRecastDelay(AbilityRecastDelayAction delay)
+        /// <param name="recastGroup">The recast group this delay will fall under.</param>
+        /// <param name="delay">An action which determines the recast delay.</param>
+        /// <returns>An ability builder with the configured options.</returns>
+        public AbilityBuilder HasRecastDelay(RecastGroup recastGroup, AbilityRecastDelayAction delay)
         {
+            _activeAbility.RecastGroup = recastGroup;
             _activeAbility.RecastDelay = delay;
+
+            return this;
+        }
+
+        /// <summary>
+        /// Assigns a recast delay on the active ability we're building.
+        /// This prevents the ability from being used again until the specified time has passed.
+        /// Calling this more than once will replace the previous recast delay.
+        /// </summary>
+        /// <param name="recastGroup">The recast group this delay will fall under.</param>
+        /// <param name="seconds">The number of seconds to delay.</param>
+        /// <returns>An ability builder with the configured options.</returns>
+        public AbilityBuilder HasRecastDelay(RecastGroup recastGroup, float seconds)
+        {
+            _activeAbility.RecastGroup = recastGroup;
+            _activeAbility.RecastDelay = activator => seconds;
 
             return this;
         }
@@ -118,7 +138,7 @@ namespace NWN.FinalFantasy.Service.AbilityService
         /// Adds an MP requirement to use the ability at this level.
         /// </summary>
         /// <param name="requiredMP">The amount of MP needed to use this ability at this level.</param>
-        /// <returns>A ability builder with the configured options</returns>
+        /// <returns>An ability builder with the configured options</returns>
         public AbilityBuilder RequirementMP(int requiredMP)
         {
             var requirement = new PerkMPRequirement(requiredMP);
@@ -131,7 +151,7 @@ namespace NWN.FinalFantasy.Service.AbilityService
         /// Adds a stamina requirement to use the ability at this level.
         /// </summary>
         /// <param name="requiredSTM">The amount of STM needed to use this ability at this level.</param>
-        /// <returns>A ability builder with the configured options</returns>
+        /// <returns>An ability builder with the configured options</returns>
         public AbilityBuilder RequirementStamina(int requiredSTM)
         {
             var requirement = new AbilityStaminaRequirement(requiredSTM);

@@ -97,7 +97,7 @@ namespace NWN.FinalFantasy.Feature
             }
 
             // Must be within line of sight.
-            if (!LineOfSightObject(activator, target) == false)
+            if (activator != target && !LineOfSightObject(activator, target) == false)
             {
                 SendMessageToPC(activator, "You cannot see your target.");
                 return false;
@@ -145,13 +145,13 @@ namespace NWN.FinalFantasy.Feature
 
                 if (now >= dbPlayer.RecastTimes[recastGroup])
                 {
-                    return true;
+                    return false;
                 }
                 else
                 {
                     string timeToWait = Time.GetTimeToWaitLongIntervals(now, dbPlayer.RecastTimes[recastGroup], false);
                     SendMessageToPC(creature, $"This ability can be used in {timeToWait}.");
-                    return false;
+                    return true;
                 }
             }
             // NPCs and DM-possessed NPCs
@@ -167,13 +167,13 @@ namespace NWN.FinalFantasy.Feature
                     var dateTime = DateTime.ParseExact(unlockDate, "yyyy-MM-dd hh:mm:ss", CultureInfo.InvariantCulture);
                     if (now >= dateTime)
                     {
-                        return true;
+                        return false;
                     }
                     else
                     {
                         string timeToWait = Time.GetTimeToWaitLongIntervals(now, dateTime, false);
                         SendMessageToPC(creature, $"This ability can be used in {timeToWait}.");
-                        return false;
+                        return true;
                     }
                 }
             }
@@ -304,7 +304,7 @@ namespace NWN.FinalFantasy.Feature
             }
 
             // This method is called after the delay of the ability has finished.
-            void CompleteActivation(string id, float delay)
+            void CompleteActivation(string id, float abilityRecastDelay)
             {
                 DeleteLocalInt(activator, id);
 
@@ -313,12 +313,13 @@ namespace NWN.FinalFantasy.Feature
 
                 ApplyRequirementEffects(activator, ability);
                 ability.ImpactAction?.Invoke(activator, target, effectivePerkLevel);
-                ApplyRecastDelay(activator, ability.RecastGroup, delay);
+                ApplyRecastDelay(activator, ability.RecastGroup, abilityRecastDelay);
             }
 
             // Begin the main process
             var activationId = Guid.NewGuid().ToString();
             var activationDelay = CalculateActivationDelay();
+            var recastDelay = ability.RecastDelay(activator);
             var position = GetPosition(activator);
             ProcessAnimationAndVisualEffects(activationDelay);
             CheckForActivationInterruption(activationId, position);
@@ -329,7 +330,7 @@ namespace NWN.FinalFantasy.Feature
                 Player.StartGuiTimingBar(activator, activationDelay, string.Empty);
             }
 
-            DelayCommand(activationDelay, () => CompleteActivation(activationId, activationDelay));
+            DelayCommand(activationDelay, () => CompleteActivation(activationId, recastDelay));
         }
 
         /// <summary>
@@ -447,6 +448,8 @@ namespace NWN.FinalFantasy.Feature
                 var playerId = GetObjectUUID(activator);
                 var dbPlayer = DB.Get<Entity.Player>(playerId);
                 dbPlayer.RecastTimes[group] = recastDate;
+
+                DB.Set(playerId, dbPlayer);
             }
 
         }

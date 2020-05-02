@@ -34,6 +34,9 @@ namespace NWN.FinalFantasy.Feature
             var numberOfRecasts = 0;
             foreach (var (group, dateTime) in dbPlayer.RecastTimes)
             {
+                // Skip over any date times that have expired but haven't been cleaned up yet.
+                if(dateTime < now) continue;
+
                 // Max of 10 recasts can be shown in the window.
                 if (numberOfRecasts >= MaxNumberOfRecastTimers) break;
 
@@ -41,12 +44,12 @@ namespace NWN.FinalFantasy.Feature
                 var centerWindowX = Gui.CenterStringInWindow(text, WindowX, WindowWidth);
 
                 numberOfRecasts++;
-                PostString(player, text, centerWindowX+2, WindowY + numberOfRecasts, ScreenAnchor.TopRight, 10.0f, Gui.ColorWhite, Gui.ColorWhite, RecastStartId + numberOfRecasts, Gui.TextName);
+                PostString(player, text, centerWindowX+2, WindowY + numberOfRecasts, ScreenAnchor.TopRight, 1.1f, Gui.ColorWhite, Gui.ColorWhite, RecastStartId + numberOfRecasts, Gui.TextName);
             }
 
             if (numberOfRecasts > 0)
             {
-                Gui.DrawWindow(player, WindowId, ScreenAnchor.TopRight, WindowX, WindowY, WindowWidth-2, 1 + numberOfRecasts);
+                Gui.DrawWindow(player, WindowId, ScreenAnchor.TopRight, WindowX, WindowY, WindowWidth-2, 1 + numberOfRecasts, 1.1f);
             }
         }
 

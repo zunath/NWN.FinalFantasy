@@ -2519,11 +2519,11 @@ namespace NWN.FinalFantasy.Core.NWScript
         /// <summary>
         ///   Get the current action (ACTION_*) that oObject is executing.
         /// </summary>
-        public static int GetCurrentAction(uint oObject = OBJECT_INVALID)
+        public static ActionType GetCurrentAction(uint oObject = OBJECT_INVALID)
         {
             Internal.NativeFunctions.StackPushObject(oObject);
             Internal.NativeFunctions.CallBuiltIn(522);
-            return Internal.NativeFunctions.StackPopInteger();
+            return (ActionType)Internal.NativeFunctions.StackPopInteger();
         }
 
         /// <summary>

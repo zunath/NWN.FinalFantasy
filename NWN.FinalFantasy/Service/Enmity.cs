@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using NWN.FinalFantasy.Core;
 using static NWN.FinalFantasy.Core.NWScript.NWScript;
 
@@ -59,12 +60,26 @@ namespace NWN.FinalFantasy.Service
         }
 
         /// <summary>
+        /// Retrieves a table containing the creatures on a specific enemy's enmity table.
+        /// If no creatures are on the enmity table, an empty dictionary will be returned.
+        /// </summary>
+        /// <param name="enemy">The enemy to use for retrieval</param>
+        /// <returns>A dictionary containing an enemy's enmity table.</returns>
+        public static Dictionary<uint, int> GetEnmityTable(uint enemy)
+        {
+            if(!_enemyEnmityTables.ContainsKey(enemy))
+                return new Dictionary<uint, int>();
+
+            return _enemyEnmityTables[enemy].ToDictionary(x => x.Key, y => y.Value);
+        }
+
+        /// <summary>
         /// Modifies the enmity of a specific target toward the specific creature.
         /// </summary>
         /// <param name="creature">The creature whose enmity will be increased.</param>
         /// <param name="enemy">The enemy who will have raised enmity toward creature.</param>
         /// <param name="amount">The amount of enmity to adjust by</param>
-        private static void ModifyEnmity(uint creature, uint enemy, int amount)
+        public static void ModifyEnmity(uint creature, uint enemy, int amount)
         {
             // Value is zero, no action necessary.
             if (amount == 0) return;
@@ -96,6 +111,12 @@ namespace NWN.FinalFantasy.Service
 
             // Update this creature's list of enemies.
             _creatureToEnemies[creature] = enemyList;
+
+            // In the event that this enemy does not have a target, immediately start attacking this creature.
+            if (GetAttackTarget(enemy) == OBJECT_INVALID)
+            {
+                AssignCommand(enemy, () => ActionAttack(creature));
+            }
         }
 
         /// <summary>

@@ -17,10 +17,10 @@ namespace NWN.FinalFantasy.Feature
         }
 
         [NWNEventHandler("test2")]
-        public static void DebugSpawnGoblin()
+        public static void DebugSpawnCreature()
         {
             var location = GetLocation(GetWaypointByTag("DEATH_DEFAULT_RESPAWN_POINT"));
-            var spawn = CreateObject(ObjectType.Creature, "nw_goblina", location);
+            var spawn = CreateObject(ObjectType.Creature, "test_zombie", location);
 
             SetLocalInt(spawn, "QUEST_NPC_GROUP_ID", 1);
         }
@@ -37,6 +37,16 @@ namespace NWN.FinalFantasy.Feature
         {
             var player = GetLastUsedBy();
             Skill.GiveSkillXP(player, SkillType.Longsword, 5000);
+        }
+
+        [NWNEventHandler("test6")]
+        public static void IncreaseEnmityOnBoy()
+        {
+            var player = GetLastUsedBy();
+            var boy = GetObjectByTag("ENMITY_TARGET");
+            var lastAttacker = GetLastAttacker(player);
+
+            Enmity.ModifyEnmity(boy, lastAttacker, 999);
         }
     }
 }

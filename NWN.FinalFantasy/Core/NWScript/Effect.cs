@@ -1321,11 +1321,11 @@ namespace NWN.FinalFantasy.Core.NWScript
         ///   Get the effect type (EFFECT_TYPE_*) of eEffect.
         ///   * Return value if eEffect is invalid: EFFECT_INVALIDEFFECT
         /// </summary>
-        public static int GetEffectType(Effect eEffect)
+        public static EffectTypeScript GetEffectType(Effect eEffect)
         {
             Internal.NativeFunctions.StackPushEffect(eEffect.Handle);
             Internal.NativeFunctions.CallBuiltIn(170);
-            return Internal.NativeFunctions.StackPopInteger();
+            return (EffectTypeScript)Internal.NativeFunctions.StackPopInteger();
         }
 
         /// <summary>

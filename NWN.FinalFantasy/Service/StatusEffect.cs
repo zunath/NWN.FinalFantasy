@@ -72,7 +72,7 @@ namespace NWN.FinalFantasy.Service
                 Object.AddIconEffect(creature, statusEffectDetail.EffectIconId);
             }
 
-            SendMessageToPC(creature, $"You receive the effect of {statusEffectDetail.Name}.");
+            Messaging.SendMessageNearbyToPlayers(creature, $"{GetName(creature)} receives the effect of {statusEffectDetail.Name}.");
         }
 
         /// <summary>
@@ -130,7 +130,7 @@ namespace NWN.FinalFantasy.Service
                 Object.RemoveIconEffect(creature, statusEffectDetail.EffectIconId);
             }
 
-            SendMessageToPC(creature, $"Your {statusEffectDetail.Name} effect has worn off.");
+            Messaging.SendMessageNearbyToPlayers(creature, $"{GetName(creature)}'s {statusEffectDetail.Name} effect has worn off.");
         }
 
         /// <summary>

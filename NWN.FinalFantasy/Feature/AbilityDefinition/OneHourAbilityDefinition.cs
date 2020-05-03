@@ -28,6 +28,7 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                 .HasImpactAction((activator, target, level) =>
                 {
                     StatusEffect.Apply(target, StatusEffectType.Invincible, 30.0f);
+                    ApplyEffectToObject(DurationType.Instant, EffectVisualEffect(VisualEffect.Vfx_Fnf_Sound_Burst), target);
                 });
         }
 

@@ -13,9 +13,22 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
         public Dictionary<Feat, AbilityDetail> BuildAbilities()
         {
             var builder = new AbilityBuilder();
+            Invincible(builder);
             Benediction(builder);
 
             return builder.Build();
+        }
+
+        private static void Invincible(AbilityBuilder builder)
+        {
+            builder.Create(Feat.Invincible, PerkType.Invincible)
+                .Name("Invincible")
+                .HasRecastDelay(RecastGroup.OneHourAbility, 3600f)
+                .UsesActivationType(AbilityActivationType.Casted)
+                .HasImpactAction((activator, target, level) =>
+                {
+                    StatusEffect.Apply(target, StatusEffectType.Invincible, 30.0f);
+                });
         }
 
         private static void Benediction(AbilityBuilder builder)
@@ -35,7 +48,10 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                         ApplyEffectToObject(DurationType.Instant, EffectHeal(maxHP), member);
                         ApplyEffectToObject(DurationType.Instant, EffectVisualEffect(VisualEffect.Vfx_Imp_Healing_X), member);
                     }
+
+                    Enmity.ModifyEnmityOnAll(activator, 300 + members.Count * 50);
                 });
         }
+
     }
 }

@@ -55,7 +55,7 @@ namespace NWN.FinalFantasy.Feature
 
             var highest = enmityTable.OrderByDescending(o => o.Value).First();
 
-            Console.WriteLine($"target = {GetName(highest.Key)}, enmity = {highest.Value}"); // todo debugging
+            //Console.WriteLine($"target = {GetName(highest.Key)}, enmity = {highest.Value}"); // todo debugging
             return highest.Key;
         }
 

@@ -48,5 +48,12 @@ namespace NWN.FinalFantasy.Feature
 
             Enmity.ModifyEnmity(boy, lastAttacker, 999);
         }
+
+        [NWNEventHandler("test7")]
+        public static void GiveEffect()
+        {
+            var player = GetLastUsedBy();
+            StatusEffect.Apply(player, StatusEffectType.Invincible, 30.0f);
+        }
     }
 }

@@ -11,6 +11,12 @@ namespace NWN.FinalFantasy.Service.AbilityService
         private readonly Dictionary<Feat, AbilityDetail> _abilities = new Dictionary<Feat, AbilityDetail>();
         private AbilityDetail _activeAbility;
 
+        /// <summary>
+        /// Creates a new ability.
+        /// </summary>
+        /// <param name="featType">The type of feat to link this ability to.</param>
+        /// <param name="effectiveLevelPerkType">The type of perk used for determining effective level.</param>
+        /// <returns>An ability builder with the configured options</returns>
         public AbilityBuilder Create(Feat featType, PerkType effectiveLevelPerkType)
         {
             _activeAbility = new AbilityDetail();
@@ -23,8 +29,8 @@ namespace NWN.FinalFantasy.Service.AbilityService
         /// <summary>
         /// Sets the name of the active ability we're building
         /// </summary>
-        /// <param name="name"></param>
-        /// <returns></returns>
+        /// <param name="name">The name of the ability to set.</param>
+        /// <returns>An ability builder with the configured options</returns>
         public AbilityBuilder Name(string name)
         {
             _activeAbility.Name = name;

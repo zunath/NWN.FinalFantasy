@@ -23,7 +23,7 @@ namespace NWN.FinalFantasy.Service.AbilityService
             var playerId = GetObjectUUID(player);
             var dbPlayer = DB.Get<Player>(playerId);
 
-            if (dbPlayer.MP > _requiredMP) return string.Empty;
+            if (dbPlayer.MP >= _requiredMP) return string.Empty;
 
             return $"Not enough MP. (Required: {_requiredMP})";
         }

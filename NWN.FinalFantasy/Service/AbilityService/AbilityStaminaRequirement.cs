@@ -23,7 +23,7 @@ namespace NWN.FinalFantasy.Service.AbilityService
             var playerId = NWScript.GetObjectUUID(player);
             var dbPlayer = DB.Get<Player>(playerId);
 
-            if (dbPlayer.Stamina > _requiredSTM) return string.Empty;
+            if (dbPlayer.Stamina >= _requiredSTM) return string.Empty;
             return $"Not enough stamina. (Required: {_requiredSTM})";
         }
 

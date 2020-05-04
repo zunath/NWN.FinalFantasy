@@ -67,6 +67,7 @@ namespace NWN.FinalFantasy.Service
         /// <returns>A value between 0.1 and 30 which determines resistance level.</returns>
         public static float GetResistance(uint creature, ResistanceType type)
         {
+            // todo: magic bonus 
             var tempResistance = GetTemporaryResistance(creature, type);
             var skinAdjustment = GetSkinResistance(creature, type);
             var resistance = tempResistance + skinAdjustment;

@@ -3,5 +3,6 @@
     public enum StatusEffectType
     {
         Invincible = 1,
+        Burn = 2,
     }
 }

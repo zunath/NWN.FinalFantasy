@@ -9,6 +9,12 @@ namespace NWN.FinalFantasy.Service.AbilityService
         Invalid = 0,
         [RecastGroup("One-Hour Ability", "1-Hr Ability")] 
         OneHourAbility = 1,
+        [RecastGroup("Fire", "Fire")]
+        Fire = 2,
+        [RecastGroup("Ice", "Ice")]
+        Ice = 3,
+        [RecastGroup("Thunder", "Thunder")]
+        Thunder = 4
     }
 
     public class RecastGroupAttribute: Attribute

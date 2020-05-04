@@ -53,7 +53,7 @@ namespace NWN.FinalFantasy.Feature
         public static void GiveEffect()
         {
             var player = GetLastUsedBy();
-            StatusEffect.Apply(player, StatusEffectType.Invincible, 30.0f);
+            StatusEffect.Apply(player, player, StatusEffectType.Invincible, 30.0f);
         }
     }
 }

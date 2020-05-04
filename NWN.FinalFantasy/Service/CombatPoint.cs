@@ -1,18 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using NWN.FinalFantasy.Core;
 using NWN.FinalFantasy.Core.NWScript.Enum;
 using NWN.FinalFantasy.Core.NWScript.Enum.Item;
 using NWN.FinalFantasy.Entity;
 using NWN.FinalFantasy.Enumeration;
-using NWN.FinalFantasy.Service;
 using static NWN.FinalFantasy.Core.NWScript.NWScript;
-using Skill = NWN.FinalFantasy.Service.Skill;
 
-namespace NWN.FinalFantasy.Feature
+namespace NWN.FinalFantasy.Service
 {
-    public static class CombatSkillPoints
+    public static class CombatPoint
     {
         /// <summary>
         /// Tracks the combat points earned by players during combat.
@@ -46,8 +45,18 @@ namespace NWN.FinalFantasy.Feature
             _weaponAndArmorSkillMapping[new Tuple<BaseItem, ArmorType>(BaseItem.QuarterStaff, ArmorType.Mystic)] = SkillType.BlackMagic;
             // White Mage: Rod + Mystic = White Magic
             _weaponAndArmorSkillMapping[new Tuple<BaseItem, ArmorType>(BaseItem.LightMace, ArmorType.Mystic)] = SkillType.WhiteMagic;
+            // Red Mage: Rapier + Mystic = Red Magic
+            _weaponAndArmorSkillMapping[new Tuple<BaseItem, ArmorType>(BaseItem.Rapier, ArmorType.Mystic)] = SkillType.RedMagic;
             // Ranger: Longbow + Light = Archery
             _weaponAndArmorSkillMapping[new Tuple<BaseItem, ArmorType>(BaseItem.Longbow, ArmorType.Light)] = SkillType.Archery;
+            // Ninja: Katana + Light = Ninjitsu
+            _weaponAndArmorSkillMapping[new Tuple<BaseItem, ArmorType>(BaseItem.Katana, ArmorType.Light)] = SkillType.Ninjitsu;
+            // Specialist: Gunblade + Heavy = Swordplay
+            _weaponAndArmorSkillMapping[new Tuple<BaseItem, ArmorType>(BaseItem.Gunblade, ArmorType.Heavy)] = SkillType.Swordplay;
+            // Sniper: Rifle + Light = Marksmanship
+            _weaponAndArmorSkillMapping[new Tuple<BaseItem, ArmorType>(BaseItem.Rifle, ArmorType.Light)] = SkillType.Marksmanship;
+            // Dark Knight: Greatsword + Heavy = Darkness
+            _weaponAndArmorSkillMapping[new Tuple<BaseItem, ArmorType>(BaseItem.GreatSword, ArmorType.Heavy)] = SkillType.Darkness;
         }
 
         /// <summary>
@@ -146,7 +155,7 @@ namespace NWN.FinalFantasy.Feature
                     var skillRank = playerSkills[skillType].Rank;
                     var rangePenalty = CalculateRankRangePenalty(highestRank, skillRank);
                     var adjustedXP = baseXP * percentage * rangePenalty;
-                    return (int) adjustedXP;
+                    return (int)adjustedXP;
                 }
 
                 // Applies an XP bonus to a support skill if the proper weapon and armor are chosen.
@@ -164,7 +173,7 @@ namespace NWN.FinalFantasy.Feature
                     {
                         if (GetItemPropertyType(ip) != ItemPropertyType.ArmorType) continue;
 
-                        armorType = (ArmorType) GetItemPropertySubType(ip);
+                        armorType = (ArmorType)GetItemPropertySubType(ip);
                         break;
                     }
 
@@ -281,8 +290,12 @@ namespace NWN.FinalFantasy.Feature
         /// <param name="player">The player receiving the point</param>
         /// <param name="creature">The creature to associate this point with.</param>
         /// <param name="skill">The skill to associate with the point.</param>
-        private static void AddCombatPoint(uint player, uint creature, SkillType skill)
+        /// <param name="amount">The number of points to add.</param>
+        public static void AddCombatPoint(uint player, uint creature, SkillType skill, int amount = 1)
         {
+            if (!GetIsPC(player) || GetIsDM(player)) return;
+            if (GetIsPC(creature) || GetIsDM(creature)) return;
+
             var tracker = _creatureCombatPointTracker.ContainsKey(creature) ?
                 _creatureCombatPointTracker[creature] :
                 new Dictionary<uint, Dictionary<SkillType, int>>();
@@ -300,10 +313,26 @@ namespace NWN.FinalFantasy.Feature
                 tracker[player][skill] = 0;
             }
 
-            // Increment points for this player and skill by one.
-            tracker[player][skill]++;
+            // Increment points for this player and skill.
+            tracker[player][skill] += amount;
 
             _creatureCombatPointTracker[creature] = tracker;
+        }
+
+        /// <summary>
+        /// Adds a combat point for a player to all NPCs s/he is currently tagged on.
+        /// </summary>
+        /// <param name="player">The player to receiving the point.</param>
+        /// <param name="skill">The skill to associate with the point.</param>
+        /// <param name="amount">The number of points to add.</param>
+        public static void AddCombatPointToAllTagged(uint player, SkillType skill, int amount = 1)
+        {
+            if (!_playerToCreatureTracker.ContainsKey(player)) return;
+
+            foreach (var creature in _playerToCreatureTracker[player])
+            {
+                AddCombatPoint(player, creature, skill, amount);
+            }
         }
 
         /// <summary>
@@ -313,12 +342,12 @@ namespace NWN.FinalFantasy.Feature
         /// <param name="creature">The creature we're referencing</param>
         private static void AddPlayerToNPCReferenceToCache(uint player, uint creature)
         {
-            if(!_playerToCreatureTracker.ContainsKey(player))
+            if (!_playerToCreatureTracker.ContainsKey(player))
             {
                 _playerToCreatureTracker[player] = new HashSet<uint>();
             }
 
-            if(!_playerToCreatureTracker[player].Contains(creature))
+            if (!_playerToCreatureTracker[player].Contains(creature))
             {
                 _playerToCreatureTracker[player].Add(creature);
             }

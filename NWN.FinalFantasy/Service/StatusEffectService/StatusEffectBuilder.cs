@@ -75,7 +75,7 @@ namespace NWN.FinalFantasy.Service.StatusEffectService
         /// </summary>
         /// <param name="tickAction">The action to run when the effect ticks.</param>
         /// <returns>A status effect builder with the configured options.</returns>
-        public StatusEffectBuilder TickAction(Action<uint> tickAction)
+        public StatusEffectBuilder TickAction(Action<uint, uint> tickAction)
         {
             _activeStatusEffect.TickAction = tickAction;
 

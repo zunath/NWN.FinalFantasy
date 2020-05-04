@@ -27,7 +27,9 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                 .UsesActivationType(AbilityActivationType.Casted)
                 .HasImpactAction((activator, target, level) =>
                 {
-                    StatusEffect.Apply(target, StatusEffectType.Invincible, 30.0f);
+                    StatusEffect.Apply(activator, target, StatusEffectType.Invincible, 30.0f);
+                    CombatPoint.AddCombatPointToAllTagged(activator, SkillType.Chivalry, 5);
+                    Enmity.ModifyEnmityOnAll(activator, 500);
                     ApplyEffectToObject(DurationType.Instant, EffectVisualEffect(VisualEffect.Vfx_Fnf_Sound_Burst), target);
                 });
         }
@@ -50,6 +52,7 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                         ApplyEffectToObject(DurationType.Instant, EffectVisualEffect(VisualEffect.Vfx_Imp_Healing_X), member);
                     }
 
+                    CombatPoint.AddCombatPointToAllTagged(activator, SkillType.WhiteMagic, 5);
                     Enmity.ModifyEnmityOnAll(activator, 300 + members.Count * 50);
                 });
         }

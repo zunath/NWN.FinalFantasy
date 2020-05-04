@@ -97,7 +97,7 @@ namespace NWN.FinalFantasy.Feature
             }
 
             // Must be within line of sight.
-            if (activator != target && !LineOfSightObject(activator, target) == false)
+            if (!LineOfSightObject(activator, target))
             {
                 SendMessageToPC(activator, "You cannot see your target.");
                 return false;

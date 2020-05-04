@@ -8,7 +8,7 @@ namespace NWN.FinalFantasy.Service.StatusEffectService
         public int EffectIconId { get; set; }
         public Action<uint> GrantAction { get; set; }
         public Action<uint> RemoveAction { get; set; }
-        public Action<uint> TickAction { get; set; }
+        public Action<uint, uint> TickAction { get; set; }
 
         public StatusEffectDetail()
         {

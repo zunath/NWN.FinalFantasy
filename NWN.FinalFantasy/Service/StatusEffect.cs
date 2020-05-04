@@ -11,8 +11,14 @@ namespace NWN.FinalFantasy.Service
 {
     public static class StatusEffect
     {
+        private class StatusEffectGroup
+        {
+            public uint Source { get; set; }
+            public DateTime Expiration { get; set; }
+        }
+
         private static readonly Dictionary<StatusEffectType, StatusEffectDetail> _statusEffects = new Dictionary<StatusEffectType, StatusEffectDetail>();
-        private static readonly Dictionary<uint, Dictionary<StatusEffectType, DateTime>> _creaturesWithStatusEffects = new Dictionary<uint, Dictionary<StatusEffectType, DateTime>>();
+        private static readonly Dictionary<uint, Dictionary<StatusEffectType, StatusEffectGroup>> _creaturesWithStatusEffects = new Dictionary<uint, Dictionary<StatusEffectType, StatusEffectGroup>>();
 
         /// <summary>
         /// When the module loads, cache all status effects.
@@ -42,25 +48,30 @@ namespace NWN.FinalFantasy.Service
         /// If creature already has the status effect, and their timer is shorter than length,
         /// it will be extended to the length specified.
         /// </summary>
+        /// <param name="source">The source of the status effect.</param>
         /// <param name="creature">The creature receiving the status effect.</param>
         /// <param name="statusEffectType">The type of status effect to give.</param>
         /// <param name="length">The amount of time the status effect should last.</param>
-        public static void Apply(uint creature, StatusEffectType statusEffectType, float length)
+        public static void Apply(uint source, uint creature, StatusEffectType statusEffectType, float length)
         {
             if(!_creaturesWithStatusEffects.ContainsKey(creature))
-                _creaturesWithStatusEffects[creature] = new Dictionary<StatusEffectType, DateTime>();
+                _creaturesWithStatusEffects[creature] = new Dictionary<StatusEffectType, StatusEffectGroup>();
+
+            if(!_creaturesWithStatusEffects[creature].ContainsKey(statusEffectType))
+                _creaturesWithStatusEffects[creature][statusEffectType] = new StatusEffectGroup();
 
             var expiration = DateTime.UtcNow.AddSeconds(length);
 
             // If the existing status effect will expire later than this, exit early.
             if (_creaturesWithStatusEffects[creature].ContainsKey(statusEffectType))
             {
-                if (_creaturesWithStatusEffects[creature][statusEffectType] > expiration)
+                if (_creaturesWithStatusEffects[creature][statusEffectType].Expiration > expiration)
                     return;
             }
 
-            // Set the expiration time.
-            _creaturesWithStatusEffects[creature][statusEffectType] = expiration;
+            // Set the group details.
+            _creaturesWithStatusEffects[creature][statusEffectType].Source = source;
+            _creaturesWithStatusEffects[creature][statusEffectType].Expiration = expiration;
 
             // Run the Grant Action, if applicable.
             var statusEffectDetail = _statusEffects[statusEffectType];
@@ -89,10 +100,10 @@ namespace NWN.FinalFantasy.Service
                 bool removeAllEffects = !GetIsObjectValid(creature) || GetIsDead(creature);
 
                 // Iterate over each status effect, cleaning them up if they've expired or executing their tick if applicable.
-                foreach (var (statusEffect, expiration) in statusEffects)
+                foreach (var (statusEffect, group) in statusEffects)
                 {
                     // Status effect has expired or creature is no longer valid. Remove it.
-                    if (removeAllEffects || now > expiration)
+                    if (removeAllEffects || now > group.Expiration)
                     {
                         Remove(creature, statusEffect);
                     }
@@ -100,7 +111,7 @@ namespace NWN.FinalFantasy.Service
                     else
                     {
                         var detail = _statusEffects[statusEffect];
-                        detail.TickAction?.Invoke(creature);
+                        detail.TickAction?.Invoke(group.Source, creature);
                     }
                 }
 
@@ -156,7 +167,7 @@ namespace NWN.FinalFantasy.Service
             if (!ignoreExpiration)
             {
                 var now = DateTime.UtcNow;
-                if (now > _creaturesWithStatusEffects[creature][statusEffectType])
+                if (now > _creaturesWithStatusEffects[creature][statusEffectType].Expiration)
                     return false;
             }
 

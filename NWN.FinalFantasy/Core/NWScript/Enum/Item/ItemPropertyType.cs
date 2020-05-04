@@ -89,6 +89,8 @@ namespace NWN.FinalFantasy.Core.NWScript.Enum.Item
         ArmorType = 101,
         HPBonus = 102,
         MPBonus = 103,
-        STMBonus = 104
+        STMBonus = 104,
+        Resistance = 105,
+        MagicBonus = 106
     }
 }

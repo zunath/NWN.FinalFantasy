@@ -11,8 +11,8 @@ namespace NWN.FinalFantasy.Service.AbilityService
         OneHourAbility = 1,
         [RecastGroup("Fire", "Fire")]
         Fire = 2,
-        [RecastGroup("Ice", "Ice")]
-        Ice = 3,
+        [RecastGroup("Blizzard", "Blizzard")]
+        Blizzard = 3,
         [RecastGroup("Thunder", "Thunder")]
         Thunder = 4
     }

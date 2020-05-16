@@ -8,6 +8,8 @@
         ElementalSpread = 4,
         Sleep = 5,
         SubtleBlow1 = 6,
-        SubtleBlow2 = 7
+        SubtleBlow2 = 7,
+        Poison1 = 8,
+        Poison2 = 9,
     }
 }

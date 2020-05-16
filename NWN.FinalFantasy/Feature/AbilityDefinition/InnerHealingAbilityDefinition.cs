@@ -37,7 +37,7 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                     ApplyEffectToObject(DurationType.Instant, EffectVisualEffect(VisualEffect.Vfx_Imp_Restoration), target);
 
                     CombatPoint.AddCombatPointToAllTagged(activator, SkillType.Chi, 5);
-                    Enmity.ModifyEnmityOnAll(activator, 10);
+                    Enmity.ModifyEnmityOnAll(activator, 10 + hpRecover);
                 });
         }
 
@@ -56,7 +56,7 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                     ApplyEffectToObject(DurationType.Instant, EffectVisualEffect(VisualEffect.Vfx_Imp_Restoration), target);
 
                     CombatPoint.AddCombatPointToAllTagged(activator, SkillType.Chi, 6);
-                    Enmity.ModifyEnmityOnAll(activator, 15);
+                    Enmity.ModifyEnmityOnAll(activator, 15 + hpRecover);
                 });
         }
 
@@ -75,7 +75,7 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                     ApplyEffectToObject(DurationType.Instant, EffectVisualEffect(VisualEffect.Vfx_Imp_Restoration), target);
 
                     CombatPoint.AddCombatPointToAllTagged(activator, SkillType.Chi, 7);
-                    Enmity.ModifyEnmityOnAll(activator, 20);
+                    Enmity.ModifyEnmityOnAll(activator, 20 + hpRecover);
                 });
         }
 
@@ -94,7 +94,7 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                     ApplyEffectToObject(DurationType.Instant, EffectVisualEffect(VisualEffect.Vfx_Imp_Restoration), target);
 
                     CombatPoint.AddCombatPointToAllTagged(activator, SkillType.Chi, 8);
-                    Enmity.ModifyEnmityOnAll(activator, 25);
+                    Enmity.ModifyEnmityOnAll(activator, 25 + hpRecover);
                 });
         }
 
@@ -113,7 +113,7 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                     ApplyEffectToObject(DurationType.Instant, EffectVisualEffect(VisualEffect.Vfx_Imp_Restoration), target);
 
                     CombatPoint.AddCombatPointToAllTagged(activator, SkillType.Chi, 9);
-                    Enmity.ModifyEnmityOnAll(activator, 30);
+                    Enmity.ModifyEnmityOnAll(activator, 30 + hpRecover);
                 });
         }
     }

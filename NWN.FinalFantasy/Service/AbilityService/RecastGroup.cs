@@ -29,6 +29,8 @@ namespace NWN.FinalFantasy.Service.AbilityService
         InnerHealing = 9,
         [RecastGroup("Valor", "Valor")]
         Valor = 10,
+        [RecastGroup("Chakra", "Chakra")]
+        Chakra = 11,
     }
 
     public class RecastGroupAttribute: Attribute

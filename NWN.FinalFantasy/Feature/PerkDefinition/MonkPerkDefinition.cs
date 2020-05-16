@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
+using NWN.FinalFantasy.Core.NWNX;
 using NWN.FinalFantasy.Core.NWScript.Enum;
-using NWN.FinalFantasy.Entity;
 using NWN.FinalFantasy.Enumeration;
 using NWN.FinalFantasy.Service;
 using NWN.FinalFantasy.Service.PerkService;
 using static NWN.FinalFantasy.Core.NWScript.NWScript;
+using Player = NWN.FinalFantasy.Entity.Player;
 
 namespace NWN.FinalFantasy.Feature.PerkDefinition
 {
@@ -110,7 +111,8 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .Description("Grants the Monk Evasion ability.")
                 .RequirementSkill(SkillType.Knuckles, 15)
                 .RequirementSkill(SkillType.Chi, 10)
-                .Price(4);
+                .Price(4)
+                .GrantsFeat(Feat.MonkAcBonus);
         }
 
         private static void CircleKick(PerkBuilder builder)
@@ -129,7 +131,7 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
 
         private static void MartialFinesse(PerkBuilder builder)
         {
-            builder.Create(PerkCategoryType.Monk, PerkType.CircleKick)
+            builder.Create(PerkCategoryType.Monk, PerkType.MartialFinesse)
                 .Name("Martial Finesse")
                 .Description("You make melee attack rolls with your DEX if it is higher than your STR. Must be equipped with knuckles.")
                 
@@ -137,7 +139,46 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .Description("Grants the Martial Finesse ability.")
                 .RequirementSkill(SkillType.Knuckles, 10)
                 .RequirementSkill(SkillType.Chi, 5)
-                .Price(4);
+                .Price(4)
+                .TriggerPurchase((player, type, level) =>
+                {
+                    var rightHand = GetItemInSlot(InventorySlot.RightHand, player);
+                    var leftHand = GetItemInSlot(InventorySlot.LeftHand, player);
+                    var rightValid = GetIsObjectValid(rightHand);
+                    var leftValid = GetIsObjectValid(leftHand);
+
+                    // No weapons are equipped. Grant the feat.
+                    if(!rightValid && !leftValid)
+                    {
+                        Creature.AddFeat(player, Feat.WeaponFinesse);
+                    }
+                })
+                .TriggerEquippedItem((player, item, slot, type, level) =>
+                {
+                    // There are items in the right or left hands right now. Exit early
+                    if (GetIsObjectValid(GetItemInSlot(InventorySlot.RightHand, player)) ||
+                        GetIsObjectValid(GetItemInSlot(InventorySlot.LeftHand, player))) return;
+
+                    // Nothing was equipped, but we're about to put an item in either hand.
+                    // For this scenario, we need to remove the feat because the player is about to have a weapon equipped.
+                    if (slot == InventorySlot.RightHand || slot == InventorySlot.LeftHand)
+                        Creature.RemoveFeat(player, Feat.WeaponFinesse);
+                })
+                .TriggerUnequippedItem((player, item, type, level) =>
+                {
+                    var rightHand = GetItemInSlot(InventorySlot.RightHand, player);
+                    var leftHand = GetItemInSlot(InventorySlot.LeftHand, player);
+                    var rightValid = GetIsObjectValid(rightHand);
+                    var leftValid = GetIsObjectValid(leftHand);
+
+                    // The item being removed is in either the right or left hand and the OTHER hand is empty.
+                    // We need to apply the feat now.
+                    if ((rightHand == item && !leftValid) ||
+                        (leftHand == item && !rightValid))
+                    {
+                        Creature.AddFeat(player, Feat.WeaponFinesse);
+                    }
+                });
         }
 
         private static void VitalityBoost(PerkBuilder builder)

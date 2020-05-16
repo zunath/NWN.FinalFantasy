@@ -730,10 +730,10 @@ namespace NWN.FinalFantasy.Core.NWScript
         ///   NOTE! You *must* use the DAMAGE_BONUS_* constants! Using other values may
         ///   result in odd behaviour.
         /// </summary>
-        public static Effect EffectDamageShield(int nDamageAmount, int nRandomAmount, int nDamageType)
+        public static Effect EffectDamageShield(int nDamageAmount, DamageBonus nRandomAmount, DamageType nDamageType)
         {
-            Internal.NativeFunctions.StackPushInteger(nDamageType);
-            Internal.NativeFunctions.StackPushInteger(nRandomAmount);
+            Internal.NativeFunctions.StackPushInteger((int)nDamageType);
+            Internal.NativeFunctions.StackPushInteger((int)nRandomAmount);
             Internal.NativeFunctions.StackPushInteger(nDamageAmount);
             Internal.NativeFunctions.CallBuiltIn(487);
             return new Effect(Internal.NativeFunctions.StackPopEffect());

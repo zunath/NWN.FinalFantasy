@@ -17,6 +17,8 @@ namespace NWN.FinalFantasy.Service.AbilityService
         Thunder = 4,
         [RecastGroup("Warp", "Warp")]
         Warp = 5,
+        [RecastGroup("Blaze Spikes", "Blaze Spikes")]
+        BlazeSpikes = 5,
     }
 
     public class RecastGroupAttribute: Attribute

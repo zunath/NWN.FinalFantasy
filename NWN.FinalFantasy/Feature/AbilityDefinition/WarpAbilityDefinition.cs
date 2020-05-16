@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using NWN.FinalFantasy.Core.NWScript.Enum;
+using NWN.FinalFantasy.Core.NWScript.Enum.VisualEffect;
 using NWN.FinalFantasy.Entity;
 using NWN.FinalFantasy.Enumeration;
 using NWN.FinalFantasy.Service;
@@ -35,6 +36,8 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                 ClearAllActions();
                 ActionJumpToLocation(location);
             });
+
+            ApplyEffectToObject(DurationType.Instant, EffectVisualEffect(VisualEffect.Vfx_Imp_Unsummon), player);
         }
 
         private static void Warp1(AbilityBuilder builder)

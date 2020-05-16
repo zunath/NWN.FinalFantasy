@@ -22,7 +22,9 @@ namespace NWN.FinalFantasy.Service.AbilityService
         [RecastGroup("Elemental Spread", "Elem. Spread")]
         ElementalSpread = 6,
         [RecastGroup("Sleep", "Sleep")]
-        Sleep = 7
+        Sleep = 7,
+        [RecastGroup("Subtle Blow", "Subtle Blow")]
+        SubtleBlow = 8,
     }
 
     public class RecastGroupAttribute: Attribute

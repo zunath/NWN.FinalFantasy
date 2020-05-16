@@ -7,5 +7,7 @@
         ElementalSeal = 3,
         ElementalSpread = 4,
         Sleep = 5,
+        SubtleBlow1 = 6,
+        SubtleBlow2 = 7
     }
 }

@@ -1,7 +1,10 @@
 ﻿using System.Collections.Generic;
 using NWN.FinalFantasy.Core.NWScript.Enum;
+using NWN.FinalFantasy.Entity;
 using NWN.FinalFantasy.Enumeration;
+using NWN.FinalFantasy.Service;
 using NWN.FinalFantasy.Service.PerkService;
+using static NWN.FinalFantasy.Core.NWScript.NWScript;
 
 namespace NWN.FinalFantasy.Feature.PerkDefinition
 {
@@ -120,7 +123,8 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .Description("Grants the Circle Kick ability.")
                 .RequirementSkill(SkillType.Knuckles, 10)
                 .RequirementSkill(SkillType.Chi, 5)
-                .Price(2);
+                .Price(2)
+                .GrantsFeat(Feat.CircleKick);
         }
 
         private static void MartialFinesse(PerkBuilder builder)
@@ -141,6 +145,21 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
             builder.Create(PerkCategoryType.Monk, PerkType.VitalityBoost)
                 .Name("Vitality Boost")
                 .Description("Increases maximum HP.")
+                .TriggerPurchase((player, type, level) =>
+                {
+                    var playerId = GetObjectUUID(player);
+                    var dbPlayer = DB.Get<Player>(playerId);
+                    Stat.AdjustMaxHP(dbPlayer, player, 15);
+                    DB.Set(playerId, dbPlayer);
+                })
+                .TriggerRefund((player, type, level) =>
+                {
+                    var amountToRemove = level * 15;
+                    var playerId = GetObjectUUID(player);
+                    var dbPlayer = DB.Get<Player>(playerId);
+                    Stat.AdjustMaxHP(dbPlayer, player, -amountToRemove);
+                    DB.Set(playerId, dbPlayer);
+                })
 
                 .AddPerkLevel()
                 .Description("Increases maximum HP by 15.")

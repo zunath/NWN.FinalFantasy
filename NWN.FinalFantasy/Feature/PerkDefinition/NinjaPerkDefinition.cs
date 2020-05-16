@@ -28,6 +28,7 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .RequirementSkill(SkillType.Ninjitsu, 50)
                 .RequirementSkill(SkillType.Katana, 50)
                 .RequirementSkill(SkillType.LightArmor, 50)
+                .RequirementQuest("a_ninjas_test")
                 .Price(15)
                 .GrantsFeat(Feat.MijinGakure);
         }

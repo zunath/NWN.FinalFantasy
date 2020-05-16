@@ -66,7 +66,11 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                 .DisplaysVisualEffectWhenActivating()
                 .HasImpactAction((activator, target, level) =>
                 {
-                    var baseDamage = Random.D6(2);
+                    var multiplier = 1;
+                    if (StatusEffect.HasStatusEffect(activator, StatusEffectType.ElementalSeal))
+                        multiplier = 3;
+
+                    var baseDamage = Random.D6(2) * multiplier;
                     ApplyDamage(activator, target, baseDamage);
                     CombatPoint.AddCombatPoint(activator, target, SkillType.BlackMagic, 3);
                     Enmity.ModifyEnmity(activator, target, 5);
@@ -84,7 +88,11 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                 .DisplaysVisualEffectWhenActivating()
                 .HasImpactAction((activator, target, level) =>
                 {
-                    var baseDamage = Random.D8(2);
+                    var multiplier = 1;
+                    if (StatusEffect.HasStatusEffect(activator, StatusEffectType.ElementalSeal))
+                        multiplier = 3;
+
+                    var baseDamage = Random.D8(2) * multiplier;
                     ApplyDamage(activator, target, baseDamage);
                     ApplyEffectToObject(DurationType.Temporary, EffectStunned(), target, 2f);
                     CombatPoint.AddCombatPoint(activator, target, SkillType.BlackMagic, 3);
@@ -103,7 +111,11 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                 .DisplaysVisualEffectWhenActivating()
                 .HasImpactAction((activator, target, level) =>
                 {
-                    var baseDamage = Random.D12(2);
+                    var multiplier = 1;
+                    if (StatusEffect.HasStatusEffect(activator, StatusEffectType.ElementalSeal))
+                        multiplier = 3;
+
+                    var baseDamage = Random.D12(2) * multiplier;
                     ApplyDamage(activator, target, baseDamage);
                     ApplyEffectToObject(DurationType.Temporary, EffectStunned(), target, 6f);
                     CombatPoint.AddCombatPoint(activator, target, SkillType.BlackMagic, 3);

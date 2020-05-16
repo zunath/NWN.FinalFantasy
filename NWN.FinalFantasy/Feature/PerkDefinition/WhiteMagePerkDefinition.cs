@@ -37,6 +37,7 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .RequirementSkill(SkillType.WhiteMagic, 50)
                 .RequirementSkill(SkillType.Rod, 50)
                 .RequirementSkill(SkillType.MysticArmor, 50)
+                .RequirementQuest("a_white_mages_test")
                 .Price(15)
                 .GrantsFeat(Feat.Benediction);
         }

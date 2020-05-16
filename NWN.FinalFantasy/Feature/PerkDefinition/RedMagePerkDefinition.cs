@@ -39,6 +39,7 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .RequirementSkill(SkillType.RedMagic, 50)
                 .RequirementSkill(SkillType.Rapier, 50)
                 .RequirementSkill(SkillType.MysticArmor, 50)
+                .RequirementQuest("a_red_mages_test")
                 .Price(15)
                 .GrantsFeat(Feat.Manafont);
         }

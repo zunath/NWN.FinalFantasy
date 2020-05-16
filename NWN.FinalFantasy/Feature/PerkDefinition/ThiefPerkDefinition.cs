@@ -37,6 +37,7 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .RequirementSkill(SkillType.Thievery, 50)
                 .RequirementSkill(SkillType.Dagger, 50)
                 .RequirementSkill(SkillType.LightArmor, 50)
+                .RequirementQuest("a_thiefs_test")
                 .Price(15)
                 .GrantsFeat(Feat.PerfectDodge);
         }

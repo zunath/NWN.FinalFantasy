@@ -26,6 +26,7 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .RequirementSkill(SkillType.Swordplay, 50)
                 .RequirementSkill(SkillType.Gunblade, 50)
                 .RequirementSkill(SkillType.HeavyArmor, 50)
+                .RequirementQuest("a_specialists_test")
                 .Price(15)
                 .GrantsFeat(Feat.LionHeart);
         }

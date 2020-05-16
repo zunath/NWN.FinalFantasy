@@ -39,6 +39,7 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .RequirementSkill(SkillType.BlackMagic, 50)
                 .RequirementSkill(SkillType.Staff, 50)
                 .RequirementSkill(SkillType.MysticArmor, 50)
+                .RequirementQuest("a_black_mages_test")
                 .Price(15)
                 .GrantsFeat(Feat.ElementalSeal);
         }

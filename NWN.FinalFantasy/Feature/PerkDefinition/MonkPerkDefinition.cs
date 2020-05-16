@@ -35,6 +35,7 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .RequirementSkill(SkillType.Chi, 50)
                 .RequirementSkill(SkillType.LightArmor, 50)
                 .RequirementSkill(SkillType.Knuckles, 50)
+                .RequirementQuest("a_monks_test")
                 .Price(15)
                 .GrantsFeat(Feat.HundredFists);
         }

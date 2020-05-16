@@ -26,6 +26,7 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .RequirementSkill(SkillType.Archery, 50)
                 .RequirementSkill(SkillType.Longbow, 50)
                 .RequirementSkill(SkillType.LightArmor, 50)
+                .RequirementQuest("a_rangers_test")
                 .Price(15)
                 .GrantsFeat(Feat.EagleEyeShot);
         }

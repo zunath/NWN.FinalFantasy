@@ -15,6 +15,7 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
             var builder = new AbilityBuilder();
             Invincible(builder);
             Benediction(builder);
+            ElementalSeal(builder);
 
             return builder.Build();
         }
@@ -54,6 +55,23 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
 
                     CombatPoint.AddCombatPointToAllTagged(activator, SkillType.WhiteMagic, 5);
                     Enmity.ModifyEnmityOnAll(activator, 300 + members.Count * 50);
+                });
+        }
+
+        private static void ElementalSeal(AbilityBuilder builder)
+        {
+            builder.Create(Feat.ElementalSeal, PerkType.ElementalSeal)
+                .Name("Elemental Seal")
+                .DisplaysVisualEffectWhenActivating()
+                .HasRecastDelay(RecastGroup.OneHourAbility, 3600f)
+                .UsesActivationType(AbilityActivationType.Casted)
+                .HasImpactAction((activator, target, level) =>
+                {
+                    StatusEffect.Apply(activator, target, StatusEffectType.ElementalSeal, 30f);
+                    ApplyEffectToObject(DurationType.Instant, EffectVisualEffect(VisualEffect.Vfx_Fnf_Howl_Mind), target);
+
+                    CombatPoint.AddCombatPointToAllTagged(activator, SkillType.BlackMagic, 5);
+                    Enmity.ModifyEnmityOnAll(activator, 300);
                 });
         }
 

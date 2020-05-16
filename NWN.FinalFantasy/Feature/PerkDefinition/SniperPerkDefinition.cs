@@ -30,6 +30,7 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .RequirementSkill(SkillType.Marksmanship, 50)
                 .RequirementSkill(SkillType.Rifle, 50)
                 .RequirementSkill(SkillType.LightArmor, 50)
+                .RequirementQuest("a_snipers_test")
                 .Price(15)
                 .GrantsFeat(Feat.Gambit);
         }

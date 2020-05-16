@@ -35,6 +35,7 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .RequirementSkill(SkillType.Chivalry, 50)
                 .RequirementSkill(SkillType.HeavyArmor, 50)
                 .RequirementSkill(SkillType.Longsword, 50)
+                .RequirementQuest("a_knights_test")
                 .Price(15)
                 .GrantsFeat(Feat.Invincible);
         }

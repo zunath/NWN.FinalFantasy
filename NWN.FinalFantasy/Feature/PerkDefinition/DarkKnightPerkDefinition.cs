@@ -26,6 +26,7 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .RequirementSkill(SkillType.Darkness, 50)
                 .RequirementSkill(SkillType.GreatSword, 50)
                 .RequirementSkill(SkillType.HeavyArmor, 50)
+                .RequirementQuest("a_dark_knights_test")
                 .Price(15)
                 .GrantsFeat(Feat.DarkNebula);
         }

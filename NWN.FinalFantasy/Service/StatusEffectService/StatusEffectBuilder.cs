@@ -51,7 +51,7 @@ namespace NWN.FinalFantasy.Service.StatusEffectService
         /// </summary>
         /// <param name="grantAction">The action to run when granted.</param>
         /// <returns>A status effect builder with the configured options.</returns>
-        public StatusEffectBuilder GrantAction(Action<uint> grantAction)
+        public StatusEffectBuilder GrantAction(Action<uint, float> grantAction)
         {
             _activeStatusEffect.GrantAction = grantAction;
 

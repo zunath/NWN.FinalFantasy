@@ -21,6 +21,8 @@ namespace NWN.FinalFantasy.Service.AbilityService
         BlazeSpikes = 5,
         [RecastGroup("Elemental Spread", "Elem. Spread")]
         ElementalSpread = 6,
+        [RecastGroup("Sleep", "Sleep")]
+        Sleep = 7
     }
 
     public class RecastGroupAttribute: Attribute

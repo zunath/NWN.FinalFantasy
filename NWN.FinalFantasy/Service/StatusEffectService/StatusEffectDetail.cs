@@ -6,7 +6,7 @@ namespace NWN.FinalFantasy.Service.StatusEffectService
     {
         public string Name { get; set; }
         public int EffectIconId { get; set; }
-        public Action<uint> GrantAction { get; set; }
+        public Action<uint, float> GrantAction { get; set; }
         public Action<uint> RemoveAction { get; set; }
         public Action<uint, uint> TickAction { get; set; }
 

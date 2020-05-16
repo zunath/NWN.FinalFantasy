@@ -37,6 +37,26 @@ namespace NWN.FinalFantasy.Feature
             }
         }
 
+        [NWNEventHandler("mod_enter")]
+        public static void HookPlayerEvents()
+        {
+            var player = GetEnteringObject();
+            if (!GetIsPC(player) || GetIsDM(player)) return;
+
+            SetEventScript(player, EventScript.Creature_OnHeartbeat, "pc_heartbeat");
+            SetEventScript(player, EventScript.Creature_OnNotice, "pc_perception");
+            SetEventScript(player, EventScript.Creature_OnSpellCastAt, "pc_spellcastat");
+            SetEventScript(player, EventScript.Creature_OnMeleeAttacked, "pc_attacked");
+            SetEventScript(player, EventScript.Creature_OnDamaged, "pc_damaged");
+            SetEventScript(player, EventScript.Creature_OnDisturbed, "pc_disturb");
+            SetEventScript(player, EventScript.Creature_OnEndCombatRound, "pc_roundend");
+            SetEventScript(player, EventScript.Creature_OnSpawnIn, "pc_spawn");
+            SetEventScript(player, EventScript.Creature_OnRested, "pc_rested");
+            SetEventScript(player, EventScript.Creature_OnDeath, "pc_death");
+            SetEventScript(player, EventScript.Creature_OnUserDefined, "pc_userdef");
+            SetEventScript(player, EventScript.Creature_OnBlockedByDoor, "pc_blocked");
+        }
+
         /// <summary>
         /// Hooks module-wide scripts.
         /// </summary>

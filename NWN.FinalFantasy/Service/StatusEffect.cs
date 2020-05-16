@@ -75,7 +75,7 @@ namespace NWN.FinalFantasy.Service
 
             // Run the Grant Action, if applicable.
             var statusEffectDetail = _statusEffects[statusEffectType];
-            statusEffectDetail.GrantAction?.Invoke(creature);
+            statusEffectDetail.GrantAction?.Invoke(creature, length);
 
             // Add the status effect icon if there is one.
             if (statusEffectDetail.EffectIconId > 0)

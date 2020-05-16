@@ -196,7 +196,7 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 
                 .AddPerkLevel()
                 .Description("Grants the Elemental Spread ability.")
-                //.RequirementSkill(SkillType.BlackMagic, 25)
+                .RequirementSkill(SkillType.BlackMagic, 25)
                 .Price(4)
                 .GrantsFeat(Feat.ElementalSpread);
         }
@@ -228,9 +228,9 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 
                 .AddPerkLevel()
                 .Description("Grants the Sleep ability.")
-                .RequirementSkill(SkillType.BlackMagic, 10)
-                .RequirementSkill(SkillType.Staff, 5)
-                .Price(2)
+                //.RequirementSkill(SkillType.BlackMagic, 10)
+                //.RequirementSkill(SkillType.Staff, 5)
+                //.Price(2)
                 .GrantsFeat(Feat.Sleep);
         }
 

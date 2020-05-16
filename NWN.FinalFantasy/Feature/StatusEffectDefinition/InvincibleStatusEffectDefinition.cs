@@ -13,7 +13,7 @@ namespace NWN.FinalFantasy.Feature.StatusEffectDefinition
                 .Create(StatusEffectType.Invincible)
                 .Name("Invincible")
                 .EffectIcon(130)
-                .GrantAction((target) =>
+                .GrantAction((target, duration) =>
                 {
                     SetPlotFlag(target, true);
                 })

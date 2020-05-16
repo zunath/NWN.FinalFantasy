@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using System.Text;
 using NWN.FinalFantasy.Core.NWScript.Enum;
+using NWN.FinalFantasy.Core.NWScript.Enum.Creature;
 using NWN.FinalFantasy.Core.NWScript.Enum.VisualEffect;
 using NWN.FinalFantasy.Enumeration;
 using NWN.FinalFantasy.Service;
@@ -55,6 +55,43 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
             AdjustResistances(target);
         }
 
+        private static void ApplyThunderEffects(uint activator, uint target, int baseDamage, int enmity, float stunLength)
+        {
+            var multiplier = 1;
+            if (StatusEffect.HasStatusEffect(activator, StatusEffectType.ElementalSeal))
+                multiplier = 3;
+
+            var damage = baseDamage * multiplier;
+            ApplyDamage(activator, target, damage);
+
+            if (stunLength > 0.0f)
+            {
+                ApplyEffectToObject(DurationType.Temporary, EffectStunned(), target, stunLength);
+            }
+
+            CombatPoint.AddCombatPoint(activator, target, SkillType.BlackMagic, 3);
+            Enmity.ModifyEnmity(activator, target, enmity);
+        }
+
+        private static void ApplyAOEThunderEffects(uint activator, uint target, int baseDamage, int enmity, float stunLength)
+        {
+            if (!StatusEffect.HasStatusEffect(activator, StatusEffectType.ElementalSpread)) return;
+
+            var nth = 1;
+            var nearby = GetNearestCreature(Type.IsAlive, 1, target, nth);
+            while (GetIsObjectValid(nearby))
+            {
+                if (target == nearby) continue;
+                if (GetDistanceBetween(target, nearby) > 5.0f) break;
+
+                ApplyThunderEffects(activator, nearby, baseDamage, enmity, stunLength);
+
+                nth++;
+                nearby = GetNearestCreature(Type.IsAlive, 1, target, nth);
+            }
+
+            StatusEffect.Remove(activator, StatusEffectType.ElementalSpread);
+        }
         private static void Thunder1(AbilityBuilder builder)
         {
             builder.Create(Feat.Thunder1, PerkType.Thunder)
@@ -66,14 +103,8 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                 .DisplaysVisualEffectWhenActivating()
                 .HasImpactAction((activator, target, level) =>
                 {
-                    var multiplier = 1;
-                    if (StatusEffect.HasStatusEffect(activator, StatusEffectType.ElementalSeal))
-                        multiplier = 3;
-
-                    var baseDamage = Random.D6(2) * multiplier;
-                    ApplyDamage(activator, target, baseDamage);
-                    CombatPoint.AddCombatPoint(activator, target, SkillType.BlackMagic, 3);
-                    Enmity.ModifyEnmity(activator, target, 5);
+                    ApplyThunderEffects(activator, target, Random.D6(2), 5, 0.0f);
+                    ApplyAOEThunderEffects(activator, target, Random.D6(2), 5, 0.0f);
                 });
         }
 
@@ -88,15 +119,8 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                 .DisplaysVisualEffectWhenActivating()
                 .HasImpactAction((activator, target, level) =>
                 {
-                    var multiplier = 1;
-                    if (StatusEffect.HasStatusEffect(activator, StatusEffectType.ElementalSeal))
-                        multiplier = 3;
-
-                    var baseDamage = Random.D8(2) * multiplier;
-                    ApplyDamage(activator, target, baseDamage);
-                    ApplyEffectToObject(DurationType.Temporary, EffectStunned(), target, 2f);
-                    CombatPoint.AddCombatPoint(activator, target, SkillType.BlackMagic, 3);
-                    Enmity.ModifyEnmity(activator, target, 10);
+                    ApplyThunderEffects(activator, target, Random.D8(2), 10, 2f);
+                    ApplyAOEThunderEffects(activator, target, Random.D8(2), 10, 2f);
                 });
         }
 
@@ -111,15 +135,8 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                 .DisplaysVisualEffectWhenActivating()
                 .HasImpactAction((activator, target, level) =>
                 {
-                    var multiplier = 1;
-                    if (StatusEffect.HasStatusEffect(activator, StatusEffectType.ElementalSeal))
-                        multiplier = 3;
-
-                    var baseDamage = Random.D12(2) * multiplier;
-                    ApplyDamage(activator, target, baseDamage);
-                    ApplyEffectToObject(DurationType.Temporary, EffectStunned(), target, 6f);
-                    CombatPoint.AddCombatPoint(activator, target, SkillType.BlackMagic, 3);
-                    Enmity.ModifyEnmity(activator, target, 15);
+                    ApplyThunderEffects(activator, target, Random.D12(2), 15, 6f);
+                    ApplyAOEThunderEffects(activator, target, Random.D12(2), 15, 6f);
                 });
         }
     }

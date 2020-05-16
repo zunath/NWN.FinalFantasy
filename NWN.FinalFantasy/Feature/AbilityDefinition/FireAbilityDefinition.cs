@@ -7,6 +7,7 @@ using NWN.FinalFantasy.Service;
 using NWN.FinalFantasy.Service.AbilityService;
 using static NWN.FinalFantasy.Core.NWScript.NWScript;
 using Random = NWN.FinalFantasy.Service.Random;
+using Type = NWN.FinalFantasy.Core.NWScript.Enum.Creature.Type;
 
 namespace NWN.FinalFantasy.Feature.AbilityDefinition
 {
@@ -55,6 +56,44 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
             AdjustResistances(target);
         }
 
+        private static void ApplyFireEffects(uint activator, uint target, int baseDamage, int enmity, float burnLength)
+        {
+            var multiplier = 1;
+            if (StatusEffect.HasStatusEffect(activator, StatusEffectType.ElementalSeal))
+                multiplier = 3;
+
+            var damage = baseDamage * multiplier;
+            ApplyDamage(activator, target, damage);
+
+            if (burnLength > 0.0f)
+            {
+                StatusEffect.Apply(activator, target, StatusEffectType.Burn, burnLength);
+            }
+
+            CombatPoint.AddCombatPoint(activator, target, SkillType.BlackMagic, 3);
+            Enmity.ModifyEnmity(activator, target, enmity);
+        }
+
+        private static void ApplyAOEFireEffects(uint activator, uint target, int baseDamage, int enmity, float burnLength)
+        {
+            if (!StatusEffect.HasStatusEffect(activator, StatusEffectType.ElementalSpread)) return;
+
+            var nth = 1;
+            var nearby = GetNearestCreature(Type.IsAlive, 1, target, nth);
+            while (GetIsObjectValid(nearby))
+            {
+                if (target == nearby) continue;
+                if (GetDistanceBetween(target, nearby) > 5.0f) break;
+
+                ApplyFireEffects(activator, nearby, baseDamage, enmity, burnLength);
+
+                nth++;
+                nearby = GetNearestCreature(Type.IsAlive, 1, target, nth);
+            }
+
+            StatusEffect.Remove(activator, StatusEffectType.ElementalSpread);
+        }
+
         private static void Fire1(AbilityBuilder builder)
         {
             builder.Create(Feat.Fire1, PerkType.Fire)
@@ -66,14 +105,8 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                 .DisplaysVisualEffectWhenActivating()
                 .HasImpactAction((activator, target, level) =>
                 {
-                    var multiplier = 1;
-                    if (StatusEffect.HasStatusEffect(activator, StatusEffectType.ElementalSeal))
-                        multiplier = 3;
-
-                    var baseDamage = Random.D6(2) * multiplier;
-                    ApplyDamage(activator, target, baseDamage);
-                    CombatPoint.AddCombatPoint(activator, target, SkillType.BlackMagic, 3);
-                    Enmity.ModifyEnmity(activator, target, 5);
+                    ApplyFireEffects(activator, target, Random.D6(2), 5, 0.0f);
+                    ApplyAOEFireEffects(activator, target, Random.D6(2), 5, 0.0f);
                 });
         }
 
@@ -88,15 +121,8 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                 .DisplaysVisualEffectWhenActivating()
                 .HasImpactAction((activator, target, level) =>
                 {
-                    var multiplier = 1;
-                    if (StatusEffect.HasStatusEffect(activator, StatusEffectType.ElementalSeal))
-                        multiplier = 3;
-
-                    var baseDamage = Random.D8(2) * multiplier;
-                    ApplyDamage(activator, target, baseDamage);
-                    StatusEffect.Apply(activator, target, StatusEffectType.Burn, 18.0f);
-                    CombatPoint.AddCombatPoint(activator, target, SkillType.BlackMagic, 3);
-                    Enmity.ModifyEnmity(activator, target, 10);
+                    ApplyFireEffects(activator, target, Random.D8(2), 10, 18.0f);
+                    ApplyAOEFireEffects(activator, target, Random.D8(2), 10, 18.0f);
                 });
         }
 
@@ -111,15 +137,8 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                 .DisplaysVisualEffectWhenActivating()
                 .HasImpactAction((activator, target, level) =>
                 {
-                    var multiplier = 1;
-                    if (StatusEffect.HasStatusEffect(activator, StatusEffectType.ElementalSeal))
-                        multiplier = 3;
-
-                    var baseDamage = Random.D12(2) * multiplier;
-                    ApplyDamage(activator, target, baseDamage);
-                    StatusEffect.Apply(activator, target, StatusEffectType.Burn, 30.0f);
-                    CombatPoint.AddCombatPoint(activator, target, SkillType.BlackMagic, 3);
-                    Enmity.ModifyEnmity(activator, target, 15);
+                    ApplyFireEffects(activator, target, Random.D12(2), 15, 30f);
+                    ApplyAOEFireEffects(activator, target, Random.D12(2), 15, 30f);
                 });
         }
     }

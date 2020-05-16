@@ -5,5 +5,6 @@
         Invincible = 1,
         Burn = 2,
         ElementalSeal = 3,
+        ElementalSpread = 4,
     }
 }

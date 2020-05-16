@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Text;
 using NWN.FinalFantasy.Core.NWScript.Enum;
+using NWN.FinalFantasy.Core.NWScript.Enum.Creature;
 using NWN.FinalFantasy.Core.NWScript.Enum.VisualEffect;
 using NWN.FinalFantasy.Enumeration;
 using NWN.FinalFantasy.Service;
@@ -55,6 +56,44 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
             AdjustResistances(target);
         }
 
+        private static void ApplyBlizzardEffects(uint activator, uint target, int baseDamage, int enmity, float slowLength)
+        {
+            var multiplier = 1;
+            if (StatusEffect.HasStatusEffect(activator, StatusEffectType.ElementalSeal))
+                multiplier = 3;
+
+            var damage = baseDamage * multiplier;
+            ApplyDamage(activator, target, damage);
+
+            if (slowLength > 0.0f)
+            {
+                ApplyEffectToObject(DurationType.Temporary, EffectMovementSpeedDecrease(25), target, slowLength);
+            }
+
+            CombatPoint.AddCombatPoint(activator, target, SkillType.BlackMagic, 3);
+            Enmity.ModifyEnmity(activator, target, enmity);
+        }
+
+        private static void ApplyAOEBlizzardEffects(uint activator, uint target, int baseDamage, int enmity, float slowLength)
+        {
+            if (!StatusEffect.HasStatusEffect(activator, StatusEffectType.ElementalSpread)) return;
+
+            var nth = 1;
+            var nearby = GetNearestCreature(Type.IsAlive, 1, target, nth);
+            while (GetIsObjectValid(nearby))
+            {
+                if (target == nearby) continue;
+                if (GetDistanceBetween(target, nearby) > 5.0f) break;
+
+                ApplyBlizzardEffects(activator, nearby, baseDamage, enmity, slowLength);
+
+                nth++;
+                nearby = GetNearestCreature(Type.IsAlive, 1, target, nth);
+            }
+
+            StatusEffect.Remove(activator, StatusEffectType.ElementalSpread);
+        }
+
         private static void Blizzard1(AbilityBuilder builder)
         {
             builder.Create(Feat.Blizzard1, PerkType.Blizzard)
@@ -66,14 +105,8 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                 .DisplaysVisualEffectWhenActivating()
                 .HasImpactAction((activator, target, level) =>
                 {
-                    var multiplier = 1;
-                    if (StatusEffect.HasStatusEffect(activator, StatusEffectType.ElementalSeal))
-                        multiplier = 3;
-
-                    var baseDamage = Random.D6(2) * multiplier;
-                    ApplyDamage(activator, target, baseDamage);
-                    CombatPoint.AddCombatPoint(activator, target, SkillType.BlackMagic, 3);
-                    Enmity.ModifyEnmity(activator, target, 5);
+                    ApplyBlizzardEffects(activator, target, Random.D6(2), 5, 0.0f);
+                    ApplyAOEBlizzardEffects(activator, target, Random.D6(2), 5, 0.0f);
                 });
         }
 
@@ -88,15 +121,8 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                 .DisplaysVisualEffectWhenActivating()
                 .HasImpactAction((activator, target, level) =>
                 {
-                    var multiplier = 1;
-                    if (StatusEffect.HasStatusEffect(activator, StatusEffectType.ElementalSeal))
-                        multiplier = 3;
-
-                    var baseDamage = Random.D8(2) * multiplier;
-                    ApplyDamage(activator, target, baseDamage);
-                    ApplyEffectToObject(DurationType.Temporary, EffectMovementSpeedDecrease(25), target, 15f);
-                    CombatPoint.AddCombatPoint(activator, target, SkillType.BlackMagic, 3);
-                    Enmity.ModifyEnmity(activator, target, 10);
+                    ApplyBlizzardEffects(activator, target, Random.D8(2), 10, 15f);
+                    ApplyAOEBlizzardEffects(activator, target, Random.D8(2), 10, 15f);
                 });
         }
 
@@ -111,15 +137,8 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                 .DisplaysVisualEffectWhenActivating()
                 .HasImpactAction((activator, target, level) =>
                 {
-                    var multiplier = 1;
-                    if (StatusEffect.HasStatusEffect(activator, StatusEffectType.ElementalSeal))
-                        multiplier = 3;
-
-                    var baseDamage = Random.D12(2) * multiplier;
-                    ApplyDamage(activator, target, baseDamage);
-                    ApplyEffectToObject(DurationType.Temporary, EffectMovementSpeedDecrease(25), target, 30f);
-                    CombatPoint.AddCombatPoint(activator, target, SkillType.BlackMagic, 3);
-                    Enmity.ModifyEnmity(activator, target, 15);
+                    ApplyBlizzardEffects(activator, target, Random.D8(2), 10, 30f);
+                    ApplyAOEBlizzardEffects(activator, target, Random.D8(2), 10, 30f);
                 });
         }
     }

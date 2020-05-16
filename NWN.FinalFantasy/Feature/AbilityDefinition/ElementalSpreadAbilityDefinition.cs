@@ -13,7 +13,7 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
             var builder = new AbilityBuilder()
                 .Create(Feat.ElementalSpread, PerkType.ElementalSpread)
                 .Name("Elemental Spread")
-                .HasRecastDelay(RecastGroup.ElementalSpread, 60f)
+                .HasRecastDelay(RecastGroup.ElementalSpread, 600f)
                 .HasActivationDelay(1f)
                 .RequirementMP(10)
                 .UsesActivationType(AbilityActivationType.Casted)

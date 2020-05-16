@@ -27,6 +27,7 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                 .Name("Invincible")
                 .HasRecastDelay(RecastGroup.OneHourAbility, 3600f)
                 .UsesActivationType(AbilityActivationType.Casted)
+                .RequirementStamina(50)
                 .HasImpactAction((activator, target, level) =>
                 {
                     StatusEffect.Apply(activator, target, StatusEffectType.Invincible, 30.0f);
@@ -42,6 +43,7 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                 .Name("Hundred Fists")
                 .HasRecastDelay(RecastGroup.OneHourAbility, 3600f)
                 .UsesActivationType(AbilityActivationType.Casted)
+                .RequirementStamina(50)
                 .HasImpactAction((activator, target, level) =>
                 {
                     CombatPoint.AddCombatPointToAllTagged(activator, SkillType.Chi, 5);
@@ -62,6 +64,7 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                 .DisplaysVisualEffectWhenActivating()
                 .HasRecastDelay(RecastGroup.OneHourAbility, 3600f)
                 .UsesActivationType(AbilityActivationType.Casted)
+                .RequirementMP(50)
                 .HasImpactAction((activator, target, level) =>
                 {
                     var members = Party.GetAllPartyMembersWithinRange(activator, 15.0f);
@@ -85,6 +88,7 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                 .DisplaysVisualEffectWhenActivating()
                 .HasRecastDelay(RecastGroup.OneHourAbility, 3600f)
                 .UsesActivationType(AbilityActivationType.Casted)
+                .RequirementMP(50)
                 .HasImpactAction((activator, target, level) =>
                 {
                     StatusEffect.Apply(activator, target, StatusEffectType.ElementalSeal, 30f);

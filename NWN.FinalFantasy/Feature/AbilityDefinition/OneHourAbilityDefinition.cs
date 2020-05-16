@@ -14,6 +14,7 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
         {
             var builder = new AbilityBuilder();
             Invincible(builder);
+            HundredFists(builder);
             Benediction(builder);
             ElementalSeal(builder);
 
@@ -32,6 +33,25 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                     CombatPoint.AddCombatPointToAllTagged(activator, SkillType.Chivalry, 5);
                     Enmity.ModifyEnmityOnAll(activator, 500);
                     ApplyEffectToObject(DurationType.Instant, EffectVisualEffect(VisualEffect.Vfx_Fnf_Sound_Burst), target);
+                });
+        }
+
+        private static void HundredFists(AbilityBuilder builder)
+        {
+            builder.Create(Feat.HundredFists, PerkType.HundredFists)
+                .Name("Hundred Fists")
+                .HasRecastDelay(RecastGroup.OneHourAbility, 3600f)
+                .UsesActivationType(AbilityActivationType.Casted)
+                .HasImpactAction((activator, target, level) =>
+                {
+                    CombatPoint.AddCombatPointToAllTagged(activator, SkillType.Chi, 5);
+                    Enmity.ModifyEnmityOnAll(activator, 250);
+
+                    var effect = EffectLinkEffects(EffectHaste(), EffectModifyAttacks(5));
+                    effect = TagEffect(effect, "HUNDRED_FISTS");
+
+                    ApplyEffectToObject(DurationType.Temporary, effect, target, 30.0f);
+                    ApplyEffectToObject(DurationType.Instant, EffectVisualEffect(VisualEffect.Vfx_Imp_Knock), target);
                 });
         }
 

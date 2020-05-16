@@ -26,7 +26,9 @@ namespace NWN.FinalFantasy.Service.AbilityService
         [RecastGroup("Subtle Blow", "Subtle Blow")]
         SubtleBlow = 8,
         [RecastGroup("Inner Healing", "Inner Healing")]
-        InnerHealing = 9
+        InnerHealing = 9,
+        [RecastGroup("Valor", "Valor")]
+        Valor = 10,
     }
 
     public class RecastGroupAttribute: Attribute

@@ -1,7 +1,10 @@
 ﻿using System.Collections.Generic;
 using NWN.FinalFantasy.Core.NWScript.Enum;
+using NWN.FinalFantasy.Entity;
 using NWN.FinalFantasy.Enumeration;
+using NWN.FinalFantasy.Service;
 using NWN.FinalFantasy.Service.PerkService;
+using static NWN.FinalFantasy.Core.NWScript.NWScript;
 
 namespace NWN.FinalFantasy.Feature.PerkDefinition
 {
@@ -127,6 +130,21 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
             builder.Create(PerkCategoryType.BlackMage, PerkType.MPBoost)
                 .Name("MP Boost")
                 .Description("Increases your maximum MP pool.")
+                .TriggerPurchase((player, type, level) =>
+                {
+                    var playerId = GetObjectUUID(player);
+                    var dbPlayer = DB.Get<Player>(playerId);
+                    Stat.AdjustMaxMP(dbPlayer, 10);
+                    DB.Set(playerId, dbPlayer);
+                })
+                .TriggerRefund((player, type, level) =>
+                {
+                    var amountToRemove = level * 10;
+                    var playerId = GetObjectUUID(player);
+                    var dbPlayer = DB.Get<Player>(playerId);
+                    Stat.AdjustMaxMP(dbPlayer, -amountToRemove);
+                    DB.Set(playerId, dbPlayer);
+                })
 
                 .AddPerkLevel()
                 .Description("Increases your maximum MP by 10.")

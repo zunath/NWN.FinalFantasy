@@ -228,9 +228,9 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 
                 .AddPerkLevel()
                 .Description("Grants the Sleep ability.")
-                //.RequirementSkill(SkillType.BlackMagic, 10)
-                //.RequirementSkill(SkillType.Staff, 5)
-                //.Price(2)
+                .RequirementSkill(SkillType.BlackMagic, 10)
+                .RequirementSkill(SkillType.Staff, 5)
+                .Price(2)
                 .GrantsFeat(Feat.Sleep);
         }
 

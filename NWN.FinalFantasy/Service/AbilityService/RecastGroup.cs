@@ -31,6 +31,8 @@ namespace NWN.FinalFantasy.Service.AbilityService
         Valor = 10,
         [RecastGroup("Chakra", "Chakra")]
         Chakra = 11,
+        [RecastGroup("Electric Fist", "Elec. Fist")]
+        ElectricFist = 12,
     }
 
     public class RecastGroupAttribute: Attribute

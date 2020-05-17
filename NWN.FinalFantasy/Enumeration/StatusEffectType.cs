@@ -11,5 +11,6 @@
         SubtleBlow2 = 7,
         Poison1 = 8,
         Poison2 = 9,
+        Static = 10,
     }
 }

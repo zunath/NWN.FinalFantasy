@@ -1,7 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using NWN.FinalFantasy.Core;
 using NWN.FinalFantasy.Core.NWScript.Enum;
+using NWN.FinalFantasy.Core.NWScript.Enum.Item;
 using NWN.FinalFantasy.Enumeration;
+using NWN.FinalFantasy.Service;
 using NWN.FinalFantasy.Service.PerkService;
+using static NWN.FinalFantasy.Core.NWScript.NWScript;
 
 namespace NWN.FinalFantasy.Feature.PerkDefinition
 {
@@ -99,9 +104,62 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
 
         private static void ShieldProficiency(PerkBuilder builder)
         {
+            const string EffectTag = "SHIELD_PROFICIENCY_CONCEALMENT";
+
+            static void RemoveShieldProficiencyEffect(uint player)
+            {
+                for (var effect = GetFirstEffect(player); GetIsEffectValid(effect); effect = GetNextEffect(player))
+                {
+                    if (GetEffectTag(effect) == EffectTag)
+                    {
+                        RemoveEffect(player, effect);
+                    }
+                }
+            }
+
+            static void ApplyShieldProficiency(uint player, uint item, int level)
+            {
+                var concealmentAmount = level * 2;
+
+                var newEffect = SupernaturalEffect(EffectConcealment(concealmentAmount));
+                newEffect = TagEffect(newEffect, EffectTag);
+                ApplyEffectToObject(DurationType.Permanent, newEffect, player);
+            }
+
             builder.Create(PerkCategoryType.Knight, PerkType.ShieldProficiency)
                 .Name("Shield Proficiency")
                 .Description("Increases your damage reduction when equipped with a shield.")
+                .TriggerPurchase((player, type, level) =>
+                {
+                    var item = GetItemInSlot(InventorySlot.LeftHand, player);
+                    RemoveShieldProficiencyEffect(player);
+                    ApplyShieldProficiency(player, item, level);
+                })
+                .TriggerRefund((player, type, level) =>
+                {
+                    RemoveShieldProficiencyEffect(player);
+                })
+                .TriggerEquippedItem((player, item, slot, type, level) =>
+                {
+                    var itemType = GetBaseItemType(item);
+                    if (itemType != BaseItem.SmallShield &&
+                        itemType != BaseItem.LargeShield &&
+                        itemType != BaseItem.TowerShield)
+                        return;
+
+                    ApplyShieldProficiency(player, item, level);
+                })
+                .TriggerUnequippedItem((player, item, type, level) =>
+                {
+                    // Must be equipped with a shield.
+                    var itemType = GetBaseItemType(item);
+                    if (itemType != BaseItem.SmallShield &&
+                        itemType != BaseItem.LargeShield &&
+                        itemType != BaseItem.TowerShield)
+                        return;
+
+                    RemoveShieldProficiencyEffect(player);
+                })
 
                 .AddPerkLevel()
                 .Description("Increases damage reduction by 2% when equipped with a shield.")

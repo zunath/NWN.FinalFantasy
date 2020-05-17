@@ -287,13 +287,7 @@ namespace NWN.FinalFantasy.Feature
                     currentPosition.Y != originalPosition.Y ||
                     currentPosition.Z != originalPosition.Z)
                 {
-                    for (var effect = GetFirstEffect(activator); GetIsEffectValid(effect); effect = GetNextEffect(activator))
-                    {
-                        if (GetEffectTag(effect) == "ACTIVATION_VFX")
-                        {
-                            RemoveEffect(activator, effect);
-                        }
-                    }
+                    RemoveEffectByTag(activator, "ACTIVATION_VFX");
 
                     Player.StopGuiTimingBar(activator, string.Empty);
                     SendMessageToPC(activator, "Your ability has been interrupted.");

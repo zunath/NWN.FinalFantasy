@@ -24,15 +24,8 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
         private static void ApplyBlazeSpikes(uint target, int amount, DamageBonus randomAmount)
         {
             const string EffectTag = "BLAZE_SPIKES";
-
-            for (var effect = GetFirstEffect(target); GetIsEffectValid(effect); effect = GetNextEffect(target))
-            {
-                if (GetEffectTag(effect) == EffectTag)
-                {
-                    RemoveEffect(target, effect);
-                }
-            }
-
+            RemoveEffectByTag(target, EffectTag);
+            
             var newEffect = EffectDamageShield(amount, randomAmount, DamageType.Fire);
             newEffect = TagEffect(newEffect, EffectTag);
             ApplyEffectToObject(DurationType.Temporary, newEffect, target, 300f);

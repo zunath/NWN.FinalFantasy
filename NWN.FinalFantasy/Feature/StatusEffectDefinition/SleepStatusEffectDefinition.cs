@@ -29,12 +29,7 @@ namespace NWN.FinalFantasy.Feature.StatusEffectDefinition
                 })
                 .RemoveAction(target =>
                 {
-                    for (var effect = GetFirstEffect(target); GetIsEffectValid(effect); effect = GetNextEffect(target))
-                    {
-                        if (GetEffectTag(effect) != SleepEffectTag) continue;
-
-                        RemoveEffect(target, effect);
-                    }
+                    RemoveEffectByTag(target, SleepEffectTag);
                 });
 
             return builder.Build();

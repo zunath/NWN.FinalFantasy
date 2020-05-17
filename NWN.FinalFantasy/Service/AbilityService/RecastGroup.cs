@@ -36,7 +36,9 @@ namespace NWN.FinalFantasy.Service.AbilityService
         [RecastGroup("Defender", "Defender")]
         Defender = 13,
         [RecastGroup("Ironclad", "Ironclad")]
-        Ironclad = 14
+        Ironclad = 14,
+        [RecastGroup("Spiked Defense", "Spiked Def.")]
+        SpikedDefense = 15
     }
 
     public class RecastGroupAttribute: Attribute

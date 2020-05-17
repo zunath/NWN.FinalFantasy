@@ -83,7 +83,8 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .AddPerkLevel()
                 .Description("Grants the Cleave ability.")
                 .RequirementSkill(SkillType.Chivalry, 10)
-                .Price(3);
+                .Price(3)
+                .GrantsFeat(Feat.Cleave);
         }
 
         private static void SpikedDefense(PerkBuilder builder)
@@ -248,9 +249,9 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
 
                 .AddPerkLevel()
                 .Description("Increases your damage resistance by 4.")
-                //.RequirementSkill(SkillType.Chivalry, 10)
-                //.RequirementSkill(SkillType.Longsword, 15)
-                //.Price(3)
+                .RequirementSkill(SkillType.Chivalry, 10)
+                .RequirementSkill(SkillType.Longsword, 15)
+                .Price(3)
                 .GrantsFeat(Feat.Ironclad1)
 
                 .AddPerkLevel()

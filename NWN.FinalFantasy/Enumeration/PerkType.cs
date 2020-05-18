@@ -23,7 +23,7 @@
         LongswordMastery = 16,
         Defender = 17,
         Ironclad = 18,
-        CircleOfScorn = 19,
+        Flash = 19,
         HPBoostKnight = 20,
         KatanaProficiency = 21,
         DualWield = 22,
@@ -34,7 +34,6 @@
         LongbowMastery = 27,
         KatanaMastery = 28,
 
-        // todo to add:
         RapierProficiency = 29,
         RapierMastery = 30,
         GunbladeProficiency = 31,

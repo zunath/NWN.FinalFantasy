@@ -21,7 +21,7 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
             Cover(builder);
             Defender(builder);
             Ironclad(builder);
-            CircleOfScorn(builder);
+            Flash(builder);
             
             return builder.Build();
         }
@@ -269,25 +269,25 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .GrantsFeat(Feat.Ironclad3);
         }
 
-        private static void CircleOfScorn(PerkBuilder builder)
+        private static void Flash(PerkBuilder builder)
         {
-            builder.Create(PerkCategoryType.Knight, PerkType.CircleOfScorn)
-                .Name("Circle of Scorn")
-                .Description("Delivers an attack which damages all nearby enemies.")
+            builder.Create(PerkCategoryType.Knight, PerkType.Flash)
+                .Name("Flash")
+                .Description("Blinds all nearby enemies and increases enmity.")
 
                 .AddPerkLevel()
-                .Description("Delivers an attack which damages all nearby enemies")
+                .Description("Blinds all nearby enemies for 30 seconds and increases enmity.")
                 .RequirementSkill(SkillType.Chivalry, 25)
                 .RequirementSkill(SkillType.Longsword, 25)
                 .Price(6)
-                .GrantsFeat(Feat.CircleOfScorn1)
+                .GrantsFeat(Feat.Flash1)
 
                 .AddPerkLevel()
-                .Description("Delivers an attack which damages all nearby enemies")
+                .Description("Blinds all nearby enemies for 45 seconds and increases enmity.")
                 .RequirementSkill(SkillType.Chivalry, 50)
                 .RequirementSkill(SkillType.Longsword, 50)
                 .Price(8)
-                .GrantsFeat(Feat.CircleOfScorn2);
+                .GrantsFeat(Feat.Flash2);
         }
     }
 }

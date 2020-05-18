@@ -42,7 +42,9 @@ namespace NWN.FinalFantasy.Service.AbilityService
         [RecastGroup("Provoke I", "Provoke I")]
         Provoke1 = 16,
         [RecastGroup("Provoke II", "Provoke II")]
-        Provoke2 = 17
+        Provoke2 = 17,
+        [RecastGroup("Flash", "Flash")]
+        Flash = 18,
     }
 
     public class RecastGroupAttribute: Attribute

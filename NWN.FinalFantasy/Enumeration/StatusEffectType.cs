@@ -17,6 +17,8 @@
         Defender3 = 13,
         Ironclad1 = 14,
         Ironclad2 = 15,
-        Ironclad3 = 16
+        Ironclad3 = 16,
+        Blind1 = 17,
+        Blind2 = 18
     }
 }

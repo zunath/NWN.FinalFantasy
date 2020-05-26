@@ -44,15 +44,15 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
 
         private static void ShieldBash(PerkBuilder builder)
         {
-            builder.Create(PerkCategoryType.Knight, PerkType.ShieldBash)
-                .Name("Shield Bash")
+            builder.Create(PerkCategoryType.Knight, PerkType.Bash)
+                .Name("Bash")
                 .Description("Deals 1d4 damage and stuns your target for a short period of time.")
 
                 .AddPerkLevel()
-                .Description("Grants the Shield Bash ability.")
+                .Description("Grants the Bash ability.")
                 .RequirementSkill(SkillType.Chivalry, 5)
                 .Price(3)
-                .GrantsFeat(Feat.ShieldBash);
+                .GrantsFeat(Feat.Bash);
         }
 
         private static void Provoke(PerkBuilder builder)

@@ -1090,7 +1090,7 @@ namespace NWN.FinalFantasy.Core.NWScript.Enum
         ChatCommandTargeter = 1116,
         OpenRestMenu = 1117,
         Invincible = 1118,
-        ShieldBash = 1119,
+        Bash = 1119,
         Provoke1 = 1120,
         Provoke2 = 1121,
         SpikedDefense = 1122,

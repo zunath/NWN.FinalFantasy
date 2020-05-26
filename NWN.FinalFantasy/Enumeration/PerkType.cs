@@ -15,7 +15,7 @@
         RodProficiency = 9,
         LongbowProficiency = 10,
 
-        ShieldBash = 11,
+        Bash = 11,
         Provoke = 12,
         Cleave = 13,
         SpikedDefense = 14,

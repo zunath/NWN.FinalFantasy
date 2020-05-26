@@ -45,6 +45,8 @@ namespace NWN.FinalFantasy.Service.AbilityService
         Provoke2 = 17,
         [RecastGroup("Flash", "Flash")]
         Flash = 18,
+        [RecastGroup("Bash", "Bash")]
+        Bash = 19,
     }
 
     public class RecastGroupAttribute: Attribute

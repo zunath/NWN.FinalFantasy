@@ -9,7 +9,7 @@ namespace NWN.FinalFantasy.Enumeration
         Unknown = 0,
 
         // Ability
-        [Skill(SkillCategoryType.Ability, "Chivalry", 50, true, "Ability to use shield bash, cleave, and other knight-related actions.", true, AbilityType.Invalid, AbilityType.Invalid)]
+        [Skill(SkillCategoryType.Ability, "Chivalry", 50, true, "Ability to use bash, cleave, and other knight-related actions.", true, AbilityType.Invalid, AbilityType.Invalid)]
         Chivalry = 1,
         [Skill(SkillCategoryType.Ability, "Chi", 50, true, "Ability to use self-buff and restoration techniques.", true, AbilityType.Invalid, AbilityType.Invalid)]
         Chi = 2,

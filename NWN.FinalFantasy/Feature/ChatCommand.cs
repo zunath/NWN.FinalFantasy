@@ -608,7 +608,7 @@ namespace NWN.FinalFantasy.Feature
 
             ChatCommands["spawngold"] = new ChatCommandDefinition(
                 "Spawns gold of a specific quantity on your character. Example: /spawngold 33",
-                CommandPermissionType.Player | CommandPermissionType.DM | CommandPermissionType.Admin,
+                CommandPermissionType.DM | CommandPermissionType.Admin,
                 (user, target, location, args) =>
                 {
                     int quantity = 1;

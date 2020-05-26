@@ -47,6 +47,8 @@ namespace NWN.FinalFantasy.Service.AbilityService
         Flash = 18,
         [RecastGroup("Bash", "Bash")]
         Bash = 19,
+        [RecastGroup("Cover", "Cover")]
+        Cover = 20,
     }
 
     public class RecastGroupAttribute: Attribute

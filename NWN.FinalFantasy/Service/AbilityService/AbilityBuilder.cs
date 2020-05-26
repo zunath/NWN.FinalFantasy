@@ -81,6 +81,21 @@ namespace NWN.FinalFantasy.Service.AbilityService
         }
 
         /// <summary>
+        /// Assigns custom validation logic on the active ability we're building.
+        /// Calling this more than once will replace the previous action.
+        /// Custom validation runs twice: Once when a creature starts to use an ability and again when they finish.
+        /// Returning a null or empty string will signify the validation passes.
+        /// </summary>
+        /// <param name="action">The action to fire when custom validation is run.</param>
+        /// <returns>An ability builder with the configured options.</returns>
+        public AbilityBuilder HasCustomValidation(AbilityCustomValidationAction action)
+        {
+            _activeAbility.CustomValidation = action;
+
+            return this;
+        }
+
+        /// <summary>
         /// Assigns an activation delay on the active ability we're building.
         /// This is typically used for casting times.
         /// Calling this more than once will replace the previous activation delay.

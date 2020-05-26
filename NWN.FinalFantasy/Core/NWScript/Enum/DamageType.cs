@@ -17,6 +17,6 @@ namespace NWN.FinalFantasy.Core.NWScript.Enum
 
         // The base weapon damage is the base damage delivered by the weapon before
         // any additional types of damage (e.g. fire) have been added.
-        BASE_WEAPON = 4096
+        BaseWeapon = 4096
     }
 }

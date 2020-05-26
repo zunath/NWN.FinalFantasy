@@ -186,5 +186,19 @@ namespace NWN.FinalFantasy.Service
             return HasStatusEffect(creature, statusEffectType, false);
         }
 
+        /// <summary>
+        /// Returns the source of a status effect which was applied onto a target creature.
+        /// If the status effect cannot be found, OBJECT_INVALID will be returned.
+        /// If source cannot be determined, OBJECT_INVALID will be returned.
+        /// </summary>
+        /// <param name="creature">The creature to check.</param>
+        /// <param name="statusEffectType">The status effect type to look for.</param>
+        /// <returns>The source of a status effect, or OBJECT_INVALID if it cannot be determined.</returns>
+        public static uint GetSource(uint creature, StatusEffectType statusEffectType)
+        {
+            if (!HasStatusEffect(creature, statusEffectType)) return OBJECT_INVALID;
+            return _creaturesWithStatusEffects[creature][statusEffectType].Source;
+        }
+
     }
 }

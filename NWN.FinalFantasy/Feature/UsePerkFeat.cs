@@ -114,6 +114,14 @@ namespace NWN.FinalFantasy.Feature
                 }
             }
 
+            // Perk-specific custom validation logic.
+            var customValidationResult = ability.CustomValidation == null ? string.Empty : ability.CustomValidation(activator, target, effectivePerkLevel);
+            if (!string.IsNullOrWhiteSpace(customValidationResult))
+            {
+                SendMessageToPC(activator, customValidationResult);
+                return false;
+            }
+
             // Check if ability is on a recast timer still.
             if (IsOnRecastDelay(activator, ability.RecastGroup))
             {

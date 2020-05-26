@@ -19,6 +19,10 @@
         Ironclad2 = 15,
         Ironclad3 = 16,
         Blind1 = 17,
-        Blind2 = 18
+        Blind2 = 18,
+        Cover1 = 19,
+        Cover2 = 20,
+        Cover3 = 21,
+        Cover4 = 22
     }
 }

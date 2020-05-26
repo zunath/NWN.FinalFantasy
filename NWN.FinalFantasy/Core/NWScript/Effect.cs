@@ -397,7 +397,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         /// </summary>
         public static Effect EffectACIncrease(int nValue,
             ArmorClassModiferType nModifyType = ArmorClassModiferType.Dodge,
-            DamageType nDamageType = DamageType.Magical)
+            AC nDamageType = AC.VsDamageTypeAll)
         {
             Internal.NativeFunctions.StackPushInteger((int)nDamageType);
             Internal.NativeFunctions.StackPushInteger((int)nModifyType);
@@ -984,7 +984,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         /// </summary>
         public static Effect EffectACDecrease(int nValue,
             ArmorClassModiferType nModifyType = ArmorClassModiferType.Dodge,
-            DamageType nDamageType = DamageType.Magical)
+            AC nDamageType = AC.VsDamageTypeAll)
         {
             Internal.NativeFunctions.StackPushInteger((int)nDamageType);
             Internal.NativeFunctions.StackPushInteger((int)nModifyType);

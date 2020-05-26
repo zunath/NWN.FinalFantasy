@@ -1,10 +1,13 @@
 ﻿using System.Collections.Generic;
 using NWN.FinalFantasy.Core.NWScript.Enum;
+using NWN.FinalFantasy.Core.NWScript.Enum.Item.Property;
 using NWN.FinalFantasy.Core.NWScript.Enum.VisualEffect;
 using NWN.FinalFantasy.Enumeration;
 using NWN.FinalFantasy.Service;
 using NWN.FinalFantasy.Service.AbilityService;
 using static NWN.FinalFantasy.Core.NWScript.NWScript;
+using DamageType = NWN.FinalFantasy.Core.NWScript.Enum.DamageType;
+using Feat = NWN.FinalFantasy.Core.NWScript.Enum.Feat;
 
 namespace NWN.FinalFantasy.Feature.AbilityDefinition
 {
@@ -17,6 +20,7 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
             HundredFists(builder);
             Benediction(builder);
             ElementalSeal(builder);
+            PerfectDodge(builder);
 
             return builder.Build();
         }
@@ -96,6 +100,20 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
 
                     CombatPoint.AddCombatPointToAllTagged(activator, SkillType.BlackMagic, 5);
                     Enmity.ModifyEnmityOnAll(activator, 300);
+                });
+        }
+
+        private static void PerfectDodge(AbilityBuilder builder)
+        {
+            builder.Create(Feat.PerfectDodge, PerkType.PerfectDodge)
+                .Name("Perfect Dodge")
+                .HasRecastDelay(RecastGroup.OneHourAbility, 3600f)
+                .UsesActivationType(AbilityActivationType.Casted)
+                .RequirementStamina(50)
+                .HasImpactAction((activator, target, level) =>
+                {
+                    ApplyEffectToObject(DurationType.Temporary, EffectACIncrease(20), target, 30f);
+                    ApplyEffectToObject(DurationType.Temporary, EffectVisualEffect(VisualEffect.Vfx_Dur_Pixiedust), target, 30f);
                 });
         }
 

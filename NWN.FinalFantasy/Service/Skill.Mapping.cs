@@ -25,12 +25,17 @@ namespace NWN.FinalFantasy.Service
         private static void LoadItemToSkillMapping()
         {
             Console.WriteLine("Loading item to skill mappings.");
-            _itemToSkillMapping[BaseItem.Longsword] = SkillType.Longsword;
-            _itemToSkillMapping[BaseItem.Gloves] = SkillType.Knuckles;
-            _itemToSkillMapping[BaseItem.Dagger] = SkillType.Dagger;
-            _itemToSkillMapping[BaseItem.QuarterStaff] = SkillType.Staff;
-            _itemToSkillMapping[BaseItem.LightMace] = SkillType.Rod;
-            _itemToSkillMapping[BaseItem.Longbow] = SkillType.Longbow;
+            _itemToSkillMapping[BaseItem.Longsword] = SkillType.Longsword;   // Knight
+            _itemToSkillMapping[BaseItem.Gloves] = SkillType.Knuckles;       // Monk
+            _itemToSkillMapping[BaseItem.Dagger] = SkillType.Dagger;         // Thief
+            _itemToSkillMapping[BaseItem.QuarterStaff] = SkillType.Staff;    // Black Mage
+            _itemToSkillMapping[BaseItem.LightMace] = SkillType.Rod;         // White Mage
+            _itemToSkillMapping[BaseItem.Rapier] = SkillType.Rapier;         // Red Mage
+            _itemToSkillMapping[BaseItem.Longbow] = SkillType.Longbow;       // Ranger
+            _itemToSkillMapping[BaseItem.Katana] = SkillType.Katana;         // Ninja
+            _itemToSkillMapping[BaseItem.Gunblade] = SkillType.Gunblade;     // Specialist
+            _itemToSkillMapping[BaseItem.Rifle] = SkillType.Rifle;           // Sniper
+            _itemToSkillMapping[BaseItem.GreatSword] = SkillType.GreatSword; // Dark Knight
             Console.WriteLine("Completed item to skill mappings successfully.");
         }
 

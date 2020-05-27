@@ -49,6 +49,10 @@ namespace NWN.FinalFantasy.Service.AbilityService
         Bash = 19,
         [RecastGroup("Cover", "Cover")]
         Cover = 20,
+        [RecastGroup("Flee", "Flee")]
+        Flee = 21,
+        [RecastGroup("Hide", "Hide")]
+        Hide = 22,
     }
 
     public class RecastGroupAttribute: Attribute

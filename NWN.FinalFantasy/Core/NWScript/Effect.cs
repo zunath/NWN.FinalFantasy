@@ -796,9 +796,9 @@ namespace NWN.FinalFantasy.Core.NWScript
         ///   * Returns an effect of type EFFECT_TYPE_INVALIDEFFECT if nInvisibilityType
         ///   is invalid.
         /// </summary>
-        public static Effect EffectInvisibility(int nInvisibilityType)
+        public static Effect EffectInvisibility(InvisibilityType nInvisibilityType)
         {
-            Internal.NativeFunctions.StackPushInteger(nInvisibilityType);
+            Internal.NativeFunctions.StackPushInteger((int)nInvisibilityType);
             Internal.NativeFunctions.CallBuiltIn(457);
             return new Effect(Internal.NativeFunctions.StackPopEffect());
         }

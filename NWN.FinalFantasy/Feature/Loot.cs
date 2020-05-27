@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using NWN.FinalFantasy.Core;
+using NWN.FinalFantasy.Enumeration;
 using NWN.FinalFantasy.Service;
 using NWN.FinalFantasy.Service.LootService;
 using static NWN.FinalFantasy.Core.NWScript.NWScript;
@@ -45,11 +46,14 @@ namespace NWN.FinalFantasy.Feature
             }
         }
 
-        [NWNEventHandler("crea_spawn")]
+        [NWNEventHandler("crea_death")]
         public static void SpawnLoot()
         {
             var creature = OBJECT_SELF;
             var lootTableEntries = GetLootTableDetails(creature);
+            var gilfinderLevel = GetLocalInt(creature, "GILFINDER_LEVEL");
+            var gilPercentIncrease = gilfinderLevel * 0.2f;
+            var treasureHunterLevel = GetLocalInt(creature, "TREASURE_HUNTER_LEVEL");
 
             foreach (var entry in lootTableEntries)
             {
@@ -90,8 +94,14 @@ namespace NWN.FinalFantasy.Feature
                 {
                     if (Random.D100(1) > chance) continue;
 
-                    var item = table.GetRandomItem();
+                    var item = table.GetRandomItem(treasureHunterLevel);
                     var quantity = Random.Next(item.MaxQuantity) + 1;
+
+                    // Gilfinder perk - Increase the quantity of gold found.
+                    if (item.Resref == "nw_it_gold001")
+                    {
+                        quantity += (int)(quantity * gilPercentIncrease);
+                    }
 
                     CreateItemOnObject(item.Resref, creature, quantity);
                 }
@@ -137,6 +147,37 @@ namespace NWN.FinalFantasy.Feature
             }
 
             return lootTables;
+        }
+
+        /// <summary>
+        /// When a creature is hit by another creature with the Gilfinder or Treasure Hunter perk,
+        /// a local variable is set on the creature which will be picked up when spawning items.
+        /// These will be checked later when the creature dies and loot is spawned.
+        /// </summary>
+        [NWNEventHandler("item_on_hit")]
+        public static void MarkGilfinderAndTreasureHunterOnTarget()
+        {
+            var player = OBJECT_SELF;
+            if (!GetIsPC(player) || GetIsDM(player) || !GetIsObjectValid(player)) return;
+
+            var target = GetSpellTargetObject();
+            if (GetIsPC(target) || GetIsDM(target)) return;
+
+            var currentGilfinder = GetLocalInt(target, "GILFINDER_LEVEL");
+            var currentTreasureHunter = GetLocalInt(target, "TREASURE_HUNTER_LEVEL");
+
+            var effectiveGilfinderLevel = Perk.GetEffectivePerkLevel(player, PerkType.Gilfinder);
+            var effectiveTreasureHunterLevel = Perk.GetEffectivePerkLevel(player, PerkType.TreasureHunter);
+
+            if (effectiveGilfinderLevel > currentGilfinder)
+            {
+                SetLocalInt(target, "GILFINDER_LEVEL", effectiveGilfinderLevel);
+            }
+
+            if (effectiveTreasureHunterLevel > currentTreasureHunter)
+            {
+                SetLocalInt(target, "TREASURE_HUNTER_LEVEL", effectiveTreasureHunterLevel);
+            }
         }
     }
 }

@@ -28,10 +28,11 @@ namespace NWN.FinalFantasy.Service.LootService
         /// <param name="resref">The resref of the item</param>
         /// <param name="frequency">The weighted frequency chance of the item to drop</param>
         /// <param name="maxQuantity">The max quantity of this item to drop. A random value is selected, not to exceed this value.</param>
+        /// <param name="isRare">If true, item frequency will be adjusted by the Treasure Hunter perk.</param>
         /// <returns>A loot table builder with the configured settings.</returns>
-        public LootTableBuilder AddItem(string resref, int frequency, int maxQuantity = 1)
+        public LootTableBuilder AddItem(string resref, int frequency, int maxQuantity = 1, bool isRare = false)
         {
-            ActiveTable.Add(new LootTableItem(resref, maxQuantity, frequency));
+            ActiveTable.Add(new LootTableItem(resref, maxQuantity, frequency, isRare));
 
             return this;
         }
@@ -45,7 +46,7 @@ namespace NWN.FinalFantasy.Service.LootService
         public LootTableBuilder AddGold(int maxAmount, int frequency)
         {
             const string GoldResref = "nw_it_gold001";
-            ActiveTable.Add(new LootTableItem(GoldResref, maxAmount, frequency));
+            ActiveTable.Add(new LootTableItem(GoldResref, maxAmount, frequency, false));
 
             return this;
         }

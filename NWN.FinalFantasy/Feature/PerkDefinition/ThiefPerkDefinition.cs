@@ -140,15 +140,15 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
         {
             builder.Create(PerkCategoryType.Thief, PerkType.TreasureHunter)
                 .Name("Treasure Hunter")
-                .Description("Increases the chance of getting treasure.")
+                .Description("Increases the chance of getting rare treasure.")
 
                 .AddPerkLevel()
-                .Description("Increases the chance of getting treasure.")
+                .Description("Increases the chance of getting rare treasure.")
                 .RequirementSkill(SkillType.Thievery, 35)
                 .Price(4)
 
                 .AddPerkLevel()
-                .Description("Increases the chance of getting treasure.")
+                .Description("Increases the chance of getting rare treasure.")
                 .RequirementSkill(SkillType.Thievery, 50)
                 .Price(4);
         }

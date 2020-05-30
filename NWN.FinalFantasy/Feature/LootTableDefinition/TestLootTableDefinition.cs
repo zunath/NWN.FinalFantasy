@@ -9,7 +9,12 @@ namespace NWN.FinalFantasy.Feature.LootTableDefinition
         {
             var builder = new LootTableBuilder()
                 .Create("myLoot")
-                .AddItem("nw_waxgr001", 50);
+                .AddItem("nw_waxgr001", 50)
+
+                .Create("steal_test")
+                .AddItem("nw_it_mpotion001", 50);
+
+
 
             return builder.Build();
         }

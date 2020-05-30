@@ -23,6 +23,7 @@
         Cover1 = 19,
         Cover2 = 20,
         Cover3 = 21,
-        Cover4 = 22
+        Cover4 = 22,
+        Poison3 = 23,
     }
 }

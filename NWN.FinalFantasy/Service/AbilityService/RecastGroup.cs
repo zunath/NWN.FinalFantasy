@@ -53,6 +53,10 @@ namespace NWN.FinalFantasy.Service.AbilityService
         Flee = 21,
         [RecastGroup("Hide", "Hide")]
         Hide = 22,
+        [RecastGroup("Wasp Sting", "Wasp Sting")]
+        WaspSting = 23,
+        [RecastGroup("Shadowstitch", "Shadowstitch")]
+        Shadowstitch = 24,
     }
 
     public class RecastGroupAttribute: Attribute

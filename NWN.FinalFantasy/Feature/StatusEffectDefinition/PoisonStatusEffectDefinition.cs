@@ -25,7 +25,7 @@ namespace NWN.FinalFantasy.Feature.StatusEffectDefinition
                 .EffectIcon(137)
                 .TickAction((activator, target) =>
                 {
-                    var damage = Random.D3(1);
+                    var damage = Random.D4(1);
 
                     AssignCommand(activator, () =>
                     {
@@ -41,7 +41,23 @@ namespace NWN.FinalFantasy.Feature.StatusEffectDefinition
                 .EffectIcon(138)
                 .TickAction((activator, target) =>
                 {
-                    var damage = Random.D3(2);
+                    var damage = Random.D8(1);
+
+                    AssignCommand(activator, () =>
+                    {
+                        ApplyEffectToObject(DurationType.Instant, EffectDamage(damage, DamageType.Acid), target);
+                    });
+                });
+        }
+
+        private static void Poison3(StatusEffectBuilder builder)
+        {
+            builder.Create(StatusEffectType.Poison3)
+                .Name("Poison III")
+                .EffectIcon(152)
+                .TickAction((activator, target) =>
+                {
+                    var damage = Random.D6(2);
 
                     AssignCommand(activator, () =>
                     {

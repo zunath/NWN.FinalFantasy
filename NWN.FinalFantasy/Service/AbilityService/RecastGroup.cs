@@ -57,6 +57,12 @@ namespace NWN.FinalFantasy.Service.AbilityService
         WaspSting = 23,
         [RecastGroup("Shadowstitch", "Shadowstitch")]
         Shadowstitch = 24,
+        [RecastGroup("Sneak Attack", "Sneak Atk.")]
+        SneakAttack = 25,
+        [RecastGroup("Life Steal", "Life Steal")]
+        LifeSteal = 26,
+        [RecastGroup("Steal", "Steal")]
+        Steal = 27,
     }
 
     public class RecastGroupAttribute: Attribute

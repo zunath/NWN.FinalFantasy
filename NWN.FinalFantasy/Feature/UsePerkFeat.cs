@@ -396,13 +396,8 @@ namespace NWN.FinalFantasy.Feature
 
             if (!Ability.IsFeatRegistered(activeWeaponAbility)) return;
 
-            var perk = Ability.GetAbilityDetail(activeWeaponAbility);
-            if (!CanUseAbility(activator, target, perk, activeAbilityEffectivePerkLevel))
-            {
-                return;
-            }
-
-            perk.ImpactAction?.Invoke(activator, target, activeAbilityEffectivePerkLevel);
+            var abilityDetail = Ability.GetAbilityDetail(activeWeaponAbility);
+            abilityDetail.ImpactAction?.Invoke(activator, target, activeAbilityEffectivePerkLevel);
 
             DeleteLocalInt(activator, ActiveAbilityName);
             DeleteLocalString(activator, ActiveAbilityIdName);

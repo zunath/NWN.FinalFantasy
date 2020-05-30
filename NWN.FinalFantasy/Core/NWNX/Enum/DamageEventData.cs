@@ -177,6 +177,38 @@ namespace NWN.FinalFantasy.Core.NWNX.Enum
             }
         }
 
+        private static int CalculateAdjustment(int original, float percent)
+        {
+            if (original <= -1) return -1;
+
+            var output = (int)(original + original * percent);
+            if (original <= 0)
+                output = 0;
+
+            return output;
+        }
+
+        /// <summary>
+        /// Adjusts all damage amounts by a specified percentage.
+        /// E.G: 0.5 will increase all values by 50%.
+        /// </summary>
+        /// <param name="percent"></param>
+        public void AdjustAllByPercent(float percent)
+        {
+            Bludgeoning = CalculateAdjustment(Bludgeoning, percent);
+            Pierce = CalculateAdjustment(Pierce, percent);
+            Slash = CalculateAdjustment(Slash, percent);
+            Magical = CalculateAdjustment(Magical, percent);
+            Acid = CalculateAdjustment(Acid, percent);
+            Cold = CalculateAdjustment(Cold, percent);
+            Divine = CalculateAdjustment(Divine, percent);
+            Electrical = CalculateAdjustment(Electrical, percent);
+            Fire = CalculateAdjustment(Fire, percent);
+            Negative = CalculateAdjustment(Negative, percent);
+            Positive = CalculateAdjustment(Positive, percent);
+            Sonic = CalculateAdjustment(Sonic, percent);
+            Base = CalculateAdjustment(Base, percent);
+        }
 
         public int Total => (Bludgeoning < 0 ? 0 : Bludgeoning) +
                             (Pierce < 0 ? 0 : Pierce) +

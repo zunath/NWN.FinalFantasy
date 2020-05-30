@@ -225,15 +225,15 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .Description("Your next melee attack will do extra damage when striking an enemy from behind.")
                 
                 .AddPerkLevel()
-                .Description("Damage will increase by 50%.")
-                .RequirementSkill(SkillType.Thievery, 25)
-                .Price(4)
+                .Description("Damage will increase by 25%.")
+                //.RequirementSkill(SkillType.Thievery, 25)
+                //.Price(4)
                 .GrantsFeat(Feat.SneakAttack1)
 
                 .AddPerkLevel()
-                .Description("Damage will increase by 100%.")
-                .RequirementSkill(SkillType.Thievery, 50)
-                .Price(4)
+                .Description("Damage will increase by 50%.")
+                //.RequirementSkill(SkillType.Thievery, 50)
+                //.Price(4)
                 .GrantsFeat(Feat.SneakAttack2);
         }
 

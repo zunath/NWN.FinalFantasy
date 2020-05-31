@@ -21,6 +21,7 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
             Benediction(builder);
             ElementalSeal(builder);
             PerfectDodge(builder);
+            Manafont(builder);
 
             return builder.Build();
         }
@@ -117,5 +118,18 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                 });
         }
 
+        private static void Manafont(AbilityBuilder builder)
+        {
+            builder.Create(Feat.Manafont, PerkType.Manafont)
+                .Name("Manafont")
+                .HasRecastDelay(RecastGroup.OneHourAbility, 3600f)
+                .UsesActivationType(AbilityActivationType.Casted)
+                .RequirementMP(50)
+                .HasImpactAction((activator, target, level) =>
+                {
+                    StatusEffect.Apply(activator, target, StatusEffectType.Manafont, 30f);
+                    ApplyEffectToObject(DurationType.Instant, EffectVisualEffect(VisualEffect.Vfx_Fnf_Sound_Burst), target);
+                });
+        }
     }
 }

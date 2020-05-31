@@ -10,6 +10,7 @@ namespace NWN.FinalFantasy.Feature.StatusEffectDefinition
         {
             var builder = new StatusEffectBuilder();
             ElementalSeal(builder);
+            Manafont(builder);
 
             return builder.Build();
         }
@@ -20,6 +21,14 @@ namespace NWN.FinalFantasy.Feature.StatusEffectDefinition
                 .Create(StatusEffectType.ElementalSeal)
                 .Name("Elemental Seal")
                 .EffectIcon(132);
+        }
+
+        private void Manafont(StatusEffectBuilder builder)
+        {
+            builder
+                .Create(StatusEffectType.Manafont)
+                .Name("Manafont")
+                .EffectIcon(156);
         }
     }
 }

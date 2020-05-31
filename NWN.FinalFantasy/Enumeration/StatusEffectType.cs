@@ -27,6 +27,7 @@
         Poison3 = 23,
         Dia1 = 24,
         Dia2 = 25,
-        Dia3 = 26
+        Dia3 = 26,
+        Manafont = 27
     }
 }

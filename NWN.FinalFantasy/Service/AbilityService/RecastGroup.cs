@@ -89,6 +89,8 @@ namespace NWN.FinalFantasy.Service.AbilityService
         Curaga1 = 39,
         [RecastGroup("Curaga II", "Curaga II")]
         Curaga2 = 40,
+        [RecastGroup("Transfer", "Transfer")]
+        Transfer = 41,
     }
 
     public class RecastGroupAttribute: Attribute

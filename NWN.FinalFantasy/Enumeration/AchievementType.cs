@@ -40,6 +40,26 @@ namespace NWN.FinalFantasy.Enumeration
         GainSkills5 = 16,
         [Achievement("Gain Skill Points VI", "Gain 1000 Skill Points", true)]
         GainSkills6 = 17,
+        [Achievement("Complete Quests I", "Complete 1 Quest", true)]
+        CompleteQuests1 = 18,
+        [Achievement("Complete Quests II", "Complete 10 Quests", true)]
+        CompleteQuests2 = 19,
+        [Achievement("Complete Quests III", "Complete 50 Quests", true)]
+        CompleteQuests3 = 20,
+        [Achievement("Complete Quests IV", "Complete 100 Quests", true)]
+        CompleteQuests4 = 21,
+        [Achievement("Complete Quests V", "Complete 500 Quests", true)]
+        CompleteQuests5 = 22,
+        [Achievement("Complete Quests VI", "Complete 1000 Quests", true)]
+        CompleteQuests6 = 23,
+        [Achievement("Complete Quests VII", "Complete 1500 Quests", true)]
+        CompleteQuests7 = 24,
+        [Achievement("Complete Quests VIII", "Complete 2000 Quests", true)]
+        CompleteQuests8 = 25,
+        [Achievement("Complete Quests IX", "Complete 3500 Quests", true)]
+        CompleteQuests9 = 26,
+        [Achievement("Complete Quests X", "Complete 5000 Quests", true)]
+        CompleteQuests10 = 27,
     }
 
     public class AchievementAttribute: Attribute

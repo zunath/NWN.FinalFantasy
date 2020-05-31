@@ -145,5 +145,64 @@ namespace NWN.FinalFantasy.Feature
                 Achievement.GiveAchievement(player, AchievementType.GainSkills6);
             }
         }
+
+        /// <summary>
+        /// Handles the Complete Quests line of achievements.
+        /// </summary>
+        [NWNEventHandler("ffo_complete_qst")]
+        public static void CompleteQuests()
+        {
+            var player = OBJECT_SELF;
+            if (!GetIsPC(player) || GetIsDM(player)) return;
+
+            var cdKey = GetPCPublicCDKey(player);
+            var dbAccount = DB.Get<Account>(cdKey);
+
+            dbAccount.AchievementProgress.QuestsCompleted++;
+            DB.Set(cdKey, dbAccount);
+
+            var numberCompleted = dbAccount.AchievementProgress.QuestsCompleted;
+
+            if (numberCompleted >= 1)
+            {
+                Achievement.GiveAchievement(player, AchievementType.CompleteQuests1);
+            }
+            if (numberCompleted >= 10)
+            {
+                Achievement.GiveAchievement(player, AchievementType.CompleteQuests2);
+            }
+            if (numberCompleted >= 50)
+            {
+                Achievement.GiveAchievement(player, AchievementType.CompleteQuests3);
+            }
+            if (numberCompleted >= 100)
+            {
+                Achievement.GiveAchievement(player, AchievementType.CompleteQuests4);
+            }
+            if (numberCompleted >= 500)
+            {
+                Achievement.GiveAchievement(player, AchievementType.CompleteQuests5);
+            }
+            if (numberCompleted >= 1000)
+            {
+                Achievement.GiveAchievement(player, AchievementType.CompleteQuests6);
+            }
+            if (numberCompleted >= 1500)
+            {
+                Achievement.GiveAchievement(player, AchievementType.CompleteQuests7);
+            }
+            if (numberCompleted >= 2000)
+            {
+                Achievement.GiveAchievement(player, AchievementType.CompleteQuests8);
+            }
+            if (numberCompleted >= 3500)
+            {
+                Achievement.GiveAchievement(player, AchievementType.CompleteQuests9);
+            }
+            if (numberCompleted >= 5000)
+            {
+                Achievement.GiveAchievement(player, AchievementType.CompleteQuests10);
+            }
+        }
     }
 }

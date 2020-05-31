@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using NWN.FinalFantasy.Core.NWNX;
 using NWN.FinalFantasy.Entity;
 using static NWN.FinalFantasy.Core.NWScript.NWScript;
+using Player = NWN.FinalFantasy.Entity.Player;
 
 namespace NWN.FinalFantasy.Service.QuestService
 {
@@ -347,6 +349,8 @@ namespace NWN.FinalFantasy.Service.QuestService
 
             SendMessageToPC(player, "Quest '" + Name + "' complete!");
             RemoveJournalQuestEntry(JournalTag, player, false);
+
+            Events.SignalEvent("FFO_COMPLETE_QUEST", player);
         }
     }
 }

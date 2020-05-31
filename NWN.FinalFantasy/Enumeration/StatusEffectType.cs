@@ -28,6 +28,9 @@
         Dia1 = 24,
         Dia2 = 25,
         Dia3 = 26,
-        Manafont = 27
+        Manafont = 27,
+        Bleed1 = 28,
+        Bleed2 = 29,
+        Bleed3 = 30,
     }
 }

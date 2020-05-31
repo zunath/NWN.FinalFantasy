@@ -169,7 +169,7 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .GrantsFeat(Feat.RecoveryStab2)
 
                 .AddPerkLevel()
-                .Description("Restores 3d8 HP to all nearby party members and grants Regen for 20 seconds.")
+                .Description("Restores 3d8 HP to all nearby party members and grants Regen for 24 seconds.")
                 .RequirementSkill(SkillType.RedMagic, 45)
                 .RequirementSkill(SkillType.Rapier, 45)
                 .Price(4)

@@ -45,7 +45,7 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
 
             AssignCommand(activator, () =>
             {
-                ApplyEffectToObject(DurationType.Instant, EffectVisualEffect(VisualEffect.Vfx_Fnf_Gas_Explosion_Nature), target);
+                ApplyEffectToObject(DurationType.Instant, EffectVisualEffect(VisualEffect.Vfx_Com_Chunk_Stone_Small), target);
                 ApplyEffectToObject(DurationType.Instant, EffectDamage(damage, DamageType.Acid), target);
             });
 

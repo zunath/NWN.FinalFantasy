@@ -147,9 +147,7 @@ namespace NWN.FinalFantasy.Feature
             Creature.AddFeatByLevel(player, Feat.WeaponProficiencyMartial, 1);
             Creature.AddFeatByLevel(player, Feat.WeaponProficiencySimple, 1);
             Creature.AddFeatByLevel(player, Feat.UncannyDodge1, 1);
-            //Creature.AddFeatByLevel(player, Feat.StructureManagementTool, 1);
             Creature.AddFeatByLevel(player, Feat.OpenRestMenu, 1);
-            //Creature.AddFeatByLevel(player, Feat.RenameCraftedItem, 1);
             Creature.AddFeatByLevel(player, Feat.ChatCommandTargeter, 1);
         }
 
@@ -157,14 +155,10 @@ namespace NWN.FinalFantasy.Feature
         private static void InitializeHotBar(uint player)
         {
             var openRestMenu = PlayerQuickBarSlot.UseFeat(Feat.OpenRestMenu);
-            //var structure = PlayerQuickBarSlot.UseFeat(Feat.StructureManagementTool);
-            //var renameCraftedItem = PlayerQuickBarSlot.UseFeat(Feat.RenameCraftedItem);
             var chatCommandTargeter = PlayerQuickBarSlot.UseFeat(Feat.ChatCommandTargeter);
 
             Core.NWNX.Player.SetQuickBarSlot(player, 0, openRestMenu);
-            //NWNXPlayer.SetQuickBarSlot(player, 1, structure);
-            //NWNXPlayer.SetQuickBarSlot(player, 2, renameCraftedItem);
-            Core.NWNX.Player.SetQuickBarSlot(player, 3, chatCommandTargeter);
+            Core.NWNX.Player.SetQuickBarSlot(player, 1, chatCommandTargeter);
         }
 
         /// <summary>
@@ -177,7 +171,7 @@ namespace NWN.FinalFantasy.Feature
             dbPlayer.UnallocatedSP = 10;
             dbPlayer.Version = 1;
             dbPlayer.Name = GetName(player);
-            Stat.AdjustMaxHP(dbPlayer, player, 5);
+            Stat.AdjustMaxHP(dbPlayer, player, 10);
             Stat.AdjustMaxSTM(dbPlayer, 10);
             Stat.AdjustBAB(dbPlayer, player, 1);
             dbPlayer.MP = Stat.GetMaxMP(player, dbPlayer);

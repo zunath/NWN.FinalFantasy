@@ -91,6 +91,14 @@ namespace NWN.FinalFantasy.Service.AbilityService
         Curaga2 = 40,
         [RecastGroup("Transfer", "Transfer")]
         Transfer = 41,
+        [RecastGroup("Piercing Stab", "Piercing Stab")]
+        PiercingStab = 42,
+        [RecastGroup("Blind", "Blind")]
+        Blind = 43,
+        [RecastGroup("Recovery Stab", "Recovery Stab")]
+        RecoveryStab = 44,
+        [RecastGroup("Convert", "Convert")]
+        Convert = 45,
     }
 
     public class RecastGroupAttribute: Attribute

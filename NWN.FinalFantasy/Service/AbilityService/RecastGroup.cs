@@ -99,6 +99,8 @@ namespace NWN.FinalFantasy.Service.AbilityService
         RecoveryStab = 44,
         [RecastGroup("Convert", "Convert")]
         Convert = 45,
+        [RecastGroup("Refresh", "Refresh")]
+        Refresh = 46,
     }
 
     public class RecastGroupAttribute: Attribute

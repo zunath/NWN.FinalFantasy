@@ -67,6 +67,10 @@ namespace NWN.FinalFantasy.Service.AbilityService
         Regen = 28,
         [RecastGroup("Raise", "Raise")]
         Raise = 29,
+        [RecastGroup("Poisona", "Poisona")]
+        Poisona = 30,
+        [RecastGroup("Teleport", "Teleport")]
+        Teleport = 31,
     }
 
     public class RecastGroupAttribute: Attribute

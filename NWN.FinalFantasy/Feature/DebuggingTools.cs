@@ -25,13 +25,6 @@ namespace NWN.FinalFantasy.Feature
             SetLocalInt(spawn, "QUEST_NPC_GROUP_ID", 1);
         }
 
-        [NWNEventHandler("test3")]
-        public static void DebugGiveAchievement()
-        {
-            var player = GetLastUsedBy();
-            Achievement.GiveAchievement(player, AchievementType.TestAchievement);
-        }
-
         [NWNEventHandler("test4")]
         public static void DebugGiveXP()
         {

@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using NWN.FinalFantasy.Core.NWNX;
 using NWN.FinalFantasy.Core.NWScript.Enum;
 using NWN.FinalFantasy.Enumeration;
 using static NWN.FinalFantasy.Core.NWScript.NWScript;
@@ -120,7 +121,7 @@ namespace NWN.FinalFantasy.Service
             // Send out an event signifying that a player has received a skill rank increase.
             if(receivedRankUp)
             {
-                ExecuteScript("skill_rank_up", player);
+                Events.SignalEvent("FFO_GAIN_SKILL_POINT", player);
             }
         }
 

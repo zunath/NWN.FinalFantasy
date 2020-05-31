@@ -191,6 +191,8 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
 
                 GrantFeats();
                 ApplyPurchasePerkTriggers(dbPlayer.Perks[model.SelectedPerk]);
+
+                Events.SignalEvent("FFO_BUY_PERK", player);
             }
 
             void GrantFeats()

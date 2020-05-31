@@ -472,6 +472,9 @@ namespace NWN.FinalFantasy.Feature
             {
                 Events.SignalEvent("APPLICATION_SHUTDOWN", GetModule());
             };
+
+            Events.SubscribeEvent("FFO_BUY_PERK", "ffo_buy_perk");
+            Events.SubscribeEvent("FFO_GAIN_SKILL_POINT", "ffo_gain_skill");
         }
     }
 }

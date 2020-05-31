@@ -1,0 +1,149 @@
+﻿using NWN.FinalFantasy.Core;
+using NWN.FinalFantasy.Entity;
+using NWN.FinalFantasy.Enumeration;
+using NWN.FinalFantasy.Service;
+using static NWN.FinalFantasy.Core.NWScript.NWScript;
+
+namespace NWN.FinalFantasy.Feature
+{
+    public static class AchievementProgression
+    {
+        [NWNEventHandler("mod_enter")]
+        public static void LogIn()
+        {
+            var player = GetEnteringObject();
+            if (!GetIsPC(player) || GetIsDM(player)) return;
+
+            var cdKey = GetPCPublicCDKey(player);
+            var dbAccount = DB.Get<Account>(cdKey) ?? new Account();
+
+            dbAccount.TimesLoggedIn++;
+            DB.Set(cdKey, dbAccount);
+        }
+
+        /// <summary>
+        /// Handles the Kill Enemy line of achievements.
+        /// </summary>
+        [NWNEventHandler("crea_death")]
+        public static void KillEnemy()
+        {
+            var killer = GetLastKiller();
+            if (!GetIsPC(killer) || GetIsDM(killer)) return;
+
+            var cdKey = GetPCPublicCDKey(killer);
+            var dbAccount = DB.Get<Account>(cdKey);
+
+            dbAccount.AchievementProgress.EnemiesKilled++;
+            DB.Set(cdKey, dbAccount);
+
+            var kills = dbAccount.AchievementProgress.EnemiesKilled;
+
+            if (kills >= 10)
+            {
+                Achievement.GiveAchievement(killer, AchievementType.KillEnemies1);
+            }
+            if (kills >= 50)
+            {
+                Achievement.GiveAchievement(killer, AchievementType.KillEnemies2);
+            }
+            if (kills >= 500)
+            {
+                Achievement.GiveAchievement(killer, AchievementType.KillEnemies3);
+            }
+            if (kills >= 2000)
+            {
+                Achievement.GiveAchievement(killer, AchievementType.KillEnemies4);
+            }
+            if (kills >= 10000)
+            {
+                Achievement.GiveAchievement(killer, AchievementType.KillEnemies5);
+            }
+            if (kills >= 100000)
+            {
+                Achievement.GiveAchievement(killer, AchievementType.KillEnemies6);
+            }
+        }
+
+        /// <summary>
+        /// Handles the Buy Perk line of achievements.
+        /// </summary>
+        [NWNEventHandler("ffo_buy_perk")]
+        public static void BuyPerk()
+        {
+            var player = OBJECT_SELF;
+            if (!GetIsPC(player) || GetIsDM(player)) return;
+
+            var cdKey = GetPCPublicCDKey(player);
+            var dbAccount = DB.Get<Account>(cdKey);
+
+            dbAccount.AchievementProgress.PerksLearned++;
+            DB.Set(cdKey, dbAccount);
+
+            var numberLearned = dbAccount.AchievementProgress.PerksLearned;
+
+            if (numberLearned >= 1)
+            {
+                Achievement.GiveAchievement(player, AchievementType.LearnPerks1);
+            }
+            if (numberLearned >= 20)
+            {
+                Achievement.GiveAchievement(player, AchievementType.LearnPerks2);
+            }
+            if (numberLearned >= 50)
+            {
+                Achievement.GiveAchievement(player, AchievementType.LearnPerks3);
+            }
+            if (numberLearned >= 100)
+            {
+                Achievement.GiveAchievement(player, AchievementType.LearnPerks4);
+            }
+            if (numberLearned >= 500)
+            {
+                Achievement.GiveAchievement(player, AchievementType.LearnPerks5);
+            }
+        }
+
+        /// <summary>
+        /// Handles the Gain Skill line of achievements.
+        /// </summary>
+        [NWNEventHandler("ffo_gain_skill")]
+        public static void GainSkillPoint()
+        {
+            var player = OBJECT_SELF;
+            if (!GetIsPC(player) || GetIsDM(player)) return;
+
+            var cdKey = GetPCPublicCDKey(player);
+            var dbAccount = DB.Get<Account>(cdKey);
+
+            dbAccount.AchievementProgress.SkillsLearned++;
+            DB.Set(cdKey, dbAccount);
+
+            var numberLearned = dbAccount.AchievementProgress.SkillsLearned;
+
+            if (numberLearned >= 1)
+            {
+                Achievement.GiveAchievement(player, AchievementType.GainSkills1);
+            }
+            if (numberLearned >= 50)
+            {
+                Achievement.GiveAchievement(player, AchievementType.GainSkills2);
+            }
+            if (numberLearned >= 150)
+            {
+                Achievement.GiveAchievement(player, AchievementType.GainSkills3);
+            }
+            if (numberLearned >= 250)
+            {
+                Achievement.GiveAchievement(player, AchievementType.GainSkills4);
+            }
+            if (numberLearned >= 500)
+            {
+                Achievement.GiveAchievement(player, AchievementType.GainSkills5);
+            }
+            if (numberLearned >= 1000)
+            {
+                Achievement.GiveAchievement(player, AchievementType.GainSkills6);
+            }
+        }
+    }
+}

@@ -39,18 +39,15 @@ namespace NWN.FinalFantasy.Core
         /// </summary>
         private static void RunOneSecondPCIntervalEvent()
         {
-            using (new Metrics(nameof(RunOneSecondPCIntervalEvent)))
-            {
-                var now = DateTime.UtcNow;
-                var delta = now - _last1SecondIntervalCall;
-                if (delta.Seconds < 1) return;
-                _last1SecondIntervalCall = now;
+            var now = DateTime.UtcNow;
+            var delta = now - _last1SecondIntervalCall;
+            if (delta.Seconds < 1) return;
+            _last1SecondIntervalCall = now;
 
-                for (var player = GetFirstPC(); GetIsObjectValid(player); player = GetNextPC())
-                {
-                    Internal.OBJECT_SELF = player;
-                    RunScripts("interval_pc_1s");
-                }
+            for (var player = GetFirstPC(); GetIsObjectValid(player); player = GetNextPC())
+            {
+                Internal.OBJECT_SELF = player;
+                RunScripts("interval_pc_1s");
             }
         }
 
@@ -64,11 +61,8 @@ namespace NWN.FinalFantasy.Core
                 var result = true;
                 foreach (var action in _conditionalScripts[script])
                 {
-                    using (new Metrics(action.Method.Name))
-                    {
-                        var actionResult = action.Invoke();
-                        if (result) result = actionResult;
-                    }
+                    var actionResult = action.Invoke();
+                    if (result) result = actionResult;
                 }
 
                 return result ? 1 : 0;
@@ -79,10 +73,7 @@ namespace NWN.FinalFantasy.Core
                 {
                     try
                     {
-                        using (new Metrics(action.Method.Name))
-                        {
-                            action();
-                        }
+                        action();
                     }
                     catch (Exception ex)
                     {

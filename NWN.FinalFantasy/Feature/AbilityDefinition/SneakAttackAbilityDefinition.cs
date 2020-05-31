@@ -91,7 +91,8 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
             
             var damageDetails = Damage.GetDamageEventData();
             damageDetails.AdjustAllByPercent(sneakAttackBonus);
-            
+            Damage.SetDamageEventData(damageDetails);
+
             DeleteLocalFloat(target, SneakAttackVariableName);
         }
     }

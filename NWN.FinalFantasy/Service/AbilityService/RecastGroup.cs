@@ -79,6 +79,16 @@ namespace NWN.FinalFantasy.Service.AbilityService
         Protect = 34,
         [RecastGroup("Protectra", "Protectra")]
         Protectra = 35,
+        [RecastGroup("Cure I", "Cure I")]
+        Cure1 = 36,
+        [RecastGroup("Cure II", "Cure II")]
+        Cure2 = 37,
+        [RecastGroup("Cure III", "Cure III")]
+        Cure3 = 38,
+        [RecastGroup("Curaga I", "Curaga I")]
+        Curaga1 = 39,
+        [RecastGroup("Curaga II", "Curaga II")]
+        Curaga2 = 40,
     }
 
     public class RecastGroupAttribute: Attribute

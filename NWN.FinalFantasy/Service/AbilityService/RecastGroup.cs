@@ -63,6 +63,10 @@ namespace NWN.FinalFantasy.Service.AbilityService
         LifeSteal = 26,
         [RecastGroup("Steal", "Steal")]
         Steal = 27,
+        [RecastGroup("Regen", "Regen")]
+        Regen = 28,
+        [RecastGroup("Raise", "Raise")]
+        Raise = 29,
     }
 
     public class RecastGroupAttribute: Attribute

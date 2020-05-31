@@ -14,6 +14,7 @@ namespace NWN.FinalFantasy.Feature.StatusEffectDefinition
             var builder = new StatusEffectBuilder();
             Poison1(builder);
             Poison2(builder);
+            Poison3(builder);
 
             return builder.Build();
         }

@@ -88,7 +88,7 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                 SendMessageToPC(activator, $"You failed to steal from {GetName(target)}.");
             }
 
-            Enmity.ModifyEnmity(target, activator, 5);
+            Enmity.ModifyEnmity(activator, target, 5);
         }
 
         private static void Steal1(AbilityBuilder builder)

@@ -25,5 +25,8 @@
         Cover3 = 21,
         Cover4 = 22,
         Poison3 = 23,
+        Dia1 = 24,
+        Dia2 = 25,
+        Dia3 = 26
     }
 }

@@ -71,6 +71,14 @@ namespace NWN.FinalFantasy.Service.AbilityService
         Poisona = 30,
         [RecastGroup("Teleport", "Teleport")]
         Teleport = 31,
+        [RecastGroup("Stone", "Stone")]
+        Stone = 32,
+        [RecastGroup("Dia", "Dia")]
+        Dia = 33,
+        [RecastGroup("Protect", "Protect")]
+        Protect = 34,
+        [RecastGroup("Protectra", "Protectra")]
+        Protectra = 35,
     }
 
     public class RecastGroupAttribute: Attribute

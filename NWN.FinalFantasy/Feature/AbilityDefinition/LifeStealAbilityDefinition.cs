@@ -6,6 +6,7 @@ using NWN.FinalFantasy.Core.NWNX;
 using NWN.FinalFantasy.Core.NWScript.Enum;
 using NWN.FinalFantasy.Core.NWScript.Enum.VisualEffect;
 using NWN.FinalFantasy.Enumeration;
+using NWN.FinalFantasy.Service;
 using NWN.FinalFantasy.Service.AbilityService;
 using static NWN.FinalFantasy.Core.NWScript.NWScript;
 
@@ -73,6 +74,9 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
             var recoveryAmount = (int) (damageDetails.Total * lifeStealAmount);
             ApplyEffectToObject(DurationType.Instant, EffectHeal(recoveryAmount), lifeStealActivator);
             ApplyEffectToObject(DurationType.Instant, EffectVisualEffect(VisualEffect.Vfx_Imp_Healing_S), lifeStealActivator);
+
+            Enmity.ModifyEnmity(lifeStealActivator, target, recoveryAmount + 6);
+            CombatPoint.AddCombatPoint(lifeStealActivator, target, SkillType.Thievery, 2);
 
             DeleteLocalFloat(target, LifeStealVariableName);
             DeleteLocalObject(target, LifeStealActivatorVariableName);

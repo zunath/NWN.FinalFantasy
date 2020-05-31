@@ -30,6 +30,9 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                 {
                     StatusEffect.Apply(activator, target, StatusEffectType.DeliberateStab, 30f);
                     ApplyEffectToObject(DurationType.Instant, EffectVisualEffect(VisualEffect.Vfx_Imp_Divine_Strike_Holy), activator);
+
+                    Enmity.ModifyEnmityOnAll(activator, 3);
+                    CombatPoint.AddCombatPointToAllTagged(activator, SkillType.RedMagic, 3);
                 });
         }
     }

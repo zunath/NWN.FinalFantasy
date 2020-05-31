@@ -42,6 +42,9 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                     var duration = CalculateDuration(activator);
                     StatusEffect.Apply(activator, target, StatusEffectType.Poison1, duration);
                     ApplyEffectToObject(DurationType.Instant, EffectVisualEffect(VisualEffect.Vfx_Imp_Disease_S), target);
+
+                    CombatPoint.AddCombatPoint(activator, target, SkillType.RedMagic, 2);
+                    Enmity.ModifyEnmity(activator, target, 10);
                 });
         }
 
@@ -57,6 +60,9 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                     var duration = CalculateDuration(activator);
                     StatusEffect.Apply(activator, target, StatusEffectType.Poison2, duration);
                     ApplyEffectToObject(DurationType.Instant, EffectVisualEffect(VisualEffect.Vfx_Imp_Disease_S), target);
+
+                    CombatPoint.AddCombatPoint(activator, target, SkillType.RedMagic, 2);
+                    Enmity.ModifyEnmity(activator, target, 12);
                 });
         }
     }

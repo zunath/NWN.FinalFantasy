@@ -43,6 +43,9 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                     var duration = CalculateDuration(activator);
                     StatusEffect.Apply(activator, target, StatusEffectType.Bleed1, duration);
                     ApplyEffectToObject(DurationType.Instant, EffectVisualEffect(VisualEffect.Vfx_Com_Chunk_Red_Small), target);
+
+                    CombatPoint.AddCombatPoint(activator, target, SkillType.RedMagic, 2);
+                    Enmity.ModifyEnmity(activator, target, 10);
                 });
         }
 
@@ -58,6 +61,9 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                     var duration = CalculateDuration(activator);
                     StatusEffect.Apply(activator, target, StatusEffectType.Bleed2, duration);
                     ApplyEffectToObject(DurationType.Instant, EffectVisualEffect(VisualEffect.Vfx_Com_Chunk_Red_Small), target);
+
+                    CombatPoint.AddCombatPoint(activator, target, SkillType.RedMagic, 2);
+                    Enmity.ModifyEnmity(activator, target, 12);
                 });
         }
 
@@ -73,6 +79,9 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                     var duration = CalculateDuration(activator);
                     StatusEffect.Apply(activator, target, StatusEffectType.Bleed3, duration);
                     ApplyEffectToObject(DurationType.Instant, EffectVisualEffect(VisualEffect.Vfx_Com_Chunk_Red_Small), target);
+
+                    CombatPoint.AddCombatPoint(activator, target, SkillType.RedMagic, 2);
+                    Enmity.ModifyEnmity(activator, target, 14);
                 });
         }
     }

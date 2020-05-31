@@ -27,6 +27,9 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
 
                     StatusEffect.Apply(activator, target, StatusEffectType.Sleep, duration);
                     Resistance.ModifyResistance(target, ResistanceType.Sleep, -0.25f);
+
+                    CombatPoint.AddCombatPoint(activator, target, SkillType.BlackMagic, 3);
+                    Enmity.ModifyEnmity(activator, target, 18);
                 });
 
             return builder.Build();

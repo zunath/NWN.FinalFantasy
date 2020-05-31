@@ -3,6 +3,7 @@ using NWN.FinalFantasy.Core.NWScript.Enum;
 using NWN.FinalFantasy.Core.NWScript.Enum.Item.Property;
 using NWN.FinalFantasy.Core.NWScript.Enum.VisualEffect;
 using NWN.FinalFantasy.Enumeration;
+using NWN.FinalFantasy.Service;
 using NWN.FinalFantasy.Service.AbilityService;
 using static NWN.FinalFantasy.Core.NWScript.NWScript;
 using DamageType = NWN.FinalFantasy.Core.NWScript.Enum.DamageType;
@@ -44,6 +45,9 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                 {
                     ApplyEffectToObject(DurationType.Instant, EffectVisualEffect(VisualEffect.Vfx_Com_Blood_Crt_Red), target);
                     ApplyBlazeSpikes(target, 1, DamageBonus.DAMAGEBONUS_1d4);
+
+                    Enmity.ModifyEnmityOnAll(activator, 6);
+                    CombatPoint.AddCombatPointToAllTagged(activator, SkillType.BlackMagic, 3);
                 });
         }
 
@@ -60,6 +64,9 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                 {
                     ApplyEffectToObject(DurationType.Instant, EffectVisualEffect(VisualEffect.Vfx_Com_Blood_Crt_Red), target);
                     ApplyBlazeSpikes(target, 1, DamageBonus.DAMAGEBONUS_2d4);
+
+                    Enmity.ModifyEnmityOnAll(activator, 8);
+                    CombatPoint.AddCombatPointToAllTagged(activator, SkillType.BlackMagic, 3);
                 });
         }
     }

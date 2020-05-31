@@ -37,7 +37,12 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
 
                         ApplyEffectToObject(DurationType.Instant, EffectHeal(amount), member);
                         ApplyEffectToObject(DurationType.Instant, EffectVisualEffect(VisualEffect.Vfx_Imp_Healing_S), member);
+
+                        Enmity.ModifyEnmityOnAll(activator, amount + 2);
                     }
+
+                    CombatPoint.AddCombatPointToAllTagged(activator, SkillType.RedMagic, 3);
+                    Enmity.ModifyEnmityOnAll(activator, 6);
                 });
         }
 
@@ -57,7 +62,12 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
 
                         ApplyEffectToObject(DurationType.Instant, EffectHeal(amount), member);
                         ApplyEffectToObject(DurationType.Instant, EffectVisualEffect(VisualEffect.Vfx_Imp_Healing_S), member);
+
+                        Enmity.ModifyEnmityOnAll(activator, amount + 2);
                     }
+
+                    CombatPoint.AddCombatPointToAllTagged(activator, SkillType.RedMagic, 3);
+                    Enmity.ModifyEnmityOnAll(activator, 8);
                 });
         }
 
@@ -82,7 +92,13 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                         ApplyEffectToObject(DurationType.Instant, EffectHeal(amount), member);
                         ApplyEffectToObject(DurationType.Instant, EffectVisualEffect(VisualEffect.Vfx_Imp_Healing_S), member);
                         ApplyEffectToObject(DurationType.Temporary, EffectRegenerate(1, 6f), member, duration);
+
+
+                        Enmity.ModifyEnmityOnAll(activator, amount + 6);
                     }
+
+                    CombatPoint.AddCombatPointToAllTagged(activator, SkillType.RedMagic, 3);
+                    Enmity.ModifyEnmityOnAll(activator, 10);
                 });
         }
     }

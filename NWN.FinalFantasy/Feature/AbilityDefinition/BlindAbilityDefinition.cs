@@ -33,6 +33,9 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                 .HasImpactAction((activator, target, level) =>
                 {
                     StatusEffect.Apply(activator, target, StatusEffectType.Blind1, 15f);
+
+                    Enmity.ModifyEnmity(activator, target, 4);
+                    CombatPoint.AddCombatPointToAllTagged(activator, SkillType.RedMagic, 3);
                 });
         }
 
@@ -49,6 +52,9 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                     // Intentional to use Blind I again.
                     StatusEffect.Apply(activator, target, StatusEffectType.Blind1, 30f);
                     ApplyEffectToObject(DurationType.Instant, EffectVisualEffect(VisualEffect.Vfx_Imp_Dazed_S), target);
+
+                    Enmity.ModifyEnmity(activator, target, 6);
+                    CombatPoint.AddCombatPointToAllTagged(activator, SkillType.RedMagic, 3);
                 });
         }
     }

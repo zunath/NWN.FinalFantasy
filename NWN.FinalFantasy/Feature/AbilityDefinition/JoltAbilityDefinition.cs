@@ -2,6 +2,7 @@
 using NWN.FinalFantasy.Core.NWScript.Enum;
 using NWN.FinalFantasy.Core.NWScript.Enum.VisualEffect;
 using NWN.FinalFantasy.Enumeration;
+using NWN.FinalFantasy.Service;
 using NWN.FinalFantasy.Service.AbilityService;
 using static NWN.FinalFantasy.Core.NWScript.NWScript;
 using Random = NWN.FinalFantasy.Service.Random;
@@ -34,6 +35,9 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
 
                     ApplyEffectToObject(DurationType.Instant, EffectVisualEffect(VisualEffect.Vfx_Com_Hit_Electrical), target);
                     ApplyEffectToObject(DurationType.Instant, EffectDamage(damage), target);
+
+                    Enmity.ModifyEnmity(activator, target, damage + 4);
+                    CombatPoint.AddCombatPoint(activator, target, SkillType.RedMagic, 3);
                 });
         }
 
@@ -51,6 +55,9 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
 
                     ApplyEffectToObject(DurationType.Instant, EffectVisualEffect(VisualEffect.Vfx_Com_Hit_Electrical), target);
                     ApplyEffectToObject(DurationType.Instant, EffectDamage(damage), target);
+
+                    Enmity.ModifyEnmity(activator, target, damage + 6);
+                    CombatPoint.AddCombatPoint(activator, target, SkillType.RedMagic, 3);
                 });
         }
 
@@ -68,6 +75,9 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
 
                     ApplyEffectToObject(DurationType.Instant, EffectVisualEffect(VisualEffect.Vfx_Com_Hit_Electrical), target);
                     ApplyEffectToObject(DurationType.Instant, EffectDamage(damage), target);
+
+                    Enmity.ModifyEnmity(activator, target, damage + 8);
+                    CombatPoint.AddCombatPoint(activator, target, SkillType.RedMagic, 3);
                 });
         }
     }

@@ -43,6 +43,9 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                     var length = 60f + GetAbilityModifier(AbilityType.Constitution, activator) * 2f;
                     StatusEffect.Apply(activator, target, StatusEffectType.Cover1, length);
                     ApplyEffectToObject(DurationType.Instant, EffectVisualEffect(VisualEffect.Vfx_Dur_Prot_Epic_Armor), target);
+
+                    Enmity.ModifyEnmityOnAll(activator, 10);
+                    CombatPoint.AddCombatPointToAllTagged(activator, SkillType.Chivalry, 3);
                 });
         }
 
@@ -68,6 +71,9 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                     var length = 60f + GetAbilityModifier(AbilityType.Constitution, activator) * 2f;
                     StatusEffect.Apply(activator, target, StatusEffectType.Cover2, length);
                     ApplyEffectToObject(DurationType.Instant, EffectVisualEffect(VisualEffect.Vfx_Dur_Prot_Epic_Armor), target);
+
+                    Enmity.ModifyEnmityOnAll(activator, 10);
+                    CombatPoint.AddCombatPointToAllTagged(activator, SkillType.Chivalry, 3);
                 });
         }
 
@@ -93,6 +99,9 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                     var length = 60f + GetAbilityModifier(AbilityType.Constitution, activator) * 2f;
                     StatusEffect.Apply(activator, target, StatusEffectType.Cover3, length);
                     ApplyEffectToObject(DurationType.Instant, EffectVisualEffect(VisualEffect.Vfx_Dur_Prot_Epic_Armor), target);
+
+                    Enmity.ModifyEnmityOnAll(activator, 10);
+                    CombatPoint.AddCombatPointToAllTagged(activator, SkillType.Chivalry, 3);
                 });
         }
 
@@ -118,6 +127,9 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                     var length = 60f + GetAbilityModifier(AbilityType.Constitution, activator) * 2f;
                     StatusEffect.Apply(activator, target, StatusEffectType.Cover4, length);
                     ApplyEffectToObject(DurationType.Instant, EffectVisualEffect(VisualEffect.Vfx_Dur_Prot_Epic_Armor), target);
+
+                    Enmity.ModifyEnmityOnAll(activator, 10);
+                    CombatPoint.AddCombatPointToAllTagged(activator, SkillType.Chivalry, 3);
                 });
         }
     }

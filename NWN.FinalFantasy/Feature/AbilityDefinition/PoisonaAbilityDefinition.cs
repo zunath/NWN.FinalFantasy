@@ -44,6 +44,9 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                     StatusEffect.Remove(target, StatusEffectType.Poison3);
 
                     ApplyEffectToObject(DurationType.Instant, EffectVisualEffect(VisualEffect.Vfx_Imp_Head_Nature), target);
+
+                    CombatPoint.AddCombatPointToAllTagged(activator, SkillType.WhiteMagic, 3);
+                    Enmity.ModifyEnmity(activator, target, 6);
                 });
         }
     }

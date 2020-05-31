@@ -31,6 +31,9 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                 {
                     ApplyEffectToObject(DurationType.Instant, EffectVisualEffect(VisualEffect.Vfx_Imp_Poison_S), target);
                     StatusEffect.Apply(activator, target, StatusEffectType.Poison1, 24f);
+
+                    CombatPoint.AddCombatPoint(activator, target, SkillType.Thievery, 3);
+                    Enmity.ModifyEnmity(activator, target, 18);
                 });
         }
 
@@ -46,6 +49,9 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                 {
                     ApplyEffectToObject(DurationType.Instant, EffectVisualEffect(VisualEffect.Vfx_Imp_Poison_S), target);
                     StatusEffect.Apply(activator, target, StatusEffectType.Poison2, 24f);
+
+                    CombatPoint.AddCombatPoint(activator, target, SkillType.Thievery, 3);
+                    Enmity.ModifyEnmity(activator, target, 18);
                 });
         }
 
@@ -61,6 +67,9 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                 {
                     ApplyEffectToObject(DurationType.Instant, EffectVisualEffect(VisualEffect.Vfx_Imp_Poison_S), target);
                     StatusEffect.Apply(activator, target, StatusEffectType.Poison3, 24f);
+
+                    CombatPoint.AddCombatPoint(activator, target, SkillType.Thievery, 3);
+                    Enmity.ModifyEnmity(activator, target, 20);
                 });
         }
 

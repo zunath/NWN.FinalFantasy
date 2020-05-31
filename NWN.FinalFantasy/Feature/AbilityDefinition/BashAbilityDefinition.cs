@@ -5,6 +5,7 @@ using System.Text;
 using NWN.FinalFantasy.Core.NWScript.Enum;
 using NWN.FinalFantasy.Core.NWScript.Enum.VisualEffect;
 using NWN.FinalFantasy.Enumeration;
+using NWN.FinalFantasy.Service;
 using NWN.FinalFantasy.Service.AbilityService;
 using static NWN.FinalFantasy.Core.NWScript.NWScript;
 using Random = NWN.FinalFantasy.Service.Random;
@@ -36,6 +37,9 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                     ApplyEffectToObject(DurationType.Instant, EffectVisualEffect(VisualEffect.Vfx_Imp_Confusion_S), target);
                     ApplyEffectToObject(DurationType.Temporary, EffectStunned(), target, length);
                     ApplyEffectToObject(DurationType.Instant, EffectDamage(damage, DamageType.Bludgeoning), target);
+
+                    Enmity.ModifyEnmity(activator, target, 4);
+                    CombatPoint.AddCombatPoint(activator, target, SkillType.Chivalry, 2);
                 });
         }
     }

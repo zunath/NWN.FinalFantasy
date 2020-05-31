@@ -115,6 +115,9 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                 {
                     ApplyEffectToObject(DurationType.Temporary, EffectACIncrease(20), target, 30f);
                     ApplyEffectToObject(DurationType.Temporary, EffectVisualEffect(VisualEffect.Vfx_Dur_Pixiedust), target, 30f);
+
+                    CombatPoint.AddCombatPointToAllTagged(activator, SkillType.Thievery, 5);
+                    Enmity.ModifyEnmityOnAll(activator, 150);
                 });
         }
 
@@ -129,6 +132,9 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                 {
                     StatusEffect.Apply(activator, target, StatusEffectType.Manafont, 30f);
                     ApplyEffectToObject(DurationType.Instant, EffectVisualEffect(VisualEffect.Vfx_Fnf_Sound_Burst), target);
+
+                    CombatPoint.AddCombatPointToAllTagged(activator, SkillType.RedMagic, 5);
+                    Enmity.ModifyEnmityOnAll(activator, 100);
                 });
         }
     }

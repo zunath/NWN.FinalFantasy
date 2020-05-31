@@ -47,6 +47,9 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                     var dbPlayer = DB.Get<Player>(playerId);
                     Stat.RestoreMP(target, dbPlayer, BaseTransferAmount);
                     DB.Set(playerId, dbPlayer);
+
+                    CombatPoint.AddCombatPointToAllTagged(activator, SkillType.RedMagic, 2);
+                    Enmity.ModifyEnmityOnAll(activator, 6);
                 });
         }
 
@@ -75,6 +78,9 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                     var dbPlayer = DB.Get<Player>(playerId);
                     Stat.RestoreMP(target, dbPlayer, BaseTransferAmount);
                     DB.Set(playerId, dbPlayer);
+
+                    CombatPoint.AddCombatPointToAllTagged(activator, SkillType.RedMagic, 2);
+                    Enmity.ModifyEnmityOnAll(activator, 8);
                 });
         }
 
@@ -103,6 +109,9 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                     var dbPlayer = DB.Get<Player>(playerId);
                     Stat.RestoreStamina(target, dbPlayer, BaseTransferAmount);
                     DB.Set(playerId, dbPlayer);
+
+                    CombatPoint.AddCombatPointToAllTagged(activator, SkillType.RedMagic, 2);
+                    Enmity.ModifyEnmityOnAll(activator, 6);
                 });
         }
 
@@ -131,6 +140,9 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                     var dbPlayer = DB.Get<Player>(playerId);
                     Stat.RestoreStamina(target, dbPlayer, BaseTransferAmount);
                     DB.Set(playerId, dbPlayer);
+
+                    CombatPoint.AddCombatPointToAllTagged(activator, SkillType.RedMagic, 2);
+                    Enmity.ModifyEnmityOnAll(activator, 8);
                 });
         }
     }

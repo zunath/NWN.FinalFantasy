@@ -21,6 +21,9 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                 .HasImpactAction((activator, target, level) =>
                 {
                     StatusEffect.Apply(activator, target, StatusEffectType.ElementalSpread, 60f);
+
+                    Enmity.ModifyEnmityOnAll(activator, 10);
+                    CombatPoint.AddCombatPointToAllTagged(activator, SkillType.BlackMagic, 3);
                 });
 
             return builder.Build();

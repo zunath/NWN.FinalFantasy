@@ -30,6 +30,9 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                 {
                     StatusEffect.Apply(activator, target, StatusEffectType.SubtleBlow1, 30f);
                     ApplyEffectToObject(DurationType.Instant, EffectVisualEffect(VisualEffect.Vfx_Imp_Ac_Bonus), target);
+
+                    CombatPoint.AddCombatPointToAllTagged(activator, SkillType.Chi, 3);
+                    Enmity.ModifyEnmityOnAll(activator, 6);
                 });
         }
 
@@ -44,6 +47,9 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                 {
                     StatusEffect.Apply(activator, target, StatusEffectType.SubtleBlow2, 30f);
                     ApplyEffectToObject(DurationType.Instant, EffectVisualEffect(VisualEffect.Vfx_Imp_Ac_Bonus), target);
+
+                    CombatPoint.AddCombatPointToAllTagged(activator, SkillType.Chi, 3);
+                    Enmity.ModifyEnmityOnAll(activator, 8);
                 });
         }
     }

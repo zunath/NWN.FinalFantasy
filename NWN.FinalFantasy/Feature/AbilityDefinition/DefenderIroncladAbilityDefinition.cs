@@ -37,7 +37,12 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                     {
                         StatusEffect.Apply(activator, member, StatusEffectType.Defender1, 60f);
                         ApplyEffectToObject(DurationType.Instant, EffectVisualEffect(VisualEffect.Vfx_Imp_Death_Ward), member);
+
+                        Enmity.ModifyEnmityOnAll(activator, 4);
                     }
+
+                    Enmity.ModifyEnmityOnAll(activator, 6);
+                    CombatPoint.AddCombatPointToAllTagged(activator, SkillType.Chivalry, 3);
                 });
         }
 
@@ -54,7 +59,12 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                     {
                         StatusEffect.Apply(activator, member, StatusEffectType.Defender2, 60f);
                         ApplyEffectToObject(DurationType.Instant, EffectVisualEffect(VisualEffect.Vfx_Imp_Death_Ward), member);
+
+                        Enmity.ModifyEnmityOnAll(activator, 4);
                     }
+
+                    Enmity.ModifyEnmityOnAll(activator, 6);
+                    CombatPoint.AddCombatPointToAllTagged(activator, SkillType.Chivalry, 3);
                 });
         }
 
@@ -71,7 +81,12 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                     {
                         StatusEffect.Apply(activator, member, StatusEffectType.Defender3, 60f);
                         ApplyEffectToObject(DurationType.Instant, EffectVisualEffect(VisualEffect.Vfx_Imp_Death_Ward), member);
+
+                        Enmity.ModifyEnmityOnAll(activator, 4);
                     }
+
+                    Enmity.ModifyEnmityOnAll(activator, 6);
+                    CombatPoint.AddCombatPointToAllTagged(activator, SkillType.Chivalry, 3);
                 });
         }
 
@@ -86,6 +101,9 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                 {
                     StatusEffect.Apply(activator, target, StatusEffectType.Ironclad1, 60f);
                     ApplyEffectToObject(DurationType.Instant, EffectVisualEffect(VisualEffect.Vfx_Imp_Death_Ward), target);
+
+                    Enmity.ModifyEnmityOnAll(activator, 8);
+                    CombatPoint.AddCombatPointToAllTagged(activator, SkillType.Chivalry, 3);
                 });
         }
 
@@ -100,6 +118,9 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                 {
                     StatusEffect.Apply(activator, target, StatusEffectType.Ironclad2, 60f);
                     ApplyEffectToObject(DurationType.Instant, EffectVisualEffect(VisualEffect.Vfx_Imp_Death_Ward), target);
+
+                    Enmity.ModifyEnmityOnAll(activator, 10);
+                    CombatPoint.AddCombatPointToAllTagged(activator, SkillType.Chivalry, 3);
                 });
         }
 
@@ -114,6 +135,9 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                 {
                     StatusEffect.Apply(activator, target, StatusEffectType.Ironclad3, 60f);
                     ApplyEffectToObject(DurationType.Instant, EffectVisualEffect(VisualEffect.Vfx_Imp_Death_Ward), target);
+
+                    Enmity.ModifyEnmityOnAll(activator, 14);
+                    CombatPoint.AddCombatPointToAllTagged(activator, SkillType.Chivalry, 3);
                 });
         }
     }

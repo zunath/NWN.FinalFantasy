@@ -4,6 +4,7 @@ using System.Text;
 using NWN.FinalFantasy.Core.NWScript.Enum;
 using NWN.FinalFantasy.Core.NWScript.Enum.VisualEffect;
 using NWN.FinalFantasy.Enumeration;
+using NWN.FinalFantasy.Service;
 using NWN.FinalFantasy.Service.AbilityService;
 using static NWN.FinalFantasy.Core.NWScript.NWScript;
 
@@ -40,6 +41,9 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                 .HasImpactAction((activator, target, level) =>
                 {
                     ApplyEffectToObject(DurationType.Instant, EffectResurrection(), target);
+
+                    CombatPoint.AddCombatPointToAllTagged(activator, SkillType.WhiteMagic, 5);
+                    Enmity.ModifyEnmityOnAll(activator, 60);
                 });
         }
     }

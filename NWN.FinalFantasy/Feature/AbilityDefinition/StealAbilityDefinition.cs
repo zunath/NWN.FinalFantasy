@@ -88,6 +88,7 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                 SendMessageToPC(activator, $"You failed to steal from {GetName(target)}.");
             }
 
+            CombatPoint.AddCombatPoint(activator, target, SkillType.Thievery, 3);
             Enmity.ModifyEnmity(activator, target, 5);
         }
 

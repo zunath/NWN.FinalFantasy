@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using NWN.FinalFantasy.Core.NWScript.Enum;
 using NWN.FinalFantasy.Enumeration;
+using NWN.FinalFantasy.Service;
 using NWN.FinalFantasy.Service.AbilityService;
 using static NWN.FinalFantasy.Core.NWScript.NWScript;
 
@@ -29,6 +30,9 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                 {
                     var duration = 30f + (GetAbilityModifier(AbilityType.Dexterity, activator) * 2);
                     ApplyEffectToObject(DurationType.Temporary, EffectMovementSpeedIncrease(40), target, duration);
+
+                    Enmity.ModifyEnmityOnAll(activator, 8);
+                    CombatPoint.AddCombatPointToAllTagged(activator, SkillType.Thievery, 3);
                 });
         }
 
@@ -44,6 +48,9 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                 {
                     var duration = 30f + (GetAbilityModifier(AbilityType.Dexterity, activator) * 2);
                     ApplyEffectToObject(DurationType.Temporary, EffectMovementSpeedIncrease(80), target, duration);
+
+                    Enmity.ModifyEnmityOnAll(activator, 8);
+                    CombatPoint.AddCombatPointToAllTagged(activator, SkillType.Thievery, 3);
                 });
         }
     }

@@ -6,6 +6,7 @@ using NWN.FinalFantasy.Core.NWNX;
 using NWN.FinalFantasy.Core.NWScript.Enum;
 using NWN.FinalFantasy.Core.NWScript.Enum.VisualEffect;
 using NWN.FinalFantasy.Enumeration;
+using NWN.FinalFantasy.Service;
 using NWN.FinalFantasy.Service.AbilityService;
 using static NWN.FinalFantasy.Core.NWScript.NWScript;
 
@@ -56,6 +57,9 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                     }
 
                     SetLocalFloat(target, SneakAttackVariableName, percentIncrease);
+
+                    CombatPoint.AddCombatPoint(activator, target, SkillType.Thievery, 3);
+                    Enmity.ModifyEnmity(activator, target, 8);
                 });
         }
 
@@ -75,6 +79,9 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                     }
 
                     SetLocalFloat(target, SneakAttackVariableName, percentIncrease);
+
+                    CombatPoint.AddCombatPoint(activator, target, SkillType.Thievery, 3);
+                    Enmity.ModifyEnmity(activator, target, 13);
                 });
         }
 

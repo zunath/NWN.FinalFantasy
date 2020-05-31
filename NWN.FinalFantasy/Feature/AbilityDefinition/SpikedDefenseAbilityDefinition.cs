@@ -3,6 +3,7 @@ using NWN.FinalFantasy.Core.NWScript.Enum;
 using NWN.FinalFantasy.Core.NWScript.Enum.Item.Property;
 using NWN.FinalFantasy.Core.NWScript.Enum.VisualEffect;
 using NWN.FinalFantasy.Enumeration;
+using NWN.FinalFantasy.Service;
 using NWN.FinalFantasy.Service.AbilityService;
 using static NWN.FinalFantasy.Core.NWScript.NWScript;
 using DamageType = NWN.FinalFantasy.Core.NWScript.Enum.DamageType;
@@ -25,6 +26,9 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
 
                     ApplyEffectToObject(DurationType.Temporary, EffectVisualEffect(VisualEffect.Vfx_Dur_Aura_Pulse_Red_Orange), target, Duration);
                     ApplyEffectToObject(DurationType.Temporary, EffectDamageShield(2, DamageBonus.DAMAGEBONUS_1d4, DamageType.Piercing), target);
+
+                    CombatPoint.AddCombatPointToAllTagged(activator, SkillType.Chivalry, 3);
+                    Enmity.ModifyEnmityOnAll(activator, 10);
                 });
 
             return builder.Build();

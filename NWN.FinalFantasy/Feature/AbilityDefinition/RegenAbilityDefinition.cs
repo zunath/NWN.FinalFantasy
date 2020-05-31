@@ -31,6 +31,9 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                 {
                     ApplyEffectToObject(DurationType.Temporary, EffectRegenerate(1, 6f), target, 60f);
                     ApplyEffectToObject(DurationType.Instant, EffectVisualEffect(VisualEffect.Vfx_Imp_Holy_Aid), target);
+
+                    CombatPoint.AddCombatPointToAllTagged(activator, SkillType.WhiteMagic, 3);
+                    Enmity.ModifyEnmityOnAll(activator, 6);
                 });
         }
 
@@ -46,6 +49,9 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                 {
                     ApplyEffectToObject(DurationType.Temporary, EffectRegenerate(2, 6f), target, 60f);
                     ApplyEffectToObject(DurationType.Instant, EffectVisualEffect(VisualEffect.Vfx_Imp_Holy_Aid), target);
+
+                    CombatPoint.AddCombatPointToAllTagged(activator, SkillType.WhiteMagic, 3);
+                    Enmity.ModifyEnmityOnAll(activator, 6);
                 });
         }
     }

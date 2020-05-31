@@ -204,14 +204,14 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .Description("Your next attack steals some HP from your target.")
 
                 .AddPerkLevel()
-                .Description("50% of your damage will transfer to HP.")
+                .Description("25% of your damage will transfer to HP.")
                 .RequirementSkill(SkillType.Dagger, 25)
                 .RequirementSkill(SkillType.Thievery, 20)
                 .Price(3)
                 .GrantsFeat(Feat.LifeSteal1)
 
                 .AddPerkLevel()
-                .Description("100% of your damage will transfer to HP.")
+                .Description("50% of your damage will transfer to HP.")
                 .RequirementSkill(SkillType.Dagger, 50)
                 .RequirementSkill(SkillType.Thievery, 40)
                 .Price(3)
@@ -226,14 +226,14 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 
                 .AddPerkLevel()
                 .Description("Damage will increase by 25%.")
-                //.RequirementSkill(SkillType.Thievery, 25)
-                //.Price(4)
+                .RequirementSkill(SkillType.Thievery, 25)
+                .Price(4)
                 .GrantsFeat(Feat.SneakAttack1)
 
                 .AddPerkLevel()
                 .Description("Damage will increase by 50%.")
-                //.RequirementSkill(SkillType.Thievery, 50)
-                //.Price(4)
+                .RequirementSkill(SkillType.Thievery, 50)
+                .Price(4)
                 .GrantsFeat(Feat.SneakAttack2);
         }
 

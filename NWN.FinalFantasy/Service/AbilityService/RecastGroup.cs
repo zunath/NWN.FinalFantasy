@@ -105,6 +105,8 @@ namespace NWN.FinalFantasy.Service.AbilityService
         Jolt = 47,
         [RecastGroup("Poison Stab", "Poison Stab")]
         PoisonStab = 48,
+        [RecastGroup("Shock Spikes", "Shock Spikes")]
+        ShockSpikes = 49,
     }
 
     public class RecastGroupAttribute: Attribute

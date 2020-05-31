@@ -13,10 +13,15 @@ namespace NWN.FinalFantasy.Service
         public static void SendMessageNearbyToPlayers(uint sender, string message)
         {
             const float MaxDistance = 10.0f;
+
+            SendMessageToPC(sender, message);
+
             int nth = 1;
             var nearby = GetNearestCreature(Type.PlayerCharacter, 1, sender, nth);
             while (GetIsObjectValid(nearby) && GetDistanceBetween(sender, nearby) <= MaxDistance)
             {
+                if (sender == nearby) continue;
+
                 SendMessageToPC(nearby, message);
                 nth++;
                 nearby = GetNearestCreature(Type.PlayerCharacter, 1, sender, nth);

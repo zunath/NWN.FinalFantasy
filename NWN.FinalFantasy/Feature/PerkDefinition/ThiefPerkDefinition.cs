@@ -95,25 +95,25 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .Description("Attempt to steal from a selected target.")
 
                 .AddPerkLevel()
-                .Description("Attempt to steal from a selected target.")
+                .Description("15% base success chance.")
                 .RequirementSkill(SkillType.Thievery, 5)
                 .Price(3)
                 .GrantsFeat(Feat.Steal1)
 
                 .AddPerkLevel()
-                .Description("Attempt to steal from a selected target.")
+                .Description("25% base success chance.")
                 .RequirementSkill(SkillType.Thievery, 15)
                 .Price(3)
                 .GrantsFeat(Feat.Steal2)
 
                 .AddPerkLevel()
-                .Description("Attempt to steal from a selected target.")
+                .Description("35% base success chance.")
                 .RequirementSkill(SkillType.Thievery, 30)
                 .Price(3)
                 .GrantsFeat(Feat.Steal3)
 
                 .AddPerkLevel()
-                .Description("Attempt to steal from a selected target.")
+                .Description("50% base success chance.")
                 .RequirementSkill(SkillType.Thievery, 45)
                 .Price(3)
                 .GrantsFeat(Feat.Steal4);

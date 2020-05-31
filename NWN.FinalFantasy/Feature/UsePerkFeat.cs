@@ -274,9 +274,10 @@ namespace NWN.FinalFantasy.Feature
                 }
 
                 // Casted types play an animation of casting.
-                if (ability.ActivationType == AbilityActivationType.Casted)
+                if (ability.ActivationType == AbilityActivationType.Casted &&
+                    ability.AnimationType != Animation.Invalid)
                 {
-                    AssignCommand(activator, () => ActionPlayAnimation(Animation.LoopingConjure1, 1.0f, delay - 0.2f));
+                    AssignCommand(activator, () => ActionPlayAnimation(ability.AnimationType, 1.0f, delay - 0.2f));
                 }
             }
 

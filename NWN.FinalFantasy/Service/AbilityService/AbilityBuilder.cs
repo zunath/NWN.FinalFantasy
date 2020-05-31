@@ -52,6 +52,19 @@ namespace NWN.FinalFantasy.Service.AbilityService
         }
 
         /// <summary>
+        /// Assigns an animation to the caster of the ability. This will be played when the creature uses the ability.
+        /// Calling this more than once will replace the previous animation.
+        /// </summary>
+        /// <param name="animation">The animation to set.</param>
+        /// <returns>An ability builder with the configured options.</returns>
+        public AbilityBuilder UsesAnimation(Animation animation)
+        {
+            _activeAbility.AnimationType = animation;
+
+            return this;
+        }
+
+        /// <summary>
         /// Assigns a visual effect to the caster of the spell. This will display while casting.
         /// Calling this more than once will replace the previous visual effect.
         /// </summary>

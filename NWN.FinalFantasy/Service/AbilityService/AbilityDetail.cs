@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using NWN.FinalFantasy.Core.NWScript.Enum;
 using NWN.FinalFantasy.Core.NWScript.Enum.VisualEffect;
 using NWN.FinalFantasy.Enumeration;
 
@@ -21,10 +22,12 @@ namespace NWN.FinalFantasy.Service.AbilityService
         public RecastGroup RecastGroup { get; set; }
         public AbilityActivationType ActivationType { get; set; }
         public PerkType EffectiveLevelPerkType { get; set; }
+        public Animation AnimationType { get; set; }
 
         public AbilityDetail()
         {
             ActivationVisualEffect = VisualEffect.None;
+            AnimationType = Animation.LoopingConjure1;
             Requirements = new List<IAbilityActivationRequirement>();
         }
     }

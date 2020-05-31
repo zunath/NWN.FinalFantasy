@@ -6,7 +6,6 @@ using NWN.FinalFantasy.Service;
 using NWN.FinalFantasy.Service.AbilityService;
 using static NWN.FinalFantasy.Core.NWScript.NWScript;
 using Random = NWN.FinalFantasy.Service.Random;
-using Skill = NWN.FinalFantasy.Service.Skill;
 
 namespace NWN.FinalFantasy.Feature.AbilityDefinition
 {
@@ -99,6 +98,7 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                 .HasRecastDelay(RecastGroup.Steal, 60f)
                 .RequirementStamina(5)
                 .UsesActivationType(AbilityActivationType.Casted)
+                .UsesAnimation(Animation.LoopingGetMid)
                 .HasActivationDelay(3.0f)
                 .HasCustomValidation((activator, target, level) => CheckForStealableItems(target))
                 .HasImpactAction((activator, target, level) =>
@@ -114,6 +114,7 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                 .HasRecastDelay(RecastGroup.Steal, 60f)
                 .RequirementStamina(15)
                 .UsesActivationType(AbilityActivationType.Casted)
+                .UsesAnimation(Animation.LoopingGetMid)
                 .HasActivationDelay(3.0f)
                 .HasCustomValidation((activator, target, level) => CheckForStealableItems(target))
                 .HasImpactAction((activator, target, level) =>
@@ -129,6 +130,7 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                 .HasRecastDelay(RecastGroup.Steal, 60f)
                 .RequirementStamina(25)
                 .UsesActivationType(AbilityActivationType.Casted)
+                .UsesAnimation(Animation.LoopingGetMid)
                 .HasActivationDelay(3.0f)
                 .HasCustomValidation((activator, target, level) => CheckForStealableItems(target))
                 .HasImpactAction((activator, target, level) =>
@@ -144,6 +146,7 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                 .HasRecastDelay(RecastGroup.Steal, 60f)
                 .RequirementStamina(40)
                 .UsesActivationType(AbilityActivationType.Casted)
+                .UsesAnimation(Animation.LoopingGetMid)
                 .HasActivationDelay(3.0f)
                 .HasCustomValidation((activator, target, level) => CheckForStealableItems(target))
                 .HasImpactAction((activator, target, level) =>

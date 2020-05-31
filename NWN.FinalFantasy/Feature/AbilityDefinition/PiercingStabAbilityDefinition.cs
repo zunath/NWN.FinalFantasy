@@ -20,6 +20,17 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
             return builder.Build();
         }
 
+        private static float CalculateDuration(uint activator)
+        {
+            const float BaseDuration = 30f;
+            var duration = BaseDuration;
+
+            if (StatusEffect.HasStatusEffect(activator, StatusEffectType.DeliberateStab))
+                duration *= 2;
+
+            return duration;
+        }
+
         private static void PiercingStab1(AbilityBuilder builder)
         {
             builder.Create(Feat.PiercingStab1, PerkType.PiercingStab)
@@ -29,7 +40,8 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                 .UsesActivationType(AbilityActivationType.Weapon)
                 .HasImpactAction((activator, target, level) =>
                 {
-                    StatusEffect.Apply(activator, target, StatusEffectType.Bleed1, 30f);
+                    var duration = CalculateDuration(activator);
+                    StatusEffect.Apply(activator, target, StatusEffectType.Bleed1, duration);
                     ApplyEffectToObject(DurationType.Instant, EffectVisualEffect(VisualEffect.Vfx_Com_Chunk_Red_Small), target);
                 });
         }
@@ -43,7 +55,8 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                 .UsesActivationType(AbilityActivationType.Weapon)
                 .HasImpactAction((activator, target, level) =>
                 {
-                    StatusEffect.Apply(activator, target, StatusEffectType.Bleed2, 30f);
+                    var duration = CalculateDuration(activator);
+                    StatusEffect.Apply(activator, target, StatusEffectType.Bleed2, duration);
                     ApplyEffectToObject(DurationType.Instant, EffectVisualEffect(VisualEffect.Vfx_Com_Chunk_Red_Small), target);
                 });
         }
@@ -57,7 +70,8 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                 .UsesActivationType(AbilityActivationType.Weapon)
                 .HasImpactAction((activator, target, level) =>
                 {
-                    StatusEffect.Apply(activator, target, StatusEffectType.Bleed3, 30f);
+                    var duration = CalculateDuration(activator);
+                    StatusEffect.Apply(activator, target, StatusEffectType.Bleed3, duration);
                     ApplyEffectToObject(DurationType.Instant, EffectVisualEffect(VisualEffect.Vfx_Com_Chunk_Red_Small), target);
                 });
         }

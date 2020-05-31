@@ -33,5 +33,6 @@
         Bleed2 = 29,
         Bleed3 = 30,
         Refresh = 31,
+        DeliberateStab = 32,
     }
 }

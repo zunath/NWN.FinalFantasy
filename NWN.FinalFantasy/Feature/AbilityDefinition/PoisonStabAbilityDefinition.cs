@@ -19,6 +19,17 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
             return builder.Build();
         }
 
+        private static float CalculateDuration(uint activator)
+        {
+            const float BaseDuration = 60f;
+            var duration = BaseDuration;
+
+            if (StatusEffect.HasStatusEffect(activator, StatusEffectType.DeliberateStab))
+                duration *= 2;
+
+            return duration;
+        }
+
         private static void PoisonStab1(AbilityBuilder builder)
         {
             builder.Create(Feat.PoisonStab1, PerkType.PiercingStab)
@@ -28,7 +39,8 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                 .UsesActivationType(AbilityActivationType.Weapon)
                 .HasImpactAction((activator, target, level) =>
                 {
-                    StatusEffect.Apply(activator, target, StatusEffectType.Poison1, 60f);
+                    var duration = CalculateDuration(activator);
+                    StatusEffect.Apply(activator, target, StatusEffectType.Poison1, duration);
                     ApplyEffectToObject(DurationType.Instant, EffectVisualEffect(VisualEffect.Vfx_Imp_Disease_S), target);
                 });
         }
@@ -42,7 +54,8 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                 .UsesActivationType(AbilityActivationType.Weapon)
                 .HasImpactAction((activator, target, level) =>
                 {
-                    StatusEffect.Apply(activator, target, StatusEffectType.Poison2, 60f);
+                    var duration = CalculateDuration(activator);
+                    StatusEffect.Apply(activator, target, StatusEffectType.Poison2, duration);
                     ApplyEffectToObject(DurationType.Instant, EffectVisualEffect(VisualEffect.Vfx_Imp_Disease_S), target);
                 });
         }

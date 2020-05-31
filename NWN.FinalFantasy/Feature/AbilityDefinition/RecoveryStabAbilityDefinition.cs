@@ -74,10 +74,14 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                     foreach (var member in Party.GetAllPartyMembersWithinRange(activator, 5.0f))
                     {
                         var amount = Random.D8(3) + bonus;
+                        var duration = 24f;
+
+                        if (StatusEffect.HasStatusEffect(activator, StatusEffectType.DeliberateStab))
+                            duration *= 2f;
 
                         ApplyEffectToObject(DurationType.Instant, EffectHeal(amount), member);
                         ApplyEffectToObject(DurationType.Instant, EffectVisualEffect(VisualEffect.Vfx_Imp_Healing_S), member);
-                        ApplyEffectToObject(DurationType.Temporary, EffectRegenerate(1, 6f), member, 24f);
+                        ApplyEffectToObject(DurationType.Temporary, EffectRegenerate(1, 6f), member, duration);
                     }
                 });
         }

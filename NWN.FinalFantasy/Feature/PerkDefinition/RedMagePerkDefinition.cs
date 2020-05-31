@@ -1,7 +1,10 @@
 ﻿using System.Collections.Generic;
+using NWN.FinalFantasy.Core.NWNX;
 using NWN.FinalFantasy.Core.NWScript.Enum;
+using NWN.FinalFantasy.Core.NWScript.Enum.Item;
 using NWN.FinalFantasy.Enumeration;
 using NWN.FinalFantasy.Service.PerkService;
+using static NWN.FinalFantasy.Core.NWScript.NWScript;
 
 namespace NWN.FinalFantasy.Feature.PerkDefinition
 {
@@ -214,7 +217,23 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .Description("Grants the Rapier Finesse ability.")
                 .RequirementSkill(SkillType.RedMagic, 5)
                 .RequirementSkill(SkillType.Rapier, 10)
-                .Price(4);
+                .Price(4)
+                .TriggerEquippedItem((player, item, slot, type, level) =>
+                {
+                    if (GetBaseItemType(item) != BaseItem.Rapier ||
+                        slot != InventorySlot.RightHand)
+                        return;
+
+                    Creature.AddFeat(player, Feat.WeaponFinesse);
+                })
+                .TriggerUnequippedItem((player, item, type, level) =>
+                {
+                    if (GetBaseItemType(item) != BaseItem.Rapier ||
+                        GetItemInSlot(InventorySlot.RightHand, player) != item)
+                        return;
+
+                    Creature.RemoveFeat(player, Feat.WeaponFinesse);
+                }); ;
         }
 
         private static void Jolt(PerkBuilder builder)

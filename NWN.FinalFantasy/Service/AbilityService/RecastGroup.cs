@@ -101,6 +101,10 @@ namespace NWN.FinalFantasy.Service.AbilityService
         Convert = 45,
         [RecastGroup("Refresh", "Refresh")]
         Refresh = 46,
+        [RecastGroup("Jolt", "Jolt")]
+        Jolt = 47,
+        [RecastGroup("Poison Stab", "Poison Stab")]
+        PoisonStab = 48,
     }
 
     public class RecastGroupAttribute: Attribute

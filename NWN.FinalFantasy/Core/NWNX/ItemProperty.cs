@@ -18,7 +18,6 @@ namespace NWN.FinalFantasy.Core.NWNX
 
             return new ItemPropertyUnpacked
             {
-                ItemPropertyID = Internal.NativeFunctions.nwnxPopInt(),
                 Property = Internal.NativeFunctions.nwnxPopInt(),
                 SubType = Internal.NativeFunctions.nwnxPopInt(),
                 CostTable = Internal.NativeFunctions.nwnxPopInt(),
@@ -50,7 +49,6 @@ namespace NWN.FinalFantasy.Core.NWNX
             Internal.NativeFunctions.nwnxPushInt(itemProperty.CostTable);
             Internal.NativeFunctions.nwnxPushInt(itemProperty.SubType);
             Internal.NativeFunctions.nwnxPushInt(itemProperty.Property);
-            Internal.NativeFunctions.nwnxPushInt(itemProperty.ItemPropertyID);
             Internal.NativeFunctions.nwnxCallFunction();
             return new Core.ItemProperty(Internal.NativeFunctions.nwnxPopItemProperty());
         }

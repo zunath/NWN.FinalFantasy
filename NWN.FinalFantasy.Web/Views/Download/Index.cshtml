@@ -1,0 +1,41 @@
+﻿@{
+    ViewData["Title"] = "Downloads";
+}
+
+<div class="row">
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title font-weight-bold">Downloads</h5>
+                <p class="card-text">
+                    Players can simply connect to the server and download the necessary files to begin playing.
+                    <br />
+                    <br />
+                    If you are interested in helping us build the server, you can download the required files below. Again - you only need these if you're building. Players don't need them.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">File Name</th>
+            <th scope="col">Description</th>
+            <th scope="col">Instructions</th>
+            <th scope="col">Download</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Hakpaks</td>
+            <td>These are the DEVELOPMENT-ONLY hakpaks. If you only want to play, you DO NOT need these. Simply connect to the server to get the files and start playing.</td>
+            <td>Extract all .hak files to your My Documents/Neverwinter Nights/hak directory. Extract the ffo.tlk to your tlk directory. Make the tlk directory if it doesn't exist already.</td>
+            <td>
+                <a class="btn btn-primary btn-block" target="_blank" asp-controller="Download" asp-action="DownloadHaks">Download</a>
+            </td>
+        </tr>
+    </tbody>
+</table>

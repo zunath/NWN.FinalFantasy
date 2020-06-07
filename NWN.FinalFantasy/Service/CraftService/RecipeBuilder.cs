@@ -28,6 +28,19 @@ namespace NWN.FinalFantasy.Service.CraftService
         }
 
         /// <summary>
+        /// Sets the category of the recipe. If no category is set,
+        /// the item will be displayed in the "Uncategorized" category in the menu.
+        /// It's recommended all recipes have a category set.
+        /// </summary>
+        /// <param name="category">The category to put the recipe under.</param>
+        /// <returns>A recipe builder with the configured options</returns>
+        public RecipeBuilder Category(RecipeCategoryType category)
+        {
+            _activeRecipe.Category = category;
+            return this;
+        }
+
+        /// <summary>
         /// Sets the name of a recipe which will be displayed to the player.
         /// </summary>
         /// <param name="name">The name of the recipe.</param>

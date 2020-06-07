@@ -12,6 +12,7 @@ namespace NWN.FinalFantasy.Service.CraftService
         public List<IRecipeRequirement> Requirements { get; set; }
         public Dictionary<string, int> Components { get; set; }
         public SkillType Skill { get; set; }
+        public RecipeCategoryType Category { get; set; }
         public bool IsActive { get; set; }
 
         public RecipeDetail()
@@ -20,6 +21,7 @@ namespace NWN.FinalFantasy.Service.CraftService
             Description = string.Empty;
             IsActive = true;
             Quantity = 1;
+            Category = RecipeCategoryType.Uncategorized;
 
             Requirements = new List<IRecipeRequirement>();
             Components = new Dictionary<string, int>();

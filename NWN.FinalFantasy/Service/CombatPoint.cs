@@ -72,7 +72,7 @@ namespace NWN.FinalFantasy.Service
             if (GetIsPC(target) || GetIsDM(target)) return;
 
             var skill = Skill.GetSkillTypeByBaseItem(baseItemType);
-            if (skill == SkillType.Unknown) return;
+            if (skill == SkillType.Invalid) return;
 
             AddCombatPoint(player, target, skill);
         }

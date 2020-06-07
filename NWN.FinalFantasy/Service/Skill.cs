@@ -32,7 +32,7 @@ namespace NWN.FinalFantasy.Service
         /// <param name="xp">The amount of XP to give.</param>
         public static void GiveSkillXP(uint player, SkillType skill, int xp)
         {
-            if (skill == SkillType.Unknown || xp <= 0 || !GetIsPC(player) || GetIsDM(player)) return;
+            if (skill == SkillType.Invalid || xp <= 0 || !GetIsPC(player) || GetIsDM(player)) return;
 
             var playerId = GetObjectUUID(player);
             var dbPlayer = DB.Get<Player>(playerId);

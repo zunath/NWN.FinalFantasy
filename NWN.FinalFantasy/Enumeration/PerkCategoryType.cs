@@ -20,16 +20,23 @@ namespace NWN.FinalFantasy.Enumeration
         WhiteMage = 6,
         [PerkCategory("Red Mage", true)]
         RedMage = 7,
-        [PerkCategory("Ranger", true)]
-        Ranger = 8,
         [PerkCategory("Ninja", true)]
-        Ninja = 9,
+        Ninja = 8,
         [PerkCategory("Specialist", true)]
-        Specialist = 10,
+        Specialist = 9,
         [PerkCategory("Sniper", true)]
-        Sniper = 11,
+        Sniper = 10,
         [PerkCategory("Dark Knight", true)]
-        DarkKnight = 12
+        DarkKnight = 11,
+        [PerkCategory("Blacksmith", true)]
+        Blacksmith = 12,
+        [PerkCategory("Leatherworker", true)]
+        Leatherworker = 13,
+        [PerkCategory("Alchemist", true)]
+        Alchemist = 14,
+        [PerkCategory("Culinarian", true)]
+        Culinarian = 15
+
     }
 
     public class PerkCategoryAttribute : Attribute

@@ -5,8 +5,8 @@ namespace NWN.FinalFantasy.Enumeration
 {
     public enum SkillType
     {
-        [Skill(SkillCategoryType.Invalid, "Unknown", 0, false, "Unused in-game.", false, AbilityType.Invalid, AbilityType.Invalid)]
-        Unknown = 0,
+        [Skill(SkillCategoryType.Invalid, "Invalid", 0, false, "Unused in-game.", false, AbilityType.Invalid, AbilityType.Invalid)]
+        Invalid = 0,
 
         // Ability
         [Skill(SkillCategoryType.Ability, "Chivalry", 50, true, "Ability to use bash, cleave, and other knight-related actions.", true, AbilityType.Invalid, AbilityType.Invalid)]

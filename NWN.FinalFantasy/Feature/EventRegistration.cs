@@ -476,6 +476,8 @@ namespace NWN.FinalFantasy.Feature
             Events.SubscribeEvent("FFO_BUY_PERK", "ffo_buy_perk");
             Events.SubscribeEvent("FFO_GAIN_SKILL_POINT", "ffo_gain_skill");
             Events.SubscribeEvent("FFO_COMPLETE_QUEST", "ffo_complete_qst");
+
+            Events.SubscribeEvent("FFO_CACHE_SKILLS_LOADED", "ffo_skill_cached");
         }
     }
 }

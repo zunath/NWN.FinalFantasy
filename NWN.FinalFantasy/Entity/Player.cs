@@ -37,6 +37,7 @@ namespace NWN.FinalFantasy.Entity
             RecastTimes = new Dictionary<RecastGroup, DateTime>();
             Quests = new Dictionary<string, PlayerQuest>();
             UnlockedPerks = new Dictionary<PerkType, DateTime>();
+            UnlockedRecipes = new Dictionary<RecipeType, DateTime>();
         }
 
         public override string KeyPrefix => "Player";
@@ -79,6 +80,7 @@ namespace NWN.FinalFantasy.Entity
         public Dictionary<RecastGroup, DateTime> RecastTimes { get; set; }
         public Dictionary<string, PlayerQuest> Quests { get; set; }
         public Dictionary<PerkType, DateTime> UnlockedPerks { get; set; }
+        public Dictionary<RecipeType, DateTime> UnlockedRecipes { get; set; }
     }
 
     public class MapPin

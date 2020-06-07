@@ -27,7 +27,6 @@ namespace NWN.FinalFantasy.Service
 
         private static void CacheAbilities()
         {
-            // Organize perks to make later reads quicker.
             var types = AppDomain.CurrentDomain.GetAssemblies()
                 .SelectMany(s => s.GetTypes())
                 .Where(w => typeof(IAbilityListDefinition).IsAssignableFrom(w) && !w.IsInterface && !w.IsAbstract);

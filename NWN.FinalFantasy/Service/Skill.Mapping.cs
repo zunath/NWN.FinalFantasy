@@ -31,7 +31,6 @@ namespace NWN.FinalFantasy.Service
             _itemToSkillMapping[BaseItem.QuarterStaff] = SkillType.Staff;    // Black Mage
             _itemToSkillMapping[BaseItem.LightMace] = SkillType.Rod;         // White Mage
             _itemToSkillMapping[BaseItem.Rapier] = SkillType.Rapier;         // Red Mage
-            _itemToSkillMapping[BaseItem.Longbow] = SkillType.Longbow;       // Ranger
             _itemToSkillMapping[BaseItem.Katana] = SkillType.Katana;         // Ninja
             _itemToSkillMapping[BaseItem.Gunblade] = SkillType.Gunblade;     // Specialist
             _itemToSkillMapping[BaseItem.Rifle] = SkillType.Rifle;           // Sniper

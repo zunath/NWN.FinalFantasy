@@ -20,7 +20,6 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
             StaffMastery(builder);
             RodMastery(builder);
             RapierMastery(builder);
-            LongbowMastery(builder);
             KatanaMastery(builder);
             GunbladeMastery(builder);
             RifleMastery(builder);
@@ -265,40 +264,6 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .Price(8)
                 .RequirementSkill(SkillType.Rapier, 40)
                 .RequirementSkill(SkillType.RedMagic, 50);
-        }
-
-
-        private static void LongbowMastery(PerkBuilder builder)
-        {
-            builder.Create(PerkCategoryType.Ranger, PerkType.LongbowMastery)
-                .Name("Longbow Mastery")
-                .Description("Grants increased BAB when equipped with a longbow.")
-                .TriggerEquippedItem((player, item, inventorySlot, type, level) =>
-                {
-                    ModifyBAB(player, item, inventorySlot, level, true, BaseItem.Longbow, InventorySlot.RightHand);
-                })
-                .TriggerUnequippedItem((player, item, type, level) =>
-                {
-                    ModifyBAB(player, item, InventorySlot.Invalid, level, false, BaseItem.Longbow, InventorySlot.Invalid);
-                })
-
-                .AddPerkLevel()
-                .Description("Grants +1 BAB when equipped with a longbow.")
-                .Price(8)
-                .RequirementSkill(SkillType.Longbow, 20)
-                .RequirementSkill(SkillType.Archery, 25)
-
-                .AddPerkLevel()
-                .Description("Grants +2 BAB when equipped with a longbow.")
-                .Price(8)
-                .RequirementSkill(SkillType.Longbow, 30)
-                .RequirementSkill(SkillType.Archery, 40)
-
-                .AddPerkLevel()
-                .Description("Grants +3 BAB when equipped with a longbow.")
-                .Price(8)
-                .RequirementSkill(SkillType.Longbow, 40)
-                .RequirementSkill(SkillType.Archery, 50);
         }
 
         private static void KatanaMastery(PerkBuilder builder)

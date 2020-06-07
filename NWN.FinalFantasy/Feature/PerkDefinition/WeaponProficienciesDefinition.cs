@@ -15,7 +15,6 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
             StaffProficiency(builder);
             RodProficiency(builder);
             RapierProficiency(builder);
-            LongbowProficiency(builder);
             KatanaProficiency(builder);
             GunbladeProficiency(builder);
             RifleProficiency(builder);
@@ -211,37 +210,6 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .Description("Grants the ability to equip tier 5 rapiers.")
                 .Price(2)
                 .RequirementSkill(SkillType.Rapier, 40);
-        }
-
-        private static void LongbowProficiency(PerkBuilder builder)
-        {
-            builder.Create(PerkCategoryType.Ranger, PerkType.LongbowProficiency)
-                .Name("Longbow Proficiency")
-                .Description("Grants the ability to equip longbows.")
-
-                .AddPerkLevel()
-                .Description("Grants the ability to equip tier 1 longbows.")
-                .Price(2)
-
-                .AddPerkLevel()
-                .Description("Grants the ability to equip tier 2 longbows.")
-                .Price(2)
-                .RequirementSkill(SkillType.Longbow, 10)
-
-                .AddPerkLevel()
-                .Description("Grants the ability to equip tier 3 longbows.")
-                .Price(2)
-                .RequirementSkill(SkillType.Longbow, 20)
-
-                .AddPerkLevel()
-                .Description("Grants the ability to equip tier 4 longbows.")
-                .Price(2)
-                .RequirementSkill(SkillType.Longbow, 30)
-
-                .AddPerkLevel()
-                .Description("Grants the ability to equip tier 5 longbows.")
-                .Price(2)
-                .RequirementSkill(SkillType.Longbow, 40);
         }
 
         private static void KatanaProficiency(PerkBuilder builder)

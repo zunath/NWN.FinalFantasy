@@ -47,8 +47,6 @@ namespace NWN.FinalFantasy.Service
             _weaponAndArmorSkillMapping[new Tuple<BaseItem, ArmorType>(BaseItem.LightMace, ArmorType.Mystic)] = SkillType.WhiteMagic;
             // Red Mage: Rapier + Mystic = Red Magic
             _weaponAndArmorSkillMapping[new Tuple<BaseItem, ArmorType>(BaseItem.Rapier, ArmorType.Mystic)] = SkillType.RedMagic;
-            // Ranger: Longbow + Light = Archery
-            _weaponAndArmorSkillMapping[new Tuple<BaseItem, ArmorType>(BaseItem.Longbow, ArmorType.Light)] = SkillType.Archery;
             // Ninja: Katana + Light = Ninjitsu
             _weaponAndArmorSkillMapping[new Tuple<BaseItem, ArmorType>(BaseItem.Katana, ArmorType.Light)] = SkillType.Ninjitsu;
             // Specialist: Gunblade + Heavy = Swordplay

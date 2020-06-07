@@ -21,8 +21,9 @@ namespace NWN.FinalFantasy.Enumeration
         WhiteMagic = 5,
         [Skill(SkillCategoryType.Ability, "Red Magic", 50, true, "Ability to use poison, convert, and other red magic-related actions.", true, AbilityType.Invalid, AbilityType.Invalid)]
         RedMagic = 6,
-        [Skill(SkillCategoryType.Ability, "Archery", 50, true, "Ability to use barrage, aim, and other archery-related actions.", true, AbilityType.Invalid, AbilityType.Invalid)]
-        Archery = 7,
+
+        // 7 is free
+
         [Skill(SkillCategoryType.Ability, "Ninjitsu", 50, true, "Ability to use utsusemi, raiton, and other ninja-related actions.", true, AbilityType.Invalid, AbilityType.Invalid)]
         Ninjitsu = 8,
         [Skill(SkillCategoryType.Ability, "Swordplay", 50, true, "Ability to use renzokuken, royal guard, and other specialist-related actions.", true, AbilityType.Invalid, AbilityType.Invalid)]
@@ -51,8 +52,9 @@ namespace NWN.FinalFantasy.Enumeration
         Staff = 18,
         [Skill(SkillCategoryType.Weapon, "Rod", 50, true, "Ability to use rods.", true, AbilityType.Wisdom, AbilityType.Charisma)]
         Rod = 19,
-        [Skill(SkillCategoryType.Weapon, "Longbow", 50, true, "Ability to use longbows.", true, AbilityType.Dexterity, AbilityType.Wisdom)]
-        Longbow = 20,
+
+        // 20 is free
+
         [Skill(SkillCategoryType.Weapon, "Katana", 50, true, "Ability to use katanas.", true, AbilityType.Strength, AbilityType.Dexterity)]
         Katana = 21,
         [Skill(SkillCategoryType.Weapon, "Gunblade", 50, true, "Ability to use gunblades.", true, AbilityType.Strength, AbilityType.Constitution)]
@@ -71,8 +73,9 @@ namespace NWN.FinalFantasy.Enumeration
         Leathercraft = 27,
         [Skill(SkillCategoryType.Crafting, "Alchemy", 50, true, "Ability to create magic-based weapons and mystic armors.", true, AbilityType.Invalid, AbilityType.Invalid)]
         Alchemy = 28,
-        [Skill(SkillCategoryType.Crafting, "Carpentry", 50, true, "Ability to create wood-based weapons and furniture.", true, AbilityType.Invalid, AbilityType.Invalid)]
-        Carpentry = 29,
+
+        // 29 is free
+
         [Skill(SkillCategoryType.Crafting, "Cooking", 50, true, "Ability to create food items which grant temporary buffs when consumed.", true, AbilityType.Invalid, AbilityType.Invalid)]
         Cooking = 30,
         [Skill(SkillCategoryType.Crafting, "Mining", 50, true, "Ability to gather raw ore and refine it.", true, AbilityType.Invalid, AbilityType.Invalid)]

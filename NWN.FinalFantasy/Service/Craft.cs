@@ -43,5 +43,15 @@ namespace NWN.FinalFantasy.Service
         {
             return _recipes[recipeType];
         }
+
+        /// <summary>
+        /// Returns true if a recipe has been registered for this type.
+        /// </summary>
+        /// <param name="recipeType">The type of recipe to look for.</param>
+        /// <returns>true if recipe has been registered, false otherwise.</returns>
+        public static bool RecipeExists(RecipeType recipeType)
+        {
+            return _recipes.ContainsKey(recipeType);
+        }
     }
 }

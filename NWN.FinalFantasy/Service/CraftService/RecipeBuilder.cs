@@ -52,6 +52,17 @@ namespace NWN.FinalFantasy.Service.CraftService
         }
 
         /// <summary>
+        /// Sets the level of the recipe which is used for success calculation.
+        /// </summary>
+        /// <param name="level">The level of the recipe.</param>
+        /// <returns>A recipe builder with the configured options.</returns>
+        public RecipeBuilder Level(int level)
+        {
+            _activeRecipe.Level = level;
+            return this;
+        }
+
+        /// <summary>
         /// Sets the description of a recipe which will be displayed to the player.
         /// </summary>
         /// <param name="description">The description of the recipe.</param>

@@ -9,7 +9,7 @@ using Player = NWN.FinalFantasy.Entity.Player;
 
 namespace NWN.FinalFantasy.Feature
 {
-    public class CraftingProgression
+    public class UseRecipeBook
     {
         /// <summary>
         /// When a player uses an item tagged with "RECIPE", the list of recipes associated with the item

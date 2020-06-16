@@ -2,9 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using NWN.FinalFantasy.Core;
+using NWN.FinalFantasy.Core.NWScript;
+using NWN.FinalFantasy.Core.NWScript.Enum;
+using NWN.FinalFantasy.Entity;
 using NWN.FinalFantasy.Enumeration;
 using NWN.FinalFantasy.Extension;
 using NWN.FinalFantasy.Service.CraftService;
+using static NWN.FinalFantasy.Core.NWScript.NWScript;
 
 namespace NWN.FinalFantasy.Service
 {
@@ -16,6 +20,10 @@ namespace NWN.FinalFantasy.Service
         private static readonly Dictionary<SkillType, Dictionary<RecipeCategoryType, Dictionary<RecipeType, RecipeDetail>>> _recipesBySkillAndCategory = new Dictionary<SkillType, Dictionary<RecipeCategoryType, Dictionary<RecipeType, RecipeDetail>>>();
         private static readonly Dictionary<SkillType, Dictionary<RecipeCategoryType, RecipeCategoryAttribute>> _categoriesBySkill = new Dictionary<SkillType, Dictionary<RecipeCategoryType, RecipeCategoryAttribute>>();
 
+        private static readonly Dictionary<SkillType, Tuple<AbilityType, AbilityType>> _craftSkillToAbility = new Dictionary<SkillType, Tuple<AbilityType, AbilityType>>();
+
+        private static readonly Dictionary<uint, PlayerCraftingState> _playerCraftingStates = new Dictionary<uint, PlayerCraftingState>();
+
         /// <summary>
         /// When the skill cache has finished loading, recipe and category data is cached.
         /// </summary>
@@ -24,6 +32,7 @@ namespace NWN.FinalFantasy.Service
         {
             CacheCategories();
             CacheRecipes();
+            CacheCraftSkillToAbilities();
         }
 
         /// <summary>
@@ -86,6 +95,17 @@ namespace NWN.FinalFantasy.Service
         }
 
         /// <summary>
+        /// Maps craft skills to the primary/secondary abilities they use during crafting.
+        /// </summary>
+        private static void CacheCraftSkillToAbilities()
+        {
+            _craftSkillToAbility[SkillType.Blacksmithing] = new Tuple<AbilityType, AbilityType>(AbilityType.Constitution, AbilityType.Dexterity);
+            _craftSkillToAbility[SkillType.Leathercraft] = new Tuple<AbilityType, AbilityType>(AbilityType.Dexterity, AbilityType.Strength);
+            _craftSkillToAbility[SkillType.Alchemy] = new Tuple<AbilityType, AbilityType>(AbilityType.Intelligence, AbilityType.Wisdom);
+            _craftSkillToAbility[SkillType.Cooking] = new Tuple<AbilityType, AbilityType>(AbilityType.Wisdom, AbilityType.Charisma);
+        }
+
+        /// <summary>
         /// Retrieves the details about a recipe.
         /// If recipe type has not been registered, an exception will be raised.
         /// </summary>
@@ -134,6 +154,74 @@ namespace NWN.FinalFantasy.Service
                 return new Dictionary<RecipeCategoryType, RecipeCategoryAttribute>();
 
             return _categoriesBySkill[skill].ToDictionary(x => x.Key, y => y.Value);
+        }
+
+        /// <summary>
+        /// Retrieves a recipe category's details by a given type.
+        /// If the type has not been registered, an exception will be thrown.
+        /// </summary>
+        /// <param name="categoryType">The type of category to retrieve.</param>
+        /// <returns>A recipe category's details.</returns>
+        public static RecipeCategoryAttribute GetCategoryDetail(RecipeCategoryType categoryType)
+        {
+            return _allCategories[categoryType];
+        }
+
+        /// <summary>
+        /// Calculates a player's chance to craft a specific recipe.
+        /// </summary>
+        /// <param name="player">The player to calculate for</param>
+        /// <param name="recipeType">The type of recipe to calculate for</param>
+        /// <returns>A value between 0 and 95 representing the chance to craft an item.</returns>
+        public static float CalculateChanceToCraft(uint player, RecipeType recipeType)
+        {
+            var chance = 70f;
+            var playerId = GetObjectUUID(player);
+            var dbPlayer = DB.Get<Player>(playerId);
+
+            var recipe = GetRecipe(recipeType);
+            var playerLevel = dbPlayer.Skills[recipe.Skill].Rank;
+            var (primary, secondary) = _craftSkillToAbility[recipe.Skill];
+            var levelDelta = playerLevel - recipe.Level;
+
+            var attributeAdjustment = GetAbilityModifier(primary) * 2.0f + GetAbilityModifier(secondary) * 1.5f;
+            var levelAdjustment = levelDelta * 10f;
+
+            chance += levelAdjustment + attributeAdjustment;
+
+            if (chance < 0)
+                chance = 0;
+            else if (chance >= 95)
+                chance = 95;
+
+            return chance;
+        }
+
+        /// <summary>
+        /// Retrieves a player's crafting state.
+        /// If no state is found, a new one will be created and returned.
+        /// </summary>
+        /// <param name="player">The player state to retrieve.</param>
+        /// <returns>A player's crafting state</returns>
+        public static PlayerCraftingState GetPlayerCraftingState(uint player)
+        {
+            if(!_playerCraftingStates.ContainsKey(player))
+                _playerCraftingStates[player] = new PlayerCraftingState();
+
+            return _playerCraftingStates[player];
+        }
+
+        /// <summary>
+        /// Removes a player's crafting state from the cache.
+        /// Be sure this is called when the player leaves the server or stops crafting.
+        /// </summary>
+        /// <param name="player">The player to remove state from.</param>
+        public static void ClearPlayerCraftingState(uint player)
+        {
+            if (!_playerCraftingStates.ContainsKey(player))
+                return;
+
+            _playerCraftingStates.Remove(player);
         }
 
     }

@@ -10,6 +10,7 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
         {
             var builder = new PerkBuilder();
             BlacksmithingRecipes(builder);
+            AutoCraftBlacksmithing(builder);
 
             return builder.Build();
         }
@@ -43,7 +44,37 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .Description("Unlocks tier 5 blacksmithing recipes.")
                 .Price(2)
                 .RequirementSkill(SkillType.Blacksmithing, 40);
+        }
 
+        private static void AutoCraftBlacksmithing(PerkBuilder builder)
+        {
+            builder.Create(PerkCategoryType.Blacksmith, PerkType.AutoCraftBlacksmithing)
+                .Name("Auto-Craft Blacksmithing")
+                .Description("Unlocks and speeds up Blacksmithing auto-crafting.")
+
+                .AddPerkLevel()
+                .Description("Unlocks auto-craft command for Blacksmithing.")
+                .Price(4)
+
+                .AddPerkLevel()
+                .Description("Reduces Blacksmithing auto-craft delay by 4 seconds.")
+                .Price(2)
+                .RequirementSkill(SkillType.Blacksmithing, 10)
+
+                .AddPerkLevel()
+                .Description("Reduces Blacksmithing auto-craft delay by 8 seconds.")
+                .Price(2)
+                .RequirementSkill(SkillType.Blacksmithing, 20)
+
+                .AddPerkLevel()
+                .Description("Reduces Blacksmithing auto-craft delay by 12 seconds.")
+                .Price(2)
+                .RequirementSkill(SkillType.Blacksmithing, 30)
+
+                .AddPerkLevel()
+                .Description("Reduces Blacksmithing auto-craft delay by 16 seconds.")
+                .Price(2)
+                .RequirementSkill(SkillType.Blacksmithing, 40);
         }
     }
 }

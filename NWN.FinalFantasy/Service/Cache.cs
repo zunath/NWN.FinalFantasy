@@ -61,17 +61,25 @@ namespace NWN.FinalFantasy.Service
         /// </summary>
         private static void CacheItemNamesByResref()
         {
-            var storageContainer = GetObjectByTag("temp_item_storage");
             var resref = Util.GetFirstResRef(ResRefType.Item);
 
             while (!string.IsNullOrWhiteSpace(resref))
             {
-                var item = CreateItemOnObject(resref, storageContainer);
-                ItemNamesByResref[resref] = GetName(item);
-                DestroyObject(item);
-
+                CacheItemNameByResref(resref);
                 resref = Util.GetNextResRef();
             }
+        }
+
+        /// <summary>
+        /// Stores the name of an individual item into the cache.
+        /// </summary>
+        /// <param name="resref">The resref of the item we want to cache.</param>
+        private static void CacheItemNameByResref(string resref)
+        {
+            var storageContainer = GetObjectByTag("temp_item_storage");
+            var item = CreateItemOnObject(resref, storageContainer);
+            ItemNamesByResref[resref] = GetName(item);
+            DestroyObject(item);
         }
 
         /// <summary>
@@ -81,8 +89,11 @@ namespace NWN.FinalFantasy.Service
         /// <returns>The name of an item, or an empty string if it cannot be found.</returns>
         public static string GetItemNameByResref(string resref)
         {
+            // Item couldn't be found in the cache. Spawn it, get its details, put them in the cache, then destroy it.
             if (!ItemNamesByResref.ContainsKey(resref))
-                return string.Empty;
+            {
+                CacheItemNameByResref(resref);
+            }
 
             return ItemNamesByResref[resref];
         }

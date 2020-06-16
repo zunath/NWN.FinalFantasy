@@ -115,6 +115,11 @@
         CarpentryRecipes = 106,
         CookingRecipes = 107,
         MiningProficiency = 108,
-        BotanyProficiency = 109
+        BotanyProficiency = 109,
+
+        AutoCraftBlacksmithing = 110,
+        AutoCraftLeathercrafting = 111,
+        AutoCraftAlchemy = 112,
+        AutoCraftCooking = 113,
     }
 }

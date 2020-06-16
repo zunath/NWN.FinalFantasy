@@ -1,4 +1,6 @@
-﻿using NWN.FinalFantasy.Core;
+﻿using System;
+using NWN.FinalFantasy.Core;
+using NWN.FinalFantasy.Core.NWScript;
 using NWN.FinalFantasy.Core.NWScript.Enum;
 using NWN.FinalFantasy.Enumeration;
 using NWN.FinalFantasy.Service;
@@ -47,6 +49,22 @@ namespace NWN.FinalFantasy.Feature
         {
             var player = GetLastUsedBy();
             StatusEffect.Apply(player, player, StatusEffectType.Invincible, 30.0f);
+        }
+
+        [NWNEventHandler("test8")]
+        public static void MakeIP()
+        {
+            Console.WriteLine("firing");
+
+            var itemprop = ItemPropertyAttackBonus(1);
+
+            Console.WriteLine("Unpacking");
+            var unpacked = Core.NWNX.ItemProperty.UnpackIP(itemprop);
+
+            Console.WriteLine("Packing");
+            var packed = Core.NWNX.ItemProperty.PackIP(unpacked);
+
+            Console.WriteLine("Done");
         }
     }
 }

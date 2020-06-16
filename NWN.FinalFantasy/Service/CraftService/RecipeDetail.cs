@@ -14,6 +14,7 @@ namespace NWN.FinalFantasy.Service.CraftService
         public SkillType Skill { get; set; }
         public RecipeCategoryType Category { get; set; }
         public bool IsActive { get; set; }
+        public int Level { get; set; }
 
         public RecipeDetail()
         {

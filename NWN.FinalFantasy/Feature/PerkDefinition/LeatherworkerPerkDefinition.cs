@@ -10,6 +10,7 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
         {
             var builder = new PerkBuilder();
             LeathercraftRecipes(builder);
+            AutoCraftLeathercrafting(builder);
 
             return builder.Build();
         }
@@ -43,7 +44,37 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .Description("Unlocks tier 5 leathercraft recipes.")
                 .Price(2)
                 .RequirementSkill(SkillType.Leathercraft, 40);
+        }
 
+        private static void AutoCraftLeathercrafting(PerkBuilder builder)
+        {
+            builder.Create(PerkCategoryType.Leatherworker, PerkType.AutoCraftLeathercrafting)
+                .Name("Auto-Craft Leathercraft")
+                .Description("Unlocks and speeds up Leathercraft auto-crafting.")
+
+                .AddPerkLevel()
+                .Description("Unlocks auto-craft command for Leathercraft.")
+                .Price(4)
+
+                .AddPerkLevel()
+                .Description("Reduces Leathercraft auto-craft delay by 4 seconds.")
+                .Price(2)
+                .RequirementSkill(SkillType.Leathercraft, 10)
+
+                .AddPerkLevel()
+                .Description("Reduces Leathercraft auto-craft delay by 8 seconds.")
+                .Price(2)
+                .RequirementSkill(SkillType.Leathercraft, 20)
+
+                .AddPerkLevel()
+                .Description("Reduces Leathercraft auto-craft delay by 12 seconds.")
+                .Price(2)
+                .RequirementSkill(SkillType.Leathercraft, 30)
+
+                .AddPerkLevel()
+                .Description("Reduces Leathercraft auto-craft delay by 16 seconds.")
+                .Price(2)
+                .RequirementSkill(SkillType.Leathercraft, 40);
         }
     }
 }

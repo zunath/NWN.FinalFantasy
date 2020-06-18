@@ -19,7 +19,7 @@ namespace NWN.FinalFantasy.Core.NWNX.Enum
         public int ChanceToAppear { get; set; }
         public bool IsUseable { get; set; }
         public int SpellID { get; set; }
-        public uint? Creator { get; set; }
+        public uint Creator { get; set; }
         public string Tag { get; set; }
     }
 }

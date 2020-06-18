@@ -175,7 +175,7 @@ namespace NWN.FinalFantasy.Service
         /// <returns>A value between 0 and 95 representing the chance to craft an item.</returns>
         public static float CalculateChanceToCraft(uint player, RecipeType recipeType)
         {
-            var chance = 70f;
+            var chance = 60f;
             var playerId = GetObjectUUID(player);
             var dbPlayer = DB.Get<Player>(playerId);
 

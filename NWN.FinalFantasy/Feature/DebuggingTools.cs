@@ -66,5 +66,12 @@ namespace NWN.FinalFantasy.Feature
 
             Console.WriteLine("Done");
         }
+
+        [NWNEventHandler("test9")]
+        public static void OpenHomePurchaseMenu()
+        {
+            var player = GetLastUsedBy();
+            Dialog.StartConversation(player, OBJECT_SELF, "PlayerHouseDialog");
+        }
     }
 }

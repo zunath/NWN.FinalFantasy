@@ -15,19 +15,17 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
         }
 
         private const string MainPageId = "MAIN_PAGE";
-        private const string PurchaseHouseLayoutListPageId = "PURCHASE_HOUSE_LAYOUT_LIST_PAGE";
         private const string PurchaseHouseLayoutDetailPageId = "PURCHASE_HOUSE_LAYOUT_DETAIL_PAGE";
-        private const string EditHousePageId = "EDIT_HOUSE_PAGE";
-
+        private const string SellHousePageId = "SELL_HOUSE_PAGE";
+        
 
         public override PlayerDialog SetUp(uint player)
         {
             var builder = new DialogBuilder()
                 .WithDataModel(new Model())
                 .AddPage(MainPageId, MainPageInit)
-                .AddPage(PurchaseHouseLayoutListPageId, PurchaseHouseLayoutListPageInit)
                 .AddPage(PurchaseHouseLayoutDetailPageId, PurchaseHouseLayoutDetailPageInit)
-                .AddPage(EditHousePageId, EditHousePageInit);
+                .AddPage(SellHousePageId, SellHousePageInit);
 
             return builder.Build();
         }
@@ -47,13 +45,32 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
             if (hasHouse)
             {
                 var house = DB.Get<PlayerHouse>(playerId);
+                var detail = Housing.GetHouseTypeDetail(house.HouseType);
+
+                page.Header = ColorToken.Green("Layout Type: ") + detail.Name + "\n" +
+                              ColorToken.Green("Furniture Limit: ") + house.Furnitures.Count + " / " + detail.FurnitureLimit + "\n\n" +
+                              "What would you like to do?";
+
+                page.AddResponse("Enter", () =>
+                {
+                    var instance = Housing.LoadPlayerHouse(playerId);
+                    var entrancePosition = Housing.GetEntrancePosition(house.HouseType);
+                    var location = Location(instance, entrancePosition, 0.0f);
+                    Housing.StoreOriginalLocation(player);
+                    
+                    AssignCommand(player, () => ActionJumpToLocation(location));
+                });
+
+                page.AddResponse("Sell Home", () =>
+                {
+                    ChangePage(SellHousePageId);
+                });
             }
             // Player doesn't own a house.
             // Provide options to buy one.
             else
             {
-                page.Header = "You can purchase a personal residence here. Available layouts depend on your current SeeD rank.";
-                page.AddResponse("Purchase Room", () => ChangePage(PurchaseHouseLayoutListPageId));
+                PurchaseHouseLayoutListPageInit(page);
             }
 
         }
@@ -103,7 +120,7 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
                 var playerId = GetObjectUUID(player);
                 var playerHouse = new PlayerHouse
                 {
-                    HouseType = model.SelectedHouseType 
+                    HouseType = model.SelectedHouseType
                 };
 
                 DB.Set(playerId, playerHouse);
@@ -168,10 +185,10 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
         }
 
         /// <summary>
-        /// Handles the "Edit House Page" header and responses.
+        /// Handles the "Sell House Page" header and responses.
         /// </summary>
         /// <param name="page">The page we're building.</param>
-        private void EditHousePageInit(DialogPage page)
+        private void SellHousePageInit(DialogPage page)
         {
 
         }

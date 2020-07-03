@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Numerics;
 using NWN.FinalFantasy.Core;
+using NWN.FinalFantasy.Core.NWScript;
+using NWN.FinalFantasy.Core.NWScript.Enum;
 using NWN.FinalFantasy.Entity;
 using NWN.FinalFantasy.Enumeration;
 using NWN.FinalFantasy.Extension;
@@ -16,6 +17,7 @@ namespace NWN.FinalFantasy.Service
         private static readonly Dictionary<FurnitureType, FurnitureAttribute> _activeFurniture = new Dictionary<FurnitureType, FurnitureAttribute>();
         private static readonly Dictionary<PlayerHouseType, PlayerHouseAttribute> _activePlayerHouses = new Dictionary<PlayerHouseType, PlayerHouseAttribute>();
         private static readonly Dictionary<PlayerHouseType, Vector> _houseEntrancePositions = new Dictionary<PlayerHouseType, Vector>();
+        private static readonly Dictionary<string, uint> _activeHouseInstances = new Dictionary<string, uint>();
 
         /// <summary>
         /// When the module loads, cache all relevant data into memory.
@@ -182,7 +184,84 @@ namespace NWN.FinalFantasy.Service
         {
             if (!GetLocalBool(area, "HOUSING_IS_INSTANCE")) return;
 
-            DestroyArea(area);
+            var result = DestroyArea(area);
+            var ownerPlayerUUID = GetLocalString(area, "HOUSING_OWNER_PLAYER_UUID");
+
+            if (string.IsNullOrWhiteSpace(ownerPlayerUUID)) return;
+
+            if (result == 1) // 1 = Successful deletion of the area
+            {
+                // Remove the area from the cache, if it exists.
+                if (_activeHouseInstances.ContainsKey(ownerPlayerUUID))
+                {
+                    _activeHouseInstances.Remove(ownerPlayerUUID);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Locates an existing instance or creates a new instance of a player's home.
+        /// </summary>
+        /// <param name="ownerPlayerUUID"></param>
+        /// <returns>The area instance.</returns>
+        public static uint LoadPlayerHouse(string ownerPlayerUUID)
+        {
+            // Instance has already been loaded, just return it.
+            if (_activeHouseInstances.ContainsKey(ownerPlayerUUID))
+            {
+                return _activeHouseInstances[ownerPlayerUUID];
+            }
+
+            // Create a new instance, load all furniture, and return the area object.
+            var playerHouse = DB.Get<PlayerHouse>(ownerPlayerUUID);
+            var detail = GetHouseTypeDetail(playerHouse.HouseType);
+            var originalArea = Cache.GetAreaByResref(detail.AreaInstanceResref);
+            var copy = CreateInstance(originalArea);
+            SetLocalString(copy, "HOUSING_OWNER_PLAYER_UUID", ownerPlayerUUID);
+
+            // Swap to custom name if available.
+            if (!string.IsNullOrWhiteSpace(playerHouse.CustomName))
+            {
+                SetName(copy, playerHouse.CustomName);
+            }
+            // Otherwise use a generic "Owner's Property" name.
+            else
+            {
+                var dbOwner = DB.Get<Player>(ownerPlayerUUID);
+                var name = dbOwner.Name + "'s Property";
+                SetName(copy, name);
+            }
+
+            var removedCount = 0;
+            for(var index = playerHouse.Furnitures.Count-1; index >= 0; index--)
+            {
+                var furniture = playerHouse.Furnitures[index];
+                var furnitureDetail = _activeFurniture[furniture.FurnitureType];
+
+                // In the event that a piece of furniture has been marked inactive after it was already placed, we need to remove it from the house.
+                if (!furnitureDetail.IsActive)
+                {
+                    playerHouse.Furnitures.RemoveAt(index);
+                    removedCount++;
+                    continue;
+                }
+
+                var position = new Vector(furniture.X, furniture.Y, furniture.Z);
+                var location = Location(copy, position, furniture.Orientation);
+
+                var placeable = CreateObject(ObjectType.Placeable, furnitureDetail.Resref, location);
+                SetLocalString(placeable, "HOUSING_FURNITURE_ID", furniture.Id.ToString());
+            }
+
+            // Save any changes, if furniture was removed.
+            if (removedCount > 0)
+            {
+                DB.Set(ownerPlayerUUID, playerHouse);
+            }
+
+            // Set the instance into cache and then return the area.
+            _activeHouseInstances[ownerPlayerUUID] = copy;
+            return copy;
         }
     }
 }

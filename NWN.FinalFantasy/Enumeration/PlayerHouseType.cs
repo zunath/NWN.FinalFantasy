@@ -6,13 +6,13 @@ namespace NWN.FinalFantasy.Enumeration
     {
         [PlayerHouse("Invalid", 0, 100, 0, "", false)]
         Invalid = 0,
-        [PlayerHouse("Basic", 30, 0, 0, "player_layout_1", true)] //todo change seed rank back to 1, and price back to 5000
+        [PlayerHouse("Basic - Wooden/White (4x4)", 30, 1, 5000, "player_layout_1", true)]
         Basic = 1,
-        [PlayerHouse("Advanced", 50, 3, 150000, "", true)]
+        [PlayerHouse("Advanced - Wooden/White (6x6)", 50, 3, 150000, "player_layout_2", true)]
         Advanced = 2,
-        [PlayerHouse("Superior", 70, 6, 30000, "", true)]
+        [PlayerHouse("Superior - Wooden/White (8x8)", 70, 6, 30000, "player_layout_3", true)]
         Superior = 3,
-        [PlayerHouse("Master", 100, 10, 50000, "", true)]
+        [PlayerHouse("Master - Wooden/White (10x10)", 100, 10, 50000, "player_layout_4", true)]
         Master = 4
     }
 

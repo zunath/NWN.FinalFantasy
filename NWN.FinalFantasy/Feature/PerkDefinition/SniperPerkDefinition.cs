@@ -17,7 +17,7 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
 
         private static void EagleEyeShot(PerkBuilder builder)
         {
-            builder.Create(PerkCategoryType.Ranger, PerkType.EagleEyeShot)
+            builder.Create(PerkCategoryType.Sniper, PerkType.EagleEyeShot)
                 .Name("Eagle Eye Shot")
                 .Description("Your next ranged attack will deal 5 times normal damage.")
 

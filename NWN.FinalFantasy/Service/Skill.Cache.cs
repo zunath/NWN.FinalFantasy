@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using NWN.FinalFantasy.Core;
+using NWN.FinalFantasy.Core.NWNX;
 using NWN.FinalFantasy.Core.NWScript.Enum;
 using NWN.FinalFantasy.Enumeration;
 using NWN.FinalFantasy.Extension;
+using static NWN.FinalFantasy.Core.NWScript.NWScript;
 
 namespace NWN.FinalFantasy.Service
 {
@@ -105,6 +107,8 @@ namespace NWN.FinalFantasy.Service
                 // Add to the skills by category cache.
                 _allSkillsByCategory[skillDetail.Category].Add(skillType);
             }
+
+            Events.SignalEvent("FFO_CACHE_SKILLS_LOADED", GetModule());
             Console.WriteLine("Skill data cached successfully.");
         }
 

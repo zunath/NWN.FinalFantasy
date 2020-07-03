@@ -40,14 +40,14 @@ namespace NWN.FinalFantasy.Service
 
         /// <summary>
         /// Retrieves the skill type associated with a base item type.
-        /// If no skill is associated with the item, SkillType.Unknown will be returned.
+        /// If no skill is associated with the item, SkillType.Invalid will be returned.
         /// </summary>
         /// <param name="baseItem">The type of base item to look for.</param>
         /// <returns>A skill type associated with the given base item type.</returns>
         public static SkillType GetSkillTypeByBaseItem(BaseItem baseItem)
         {
             if (!_itemToSkillMapping.ContainsKey(baseItem))
-                return SkillType.Unknown;
+                return SkillType.Invalid;
 
             return _itemToSkillMapping[baseItem];
         }

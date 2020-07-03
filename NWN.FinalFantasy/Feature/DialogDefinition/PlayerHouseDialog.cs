@@ -12,6 +12,7 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
         {
             public PlayerHouseType SelectedHouseType { get; set; }
             public bool IsConfirmingPurchase { get; set; }
+            public bool IsConfirmingSell { get; set; }
         }
 
         private const string MainPageId = "MAIN_PAGE";
@@ -25,7 +26,13 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
                 .WithDataModel(new Model())
                 .AddPage(MainPageId, MainPageInit)
                 .AddPage(PurchaseHouseLayoutDetailPageId, PurchaseHouseLayoutDetailPageInit)
-                .AddPage(SellHousePageId, SellHousePageInit);
+                .AddPage(SellHousePageId, SellHousePageInit)
+                .AddBackAction((previous, next) =>
+                {
+                    var model = GetDataModel<Model>();
+                    model.IsConfirmingPurchase = false;
+                    model.IsConfirmingSell = false;
+                });
 
             return builder.Build();
         }
@@ -126,6 +133,8 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
                 DB.Set(playerId, playerHouse);
 
                 FloatingTextStringOnCreature("You've purchased a new home!", player, false);
+
+                Log.Write(LogGroup.PlayerHousing, $"Player {GetName(player)} (ID = '{playerId}') bought property type {layoutDetail.Name} for {layoutDetail.Price} gil.");
             }
 
             page.Header = ColorToken.Green("Layout: ") + layoutDetail.Name + "\n" +
@@ -190,6 +199,37 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
         /// <param name="page">The page we're building.</param>
         private void SellHousePageInit(DialogPage page)
         {
+            var player = GetPC();
+            var playerId = GetObjectUUID(player);
+            var dbHouse = DB.Get<PlayerHouse>(playerId);
+            var model = GetDataModel<Model>();
+
+            var houseDetail = Housing.GetHouseTypeDetail(dbHouse.HouseType);
+            var gil = houseDetail.Price / 2;
+            page.Header = ColorToken.Red("WARNING: ") + "You are about to sell your property. All items contained inside will be permanently lost!\n\n" +
+                          "It is highly recommended you pick up all items and furniture inside before selling the property.\n\n" + 
+                ColorToken.Green($"You will receive {gil} gil for the sale of this property. Are you sure you wish to sell it?");
+
+            if (model.IsConfirmingSell)
+            {
+                page.AddResponse(ColorToken.Red($"CONFIRM SELL PROPERTY"), () =>
+                {
+                    DB.Delete<PlayerHouse>(playerId);
+
+                    GiveGoldToCreature(player, gil);
+                    FloatingTextStringOnCreature($"Property sold successfully for {gil} gil.", player, false);
+                    EndConversation();
+
+                    Log.Write(LogGroup.PlayerHousing, $"Player {GetName(player)} (ID = '{playerId}') sold their property for {gil} gil.");
+                });
+            }
+            else
+            {
+                page.AddResponse(ColorToken.Red("Sell Property"), () =>
+                {
+                    model.IsConfirmingSell = true;
+                });
+            }
 
         }
     }

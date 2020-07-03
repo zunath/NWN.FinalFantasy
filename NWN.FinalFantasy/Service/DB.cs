@@ -135,5 +135,21 @@ namespace NWN.FinalFantasy.Service
 
             return _multiplexer.GetDatabase().KeyExists($"{keyPrefixOverride}:{key}");
         }
+
+        /// <summary>
+        /// Deletes an entry by a specified key.
+        /// </summary>
+        /// <typeparam name="T">The type of entity to delete.</typeparam>
+        /// <param name="key">The key of the entity</param>
+        /// <param name="keyPrefixOverride">If null, the key prefix defined on the entity will be used. Otherwise, this value will be used as the prefix.</param>
+        public static void Delete<T>(string key, string keyPrefixOverride = null)
+        {
+            if (keyPrefixOverride == null)
+            {
+                keyPrefixOverride = _keyPrefixByType[typeof(T)];
+            }
+
+            _multiplexer.GetDatabase().KeyDelete($"{keyPrefixOverride}:{key}");
+        }
     }
 }

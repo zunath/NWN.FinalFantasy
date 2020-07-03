@@ -71,15 +71,17 @@ namespace NWN.FinalFantasy.Feature
                 uint command;
 
                 // Auto-Craft command: Only available if perk has been purchased.
-                if (Perk.GetEffectivePerkLevel(player, _autoCraftPerk[state.DeviceSkillType]) > 0)
+                // todo: Need to write the mini-game. For now, only auto-craft will be available.
+                //if (Perk.GetEffectivePerkLevel(player, _autoCraftPerk[state.DeviceSkillType]) > 0)
                 {
                     command = CreateItemOnObject(AutoCraftItemResref, device);
                     SetName(command, $"Auto Craft: {recipe.Quantity}x {recipe.Name}");
                 }
 
                 // Craft command
-                command = CreateItemOnObject(CraftItemResref, device);
-                SetName(command, $"Craft: {recipe.Quantity}x {recipe.Name}");
+                // todo: Need to write the mini-game. For now, only auto-craft will be available.
+                //command = CreateItemOnObject(CraftItemResref, device);
+                //SetName(command, $"Craft: {recipe.Quantity}x {recipe.Name}");
 
                 // Load Components command
                 command = CreateItemOnObject(LoadComponentsResref, device);
@@ -202,7 +204,7 @@ namespace NWN.FinalFantasy.Feature
                 return baseDelay;
             }
 
-            void CraftItem(bool createItem)
+            void CraftItem(bool isSuccessful)
             {
                 var recipe = Craft.GetRecipe(state.SelectedRecipe);
 
@@ -237,7 +239,7 @@ namespace NWN.FinalFantasy.Feature
                         remainingComponents.Remove(resref);
                 }
 
-                if (createItem)
+                if (isSuccessful)
                 {
                     CreateItemOnObject(recipe.Resref, player, recipe.Quantity);
                 }

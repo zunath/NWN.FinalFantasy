@@ -109,6 +109,16 @@ namespace NWN.FinalFantasy.Service
         }
 
         /// <summary>
+        /// Retrieves a specific type of furniture's details.
+        /// </summary>
+        /// <param name="type">The type of furniture.</param>
+        /// <returns>Details for the specified furniture type.</returns>
+        public static FurnitureAttribute GetFurnitureDetail(FurnitureType type)
+        {
+            return _activeFurniture[type];
+        }
+
+        /// <summary>
         /// Retrieves the X, Y, and Z coordinates of the home layout's entrance.
         /// </summary>
         /// <param name="type">The type of house layout to look for</param>
@@ -233,15 +243,14 @@ namespace NWN.FinalFantasy.Service
             }
 
             var removedCount = 0;
-            for(var index = playerHouse.Furnitures.Count-1; index >= 0; index--)
+            foreach(var (id, furniture) in playerHouse.Furnitures)
             {
-                var furniture = playerHouse.Furnitures[index];
                 var furnitureDetail = _activeFurniture[furniture.FurnitureType];
 
                 // In the event that a piece of furniture has been marked inactive after it was already placed, we need to remove it from the house.
                 if (!furnitureDetail.IsActive)
                 {
-                    playerHouse.Furnitures.RemoveAt(index);
+                    playerHouse.Furnitures.Remove(id);
                     removedCount++;
                     continue;
                 }
@@ -250,7 +259,7 @@ namespace NWN.FinalFantasy.Service
                 var location = Location(copy, position, furniture.Orientation);
 
                 var placeable = CreateObject(ObjectType.Placeable, furnitureDetail.Resref, location);
-                SetLocalString(placeable, "HOUSING_FURNITURE_ID", furniture.Id.ToString());
+                SetLocalString(placeable, "HOUSING_FURNITURE_ID", id);
             }
 
             // Save any changes, if furniture was removed.
@@ -262,6 +271,76 @@ namespace NWN.FinalFantasy.Service
             // Set the instance into cache and then return the area.
             _activeHouseInstances[ownerPlayerUUID] = copy;
             return copy;
+        }
+
+        /// <summary>
+        /// Checks whether a player can place a furniture item inside of a property.
+        /// Error messages will be sent to the player in the event they fail a check.
+        /// </summary>
+        /// <param name="player">The player to check</param>
+        /// <param name="item">The item being placed</param>
+        /// <returns>true if player can place the furniture, false otherwise</returns>
+        public static bool CanPlaceFurniture(uint player, uint item)
+        {
+            var area = GetArea(player);
+
+            // Ensure it's a furniture item.
+            var furnitureTypeId = GetFurnitureTypeFromItem(item);
+            if (furnitureTypeId == FurnitureType.Invalid) return false;
+
+            // Ensure we're inside someone's house.
+            var ownerPlayerUUID = GetLocalString(area, "HOUSING_OWNER_PLAYER_UUID");
+            if (string.IsNullOrWhiteSpace(ownerPlayerUUID))
+            {
+                SendMessageToPC(player, "Furniture may only be placed inside properties.");
+                return false;
+            }
+
+            // Ensure player has permissions
+            var dbHouse = DB.Get<PlayerHouse>(ownerPlayerUUID);
+            var playerId = GetObjectUUID(player);
+            var permission = dbHouse.PlayerPermissions.ContainsKey(playerId)
+                ? dbHouse.PlayerPermissions[playerId]
+                : new PlayerHousePermission();
+
+            if (!permission.CanPlaceFurniture)
+            {
+                SendMessageToPC(player, "You do not have permission to place furniture in this property.");
+                return false;
+            }
+
+            // Too many items have been placed.
+            var houseDetail = GetHouseTypeDetail(dbHouse.HouseType);
+            if (dbHouse.Furnitures.Count >= houseDetail.FurnitureLimit)
+            {
+                SendMessageToPC(player, "You cannot place any more furniture inside this property.");
+                return false;
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Retrieves the furniture type from an item.
+        /// Item's resref must start with 'furniture_' and end with 4 numbers.
+        /// I.E: 'furniture_0004'
+        /// Returns FurnitureType.Invalid on error.
+        /// </summary>
+        /// <param name="item">The item to retrieve from.</param>
+        /// <returns>A furniture type associated with the item.</returns>
+        public static FurnitureType GetFurnitureTypeFromItem(uint item)
+        {
+            var resref = GetResRef(item);
+            if (!resref.StartsWith("furniture_")) return FurnitureType.Invalid;
+
+            var id = resref.Substring(resref.Length-4, 4);
+
+            if (!int.TryParse(id, out var furnitureId))
+            {
+                return FurnitureType.Invalid;
+            }
+
+            return (FurnitureType) furnitureId;
         }
     }
 }

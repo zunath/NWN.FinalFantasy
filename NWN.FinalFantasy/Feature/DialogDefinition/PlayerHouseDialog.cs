@@ -1,4 +1,5 @@
-﻿using NWN.FinalFantasy.Entity;
+﻿using System.Collections.Generic;
+using NWN.FinalFantasy.Entity;
 using NWN.FinalFantasy.Enumeration;
 using NWN.FinalFantasy.Service;
 using NWN.FinalFantasy.Service.DialogService;
@@ -18,7 +19,7 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
         private const string MainPageId = "MAIN_PAGE";
         private const string PurchaseHouseLayoutDetailPageId = "PURCHASE_HOUSE_LAYOUT_DETAIL_PAGE";
         private const string SellHousePageId = "SELL_HOUSE_PAGE";
-        
+
 
         public override PlayerDialog SetUp(uint player)
         {
@@ -64,7 +65,7 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
                     var entrancePosition = Housing.GetEntrancePosition(house.HouseType);
                     var location = Location(instance, entrancePosition, 0.0f);
                     Housing.StoreOriginalLocation(player);
-                    
+
                     AssignCommand(player, () => ActionJumpToLocation(location));
                 });
 
@@ -125,15 +126,27 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
             void PurchaseHome()
             {
                 var playerId = GetObjectUUID(player);
+
+                // Grant the owner all permissions.
+                var permission = new PlayerHousePermission
+                {
+                    CanAdjustPermissions = true,
+                    CanEnter = true,
+                    CanPlaceFurniture = true
+                };
+
                 var playerHouse = new PlayerHouse
                 {
-                    HouseType = model.SelectedHouseType
+                    HouseType = model.SelectedHouseType,
+                    PlayerPermissions = new Dictionary<string, PlayerHousePermission>
+                    {
+                        { playerId, permission }
+                    }
                 };
 
                 DB.Set(playerId, playerHouse);
 
                 FloatingTextStringOnCreature("You've purchased a new home!", player, false);
-
                 Log.Write(LogGroup.PlayerHousing, $"Player {GetName(player)} (ID = '{playerId}') bought property type {layoutDetail.Name} for {layoutDetail.Price} gil.");
             }
 
@@ -207,7 +220,7 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
             var houseDetail = Housing.GetHouseTypeDetail(dbHouse.HouseType);
             var gil = houseDetail.Price / 2;
             page.Header = ColorToken.Red("WARNING: ") + "You are about to sell your property. All items contained inside will be permanently lost!\n\n" +
-                          "It is highly recommended you pick up all items and furniture inside before selling the property.\n\n" + 
+                          "It is highly recommended you pick up all items and furniture inside before selling the property.\n\n" +
                 ColorToken.Green($"You will receive {gil} gil for the sale of this property. Are you sure you wish to sell it?");
 
             if (model.IsConfirmingSell)

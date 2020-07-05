@@ -65,7 +65,8 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
 
             if (permission.CanAdjustPermissions)
             {
-                page.AddResponse("Manage Permissions", () => ChangePage(ManagePermissionsPageId));
+                // todo: Currently disabled. Plan to introduce permission management at a later date.
+                //page.AddResponse(ColorToken.Green("Manage Permissions"), () => ChangePage(ManagePermissionsPageId));
             }
 
             // Load nearby furniture.
@@ -75,10 +76,15 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
                 LoadFurniture(dbHouse, model.TargetObject, page);
             }
 
+            const int MaxNumberOfFurniture = 10;
             var nth = 1;
             var nearby = GetNearestObjectToLocation(model.TargetLocation, ObjectType.Placeable, nth);
             while (GetIsObjectValid(nearby))
             {
+                // Reached the max.
+                if (nth > MaxNumberOfFurniture) break;
+
+                // This placeable is the same as the targeted placeable. We don't want it to show up twice.
                 if (nearby == model.TargetObject) continue;
 
                 LoadFurniture(dbHouse, nearby, page);

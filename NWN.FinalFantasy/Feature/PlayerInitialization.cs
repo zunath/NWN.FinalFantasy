@@ -45,16 +45,16 @@ namespace NWN.FinalFantasy.Feature
         private static void AutoLevelPlayer(uint player)
         {
             // Capture original stats before we level up the player.
-            int str = Creature.GetRawAbilityScore(player, AbilityType.Strength);
-            int con = Creature.GetRawAbilityScore(player, AbilityType.Constitution);
-            int dex = Creature.GetRawAbilityScore(player, AbilityType.Dexterity);
-            int @int = Creature.GetRawAbilityScore(player, AbilityType.Intelligence);
-            int wis = Creature.GetRawAbilityScore(player, AbilityType.Wisdom);
-            int cha = Creature.GetRawAbilityScore(player, AbilityType.Charisma);
+            var str = Creature.GetRawAbilityScore(player, AbilityType.Strength);
+            var con = Creature.GetRawAbilityScore(player, AbilityType.Constitution);
+            var dex = Creature.GetRawAbilityScore(player, AbilityType.Dexterity);
+            var @int = Creature.GetRawAbilityScore(player, AbilityType.Intelligence);
+            var wis = Creature.GetRawAbilityScore(player, AbilityType.Wisdom);
+            var cha = Creature.GetRawAbilityScore(player, AbilityType.Charisma);
 
             GiveXPToCreature(player, 10000);
 
-            for(int level = 1; level <= 5; level++)
+            for(var level = 1; level <= 5; level++)
             {
                 var @class = GetClassByPosition(1, player);
                 LevelUpHenchman(player, @class);
@@ -75,7 +75,7 @@ namespace NWN.FinalFantasy.Feature
         /// <param name="player">The player to wipe an inventory for.</param>
         private static void ClearInventory(uint player)
         {
-            for (int slot = 0; slot < NumberOfInventorySlots; slot++)
+            for (var slot = 0; slot < NumberOfInventorySlots; slot++)
             {
                 var item = GetItemInSlot((InventorySlot)slot, player);
                 if (!GetIsObjectValid(item)) continue;
@@ -97,7 +97,7 @@ namespace NWN.FinalFantasy.Feature
         /// <param name="player">The player to modify</param>
         private static void InitializeSkills(uint player)
         {
-            for (int iCurSkill = 1; iCurSkill <= 27; iCurSkill++)
+            for (var iCurSkill = 1; iCurSkill <= 27; iCurSkill++)
             {
                 var skill = (Skill) (iCurSkill - 1);
                 Creature.SetSkillRank(player, skill, 0);
@@ -122,7 +122,7 @@ namespace NWN.FinalFantasy.Feature
         private static void RemoveNWNSpells(uint player)
         {
             var @class = GetClassByPosition(1, player);
-            for (int index = 0; index <= 255; index++)
+            for (var index = 0; index <= 255; index++)
             {
                 Creature.RemoveKnownSpell(player, @class, 0, index);
             }
@@ -130,8 +130,8 @@ namespace NWN.FinalFantasy.Feature
 
         private static void ClearFeats(uint player)
         {
-            int numberOfFeats = Creature.GetFeatCount(player);
-            for (int currentFeat = numberOfFeats; currentFeat >= 0; currentFeat--)
+            var numberOfFeats = Creature.GetFeatCount(player);
+            for (var currentFeat = numberOfFeats; currentFeat >= 0; currentFeat--)
             {
                 Creature.RemoveFeat(player, Creature.GetFeatByIndex(player, currentFeat - 1));
             }
@@ -149,6 +149,7 @@ namespace NWN.FinalFantasy.Feature
             Creature.AddFeatByLevel(player, Feat.UncannyDodge1, 1);
             Creature.AddFeatByLevel(player, Feat.OpenRestMenu, 1);
             Creature.AddFeatByLevel(player, Feat.ChatCommandTargeter, 1);
+            Creature.AddFeatByLevel(player, Feat.PropertyTool, 1);
         }
 
 

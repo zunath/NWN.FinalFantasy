@@ -1,10 +1,12 @@
 ﻿using System;
 using NWN.FinalFantasy.Core;
+using NWN.FinalFantasy.Core.NWNX;
 using NWN.FinalFantasy.Core.NWScript;
 using NWN.FinalFantasy.Core.NWScript.Enum;
 using NWN.FinalFantasy.Enumeration;
 using NWN.FinalFantasy.Service;
 using static NWN.FinalFantasy.Core.NWScript.NWScript;
+using Dialog = NWN.FinalFantasy.Service.Dialog;
 using Skill = NWN.FinalFantasy.Service.Skill;
 
 namespace NWN.FinalFantasy.Feature
@@ -71,6 +73,9 @@ namespace NWN.FinalFantasy.Feature
         public static void OpenHomePurchaseMenu()
         {
             var player = GetLastUsedBy();
+
+            Creature.AddFeatByLevel(player, Feat.PropertyTool, 1);
+
             Dialog.StartConversation(player, OBJECT_SELF, "PlayerHouseDialog");
         }
     }

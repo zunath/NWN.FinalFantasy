@@ -22,7 +22,7 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
             var feat = (Feat)Convert.ToInt32(Events.GetEventData("FEAT_ID"));
             if (feat != Feat.OpenRestMenu) return;
 
-            Dialog.StartConversation(OBJECT_SELF, OBJECT_SELF, "RestMenuDialog");
+            Dialog.StartConversation(OBJECT_SELF, OBJECT_SELF, nameof(RestMenuDialog));
         }
 
         private const string MainPageId = "MAIN_PAGE";
@@ -57,12 +57,12 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
 
             page.Header = header;
 
-            page.AddResponse("View Skills", () => SwitchConversation("ViewSkillsDialog"));
-            page.AddResponse("View Perks", () => SwitchConversation("ViewPerksDialog"));
-            page.AddResponse("View Achievements", () => SwitchConversation("ViewAchievementsDialog"));
-            page.AddResponse("View Recipes", () => SwitchConversation("RecipeDialog"));
-            page.AddResponse("Modify Item Appearance", () => SwitchConversation("ModifyItemAppearanceDialog"));
-            page.AddResponse("Player Settings", () => SwitchConversation("PlayerSettingsDialog"));
+            page.AddResponse("View Skills", () => SwitchConversation(nameof(ViewSkillsDialog)));
+            page.AddResponse("View Perks", () => SwitchConversation(nameof(ViewPerksDialog)));
+            page.AddResponse("View Achievements", () => SwitchConversation(nameof(ViewAchievementsDialog)));
+            page.AddResponse("View Recipes", () => SwitchConversation(nameof(RecipeDialog)));
+            //page.AddResponse("Modify Item Appearance", () => SwitchConversation(nameof(ModifyItemAppearanceDialog)));
+            page.AddResponse("Player Settings", () => SwitchConversation(nameof(PlayerSettingsDialog)));
             page.AddResponse("Open Trash Can (Destroy Items)", () =>
             {
                 EndConversation();

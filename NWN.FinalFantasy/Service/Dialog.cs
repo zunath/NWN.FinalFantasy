@@ -29,7 +29,7 @@ namespace NWN.FinalFantasy.Service
                 .Where(p => typeof(IConversation).IsAssignableFrom(p) && p.IsClass && !p.IsAbstract).ToArray();
             foreach (var type in classes)
             {
-                IConversation instance = Activator.CreateInstance(type) as IConversation;
+                var instance = Activator.CreateInstance(type) as IConversation;
                 if (instance == null)
                 {
                     throw new NullReferenceException("Unable to activate instance of type: " + type);
@@ -41,7 +41,7 @@ namespace NWN.FinalFantasy.Service
         [NWNEventHandler("mod_load")]
         public static void InitializeDialogs()
         {
-            for (int x = 1; x <= NumberOfDialogs; x++)
+            for (var x = 1; x <= NumberOfDialogs; x++)
             {
                 DialogFilesInUse.Add(x, false);
             }
@@ -71,7 +71,7 @@ namespace NWN.FinalFantasy.Service
             var player = GetLastUsedBy();
             if (!GetIsObjectValid(player)) player = (GetPCSpeaker());
 
-            string conversation = GetLocalString(OBJECT_SELF, "CONVERSATION");
+            var conversation = GetLocalString(OBJECT_SELF, "CONVERSATION");
 
             if (!string.IsNullOrWhiteSpace(conversation))
             {
@@ -314,14 +314,25 @@ namespace NWN.FinalFantasy.Service
         {
             var player = GetPCSpeaker();
             var playerId = GetObjectUUID(player);
-            bool hasDialog = HasPlayerDialog(playerId);
+            var hasDialog = HasPlayerDialog(playerId);
             if (!hasDialog) return false;
             var dialog = LoadPlayerDialog(playerId);
 
             var page = dialog.CurrentPage;
 
+            // Initialization should run one time per conversation.
+            if (GetLocalInt(player, "DIALOG_SYSTEM_INITIALIZE_RAN") != 1)
+            {
+                foreach (var initializationAction in dialog.InitializationActions)
+                {
+                    initializationAction();
+                }
+
+                SetLocalInt(player, "DIALOG_SYSTEM_INITIALIZE_RAN", 1);
+            }
+
             // The AppearsWhen call happens for every node.
-            // We only want to load the header and responses time so ensure it only happens for the first node.
+            // We only want to load the header and responses one time so ensure it only happens for the first node.
             if (!dialog.IsEnding && nodeType == 1 && nodeId == 0)
             {
                 page.Header = string.Empty;
@@ -329,14 +340,14 @@ namespace NWN.FinalFantasy.Service
                 page.PageInit?.Invoke(page);
             }
 
-            int currentSelectionNumber = nodeId + 1;
-            bool displayNode = false;
-            string newNodeText = string.Empty;
-            int dialogOffset = (NumberOfResponsesPerPage + 1) * (dialog.DialogNumber - 1);
+            var currentSelectionNumber = nodeId + 1;
+            var displayNode = false;
+            var newNodeText = string.Empty;
+            var dialogOffset = (NumberOfResponsesPerPage + 1) * (dialog.DialogNumber - 1);
 
             if (currentSelectionNumber == NumberOfResponsesPerPage + 1) // Next page
             {
-                int displayCount = page.NumberOfResponses - (NumberOfResponsesPerPage * dialog.PageOffset);
+                var displayCount = page.NumberOfResponses - (NumberOfResponsesPerPage * dialog.PageOffset);
 
                 if (displayCount > NumberOfResponsesPerPage)
                 {
@@ -359,7 +370,7 @@ namespace NWN.FinalFantasy.Service
             }
             else if (nodeType == 2)
             {
-                int responseID = (dialog.PageOffset * NumberOfResponsesPerPage) + nodeId;
+                var responseID = (dialog.PageOffset * NumberOfResponsesPerPage) + nodeId;
                 if (responseID + 1 <= page.NumberOfResponses)
                 {
                     var response = page.Responses[responseID];
@@ -373,16 +384,6 @@ namespace NWN.FinalFantasy.Service
             }
             else if (nodeType == 1)
             {
-                if (GetLocalInt(player, "DIALOG_SYSTEM_INITIALIZE_RAN") != 1)
-                {
-                    foreach (var initializationAction in dialog.InitializationActions)
-                    {
-                        initializationAction();
-                    }
-
-                    SetLocalInt(player, "DIALOG_SYSTEM_INITIALIZE_RAN", 1);
-                }
-
                 if (dialog.IsEnding)
                 {
                     foreach (var endAction in dialog.EndActions)
@@ -416,8 +417,8 @@ namespace NWN.FinalFantasy.Service
             var playerId = GetObjectUUID(player);
             var dialog = LoadPlayerDialog(playerId);
 
-            int selectionNumber = nodeId + 1;
-            int responseID = nodeId + (NumberOfResponsesPerPage * dialog.PageOffset);
+            var selectionNumber = nodeId + 1;
+            var responseID = nodeId + (NumberOfResponsesPerPage * dialog.PageOffset);
 
             if (selectionNumber == NumberOfResponsesPerPage + 1) // Next page
             {
@@ -429,7 +430,7 @@ namespace NWN.FinalFantasy.Service
             }
             else if (selectionNumber == NumberOfResponsesPerPage + 3) // Back
             {
-                string currentPageName = dialog.CurrentPageName;
+                var currentPageName = dialog.CurrentPageName;
                 var previous = dialog.NavigationStack.Pop();
 
                 // This might be a little confusing but we're passing the active page as the "old page" to the Back() method.
@@ -585,7 +586,7 @@ namespace NWN.FinalFantasy.Service
         {
             if (dialog.DialogNumber <= 0)
             {
-                for (int x = 1; x <= NumberOfDialogs; x++)
+                for (var x = 1; x <= NumberOfDialogs; x++)
                 {
                     var existingDialog = PlayerDialogs.SingleOrDefault(d => d.Value.DialogNumber == x);
                     if (!DialogFilesInUse[x] || existingDialog.Value == null)
@@ -614,7 +615,7 @@ namespace NWN.FinalFantasy.Service
         public static void EndConversation(uint player)
         {
             var playerId = GetObjectUUID(player);
-            PlayerDialog playerDialog = LoadPlayerDialog(playerId);
+            var playerDialog = LoadPlayerDialog(playerId);
             playerDialog.IsEnding = true;
             StorePlayerDialog(playerId, playerDialog);
         }

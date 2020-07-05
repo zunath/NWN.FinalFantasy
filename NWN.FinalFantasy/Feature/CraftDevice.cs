@@ -4,6 +4,7 @@ using NWN.FinalFantasy.Core;
 using NWN.FinalFantasy.Core.NWNX;
 using NWN.FinalFantasy.Core.NWScript.Enum;
 using NWN.FinalFantasy.Enumeration;
+using NWN.FinalFantasy.Feature.DialogDefinition;
 using NWN.FinalFantasy.Service;
 using static NWN.FinalFantasy.Core.NWScript.NWScript;
 using Dialog = NWN.FinalFantasy.Service.Dialog;
@@ -61,7 +62,7 @@ namespace NWN.FinalFantasy.Feature
                 state.DeviceSkillType = skillType;
                 state.IsOpeningMenu = true;
 
-                Dialog.StartConversation(player, OBJECT_SELF, "RecipeDialog");
+                Dialog.StartConversation(player, OBJECT_SELF, nameof(RecipeDialog));
             }
             // Recipe has been picked. Spawn the command items into this device's inventory.
             else
@@ -387,7 +388,7 @@ namespace NWN.FinalFantasy.Feature
             var state = Craft.GetPlayerCraftingState(player);
             state.IsOpeningMenu = true;
 
-            Dialog.StartConversation(player, device, "RecipeDialog");
+            Dialog.StartConversation(player, device, nameof(RecipeDialog));
         }
 
     }

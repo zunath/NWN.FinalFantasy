@@ -6,11 +6,19 @@ namespace NWN.FinalFantasy.Service.DialogService
 {
     public abstract class DialogBase : IConversation
     {
+        /// <summary>
+        /// Retrieves the speaking player.
+        /// </summary>
+        /// <returns>The player speaking</returns>
         protected uint GetPC()
         {
             return GetPCSpeaker();
         }
 
+        /// <summary>
+        /// Gets the target of the dialog.
+        /// </summary>
+        /// <returns></returns>
         protected uint GetDialogTarget()
         {
             var player = GetPC();
@@ -19,6 +27,11 @@ namespace NWN.FinalFantasy.Service.DialogService
             return dialog.DialogTarget;
         }
 
+        /// <summary>
+        /// Retrieves the data model used by the conversation. 
+        /// </summary>
+        /// <typeparam name="T">The type of data</typeparam>
+        /// <returns>A data model used by the conversation</returns>
         protected T GetDataModel<T>()
             where T: class
         {
@@ -28,6 +41,11 @@ namespace NWN.FinalFantasy.Service.DialogService
             return dialog.DataModel as T;
         }
 
+        /// <summary>
+        /// Switches to a new page within the active conversation dialog.
+        /// </summary>
+        /// <param name="pageName">The name of the new page.</param>
+        /// <param name="updateNavigationStack">If true, the player will be able to click the back button to return to the current page.</param>
         protected void ChangePage(string pageName, bool updateNavigationStack = true)
         {
             var player = GetPC();
@@ -40,14 +58,20 @@ namespace NWN.FinalFantasy.Service.DialogService
             dialog.PageOffset = 0;
         }
 
-        protected void SwitchConversation(string conversationName)
+        /// <summary>
+        /// Swaps to a new conversation.
+        /// If maintainNavigationStack is true, and the new dialog supports it, a back button will be provided on the new conversation.
+        /// </summary>
+        /// <param name="conversationName">The new conversation to switch to</param>
+        /// <param name="maintainNavigationStack">If true, a back button will be provided on the new conversation. Otherwise it won't be.</param>
+        protected void SwitchConversation(string conversationName, bool maintainNavigationStack = true)
         {
             var player = GetPC();
             var playerId = GetObjectUUID(player);
             var dialog = Dialog.LoadPlayerDialog(playerId);
             Stack<DialogNavigation> navigationStack = null;
 
-            if (dialog.EnableBackButton)
+            if (dialog.EnableBackButton && maintainNavigationStack)
             {
                 navigationStack = dialog.NavigationStack;
                 navigationStack.Push(new DialogNavigation(dialog.CurrentPageName, dialog.ActiveDialogName));
@@ -69,6 +93,10 @@ namespace NWN.FinalFantasy.Service.DialogService
             SetLocalInt(player, "DIALOG_SYSTEM_INITIALIZE_RAN", 1);
         }
 
+        /// <summary>
+        /// Turns the Back button on or off.
+        /// </summary>
+        /// <param name="isOn">If true, back button will be enabled. Otherwise it won't.</param>
         protected void ToggleBackButton(bool isOn)
         {
             var player = GetPC();
@@ -78,6 +106,9 @@ namespace NWN.FinalFantasy.Service.DialogService
             dialog.NavigationStack.Clear();
         }
 
+        /// <summary>
+        /// Tracks the navigation the player has done during this session.
+        /// </summary>
         protected Stack<DialogNavigation> NavigationStack
         {
             get
@@ -96,6 +127,9 @@ namespace NWN.FinalFantasy.Service.DialogService
             }
         }
 
+        /// <summary>
+        /// Wipes the navigation history for a player.
+        /// </summary>
         protected void ClearNavigationStack()
         {
             var player = GetPC();
@@ -104,6 +138,9 @@ namespace NWN.FinalFantasy.Service.DialogService
             dialog.NavigationStack.Clear();
         }
 
+        /// <summary>
+        /// Forcibly ends the conversation.
+        /// </summary>
         protected void EndConversation()
         {
             Dialog.EndConversation(GetPC());

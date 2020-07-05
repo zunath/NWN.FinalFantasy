@@ -1201,6 +1201,7 @@ namespace NWN.FinalFantasy.Core.NWScript.Enum
         LionHeart = 1227,
         Gambit = 1228,
         DarkNebula = 1229,
-        Raise = 1230
+        Raise = 1230,
+        PropertyTool = 1231
     }
 }

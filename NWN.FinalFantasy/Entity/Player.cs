@@ -38,6 +38,7 @@ namespace NWN.FinalFantasy.Entity
             Quests = new Dictionary<string, PlayerQuest>();
             UnlockedPerks = new Dictionary<PerkType, DateTime>();
             UnlockedRecipes = new Dictionary<RecipeType, DateTime>();
+            SeedProgress = new SeedProgress();
         }
 
         public override string KeyPrefix => "Player";
@@ -81,6 +82,7 @@ namespace NWN.FinalFantasy.Entity
         public Dictionary<string, PlayerQuest> Quests { get; set; }
         public Dictionary<PerkType, DateTime> UnlockedPerks { get; set; }
         public Dictionary<RecipeType, DateTime> UnlockedRecipes { get; set; }
+        public SeedProgress SeedProgress { get; set; }
     }
 
     public class MapPin
@@ -124,5 +126,11 @@ namespace NWN.FinalFantasy.Entity
         {
             DisplayAchievementNotification = true;
         }
+    }
+
+    public class SeedProgress
+    {
+        public int Rank { get; set; }
+        public int Points { get; set; }
     }
 }

@@ -41,6 +41,9 @@ namespace NWN.FinalFantasy.Feature
             var areaResref = GetResRef(area);
             if (!GetIsPC(player) || GetIsDM(player) || areaResref == "ooc_area") return;
 
+            // If the area isn't in the cache, it must be an instance. Don't save locations inside instances.
+            if (Cache.GetAreaByResref(areaResref) == OBJECT_INVALID) return;
+
             PerformSave(player);
         }
 

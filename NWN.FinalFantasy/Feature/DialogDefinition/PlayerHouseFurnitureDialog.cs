@@ -60,20 +60,40 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
 
         private void PopulateDataModel()
         {
+            // There are two ways to enter this conversation.
+            //   1.) Use a furniture item.
+            //   2.) Use the property tool feat.
+            // Depending on the entry method, the data model gets populated differently.
+
             var player = GetPC();
             var area = GetArea(player);
             var model = GetDataModel<Model>();
 
             var item = GetLocalObject(player, "TEMP_FURNITURE_OBJECT");
 
-            model.Item = item;
-            model.FurnitureType = Housing.GetFurnitureTypeFromItem(item);
+            // Used furniture item.
+            if (GetIsObjectValid(item))
+            {
+                model.Item = item;
+                model.HasBeenPlaced = false;
+            }
+            // Used property tool.
+            else
+            {
+                model.Item = OBJECT_INVALID;
+                model.HasBeenPlaced = true;
+                model.Placeable = GetLocalObject(player, "TEMP_FURNITURE_PLACEABLE");
+            }
+
+            model.FurnitureType = (FurnitureType)GetLocalInt(player, "TEMP_FURNITURE_TYPE_ID");
             model.OwnerUUID = GetLocalString(area, "HOUSING_OWNER_PLAYER_UUID");
             model.TargetLocation = GetLocalLocation(player, "TEMP_FURNITURE_LOCATION");
 
             // Wipe temp variables.
+            DeleteLocalInt(player, "TEMP_FURNITURE_TYPE_ID");
             DeleteLocalObject(player, "TEMP_FURNITURE_OBJECT");
             DeleteLocalLocation(player, "TEMP_FURNITURE_LOCATION");
+            DeleteLocalObject(player, "TEMP_FURNITURE_PLACEABLE");
         }
 
         private void MainPageInit(DialogPage page)
@@ -91,9 +111,7 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
             if (model.HasBeenPlaced)
             {
                 page.AddResponse("Pick Up", PickUpFurniture);
-
                 page.AddResponse("Move", () => ChangePage(MovePageId));
-
                 page.AddResponse("Rotate", () => ChangePage(RotatePageId));
             }
             // Furniture hasn't been placed yet.

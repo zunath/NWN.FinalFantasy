@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using NWN.FinalFantasy.Core.NWNX;
 using NWN.FinalFantasy.Entity;
+using NWN.FinalFantasy.Feature.DialogDefinition;
 using static NWN.FinalFantasy.Core.NWScript.NWScript;
 using Player = NWN.FinalFantasy.Entity.Player;
 
@@ -150,7 +151,7 @@ namespace NWN.FinalFantasy.Service.QuestService
             if (AllowRewardSelection)
             {
                 SetLocalString(player, "QST_REWARD_SELECTION_QUEST_ID", QuestId);
-                Dialog.StartConversation(player, player, "QuestRewardSelectionDialog");
+                Dialog.StartConversation(player, player, nameof(QuestRewardSelectionDialog));
             }
             else
             {

@@ -1,5 +1,6 @@
 ﻿using NWN.FinalFantasy.Core;
 using NWN.FinalFantasy.Core.NWScript.Enum;
+using NWN.FinalFantasy.Feature.DialogDefinition;
 using NWN.FinalFantasy.Service;
 using static NWN.FinalFantasy.Core.NWScript.NWScript;
 
@@ -19,7 +20,7 @@ namespace NWN.FinalFantasy.Feature
 
             AssignCommand(player, () => ClearAllActions());
 
-            Dialog.StartConversation(player, player, "RestMenuDialog");
+            Dialog.StartConversation(player, player, nameof(RestMenuDialog));
         }
     }
 }

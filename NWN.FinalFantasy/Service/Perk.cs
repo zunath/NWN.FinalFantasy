@@ -3,6 +3,7 @@ using System.Linq;
 using NWN.FinalFantasy.Core;
 using NWN.FinalFantasy.Core.NWNX;
 using NWN.FinalFantasy.Enumeration;
+using NWN.FinalFantasy.Feature.DialogDefinition;
 using static NWN.FinalFantasy.Core.NWScript.NWScript;
 using Object = NWN.FinalFantasy.Core.NWNX.Object;
 using Player = NWN.FinalFantasy.Entity.Player;
@@ -102,7 +103,7 @@ namespace NWN.FinalFantasy.Service
 
             SetLocalObject(player, "PERK_REFUND_OBJECT", item);
             AssignCommand(player, () => ClearAllActions());
-            Dialog.StartConversation(player, player, "PerkRefundDialog");
+            Dialog.StartConversation(player, player, nameof(PerkRefundDialog));
 
             // Don't display the "You cannot use this item" message. Skip the event.
             Events.SetEventResult("1"); 

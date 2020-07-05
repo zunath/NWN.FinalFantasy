@@ -2,7 +2,7 @@
   "__data_type": "UTI ",
   "AddCost": {
     "type": "dword",
-    "value": 0
+    "value": 100
   },
   "BaseItem": {
     "type": "int",
@@ -41,7 +41,7 @@
   "LocalizedName": {
     "type": "cexolocstring",
     "value": {
-      "0": "Furniture Example"
+      "0": "Invalid"
     }
   },
   "ModelPart1": {

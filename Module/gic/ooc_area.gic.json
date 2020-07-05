@@ -286,6 +286,13 @@
           "type": "cexostring",
           "value": "Bread"
         }
+      },
+      {
+        "__struct_id": 9,
+        "Comment": {
+          "type": "cexostring",
+          "value": "Low treasure script."
+        }
       }
     ]
   },

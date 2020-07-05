@@ -8,7 +8,7 @@ namespace NWN.FinalFantasy.Enumeration
         Invalid = 0,
         [PlayerHouse("Basic - Wooden/White (4x4)", 30, 1, 5000, "player_layout_1", true)]
         Basic = 1,
-        [PlayerHouse("Advanced - Wooden/White (6x6)", 50, 3, 150000, "player_layout_2", true)]
+        [PlayerHouse("Advanced - Wooden/White (6x6)", 50, 3, 15000, "player_layout_2", true)]
         Advanced = 2,
         [PlayerHouse("Superior - Wooden/White (8x8)", 70, 6, 30000, "player_layout_3", true)]
         Superior = 3,

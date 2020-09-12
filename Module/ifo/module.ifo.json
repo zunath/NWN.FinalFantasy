@@ -65,10 +65,6 @@
       }
     ]
   },
-  "Mod_CacheNSSList": {
-    "type": "list",
-    "value": []
-  },
   "Mod_Creator_ID": {
     "type": "int",
     "value": 2

@@ -21,6 +21,10 @@
     "value": [
       {
         "__struct_id": 0,
+        "ActionParams": {
+          "type": "list",
+          "value": []
+        },
         "Animation": {
           "type": "dword",
           "value": 0
@@ -50,6 +54,10 @@
                 "type": "resref",
                 "value": "appears"
               },
+              "ConditionParams": {
+                "type": "list",
+                "value": []
+              },
               "Index": {
                 "type": "dword",
                 "value": 1
@@ -64,6 +72,10 @@
               "Active": {
                 "type": "resref",
                 "value": ""
+              },
+              "ConditionParams": {
+                "type": "list",
+                "value": []
               },
               "Index": {
                 "type": "dword",
@@ -97,6 +109,10 @@
       },
       {
         "__struct_id": 1,
+        "ActionParams": {
+          "type": "list",
+          "value": []
+        },
         "Animation": {
           "type": "dword",
           "value": 0
@@ -136,12 +152,16 @@
         "Text": {
           "type": "cexolocstring",
           "value": {
-            "0": "Did you kill stuff yet? {{condition-on-quest-state myQuestId 1}}"
+            "0": "Did you kill stuff yet?"
           }
         }
       },
       {
         "__struct_id": 2,
+        "ActionParams": {
+          "type": "list",
+          "value": []
+        },
         "Animation": {
           "type": "dword",
           "value": 0
@@ -171,6 +191,10 @@
                 "type": "resref",
                 "value": "appears"
               },
+              "ConditionParams": {
+                "type": "list",
+                "value": []
+              },
               "Index": {
                 "type": "dword",
                 "value": 3
@@ -185,6 +209,10 @@
               "Active": {
                 "type": "resref",
                 "value": ""
+              },
+              "ConditionParams": {
+                "type": "list",
+                "value": []
               },
               "Index": {
                 "type": "dword",
@@ -212,12 +240,16 @@
         "Text": {
           "type": "cexolocstring",
           "value": {
-            "0": "You're on my quest brah {{condition-on-quest-state myQuestId 2}}"
+            "0": "You're on my quest brah"
           }
         }
       },
       {
         "__struct_id": 3,
+        "ActionParams": {
+          "type": "list",
+          "value": []
+        },
         "Animation": {
           "type": "dword",
           "value": 0
@@ -247,6 +279,10 @@
                 "type": "resref",
                 "value": "appears"
               },
+              "ConditionParams": {
+                "type": "list",
+                "value": []
+              },
               "Index": {
                 "type": "dword",
                 "value": 4
@@ -273,12 +309,16 @@
         "Text": {
           "type": "cexolocstring",
           "value": {
-            "0": "You did good kid. {{condition-on-quest-state myQuestId 3}}"
+            "0": "You did good kid."
           }
         }
       },
       {
         "__struct_id": 4,
+        "ActionParams": {
+          "type": "list",
+          "value": []
+        },
         "Animation": {
           "type": "dword",
           "value": 0
@@ -318,7 +358,7 @@
         "Text": {
           "type": "cexolocstring",
           "value": {
-            "0": "Quest is done brah {{condition-completed-quest myQuestId}}"
+            "0": "Quest is done brah"
           }
         }
       }
@@ -326,7 +366,7 @@
   },
   "NumWords": {
     "type": "dword",
-    "value": 44
+    "value": 27
   },
   "PreventZoomIn": {
     "type": "byte",
@@ -337,6 +377,10 @@
     "value": [
       {
         "__struct_id": 0,
+        "ActionParams": {
+          "type": "list",
+          "value": []
+        },
         "Animation": {
           "type": "dword",
           "value": 0
@@ -378,6 +422,22 @@
       },
       {
         "__struct_id": 1,
+        "ActionParams": {
+          "type": "list",
+          "value": [
+            {
+              "__struct_id": 0,
+              "Key": {
+                "type": "cexostring",
+                "value": "action-accept-quest"
+              },
+              "Value": {
+                "type": "cexostring",
+                "value": "myQuestId"
+              }
+            }
+          ]
+        },
         "Animation": {
           "type": "dword",
           "value": 0
@@ -413,12 +473,16 @@
         "Text": {
           "type": "cexolocstring",
           "value": {
-            "0": "Yes {{action-accept-quest myQuestId}}"
+            "0": "Yes"
           }
         }
       },
       {
         "__struct_id": 2,
+        "ActionParams": {
+          "type": "list",
+          "value": []
+        },
         "Animation": {
           "type": "dword",
           "value": 0
@@ -460,6 +524,22 @@
       },
       {
         "__struct_id": 3,
+        "ActionParams": {
+          "type": "list",
+          "value": [
+            {
+              "__struct_id": 0,
+              "Key": {
+                "type": "cexostring",
+                "value": "action-request-quest-items"
+              },
+              "Value": {
+                "type": "cexostring",
+                "value": "myQuestId"
+              }
+            }
+          ]
+        },
         "Animation": {
           "type": "dword",
           "value": 0
@@ -495,12 +575,28 @@
         "Text": {
           "type": "cexolocstring",
           "value": {
-            "0": "Give Items {{action-request-quest-items myQuestId}}"
+            "0": "Give Items"
           }
         }
       },
       {
         "__struct_id": 4,
+        "ActionParams": {
+          "type": "list",
+          "value": [
+            {
+              "__struct_id": 0,
+              "Key": {
+                "type": "cexostring",
+                "value": "action-advance-quest"
+              },
+              "Value": {
+                "type": "cexostring",
+                "value": "myQuestId"
+              }
+            }
+          ]
+        },
         "Animation": {
           "type": "dword",
           "value": 0
@@ -536,7 +632,7 @@
         "Text": {
           "type": "cexolocstring",
           "value": {
-            "0": "Ok {{action-advance-quest myQuestId}}"
+            "0": "Ok"
           }
         }
       }
@@ -551,6 +647,22 @@
           "type": "resref",
           "value": "appears"
         },
+        "ConditionParams": {
+          "type": "list",
+          "value": [
+            {
+              "__struct_id": 0,
+              "Key": {
+                "type": "cexostring",
+                "value": "condition-completed-quest"
+              },
+              "Value": {
+                "type": "cexostring",
+                "value": "myQuestId"
+              }
+            }
+          ]
+        },
         "Index": {
           "type": "dword",
           "value": 4
@@ -561,6 +673,22 @@
         "Active": {
           "type": "resref",
           "value": "appears"
+        },
+        "ConditionParams": {
+          "type": "list",
+          "value": [
+            {
+              "__struct_id": 0,
+              "Key": {
+                "type": "cexostring",
+                "value": "condition-on-quest-state"
+              },
+              "Value": {
+                "type": "cexostring",
+                "value": "myQuestId 3"
+              }
+            }
+          ]
         },
         "Index": {
           "type": "dword",
@@ -573,6 +701,22 @@
           "type": "resref",
           "value": "appears"
         },
+        "ConditionParams": {
+          "type": "list",
+          "value": [
+            {
+              "__struct_id": 0,
+              "Key": {
+                "type": "cexostring",
+                "value": "condition-on-quest-state"
+              },
+              "Value": {
+                "type": "cexostring",
+                "value": "myQuestId 2"
+              }
+            }
+          ]
+        },
         "Index": {
           "type": "dword",
           "value": 2
@@ -584,6 +728,22 @@
           "type": "resref",
           "value": "appears"
         },
+        "ConditionParams": {
+          "type": "list",
+          "value": [
+            {
+              "__struct_id": 0,
+              "Key": {
+                "type": "cexostring",
+                "value": "condition-on-quest-state"
+              },
+              "Value": {
+                "type": "cexostring",
+                "value": "myQuestId 1"
+              }
+            }
+          ]
+        },
         "Index": {
           "type": "dword",
           "value": 1
@@ -594,6 +754,10 @@
         "Active": {
           "type": "resref",
           "value": "appears"
+        },
+        "ConditionParams": {
+          "type": "list",
+          "value": []
         },
         "Index": {
           "type": "dword",

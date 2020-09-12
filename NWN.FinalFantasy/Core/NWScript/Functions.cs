@@ -1,4 +1,5 @@
 using System;
+using System.Numerics;
 using NWN.FinalFantasy.Core.NWScript.Enum;
 using Type = NWN.FinalFantasy.Core.NWScript.Enum.Creature.Type;
 
@@ -170,7 +171,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         public static void ActionMoveToLocation(Location lDestination, bool bRun = false)
         {
             Internal.NativeFunctions.StackPushInteger(bRun ? 1 : 0);
-            Internal.NativeFunctions.StackPushLocation(lDestination.Handle);
+            Internal.NativeFunctions.StackPushGameDefinedStructure((int)EngineStructure.Location, lDestination);
             Internal.NativeFunctions.CallBuiltIn(21);
         }
 
@@ -728,12 +729,12 @@ namespace NWN.FinalFantasy.Core.NWScript
         ///   Return value on error: OBJECT_INVALID
         /// </summary>
         public static uint GetFirstObjectInShape(Shape nShape, float fSize, Location lTarget, bool bLineOfSight = false,
-            ObjectType nObjectFilter = ObjectType.Creature, Vector? vOrigin = null)
+            ObjectType nObjectFilter = ObjectType.Creature, Vector3 vOrigin = default)
         {
-            Internal.NativeFunctions.StackPushVector(vOrigin.HasValue ? vOrigin.Value : new Vector());
+            Internal.NativeFunctions.StackPushVector(vOrigin);
             Internal.NativeFunctions.StackPushInteger((int)nObjectFilter);
             Internal.NativeFunctions.StackPushInteger(bLineOfSight ? 1 : 0);
-            Internal.NativeFunctions.StackPushLocation(lTarget.Handle);
+            Internal.NativeFunctions.StackPushGameDefinedStructure((int)EngineStructure.Location, lTarget);
             Internal.NativeFunctions.StackPushFloat(fSize);
             Internal.NativeFunctions.StackPushInteger((int)nShape);
             Internal.NativeFunctions.CallBuiltIn(128);
@@ -767,12 +768,12 @@ namespace NWN.FinalFantasy.Core.NWScript
         ///   Return value on error: OBJECT_INVALID
         /// </summary>
         public static uint GetNextObjectInShape(Shape nShape, float fSize, Location lTarget, bool bLineOfSight = false,
-            ObjectType nObjectFilter = ObjectType.Creature, Vector? vOrigin = null)
+            ObjectType nObjectFilter = ObjectType.Creature, Vector3 vOrigin = default)
         {
-            Internal.NativeFunctions.StackPushVector(vOrigin.HasValue ? vOrigin.Value : new Vector());
+            Internal.NativeFunctions.StackPushVector(vOrigin);
             Internal.NativeFunctions.StackPushInteger((int)nObjectFilter);
             Internal.NativeFunctions.StackPushInteger(bLineOfSight ? 1 : 0);
-            Internal.NativeFunctions.StackPushLocation(lTarget.Handle);
+            Internal.NativeFunctions.StackPushGameDefinedStructure((int)EngineStructure.Location, lTarget);
             Internal.NativeFunctions.StackPushFloat(fSize);
             Internal.NativeFunctions.StackPushInteger((int)nShape);
             Internal.NativeFunctions.CallBuiltIn(129);
@@ -796,7 +797,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         /// </summary>
         public static void SignalEvent(uint oObject, Event evToRun)
         {
-            Internal.NativeFunctions.StackPushEvent(evToRun.Handle);
+            Internal.NativeFunctions.StackPushGameDefinedStructure((int)EngineStructure.Event, evToRun);
             Internal.NativeFunctions.StackPushObject(oObject);
             Internal.NativeFunctions.CallBuiltIn(131);
         }
@@ -819,7 +820,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         {
             Internal.NativeFunctions.StackPushInteger(nUserDefinedEventNumber);
             Internal.NativeFunctions.CallBuiltIn(132);
-            return new Event(Internal.NativeFunctions.StackPopEvent());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Event);
         }
 
         /// <summary>
@@ -854,17 +855,17 @@ namespace NWN.FinalFantasy.Core.NWScript
         ///   - vVector
         ///   - bPrepend: if this is TRUE, the message will be prefixed with "PRINTVECTOR:"
         /// </summary>
-        public static void PrintVector(Vector? vVector, bool bPrepend = false)
+        public static void PrintVector(Vector3 vVector, bool bPrepend = false)
         {
             Internal.NativeFunctions.StackPushInteger(bPrepend ? 1 : 0);
-            Internal.NativeFunctions.StackPushVector(vVector.HasValue ? vVector.Value : new Vector());
+            Internal.NativeFunctions.StackPushVector(vVector);
             Internal.NativeFunctions.CallBuiltIn(141);
         }
 
         /// <summary>
         ///   Create a vector with the specified values for x, y and z
         /// </summary>
-        public static Vector Vector(float x = 0.0f, float y = 0.0f, float z = 0.0f)
+        public static Vector3 Vector(float x = 0.0f, float y = 0.0f, float z = 0.0f)
         {
             Internal.NativeFunctions.StackPushFloat(z);
             Internal.NativeFunctions.StackPushFloat(y);
@@ -876,9 +877,9 @@ namespace NWN.FinalFantasy.Core.NWScript
         /// <summary>
         ///   Cause the caller to face vTarget
         /// </summary>
-        public static void SetFacingPoint(Vector? vTarget)
+        public static void SetFacingPoint(Vector3 vTarget)
         {
-            Internal.NativeFunctions.StackPushVector(vTarget.HasValue ? vTarget.Value : new Vector());
+            Internal.NativeFunctions.StackPushVector(vTarget);
             Internal.NativeFunctions.CallBuiltIn(143);
         }
 
@@ -925,7 +926,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         /// </summary>
         public static void SetLocalLocation(uint oObject, string sVarName, Location lValue)
         {
-            Internal.NativeFunctions.StackPushLocation(lValue.Handle);
+            Internal.NativeFunctions.StackPushGameDefinedStructure((int)EngineStructure.Location, lValue);
             Internal.NativeFunctions.StackPushStringUTF8(sVarName);
             Internal.NativeFunctions.StackPushObject(oObject);
             Internal.NativeFunctions.CallBuiltIn(152);
@@ -939,7 +940,7 @@ namespace NWN.FinalFantasy.Core.NWScript
             Internal.NativeFunctions.StackPushStringUTF8(sVarName);
             Internal.NativeFunctions.StackPushObject(oObject);
             Internal.NativeFunctions.CallBuiltIn(153);
-            return new Location(Internal.NativeFunctions.StackPopLocation());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Location);
         }
 
         /// <summary>
@@ -1227,7 +1228,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         public static Location GetSpellTargetLocation()
         {
             Internal.NativeFunctions.CallBuiltIn(222);
-            return new Location(Internal.NativeFunctions.StackPopLocation());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Location);
         }
 
         /// <summary>
@@ -1235,7 +1236,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         /// </summary>
         public static float GetFacingFromLocation(Location lLocation)
         {
-            Internal.NativeFunctions.StackPushLocation(lLocation.Handle);
+            Internal.NativeFunctions.StackPushGameDefinedStructure((int)EngineStructure.Location, lLocation);
             Internal.NativeFunctions.CallBuiltIn(225);
             return Internal.NativeFunctions.StackPopFloat();
         }
@@ -1300,7 +1301,7 @@ namespace NWN.FinalFantasy.Core.NWScript
             Internal.NativeFunctions.StackPushInteger((int)nProjectilePathType);
             Internal.NativeFunctions.StackPushInteger(bCheat ? 1 : 0);
             Internal.NativeFunctions.StackPushInteger((int)nMetaMagic);
-            Internal.NativeFunctions.StackPushLocation(lTargetLocation.Handle);
+            Internal.NativeFunctions.StackPushGameDefinedStructure((int)EngineStructure.Location, lTargetLocation);
             Internal.NativeFunctions.StackPushInteger((int)nSpell);
             Internal.NativeFunctions.CallBuiltIn(234);
         }
@@ -1381,7 +1382,7 @@ namespace NWN.FinalFantasy.Core.NWScript
             Internal.NativeFunctions.StackPushInteger((int)nSpell);
             Internal.NativeFunctions.StackPushObject(oCaster);
             Internal.NativeFunctions.CallBuiltIn(244);
-            return new Event(Internal.NativeFunctions.StackPopEvent());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Event);
         }
 
         /// <summary>
@@ -1880,8 +1881,8 @@ namespace NWN.FinalFantasy.Core.NWScript
         /// </summary>
         public static float GetDistanceBetweenLocations(Location lLocationA, Location lLocationB)
         {
-            Internal.NativeFunctions.StackPushLocation(lLocationB.Handle);
-            Internal.NativeFunctions.StackPushLocation(lLocationA.Handle);
+            Internal.NativeFunctions.StackPushGameDefinedStructure((int)EngineStructure.Location, lLocationB);
+            Internal.NativeFunctions.StackPushGameDefinedStructure((int)EngineStructure.Location, lLocationA);
             Internal.NativeFunctions.CallBuiltIn(298);
             return Internal.NativeFunctions.StackPopFloat();
         }
@@ -1929,7 +1930,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         {
             Internal.NativeFunctions.StackPushInteger((int)nSpell);
             Internal.NativeFunctions.CallBuiltIn(301);
-            return new Talent(Internal.NativeFunctions.StackPopTalent());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Talent);
         }
 
         /// <summary>
@@ -1940,7 +1941,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         {
             Internal.NativeFunctions.StackPushInteger((int)nFeat);
             Internal.NativeFunctions.CallBuiltIn(302);
-            return new Talent(Internal.NativeFunctions.StackPopTalent());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Talent);
         }
 
         /// <summary>
@@ -1951,7 +1952,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         {
             Internal.NativeFunctions.StackPushInteger((int)nSkill);
             Internal.NativeFunctions.CallBuiltIn(303);
-            return new Talent(Internal.NativeFunctions.StackPopTalent());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Talent);
         }
 
         /// <summary>
@@ -1976,7 +1977,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         /// </summary>
         public static int GetEffectSpellId(Effect eSpellEffect)
         {
-            Internal.NativeFunctions.StackPushEffect(eSpellEffect.Handle);
+            Internal.NativeFunctions.StackPushGameDefinedStructure((int)EngineStructure.Effect, eSpellEffect);
             Internal.NativeFunctions.CallBuiltIn(305);
             return Internal.NativeFunctions.StackPopInteger();
         }
@@ -1987,7 +1988,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         public static bool GetCreatureHasTalent(Talent tTalent, uint oCreature = OBJECT_INVALID)
         {
             Internal.NativeFunctions.StackPushObject(oCreature);
-            Internal.NativeFunctions.StackPushTalent(tTalent.Handle);
+            Internal.NativeFunctions.StackPushGameDefinedStructure((int)EngineStructure.Talent, tTalent);
             Internal.NativeFunctions.CallBuiltIn(306);
             return Internal.NativeFunctions.StackPopInteger() != 0;
         }
@@ -2002,7 +2003,7 @@ namespace NWN.FinalFantasy.Core.NWScript
             Internal.NativeFunctions.StackPushObject(oCreature);
             Internal.NativeFunctions.StackPushInteger((int)nCategory);
             Internal.NativeFunctions.CallBuiltIn(307);
-            return new Talent(Internal.NativeFunctions.StackPopTalent());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Talent);
         }
 
         /// <summary>
@@ -2019,7 +2020,7 @@ namespace NWN.FinalFantasy.Core.NWScript
             Internal.NativeFunctions.StackPushInteger(nCRMax);
             Internal.NativeFunctions.StackPushInteger((int)nCategory);
             Internal.NativeFunctions.CallBuiltIn(308);
-            return new Talent(Internal.NativeFunctions.StackPopTalent());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Talent);
         }
 
         /// <summary>
@@ -2028,7 +2029,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         public static void ActionUseTalentOnObject(Talent tChosenTalent, uint oTarget)
         {
             Internal.NativeFunctions.StackPushObject(oTarget);
-            Internal.NativeFunctions.StackPushTalent(tChosenTalent.Handle);
+            Internal.NativeFunctions.StackPushGameDefinedStructure((int)EngineStructure.Talent, tChosenTalent);
             Internal.NativeFunctions.CallBuiltIn(309);
         }
 
@@ -2037,8 +2038,8 @@ namespace NWN.FinalFantasy.Core.NWScript
         /// </summary>
         public static void ActionUseTalentAtLocation(Talent tChosenTalent, Location lTargetLocation)
         {
-            Internal.NativeFunctions.StackPushLocation(lTargetLocation.Handle);
-            Internal.NativeFunctions.StackPushTalent(tChosenTalent.Handle);
+            Internal.NativeFunctions.StackPushGameDefinedStructure((int)EngineStructure.Location, lTargetLocation);
+            Internal.NativeFunctions.StackPushGameDefinedStructure((int)EngineStructure.Talent, tChosenTalent);
             Internal.NativeFunctions.CallBuiltIn(310);
         }
 
@@ -2057,7 +2058,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         /// </summary>
         public static void JumpToLocation(Location lDestination)
         {
-            Internal.NativeFunctions.StackPushLocation(lDestination.Handle);
+            Internal.NativeFunctions.StackPushGameDefinedStructure((int)EngineStructure.Location, lDestination);
             Internal.NativeFunctions.CallBuiltIn(313);
         }
 
@@ -2243,7 +2244,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         /// </summary>
         public static bool GetIsTalentValid(Talent tTalent)
         {
-            Internal.NativeFunctions.StackPushTalent(tTalent.Handle);
+            Internal.NativeFunctions.StackPushGameDefinedStructure((int)EngineStructure.Talent, tTalent);
             Internal.NativeFunctions.CallBuiltIn(359);
             return Internal.NativeFunctions.StackPopInteger() != 0;
         }
@@ -2256,7 +2257,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         {
             Internal.NativeFunctions.StackPushFloat(fMoveAwayRange);
             Internal.NativeFunctions.StackPushInteger(bRun ? 1 : 0);
-            Internal.NativeFunctions.StackPushLocation(lMoveAwayFrom.Handle);
+            Internal.NativeFunctions.StackPushGameDefinedStructure((int)EngineStructure.Location, lMoveAwayFrom);
             Internal.NativeFunctions.CallBuiltIn(360);
         }
 
@@ -2277,7 +2278,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         /// </summary>
         public static TalentType GetTypeFromTalent(Talent tTalent)
         {
-            Internal.NativeFunctions.StackPushTalent(tTalent.Handle);
+            Internal.NativeFunctions.StackPushGameDefinedStructure((int)EngineStructure.Talent, tTalent);
             Internal.NativeFunctions.CallBuiltIn(362);
             return (TalentType)Internal.NativeFunctions.StackPopInteger();
         }
@@ -2287,7 +2288,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         /// </summary>
         public static int GetIdFromTalent(Talent tTalent)
         {
-            Internal.NativeFunctions.StackPushTalent(tTalent.Handle);
+            Internal.NativeFunctions.StackPushGameDefinedStructure((int)EngineStructure.Talent, tTalent);
             Internal.NativeFunctions.CallBuiltIn(363);
             return Internal.NativeFunctions.StackPopInteger();
         }
@@ -2406,7 +2407,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         public static Location GetStartingLocation()
         {
             Internal.NativeFunctions.CallBuiltIn(411);
-            return new Location(Internal.NativeFunctions.StackPopLocation());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Location);
         }
 
         /// <summary>
@@ -2484,7 +2485,7 @@ namespace NWN.FinalFantasy.Core.NWScript
             ProjectilePathType nProjectilePathType = ProjectilePathType.Default)
         {
             Internal.NativeFunctions.StackPushInteger((int)nProjectilePathType);
-            Internal.NativeFunctions.StackPushLocation(lTarget.Handle);
+            Internal.NativeFunctions.StackPushGameDefinedStructure((int)EngineStructure.Location, lTarget);
             Internal.NativeFunctions.StackPushInteger(nSpell);
             Internal.NativeFunctions.CallBuiltIn(502);
         }
@@ -2796,11 +2797,11 @@ namespace NWN.FinalFantasy.Core.NWScript
         ///   The var name must be unique across the entire database, regardless of the variable type.
         ///   If you want a variable to pertain to a specific player in the game, provide a player object.
         /// </summary>
-        public static void SetCampaignVector(string sCampaignName, string sVarName, Vector? vVector,
+        public static void SetCampaignVector(string sCampaignName, string sVarName, Vector3 vVector,
             uint oPlayer = OBJECT_INVALID)
         {
             Internal.NativeFunctions.StackPushObject(oPlayer);
-            Internal.NativeFunctions.StackPushVector(vVector.HasValue ? vVector.Value : new Vector());
+            Internal.NativeFunctions.StackPushVector(vVector);
             Internal.NativeFunctions.StackPushStringUTF8(sVarName);
             Internal.NativeFunctions.StackPushStringUTF8(sCampaignName);
             Internal.NativeFunctions.CallBuiltIn(591);
@@ -2816,7 +2817,7 @@ namespace NWN.FinalFantasy.Core.NWScript
             uint oPlayer = OBJECT_INVALID)
         {
             Internal.NativeFunctions.StackPushObject(oPlayer);
-            Internal.NativeFunctions.StackPushLocation(locLocation.Handle);
+            Internal.NativeFunctions.StackPushGameDefinedStructure((int)EngineStructure.Location, locLocation);
             Internal.NativeFunctions.StackPushStringUTF8(sVarName);
             Internal.NativeFunctions.StackPushStringUTF8(sCampaignName);
             Internal.NativeFunctions.CallBuiltIn(592);
@@ -2883,7 +2884,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         ///   The var name must be unique across the entire database, regardless of the variable type.
         ///   If you want a variable to pertain to a specific player in the game, provide a player object.
         /// </summary>
-        public static Vector GetCampaignVector(string sCampaignName, string sVarName, uint oPlayer = OBJECT_INVALID)
+        public static Vector3 GetCampaignVector(string sCampaignName, string sVarName, uint oPlayer = OBJECT_INVALID)
         {
             Internal.NativeFunctions.StackPushObject(oPlayer);
             Internal.NativeFunctions.StackPushStringUTF8(sVarName);
@@ -2904,7 +2905,7 @@ namespace NWN.FinalFantasy.Core.NWScript
             Internal.NativeFunctions.StackPushStringUTF8(sVarName);
             Internal.NativeFunctions.StackPushStringUTF8(sCampaignName);
             Internal.NativeFunctions.CallBuiltIn(598);
-            return new Location(Internal.NativeFunctions.StackPopLocation());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Location);
         }
 
         /// <summary>
@@ -2963,7 +2964,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         {
             Internal.NativeFunctions.StackPushObject(oPlayer);
             Internal.NativeFunctions.StackPushObject(oOwner);
-            Internal.NativeFunctions.StackPushLocation(locLocation.Handle);
+            Internal.NativeFunctions.StackPushGameDefinedStructure((int)EngineStructure.Location, locLocation);
             Internal.NativeFunctions.StackPushStringUTF8(sVarName);
             Internal.NativeFunctions.StackPushStringUTF8(sCampaignName);
             Internal.NativeFunctions.CallBuiltIn(603);
@@ -3465,5 +3466,106 @@ namespace NWN.FinalFantasy.Core.NWScript
             Internal.NativeFunctions.CallBuiltIn(903);
             return (ClericDomain)Internal.NativeFunctions.StackPopInteger();
         }
+
+
+
+        /// <summary>
+        /// Queue an action to use an active item property.
+        /// * oItem - item that has the item property to use
+        /// * ip - item property to use
+        /// * object oTarget - target
+        /// * nSubPropertyIndex - specify if your itemproperty has subproperties (such as subradial spells)
+        /// * bDecrementCharges - decrement charges if item property is limited
+        /// </summary>
+        public static void ActionUseItemOnObject(uint oItem, IntPtr ip, uint oTarget, int nSubPropertyIndex = 0, bool bDecrementCharges = true)
+        {
+            Internal.NativeFunctions.StackPushInteger(bDecrementCharges ? 1 : 0);
+            Internal.NativeFunctions.StackPushInteger(nSubPropertyIndex);
+            Internal.NativeFunctions.StackPushObject(oTarget);
+            Internal.NativeFunctions.StackPushGameDefinedStructure((int)EngineStructure.ItemProperty, ip);
+            Internal.NativeFunctions.StackPushObject(oItem);
+            Internal.NativeFunctions.CallBuiltIn(910);
+        }
+
+        /// <summary>
+        /// Queue an action to use an active item property.
+        /// * oItem - item that has the item property to use
+        /// * ip - item property to use
+        /// * location lTarget - target location (must be in the same area as item possessor)
+        /// * nSubPropertyIndex - specify if your itemproperty has subproperties (such as subradial spells)
+        /// * bDecrementCharges - decrement charges if item property is limited
+        /// </summary>
+        public static void ActionUseItemAtLocation(uint oItem, IntPtr ip, IntPtr lTarget, int nSubPropertyIndex = 0, bool bDecrementCharges = true)
+        {
+            Internal.NativeFunctions.StackPushInteger(bDecrementCharges ? 1 : 0);
+            Internal.NativeFunctions.StackPushInteger(nSubPropertyIndex);
+            Internal.NativeFunctions.StackPushGameDefinedStructure((int)EngineStructure.Location, lTarget);
+            Internal.NativeFunctions.StackPushGameDefinedStructure((int)EngineStructure.ItemProperty, ip);
+            Internal.NativeFunctions.StackPushObject(oItem);
+            Internal.NativeFunctions.CallBuiltIn(911);
+        }
+
+        /// <summary>
+        /// Makes oPC enter a targeting mode, letting them select an object as a target
+        /// If a PC selects a target, it will trigger the module OnPlayerTarget event.
+        /// </summary>
+        public static void EnterTargetingMode(uint oPC, ObjectType nValidObjectTypes = ObjectType.All, MouseCursor nMouseCursorId = MouseCursor.Magic, MouseCursor nBadTargetCursor = MouseCursor.NoMagic)
+        {
+            Internal.NativeFunctions.StackPushInteger((int)nBadTargetCursor);
+            Internal.NativeFunctions.StackPushInteger((int)nMouseCursorId);
+            Internal.NativeFunctions.StackPushInteger((int)nValidObjectTypes);
+            Internal.NativeFunctions.StackPushObject(oPC);
+            Internal.NativeFunctions.CallBuiltIn(912);
+        }
+
+        /// <summary>
+        /// Gets the target object in the module OnPlayerTarget event.
+        /// Returns the area object when the target is the ground.
+        /// </summary>
+        public static uint GetTargetingModeSelectedObject()
+        {
+            Internal.NativeFunctions.CallBuiltIn(913);
+            return Internal.NativeFunctions.StackPopObject();
+        }
+
+        /// <summary>
+        /// Gets the target position in the module OnPlayerTarget event.
+        /// </summary>
+        public static Vector3 GetTargetingModeSelectedPosition()
+        {
+            Internal.NativeFunctions.CallBuiltIn(914);
+            return Internal.NativeFunctions.StackPopVector();
+        }
+
+        /// <summary>
+        /// Gets the player object that triggered the OnPlayerTarget event.
+        /// </summary>
+        public static uint GetLastPlayerToSelectTarget()
+        {
+            Internal.NativeFunctions.CallBuiltIn(915);
+            return Internal.NativeFunctions.StackPopObject();
+        }
+
+        /// <summary>
+        /// Sets oObject's hilite color to nColor
+        /// The nColor format is 0xRRGGBB; -1 clears the color override.
+        /// </summary>
+        public static void SetObjectHiliteColor(uint oObject, int nColor = -1)
+        {
+            Internal.NativeFunctions.StackPushInteger(nColor);
+            Internal.NativeFunctions.StackPushObject(oObject);
+            Internal.NativeFunctions.CallBuiltIn(916);
+        }
+
+        /// <summary>
+        /// Sets the cursor (MOUSECURSOR_*) to use when hovering over oObject
+        /// </summary>
+        public static void SetObjectMouseCursor(uint oObject, MouseCursor nCursor = MouseCursor.Invalid)
+        {
+            Internal.NativeFunctions.StackPushInteger((int)nCursor);
+            Internal.NativeFunctions.StackPushObject(oObject);
+            Internal.NativeFunctions.CallBuiltIn(917);
+        }
+
     }
 }

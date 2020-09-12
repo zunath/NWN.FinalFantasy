@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Numerics;
 using NWN.FinalFantasy.Core.NWNX.Enum;
 
 
@@ -143,7 +144,7 @@ namespace NWN.FinalFantasy.Core.NWNX
         }
 
         // Plays the VFX at the target position in current area for the given player only
-        public static void ShowVisualEffect(uint player, int effectId, Vector position)
+        public static void ShowVisualEffect(uint player, int effectId, Vector3 position)
         {
             Internal.NativeFunctions.nwnxSetFunction(PLUGIN_NAME, "ShowVisualEffect");
             Internal.NativeFunctions.nwnxPushFloat(position.X);

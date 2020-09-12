@@ -21,7 +21,7 @@ namespace NWN.FinalFantasy.Service
         public static void JoinParty()
         {
             var player = OBJECT_SELF;
-            var requester = Object.StringToObject(Events.GetEventData("INVITED_BY"));
+            var requester = StringToObject(Events.GetEventData("INVITED_BY"));
 
             // This is a brand new party.
             // Add both the requester and the player to the cache.
@@ -54,7 +54,7 @@ namespace NWN.FinalFantasy.Service
         [NWNEventHandler("pty_leave_bef")]
         public static void LeaveParty()
         {
-            var player = Object.StringToObject(Events.GetEventData("LEAVING"));
+            var player = StringToObject(Events.GetEventData("LEAVING"));
             RemovePlayerFromParty(player);
         }
 
@@ -64,7 +64,7 @@ namespace NWN.FinalFantasy.Service
         [NWNEventHandler("pty_chgldr_bef")]
         public static void TransferLeadership()
         {
-            var player = Object.StringToObject(Events.GetEventData("NEW_LEADER"));
+            var player = StringToObject(Events.GetEventData("NEW_LEADER"));
             var partyId = _playerToParty[player];
             _partyLeaders[partyId] = player;
         }

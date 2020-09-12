@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.Numerics;
 using NWN.FinalFantasy.Core;
 using NWN.FinalFantasy.Core.Bioware;
 using NWN.FinalFantasy.Core.NWNX;
@@ -39,7 +40,7 @@ namespace NWN.FinalFantasy.Feature
         public static void UseFeat()
         {
             var activator = OBJECT_SELF;
-            var target = Object.StringToObject(Events.GetEventData("TARGET_OBJECT_ID"));
+            var target = StringToObject(Events.GetEventData("TARGET_OBJECT_ID"));
             var feat = (Feat)Convert.ToInt32(Events.GetEventData("FEAT_ID"));
             if (!Ability.IsFeatRegistered(feat)) return;
             var ability = Ability.GetAbilityDetail(feat);
@@ -282,7 +283,7 @@ namespace NWN.FinalFantasy.Feature
             }
 
             // Recursive function which checks if player has moved since starting the casting.
-            void CheckForActivationInterruption(string activationId, Vector originalPosition)
+            void CheckForActivationInterruption(string activationId, Vector3 originalPosition)
             {
                 if (!GetIsPC(activator)) return;
 

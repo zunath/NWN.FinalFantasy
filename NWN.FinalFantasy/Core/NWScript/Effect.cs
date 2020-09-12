@@ -16,7 +16,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         /// </summary>
         public static string GetEffectTag(Effect eEffect)
         {
-            Internal.NativeFunctions.StackPushEffect(eEffect.Handle);
+            Internal.NativeFunctions.StackPushGameDefinedStructure((int)EngineStructure.Effect, eEffect);
             Internal.NativeFunctions.CallBuiltIn(849);
             return Internal.NativeFunctions.StackPopStringUTF8();
         }
@@ -28,9 +28,9 @@ namespace NWN.FinalFantasy.Core.NWScript
         public static Effect TagEffect(Effect eEffect, string sNewTag)
         {
             Internal.NativeFunctions.StackPushStringUTF8(sNewTag);
-            Internal.NativeFunctions.StackPushEffect(eEffect.Handle);
+            Internal.NativeFunctions.StackPushGameDefinedStructure((int)EngineStructure.Effect, eEffect);
             Internal.NativeFunctions.CallBuiltIn(850);
-            return new Effect(Internal.NativeFunctions.StackPopEffect());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Effect);
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         /// </summary>
         public static int GetEffectCasterLevel(Effect eEffect)
         {
-            Internal.NativeFunctions.StackPushEffect(eEffect.Handle);
+            Internal.NativeFunctions.StackPushGameDefinedStructure((int)EngineStructure.Effect, eEffect);
             Internal.NativeFunctions.CallBuiltIn(851);
             return Internal.NativeFunctions.StackPopInteger();
         }
@@ -51,7 +51,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         /// </summary>
         public static int GetEffectDuration(Effect eEffect)
         {
-            Internal.NativeFunctions.StackPushEffect(eEffect.Handle);
+            Internal.NativeFunctions.StackPushGameDefinedStructure((int)EngineStructure.Effect, eEffect);
             Internal.NativeFunctions.CallBuiltIn(852);
             return Internal.NativeFunctions.StackPopInteger();
         }
@@ -62,7 +62,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         /// </summary>
         public static int GetEffectDurationRemaining(Effect eEffect)
         {
-            Internal.NativeFunctions.StackPushEffect(eEffect.Handle);
+            Internal.NativeFunctions.StackPushGameDefinedStructure((int)EngineStructure.Effect, eEffect);
             Internal.NativeFunctions.CallBuiltIn(853);
             return Internal.NativeFunctions.StackPopInteger();
         }
@@ -74,7 +74,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         public static Effect EffectCutsceneImmobilize()
         {
             Internal.NativeFunctions.CallBuiltIn(767);
-            return new Effect(Internal.NativeFunctions.StackPopEffect());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Effect);
         }
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         public static Effect EffectCutsceneGhost()
         {
             Internal.NativeFunctions.CallBuiltIn(757);
-            return new Effect(Internal.NativeFunctions.StackPopEffect());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Effect);
         }
 
         /// <summary>
@@ -240,7 +240,7 @@ namespace NWN.FinalFantasy.Core.NWScript
             Internal.NativeFunctions.StackPushInteger(nDisplayFeedback ? 1 : 0);
             Internal.NativeFunctions.StackPushInteger(nSpectacularDeath ? 1 : 0);
             Internal.NativeFunctions.CallBuiltIn(133);
-            return new Effect(Internal.NativeFunctions.StackPopEffect());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Effect);
         }
 
         /// <summary>
@@ -252,7 +252,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         public static Effect EffectKnockdown()
         {
             Internal.NativeFunctions.CallBuiltIn(134);
-            return new Effect(Internal.NativeFunctions.StackPopEffect());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Effect);
         }
 
         /// <summary>
@@ -274,7 +274,7 @@ namespace NWN.FinalFantasy.Core.NWScript
             Internal.NativeFunctions.StackPushInteger(nDexMod);
             Internal.NativeFunctions.StackPushInteger(nStrMod);
             Internal.NativeFunctions.CallBuiltIn(138);
-            return new Effect(Internal.NativeFunctions.StackPopEffect());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Effect);
         }
 
         /// <summary>
@@ -285,7 +285,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         public static Effect EffectEntangle()
         {
             Internal.NativeFunctions.CallBuiltIn(130);
-            return new Effect(Internal.NativeFunctions.StackPopEffect());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Effect);
         }
 
         /// <summary>
@@ -305,7 +305,7 @@ namespace NWN.FinalFantasy.Core.NWScript
             Internal.NativeFunctions.StackPushInteger(nValue);
             Internal.NativeFunctions.StackPushInteger(nSave);
             Internal.NativeFunctions.CallBuiltIn(117);
-            return new Effect(Internal.NativeFunctions.StackPopEffect());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Effect);
         }
 
         /// <summary>
@@ -318,7 +318,7 @@ namespace NWN.FinalFantasy.Core.NWScript
             Internal.NativeFunctions.StackPushInteger((int)nModifierType);
             Internal.NativeFunctions.StackPushInteger(nBonus);
             Internal.NativeFunctions.CallBuiltIn(118);
-            return new Effect(Internal.NativeFunctions.StackPopEffect());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Effect);
         }
 
         /// <summary>
@@ -334,7 +334,7 @@ namespace NWN.FinalFantasy.Core.NWScript
             Internal.NativeFunctions.StackPushInteger((int)nDamagePower);
             Internal.NativeFunctions.StackPushInteger(nAmount);
             Internal.NativeFunctions.CallBuiltIn(119);
-            return new Effect(Internal.NativeFunctions.StackPopEffect());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Effect);
         }
 
         /// <summary>
@@ -349,7 +349,7 @@ namespace NWN.FinalFantasy.Core.NWScript
             Internal.NativeFunctions.StackPushInteger((int)nDamageType);
             Internal.NativeFunctions.StackPushInteger(nBonus);
             Internal.NativeFunctions.CallBuiltIn(120);
-            return new Effect(Internal.NativeFunctions.StackPopEffect());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Effect);
         }
 
         /// <summary>
@@ -359,9 +359,9 @@ namespace NWN.FinalFantasy.Core.NWScript
         /// </summary>
         public static Effect MagicalEffect(Effect eEffect)
         {
-            Internal.NativeFunctions.StackPushEffect(eEffect.Handle);
+            Internal.NativeFunctions.StackPushGameDefinedStructure((int)EngineStructure.Effect, eEffect);
             Internal.NativeFunctions.CallBuiltIn(112);
-            return new Effect(Internal.NativeFunctions.StackPopEffect());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Effect);
         }
 
         /// <summary>
@@ -371,9 +371,9 @@ namespace NWN.FinalFantasy.Core.NWScript
         /// </summary>
         public static Effect SupernaturalEffect(Effect eEffect)
         {
-            Internal.NativeFunctions.StackPushEffect(eEffect.Handle);
+            Internal.NativeFunctions.StackPushGameDefinedStructure((int)EngineStructure.Effect, eEffect);
             Internal.NativeFunctions.CallBuiltIn(113);
-            return new Effect(Internal.NativeFunctions.StackPopEffect());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Effect);
         }
 
         /// <summary>
@@ -383,9 +383,9 @@ namespace NWN.FinalFantasy.Core.NWScript
         /// </summary>
         public static Effect ExtraordinaryEffect(Effect eEffect)
         {
-            Internal.NativeFunctions.StackPushEffect(eEffect.Handle);
+            Internal.NativeFunctions.StackPushGameDefinedStructure((int)EngineStructure.Effect, eEffect);
             Internal.NativeFunctions.CallBuiltIn(114);
-            return new Effect(Internal.NativeFunctions.StackPopEffect());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Effect);
         }
 
         /// <summary>
@@ -403,7 +403,7 @@ namespace NWN.FinalFantasy.Core.NWScript
             Internal.NativeFunctions.StackPushInteger((int)nModifyType);
             Internal.NativeFunctions.StackPushInteger(nValue);
             Internal.NativeFunctions.CallBuiltIn(115);
-            return new Effect(Internal.NativeFunctions.StackPopEffect());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Effect);
         }
 
         /// <summary>
@@ -413,7 +413,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         {
             Internal.NativeFunctions.StackPushObject(oCreature);
             Internal.NativeFunctions.CallBuiltIn(85);
-            return new Effect(Internal.NativeFunctions.StackPopEffect());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Effect);
         }
 
         /// <summary>
@@ -423,7 +423,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         {
             Internal.NativeFunctions.StackPushObject(oCreature);
             Internal.NativeFunctions.CallBuiltIn(86);
-            return new Effect(Internal.NativeFunctions.StackPopEffect());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Effect);
         }
 
         /// <summary>
@@ -432,7 +432,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         /// </summary>
         public static void RemoveEffect(uint oCreature, Effect eEffect)
         {
-            Internal.NativeFunctions.StackPushEffect(eEffect.Handle);
+            Internal.NativeFunctions.StackPushGameDefinedStructure((int)EngineStructure.Effect, eEffect);
             Internal.NativeFunctions.StackPushObject(oCreature);
             Internal.NativeFunctions.CallBuiltIn(87);
         }
@@ -443,7 +443,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         /// </summary>
         public static bool GetIsEffectValid(Effect eEffect)
         {
-            Internal.NativeFunctions.StackPushEffect(eEffect.Handle);
+            Internal.NativeFunctions.StackPushGameDefinedStructure((int)EngineStructure.Effect, eEffect);
             Internal.NativeFunctions.CallBuiltIn(88);
             return Internal.NativeFunctions.StackPopInteger() == 1;
         }
@@ -454,7 +454,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         /// </summary>
         public static int GetEffectDurationType(Effect eEffect)
         {
-            Internal.NativeFunctions.StackPushEffect(eEffect.Handle);
+            Internal.NativeFunctions.StackPushGameDefinedStructure((int)EngineStructure.Effect, eEffect);
             Internal.NativeFunctions.CallBuiltIn(89);
             return Internal.NativeFunctions.StackPopInteger();
         }
@@ -465,7 +465,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         /// </summary>
         public static int GetEffectSubType(Effect eEffect)
         {
-            Internal.NativeFunctions.StackPushEffect(eEffect.Handle);
+            Internal.NativeFunctions.StackPushGameDefinedStructure((int)EngineStructure.Effect, eEffect);
             Internal.NativeFunctions.CallBuiltIn(90);
             return Internal.NativeFunctions.StackPopInteger();
         }
@@ -476,7 +476,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         /// </summary>
         public static uint GetEffectCreator(Effect eEffect)
         {
-            Internal.NativeFunctions.StackPushEffect(eEffect.Handle);
+            Internal.NativeFunctions.StackPushGameDefinedStructure((int)EngineStructure.Effect, eEffect);
             Internal.NativeFunctions.CallBuiltIn(91);
             return Internal.NativeFunctions.StackPopObject();
         }
@@ -489,7 +489,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         {
             Internal.NativeFunctions.StackPushInteger(nDamageToHeal);
             Internal.NativeFunctions.CallBuiltIn(78);
-            return new Effect(Internal.NativeFunctions.StackPopEffect());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Effect);
         }
 
         /// <summary>
@@ -506,7 +506,7 @@ namespace NWN.FinalFantasy.Core.NWScript
             Internal.NativeFunctions.StackPushInteger((int)nDamageType);
             Internal.NativeFunctions.StackPushInteger(nDamageAmount);
             Internal.NativeFunctions.CallBuiltIn(79);
-            return new Effect(Internal.NativeFunctions.StackPopEffect());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Effect);
         }
 
         /// <summary>
@@ -518,7 +518,7 @@ namespace NWN.FinalFantasy.Core.NWScript
             Internal.NativeFunctions.StackPushInteger(nModifyBy);
             Internal.NativeFunctions.StackPushInteger((int)nAbilityToIncrease);
             Internal.NativeFunctions.CallBuiltIn(80);
-            return new Effect(Internal.NativeFunctions.StackPopEffect());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Effect);
         }
 
         /// <summary>
@@ -534,7 +534,7 @@ namespace NWN.FinalFantasy.Core.NWScript
             Internal.NativeFunctions.StackPushInteger(nAmount);
             Internal.NativeFunctions.StackPushInteger((int)nDamageType);
             Internal.NativeFunctions.CallBuiltIn(81);
-            return new Effect(Internal.NativeFunctions.StackPopEffect());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Effect);
         }
 
         /// <summary>
@@ -543,7 +543,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         public static Effect EffectResurrection()
         {
             Internal.NativeFunctions.CallBuiltIn(82);
-            return new Effect(Internal.NativeFunctions.StackPopEffect());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Effect);
         }
 
         /// <summary>
@@ -565,7 +565,7 @@ namespace NWN.FinalFantasy.Core.NWScript
             Internal.NativeFunctions.StackPushInteger((int)nVisualEffectId);
             Internal.NativeFunctions.StackPushStringUTF8(sCreatureResref);
             Internal.NativeFunctions.CallBuiltIn(83);
-            return new Effect(Internal.NativeFunctions.StackPopEffect());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Effect);
         }
 
         /// <summary>
@@ -575,7 +575,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         public static Effect EffectEthereal()
         {
             Internal.NativeFunctions.CallBuiltIn(711);
-            return new Effect(Internal.NativeFunctions.StackPopEffect());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Effect);
         }
 
         /// <summary>
@@ -589,7 +589,7 @@ namespace NWN.FinalFantasy.Core.NWScript
             Internal.NativeFunctions.StackPushInteger((int)nSpellSchool);
             Internal.NativeFunctions.StackPushInteger(nPercent);
             Internal.NativeFunctions.CallBuiltIn(690);
-            return new Effect(Internal.NativeFunctions.StackPopEffect());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Effect);
         }
 
         /// <summary>
@@ -599,7 +599,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         public static Effect EffectCutsceneDominated()
         {
             Internal.NativeFunctions.CallBuiltIn(604);
-            return new Effect(Internal.NativeFunctions.StackPopEffect());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Effect);
         }
 
         /// <summary>
@@ -609,7 +609,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         public static Effect EffectPetrify()
         {
             Internal.NativeFunctions.CallBuiltIn(583);
-            return new Effect(Internal.NativeFunctions.StackPopEffect());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Effect);
         }
 
         /// <summary>
@@ -619,7 +619,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         public static Effect EffectCutsceneParalyze()
         {
             Internal.NativeFunctions.CallBuiltIn(585);
-            return new Effect(Internal.NativeFunctions.StackPopEffect());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Effect);
         }
 
         /// <summary>
@@ -631,7 +631,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         {
             Internal.NativeFunctions.StackPushInteger(nHitDice);
             Internal.NativeFunctions.CallBuiltIn(552);
-            return new Effect(Internal.NativeFunctions.StackPopEffect());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Effect);
         }
 
         /// <summary>
@@ -643,7 +643,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         {
             Internal.NativeFunctions.StackPushInteger(nHitDice);
             Internal.NativeFunctions.CallBuiltIn(553);
-            return new Effect(Internal.NativeFunctions.StackPopEffect());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Effect);
         }
 
         /// <summary>
@@ -666,7 +666,7 @@ namespace NWN.FinalFantasy.Core.NWScript
             Internal.NativeFunctions.StackPushStringUTF8(sCreatureTemplate1);
             Internal.NativeFunctions.StackPushInteger(nLooping);
             Internal.NativeFunctions.CallBuiltIn(510);
-            return new Effect(Internal.NativeFunctions.StackPopEffect());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Effect);
         }
 
         /// <summary>
@@ -679,9 +679,9 @@ namespace NWN.FinalFantasy.Core.NWScript
         public static Effect EffectDisappearAppear(Location lLocation, int nAnimation = 1)
         {
             Internal.NativeFunctions.StackPushInteger(nAnimation);
-            Internal.NativeFunctions.StackPushLocation(lLocation.Handle);
+            Internal.NativeFunctions.StackPushGameDefinedStructure((int)EngineStructure.Location, lLocation);
             Internal.NativeFunctions.CallBuiltIn(480);
-            return new Effect(Internal.NativeFunctions.StackPopEffect());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Effect);
         }
 
         /// <summary>
@@ -694,7 +694,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         {
             Internal.NativeFunctions.StackPushInteger(nAnimation);
             Internal.NativeFunctions.CallBuiltIn(481);
-            return new Effect(Internal.NativeFunctions.StackPopEffect());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Effect);
         }
 
         /// <summary>
@@ -706,7 +706,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         {
             Internal.NativeFunctions.StackPushInteger(nAnimation);
             Internal.NativeFunctions.CallBuiltIn(482);
-            return new Effect(Internal.NativeFunctions.StackPopEffect());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Effect);
         }
 
         /// <summary>
@@ -718,7 +718,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         {
             Internal.NativeFunctions.StackPushInteger(nAttacks);
             Internal.NativeFunctions.CallBuiltIn(485);
-            return new Effect(Internal.NativeFunctions.StackPopEffect());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Effect);
         }
 
         /// <summary>
@@ -736,7 +736,7 @@ namespace NWN.FinalFantasy.Core.NWScript
             Internal.NativeFunctions.StackPushInteger((int)nRandomAmount);
             Internal.NativeFunctions.StackPushInteger(nDamageAmount);
             Internal.NativeFunctions.CallBuiltIn(487);
-            return new Effect(Internal.NativeFunctions.StackPopEffect());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Effect);
         }
 
         /// <summary>
@@ -753,7 +753,7 @@ namespace NWN.FinalFantasy.Core.NWScript
             Internal.NativeFunctions.StackPushInteger((int)nMissChanceType);
             Internal.NativeFunctions.StackPushInteger(nPercentage);
             Internal.NativeFunctions.CallBuiltIn(477);
-            return new Effect(Internal.NativeFunctions.StackPopEffect());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Effect);
         }
 
         /// <summary>
@@ -774,7 +774,7 @@ namespace NWN.FinalFantasy.Core.NWScript
             Internal.NativeFunctions.StackPushInteger(nTotalSpellLevelsAbsorbed);
             Internal.NativeFunctions.StackPushInteger(nMaxSpellLevelAbsorbed);
             Internal.NativeFunctions.CallBuiltIn(472);
-            return new Effect(Internal.NativeFunctions.StackPopEffect());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Effect);
         }
 
         /// <summary>
@@ -787,7 +787,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         {
             Internal.NativeFunctions.StackPushInteger(nCasterLevel);
             Internal.NativeFunctions.CallBuiltIn(473);
-            return new Effect(Internal.NativeFunctions.StackPopEffect());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Effect);
         }
 
         /// <summary>
@@ -800,7 +800,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         {
             Internal.NativeFunctions.StackPushInteger((int)nInvisibilityType);
             Internal.NativeFunctions.CallBuiltIn(457);
-            return new Effect(Internal.NativeFunctions.StackPopEffect());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Effect);
         }
 
         /// <summary>
@@ -817,7 +817,7 @@ namespace NWN.FinalFantasy.Core.NWScript
             Internal.NativeFunctions.StackPushInteger((int)nMissType);
             Internal.NativeFunctions.StackPushInteger(nPercentage);
             Internal.NativeFunctions.CallBuiltIn(458);
-            return new Effect(Internal.NativeFunctions.StackPopEffect());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Effect);
         }
 
         /// <summary>
@@ -826,7 +826,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         public static Effect EffectDarkness()
         {
             Internal.NativeFunctions.CallBuiltIn(459);
-            return new Effect(Internal.NativeFunctions.StackPopEffect());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Effect);
         }
 
         /// <summary>
@@ -839,7 +839,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         {
             Internal.NativeFunctions.StackPushInteger(nCasterLevel);
             Internal.NativeFunctions.CallBuiltIn(460);
-            return new Effect(Internal.NativeFunctions.StackPopEffect());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Effect);
         }
 
         /// <summary>
@@ -848,7 +848,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         public static Effect EffectUltravision()
         {
             Internal.NativeFunctions.CallBuiltIn(461);
-            return new Effect(Internal.NativeFunctions.StackPopEffect());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Effect);
         }
 
         /// <summary>
@@ -861,7 +861,7 @@ namespace NWN.FinalFantasy.Core.NWScript
             Internal.NativeFunctions.StackPushInteger(bHPBonus ? 1 : 0);
             Internal.NativeFunctions.StackPushInteger(nNumLevels);
             Internal.NativeFunctions.CallBuiltIn(462);
-            return new Effect(Internal.NativeFunctions.StackPopEffect());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Effect);
         }
 
         /// <summary>
@@ -872,7 +872,7 @@ namespace NWN.FinalFantasy.Core.NWScript
             Internal.NativeFunctions.StackPushInteger(nLocked ? 1 : 0);
             Internal.NativeFunctions.StackPushInteger(nPolymorphSelection);
             Internal.NativeFunctions.CallBuiltIn(463);
-            return new Effect(Internal.NativeFunctions.StackPopEffect());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Effect);
         }
 
         /// <summary>
@@ -884,7 +884,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         {
             Internal.NativeFunctions.StackPushInteger(nDifficultyClass);
             Internal.NativeFunctions.CallBuiltIn(464);
-            return new Effect(Internal.NativeFunctions.StackPopEffect());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Effect);
         }
 
         /// <summary>
@@ -893,7 +893,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         public static Effect EffectTrueSeeing()
         {
             Internal.NativeFunctions.CallBuiltIn(465);
-            return new Effect(Internal.NativeFunctions.StackPopEffect());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Effect);
         }
 
         /// <summary>
@@ -902,7 +902,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         public static Effect EffectSeeInvisible()
         {
             Internal.NativeFunctions.CallBuiltIn(466);
-            return new Effect(Internal.NativeFunctions.StackPopEffect());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Effect);
         }
 
         /// <summary>
@@ -911,7 +911,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         public static Effect EffectTimeStop()
         {
             Internal.NativeFunctions.CallBuiltIn(467);
-            return new Effect(Internal.NativeFunctions.StackPopEffect());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Effect);
         }
 
         /// <summary>
@@ -920,7 +920,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         public static Effect EffectBlindness()
         {
             Internal.NativeFunctions.CallBuiltIn(468);
-            return new Effect(Internal.NativeFunctions.StackPopEffect());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Effect);
         }
 
         /// <summary>
@@ -933,7 +933,7 @@ namespace NWN.FinalFantasy.Core.NWScript
             Internal.NativeFunctions.StackPushInteger(nModifyBy);
             Internal.NativeFunctions.StackPushInteger(nAbility);
             Internal.NativeFunctions.CallBuiltIn(446);
-            return new Effect(Internal.NativeFunctions.StackPopEffect());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Effect);
         }
 
         /// <summary>
@@ -946,7 +946,7 @@ namespace NWN.FinalFantasy.Core.NWScript
             Internal.NativeFunctions.StackPushInteger((int)nModifierType);
             Internal.NativeFunctions.StackPushInteger(nPenalty);
             Internal.NativeFunctions.CallBuiltIn(447);
-            return new Effect(Internal.NativeFunctions.StackPopEffect());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Effect);
         }
 
         /// <summary>
@@ -959,7 +959,7 @@ namespace NWN.FinalFantasy.Core.NWScript
             Internal.NativeFunctions.StackPushInteger((int)nDamageType);
             Internal.NativeFunctions.StackPushInteger(nPenalty);
             Internal.NativeFunctions.CallBuiltIn(448);
-            return new Effect(Internal.NativeFunctions.StackPopEffect());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Effect);
         }
 
         /// <summary>
@@ -972,7 +972,7 @@ namespace NWN.FinalFantasy.Core.NWScript
             Internal.NativeFunctions.StackPushInteger(nPercentImmunity);
             Internal.NativeFunctions.StackPushInteger(nDamageType);
             Internal.NativeFunctions.CallBuiltIn(449);
-            return new Effect(Internal.NativeFunctions.StackPopEffect());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Effect);
         }
 
         /// <summary>
@@ -990,7 +990,7 @@ namespace NWN.FinalFantasy.Core.NWScript
             Internal.NativeFunctions.StackPushInteger((int)nModifyType);
             Internal.NativeFunctions.StackPushInteger(nValue);
             Internal.NativeFunctions.CallBuiltIn(450);
-            return new Effect(Internal.NativeFunctions.StackPopEffect());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Effect);
         }
 
         /// <summary>
@@ -1005,7 +1005,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         {
             Internal.NativeFunctions.StackPushInteger(nPercentChange);
             Internal.NativeFunctions.CallBuiltIn(451);
-            return new Effect(Internal.NativeFunctions.StackPopEffect());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Effect);
         }
 
         /// <summary>
@@ -1025,7 +1025,7 @@ namespace NWN.FinalFantasy.Core.NWScript
             Internal.NativeFunctions.StackPushInteger(nValue);
             Internal.NativeFunctions.StackPushInteger(nSave);
             Internal.NativeFunctions.CallBuiltIn(452);
-            return new Effect(Internal.NativeFunctions.StackPopEffect());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Effect);
         }
 
         /// <summary>
@@ -1037,7 +1037,7 @@ namespace NWN.FinalFantasy.Core.NWScript
             Internal.NativeFunctions.StackPushInteger(nValue);
             Internal.NativeFunctions.StackPushInteger(nSkill);
             Internal.NativeFunctions.CallBuiltIn(453);
-            return new Effect(Internal.NativeFunctions.StackPopEffect());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Effect);
         }
 
         /// <summary>
@@ -1047,7 +1047,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         {
             Internal.NativeFunctions.StackPushInteger(nValue);
             Internal.NativeFunctions.CallBuiltIn(454);
-            return new Effect(Internal.NativeFunctions.StackPopEffect());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Effect);
         }
 
         /// <summary>
@@ -1056,10 +1056,10 @@ namespace NWN.FinalFantasy.Core.NWScript
         public static Event EventActivateItem(uint oItem, Location lTarget, uint oTarget = Core.NWScript.NWScript.OBJECT_INVALID)
         {
             Internal.NativeFunctions.StackPushObject(oTarget);
-            Internal.NativeFunctions.StackPushLocation(lTarget.Handle);
+            Internal.NativeFunctions.StackPushGameDefinedStructure((int)EngineStructure.Location, lTarget);
             Internal.NativeFunctions.StackPushObject(oItem);
             Internal.NativeFunctions.CallBuiltIn(424);
-            return new Event(Internal.NativeFunctions.StackPopEvent());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Event);
         }
 
         /// <summary>
@@ -1071,7 +1071,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         {
             Internal.NativeFunctions.StackPushFloat(fHitPointChangePerRound);
             Internal.NativeFunctions.CallBuiltIn(387);
-            return new Effect(Internal.NativeFunctions.StackPopEffect());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Effect);
         }
 
         /// <summary>
@@ -1081,7 +1081,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         public static Effect EffectTurned()
         {
             Internal.NativeFunctions.CallBuiltIn(379);
-            return new Effect(Internal.NativeFunctions.StackPopEffect());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Effect);
         }
 
         /// <summary>
@@ -1096,9 +1096,9 @@ namespace NWN.FinalFantasy.Core.NWScript
         {
             Internal.NativeFunctions.StackPushInteger((int)nGoodEvil);
             Internal.NativeFunctions.StackPushInteger((int)nLawChaos);
-            Internal.NativeFunctions.StackPushEffect(eEffect.Handle);
+            Internal.NativeFunctions.StackPushGameDefinedStructure((int)EngineStructure.Effect, eEffect);
             Internal.NativeFunctions.CallBuiltIn(355);
-            return new Effect(Internal.NativeFunctions.StackPopEffect());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Effect);
         }
 
         /// <summary>
@@ -1109,9 +1109,9 @@ namespace NWN.FinalFantasy.Core.NWScript
         public static Effect VersusRacialTypeEffect(Effect eEffect, RacialType nRacialType)
         {
             Internal.NativeFunctions.StackPushInteger((int)nRacialType);
-            Internal.NativeFunctions.StackPushEffect(eEffect.Handle);
+            Internal.NativeFunctions.StackPushGameDefinedStructure((int)EngineStructure.Effect, eEffect);
             Internal.NativeFunctions.CallBuiltIn(356);
-            return new Effect(Internal.NativeFunctions.StackPopEffect());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Effect);
         }
 
         /// <summary>
@@ -1119,9 +1119,9 @@ namespace NWN.FinalFantasy.Core.NWScript
         /// </summary>
         public static Effect VersusTrapEffect(Effect eEffect)
         {
-            Internal.NativeFunctions.StackPushEffect(eEffect.Handle);
+            Internal.NativeFunctions.StackPushGameDefinedStructure((int)EngineStructure.Effect, eEffect);
             Internal.NativeFunctions.CallBuiltIn(357);
-            return new Effect(Internal.NativeFunctions.StackPopEffect());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Effect);
         }
 
         /// <summary>
@@ -1135,7 +1135,7 @@ namespace NWN.FinalFantasy.Core.NWScript
             Internal.NativeFunctions.StackPushInteger(nValue);
             Internal.NativeFunctions.StackPushInteger((int)nSkill);
             Internal.NativeFunctions.CallBuiltIn(351);
-            return new Effect(Internal.NativeFunctions.StackPopEffect());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Effect);
         }
 
         /// <summary>
@@ -1147,7 +1147,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         {
             Internal.NativeFunctions.StackPushInteger(nHitPoints);
             Internal.NativeFunctions.CallBuiltIn(314);
-            return new Effect(Internal.NativeFunctions.StackPopEffect());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Effect);
         }
 
         /// <summary>
@@ -1164,7 +1164,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         public static Event EventConversation()
         {
             Internal.NativeFunctions.CallBuiltIn(295);
-            return new Event(Internal.NativeFunctions.StackPopEvent());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Event);
         }
 
         /// <summary>
@@ -1177,7 +1177,7 @@ namespace NWN.FinalFantasy.Core.NWScript
             Internal.NativeFunctions.StackPushInteger(nPercentImmunity);
             Internal.NativeFunctions.StackPushInteger((int)nDamageType);
             Internal.NativeFunctions.CallBuiltIn(275);
-            return new Effect(Internal.NativeFunctions.StackPopEffect());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Effect);
         }
 
         /// <summary>
@@ -1188,7 +1188,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         {
             Internal.NativeFunctions.StackPushInteger((int)nImmunityType);
             Internal.NativeFunctions.CallBuiltIn(273);
-            return new Effect(Internal.NativeFunctions.StackPopEffect());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Effect);
         }
 
         /// <summary>
@@ -1197,7 +1197,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         public static Effect EffectHaste()
         {
             Internal.NativeFunctions.CallBuiltIn(270);
-            return new Effect(Internal.NativeFunctions.StackPopEffect());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Effect);
         }
 
         /// <summary>
@@ -1206,7 +1206,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         public static Effect EffectSlow()
         {
             Internal.NativeFunctions.CallBuiltIn(271);
-            return new Effect(Internal.NativeFunctions.StackPopEffect());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Effect);
         }
 
         /// <summary>
@@ -1217,7 +1217,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         {
             Internal.NativeFunctions.StackPushInteger((int)nPoisonType);
             Internal.NativeFunctions.CallBuiltIn(250);
-            return new Effect(Internal.NativeFunctions.StackPopEffect());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Effect);
         }
 
         /// <summary>
@@ -1228,7 +1228,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         {
             Internal.NativeFunctions.StackPushInteger((int)nDiseaseType);
             Internal.NativeFunctions.CallBuiltIn(251);
-            return new Effect(Internal.NativeFunctions.StackPopEffect());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Effect);
         }
 
         /// <summary>
@@ -1237,7 +1237,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         public static Effect EffectSilence()
         {
             Internal.NativeFunctions.CallBuiltIn(252);
-            return new Effect(Internal.NativeFunctions.StackPopEffect());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Effect);
         }
 
         /// <summary>
@@ -1248,7 +1248,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         {
             Internal.NativeFunctions.StackPushInteger(nValue);
             Internal.NativeFunctions.CallBuiltIn(212);
-            return new Effect(Internal.NativeFunctions.StackPopEffect());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Effect);
         }
 
         /// <summary>
@@ -1268,7 +1268,7 @@ namespace NWN.FinalFantasy.Core.NWScript
             Internal.NativeFunctions.StackPushObject(oEffector);
             Internal.NativeFunctions.StackPushInteger((int)nBeamVisualEffect);
             Internal.NativeFunctions.CallBuiltIn(207);
-            return new Effect(Internal.NativeFunctions.StackPopEffect());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Effect);
         }
 
         /// <summary>
@@ -1284,10 +1284,10 @@ namespace NWN.FinalFantasy.Core.NWScript
         /// </summary>
         public static Effect EffectLinkEffects(Effect eChildEffect, Effect eParentEffect)
         {
-            Internal.NativeFunctions.StackPushEffect(eParentEffect.Handle);
-            Internal.NativeFunctions.StackPushEffect(eChildEffect.Handle);
+            Internal.NativeFunctions.StackPushGameDefinedStructure((int)EngineStructure.Effect, eParentEffect);
+            Internal.NativeFunctions.StackPushGameDefinedStructure((int)EngineStructure.Effect, eChildEffect);
             Internal.NativeFunctions.CallBuiltIn(199);
-            return new Effect(Internal.NativeFunctions.StackPopEffect());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Effect);
         }
 
         /// <summary>
@@ -1301,7 +1301,7 @@ namespace NWN.FinalFantasy.Core.NWScript
             Internal.NativeFunctions.StackPushInteger(nMissEffect ? 1 : 0);
             Internal.NativeFunctions.StackPushInteger((int)visualEffectID);
             Internal.NativeFunctions.CallBuiltIn(180);
-            return new Effect(Internal.NativeFunctions.StackPopEffect());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Effect);
         }
 
         /// <summary>
@@ -1312,7 +1312,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         {
             Internal.NativeFunctions.StackPushFloat(fDuration);
             Internal.NativeFunctions.StackPushObject(oTarget);
-            Internal.NativeFunctions.StackPushEffect(eEffect.Handle);
+            Internal.NativeFunctions.StackPushGameDefinedStructure((int)EngineStructure.Effect, eEffect);
             Internal.NativeFunctions.StackPushInteger((int)nDurationType);
             Internal.NativeFunctions.CallBuiltIn(220);
         }
@@ -1323,7 +1323,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         /// </summary>
         public static EffectTypeScript GetEffectType(Effect eEffect)
         {
-            Internal.NativeFunctions.StackPushEffect(eEffect.Handle);
+            Internal.NativeFunctions.StackPushGameDefinedStructure((int)EngineStructure.Effect, eEffect);
             Internal.NativeFunctions.CallBuiltIn(170);
             return (EffectTypeScript)Internal.NativeFunctions.StackPopInteger();
         }
@@ -1340,7 +1340,7 @@ namespace NWN.FinalFantasy.Core.NWScript
             Internal.NativeFunctions.StackPushStringUTF8(sOnEnterScript);
             Internal.NativeFunctions.StackPushInteger((int)nAreaEffect);
             Internal.NativeFunctions.CallBuiltIn(171);
-            return new Effect(Internal.NativeFunctions.StackPopEffect());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Effect);
         }
 
         /// <summary>
@@ -1353,7 +1353,7 @@ namespace NWN.FinalFantasy.Core.NWScript
             Internal.NativeFunctions.StackPushFloat(fIntervalSeconds);
             Internal.NativeFunctions.StackPushInteger(nAmount);
             Internal.NativeFunctions.CallBuiltIn(164);
-            return new Effect(Internal.NativeFunctions.StackPopEffect());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Effect);
         }
 
         /// <summary>
@@ -1368,7 +1368,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         {
             Internal.NativeFunctions.StackPushInteger(nPercentChange);
             Internal.NativeFunctions.CallBuiltIn(165);
-            return new Effect(Internal.NativeFunctions.StackPopEffect());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Effect);
         }
 
         /// <summary>
@@ -1377,7 +1377,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         public static Effect EffectCharmed()
         {
             Internal.NativeFunctions.CallBuiltIn(156);
-            return new Effect(Internal.NativeFunctions.StackPopEffect());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Effect);
         }
 
         /// <summary>
@@ -1386,7 +1386,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         public static Effect EffectConfused()
         {
             Internal.NativeFunctions.CallBuiltIn(157);
-            return new Effect(Internal.NativeFunctions.StackPopEffect());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Effect);
         }
 
         /// <summary>
@@ -1395,7 +1395,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         public static Effect EffectFrightened()
         {
             Internal.NativeFunctions.CallBuiltIn(158);
-            return new Effect(Internal.NativeFunctions.StackPopEffect());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Effect);
         }
 
         /// <summary>
@@ -1404,7 +1404,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         public static Effect EffectDominated()
         {
             Internal.NativeFunctions.CallBuiltIn(159);
-            return new Effect(Internal.NativeFunctions.StackPopEffect());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Effect);
         }
 
         /// <summary>
@@ -1413,7 +1413,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         public static Effect EffectDazed()
         {
             Internal.NativeFunctions.CallBuiltIn(160);
-            return new Effect(Internal.NativeFunctions.StackPopEffect());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Effect);
         }
 
         /// <summary>
@@ -1422,7 +1422,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         public static Effect EffectStunned()
         {
             Internal.NativeFunctions.CallBuiltIn(161);
-            return new Effect(Internal.NativeFunctions.StackPopEffect());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Effect);
         }
 
         /// <summary>
@@ -1431,7 +1431,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         public static Effect EffectSleep()
         {
             Internal.NativeFunctions.CallBuiltIn(154);
-            return new Effect(Internal.NativeFunctions.StackPopEffect());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Effect);
         }
 
         /// <summary>
@@ -1440,7 +1440,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         public static Effect EffectParalyze()
         {
             Internal.NativeFunctions.CallBuiltIn(148);
-            return new Effect(Internal.NativeFunctions.StackPopEffect());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Effect);
         }
 
         /// <summary>
@@ -1456,7 +1456,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         {
             Internal.NativeFunctions.StackPushInteger((int)nImmunityToSpell);
             Internal.NativeFunctions.CallBuiltIn(149);
-            return new Effect(Internal.NativeFunctions.StackPopEffect());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Effect);
         }
 
         /// <summary>
@@ -1465,7 +1465,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         public static Effect EffectDeaf()
         {
             Internal.NativeFunctions.CallBuiltIn(150);
-            return new Effect(Internal.NativeFunctions.StackPopEffect());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Effect);
         }
     }
 }

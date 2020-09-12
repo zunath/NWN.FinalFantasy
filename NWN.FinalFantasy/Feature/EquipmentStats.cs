@@ -34,7 +34,7 @@ namespace NWN.FinalFantasy.Feature
             var player = OBJECT_SELF;
             if (!GetIsPC(player) || GetIsDM(player)) return;
 
-            var item = Object.StringToObject(Events.GetEventData("ITEM"));
+            var item = StringToObject(Events.GetEventData("ITEM"));
 
             for (var ip = GetFirstItemProperty(item); GetIsItemPropertyValid(ip); ip = GetNextItemProperty(item))
             {
@@ -53,7 +53,7 @@ namespace NWN.FinalFantasy.Feature
             var player = OBJECT_SELF;
             if (!GetIsPC(player) || GetIsDM(player)) return;
 
-            var item = Object.StringToObject(Events.GetEventData("ITEM"));
+            var item = StringToObject(Events.GetEventData("ITEM"));
 
             for (var ip = GetFirstItemProperty(item); GetIsItemPropertyValid(ip); ip = GetNextItemProperty(item))
             {

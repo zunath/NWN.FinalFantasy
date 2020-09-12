@@ -1,23 +1,19 @@
 using System;
 using System.Collections.Generic;
+using NWN.FinalFantasy.Core;
 
 namespace NWN.FinalFantasy.Core
 {
-    internal static partial class Internal
+    internal partial class Internal
     {
         public const uint OBJECT_INVALID = 0x7F000000;
-
-        private static readonly Stack<ScriptContext> ScriptContexts = new Stack<ScriptContext>();
-
-        private static ulong NextEventId;
-        private static readonly Dictionary<ulong, Closure> Closures = new Dictionary<ulong, Closure>();
         public static uint OBJECT_SELF { get; set; } = OBJECT_INVALID;
 
         public static void OnMainLoop(ulong frame)
         {
             try
             {
-                NWNEventHandler.OnMainLoop(frame);
+                Entrypoints.OnMainLoop(frame);
             }
             catch (Exception e)
             {
@@ -25,28 +21,41 @@ namespace NWN.FinalFantasy.Core
             }
         }
 
-        private static int OnRunScript(string script, uint oidSelf)
+        private struct ScriptContext
         {
-            var ret = 0;
+            public uint OwnerObject;
+            public string ScriptName;
+        }
+        private static Stack<ScriptContext> ScriptContexts = new Stack<ScriptContext>();
+        public static int OnRunScript(string script, uint oidSelf)
+        {
+            int ret = 0;
             OBJECT_SELF = oidSelf;
             ScriptContexts.Push(new ScriptContext { OwnerObject = oidSelf, ScriptName = script });
             try
             {
-                ret = NWNEventHandler.OnRunScript(script, oidSelf);
+                ret = Entrypoints.OnRunScript(script, oidSelf);
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.ToString());
             }
-
             ScriptContexts.Pop();
             OBJECT_SELF = ScriptContexts.Count == 0 ? OBJECT_INVALID : ScriptContexts.Peek().OwnerObject;
             return ret;
         }
 
-        private static void OnClosure(ulong eid, uint oidSelf)
+        private struct Closure
         {
-            var old = OBJECT_SELF;
+            public uint OwnerObject;
+            public ActionDelegate Run;
+        }
+        private static ulong NextEventId = 0;
+        private static Dictionary<ulong, Closure> Closures = new Dictionary<ulong, Closure>();
+
+        public static void OnClosure(ulong eid, uint oidSelf)
+        {
+            uint old = OBJECT_SELF;
             OBJECT_SELF = oidSelf;
             try
             {
@@ -60,34 +69,48 @@ namespace NWN.FinalFantasy.Core
             OBJECT_SELF = old;
         }
 
+        public static void OnSignal(string signal)
+        {
+            try
+            {
+                switch (signal)
+                {
+                    case "ON_MODULE_LOAD_FINISH":
+                        Entrypoints.OnModuleLoad();
+                        break;
+                    case "ON_DESTROY_SERVER":
+                        Entrypoints.OnShutdown();
+                        break;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
+        }
+
         public static void ClosureAssignCommand(uint obj, ActionDelegate func)
         {
             if (NativeFunctions.ClosureAssignCommand(obj, NextEventId) != 0)
+            {
                 Closures.Add(NextEventId++, new Closure { OwnerObject = obj, Run = func });
+            }
         }
 
         public static void ClosureDelayCommand(uint obj, float duration, ActionDelegate func)
         {
             if (NativeFunctions.ClosureDelayCommand(obj, duration, NextEventId) != 0)
+            {
                 Closures.Add(NextEventId++, new Closure { OwnerObject = obj, Run = func });
+            }
         }
 
         public static void ClosureActionDoCommand(uint obj, ActionDelegate func)
         {
             if (NativeFunctions.ClosureActionDoCommand(obj, NextEventId) != 0)
+            {
                 Closures.Add(NextEventId++, new Closure { OwnerObject = obj, Run = func });
-        }
-
-        private struct ScriptContext
-        {
-            public uint OwnerObject;
-            public string ScriptName;
-        }
-
-        private struct Closure
-        {
-            public uint OwnerObject;
-            public ActionDelegate Run;
+            }
         }
     }
 }

@@ -52,7 +52,7 @@ namespace NWN.FinalFantasy.Feature
             }
 
             // We have access. Set the target object and location, which will be picked up by the menu.
-            var target = Object.StringToObject(Events.GetEventData("TARGET_OBJECT_ID"));
+            var target = StringToObject(Events.GetEventData("TARGET_OBJECT_ID"));
             var targetPositionX = (float)Convert.ToDouble(Events.GetEventData("TARGET_POSITION_X"));
             var targetPositionY = (float)Convert.ToDouble(Events.GetEventData("TARGET_POSITION_Y"));
             var targetPositionZ = (float)Convert.ToDouble(Events.GetEventData("TARGET_POSITION_Z"));

@@ -98,7 +98,7 @@ namespace NWN.FinalFantasy.Service
         {
             var player = OBJECT_SELF;
             if (!GetIsPC(player) || GetIsDM(player)) return;
-            var item = Object.StringToObject(Events.GetEventData("ITEM_OBJECT_ID"));
+            var item = StringToObject(Events.GetEventData("ITEM_OBJECT_ID"));
             if (GetResRef(item) != "refund_tome") return;
 
             SetLocalObject(player, "PERK_REFUND_OBJECT", item);

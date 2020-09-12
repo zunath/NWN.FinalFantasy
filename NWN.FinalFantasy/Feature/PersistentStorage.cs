@@ -77,7 +77,7 @@ namespace NWN.FinalFantasy.Feature
             var container = OBJECT_SELF;
             if (GetResRef(container) != "bank_chest" || GetLocalBool(container, "IS_DESERIALIZING")) return;
 
-            var item = Object.StringToObject(Events.GetEventData("ITEM"));
+            var item = StringToObject(Events.GetEventData("ITEM"));
             var player = GetItemPossessor(item);
             var playerId = GetObjectUUID(player);
             var storageId = GetStorageID();
@@ -186,7 +186,7 @@ namespace NWN.FinalFantasy.Feature
             if (IsLoading) return;
 
             var container = OBJECT_SELF;
-            var item = Object.StringToObject(Events.GetEventData("ITEM"));
+            var item = StringToObject(Events.GetEventData("ITEM"));
             var player = GetItemPossessor(item);
             var limit = GetItemLimit();
             var count = Item.GetInventoryItemCount(container);

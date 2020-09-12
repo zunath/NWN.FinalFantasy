@@ -20,7 +20,7 @@ namespace NWN.FinalFantasy.Feature
         {
             var player = OBJECT_SELF;
             var area = GetArea(player);
-            var item = Object.StringToObject(Events.GetEventData("ITEM_OBJECT_ID"));
+            var item = StringToObject(Events.GetEventData("ITEM_OBJECT_ID"));
 
             if (!Housing.CanPlaceFurniture(player, item))
             {

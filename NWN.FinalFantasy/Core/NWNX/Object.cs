@@ -1,3 +1,5 @@
+using System.Numerics;
+
 namespace NWN.FinalFantasy.Core.NWNX
 {
     public class Object
@@ -35,18 +37,8 @@ namespace NWN.FinalFantasy.Core.NWNX
             return lv;
         }
 
-        // Returns an object from the provided object ID.
-        // This is the counterpart to ObjectToString.
-        public static uint StringToObject(string id)
-        {
-            Internal.NativeFunctions.nwnxSetFunction(PLUGIN_NAME, "StringToObject");
-            Internal.NativeFunctions.nwnxPushString(id);
-            Internal.NativeFunctions.nwnxCallFunction();
-            return Internal.NativeFunctions.nwnxPopObject();
-        }
-
         // Set the provided object's position to the provided vector.
-        public static void SetPosition(uint obj, Vector pos)
+        public static void SetPosition(uint obj, Vector3 pos)
         {
             Internal.NativeFunctions.nwnxSetFunction(PLUGIN_NAME, "SetPosition");
             Internal.NativeFunctions.nwnxPushFloat(pos.X);
@@ -162,7 +154,7 @@ namespace NWN.FinalFantasy.Core.NWNX
         }
 
         /// Add or move obj to area at pos
-        public static void AddToArea(uint obj, uint area, Vector pos)
+        public static void AddToArea(uint obj, uint area, Vector3 pos)
         {
             Internal.NativeFunctions.nwnxSetFunction(PLUGIN_NAME, "AddToArea");
             Internal.NativeFunctions.nwnxPushFloat(pos.Z);
@@ -368,7 +360,7 @@ namespace NWN.FinalFantasy.Core.NWNX
         /// vPosition The position.
         /// TRUE if vPosition is inside oTrigger's geometry.
         /// </summary>
-        public static bool GetPositionIsInTrigger(uint obj, Vector position)
+        public static bool GetPositionIsInTrigger(uint obj, Vector3 position)
         {
             Internal.NativeFunctions.nwnxSetFunction(PLUGIN_NAME, "GetPositionIsInTrigger");
             Internal.NativeFunctions.nwnxPushFloat(position.Z);

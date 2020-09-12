@@ -23,7 +23,7 @@ namespace NWN.FinalFantasy.Feature
         public static void ValidateItemUse()
         {
             var creature = OBJECT_SELF;
-            var item = Object.StringToObject(Events.GetEventData("ITEM_OBJECT_ID"));
+            var item = StringToObject(Events.GetEventData("ITEM_OBJECT_ID"));
 
             Events.SetEventResult(string.IsNullOrWhiteSpace(CanItemBeUsed(creature, item)) ? "1" : "0");
             Events.SkipEvent();
@@ -37,7 +37,7 @@ namespace NWN.FinalFantasy.Feature
         public static void ValidateItemEquip()
         {
             var creature = OBJECT_SELF;
-            var item = Object.StringToObject(Events.GetEventData("ITEM"));
+            var item = StringToObject(Events.GetEventData("ITEM"));
 
             var error = CanItemBeUsed(creature, item);
             if (string.IsNullOrWhiteSpace(error))
@@ -58,7 +58,7 @@ namespace NWN.FinalFantasy.Feature
         public static void ValidateDualWield()
         {
             var creature = OBJECT_SELF;
-            var item = Object.StringToObject(Events.GetEventData("ITEM"));
+            var item = StringToObject(Events.GetEventData("ITEM"));
             var slot = (InventorySlot)Convert.ToInt32(Events.GetEventData("SLOT"));
 
             // Not equipping to the left hand, or there's nothing equipped in the right hand.
@@ -138,8 +138,7 @@ namespace NWN.FinalFantasy.Feature
             if (!GetIsPC(player) || GetIsDM(player)) return;
 
             var playerId = GetObjectUUID(player);
-            var dbPlayer = DB.Get<Player>(playerId);
-            var item = Object.StringToObject(Events.GetEventData("ITEM"));
+            var item = StringToObject(Events.GetEventData("ITEM"));
             var slot = (InventorySlot)Convert.ToInt32(Events.GetEventData("SLOT"));
 
             foreach (var (perkType, actionList) in Perk.GetAllEquipTriggers())

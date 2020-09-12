@@ -20,7 +20,7 @@ namespace NWN.FinalFantasy.Feature
             var area = GetArea(self);
             var position = GetPosition(self);
             var facing = GetFacing(self);
-            Vector lootPosition = Vector(position.X, position.Y, position.Z - 0.11f);
+            var lootPosition = Vector(position.X, position.Y, position.Z - 0.11f);
             Location spawnLocation = Location(area, lootPosition, facing);
 
             var container = CreateObject(ObjectType.Placeable, "npc_corpse", spawnLocation);

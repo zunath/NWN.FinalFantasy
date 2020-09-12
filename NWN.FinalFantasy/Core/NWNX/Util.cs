@@ -163,5 +163,39 @@ namespace NWN.FinalFantasy.Core.NWNX
 
             return Internal.NativeFunctions.nwnxPopString();
         }
+
+        /// @brief Create a door.
+        /// @param sResRef The ResRef of the door.
+        /// @param locLocation The location to create the door at.
+        /// @param sNewTag An optional new tag for the door.
+        /// @return The door, or OBJECT_INVALID on failure.
+        public static uint CreateDoor(string sResRef, Location locLocation, string sNewTag)
+        {
+            Internal.NativeFunctions.nwnxSetFunction(PLUGIN_NAME, "CreateDoor");
+
+            var vPosition = NWScript.NWScript.GetPositionFromLocation(locLocation);
+
+            Internal.NativeFunctions.nwnxPushString(sNewTag);
+            Internal.NativeFunctions.nwnxPushFloat(NWScript.NWScript.GetFacingFromLocation(locLocation));
+            Internal.NativeFunctions.nwnxPushFloat(vPosition.Z);
+            Internal.NativeFunctions.nwnxPushFloat(vPosition.Y);
+            Internal.NativeFunctions.nwnxPushFloat(vPosition.X);
+            Internal.NativeFunctions.nwnxPushObject(NWScript.NWScript.GetAreaFromLocation(locLocation));
+            Internal.NativeFunctions.nwnxPushString(sResRef);
+            Internal.NativeFunctions.nwnxCallFunction();
+
+            return Internal.NativeFunctions.nwnxPopObject();
+        }
+
+        /// @brief Set the object that will be returned by GetItemActivator.
+        /// @param oObject An object.
+        public static void SetItemActivator(uint oObject)
+        {
+            Internal.NativeFunctions.nwnxSetFunction(PLUGIN_NAME, "SetItemActivator");
+
+            Internal.NativeFunctions.nwnxPushObject(oObject);
+            Internal.NativeFunctions.nwnxCallFunction();
+        }
+
     }
 }

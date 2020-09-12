@@ -495,5 +495,43 @@ namespace NWN.FinalFantasy.Core.NWNX
 
             Internal.NativeFunctions.nwnxCallFunction();
         }
+
+        public static void SetCustomToken(uint oPlayer, int nCustomTokenNumber, string sTokenValue)
+        {
+            Internal.NativeFunctions.nwnxSetFunction(PLUGIN_NAME, "SetCustomToken");
+            Internal.NativeFunctions.nwnxPushString(sTokenValue);
+            Internal.NativeFunctions.nwnxPushInt(nCustomTokenNumber);
+            Internal.NativeFunctions.nwnxPushObject(oPlayer);
+
+            Internal.NativeFunctions.nwnxCallFunction();
+        }
+
+        public static void SetCreatureNameOverride(uint oPlayer, uint oCreature, string sName)
+        {
+            Internal.NativeFunctions.nwnxSetFunction(PLUGIN_NAME, "SetCreatureNameOverride");
+
+            Internal.NativeFunctions.nwnxPushString(sName);
+            Internal.NativeFunctions.nwnxPushObject(oCreature);
+            Internal.NativeFunctions.nwnxPushObject(oPlayer);
+
+            Internal.NativeFunctions.nwnxCallFunction();
+        }
+
+        /// @brief Display floaty text above oCreature for oPlayer only.
+        /// @note This will also display the floaty text above creatures that are not part of oPlayer's faction.
+        /// @param oPlayer The player to display the text to.
+        /// @param oCreature The creature to display the text above.
+        /// @param sText The text to display.
+        public static void FloatingTextStringOnCreature(uint oPlayer, uint oCreature, string sText)
+        {
+            Internal.NativeFunctions.nwnxSetFunction(PLUGIN_NAME, "SetCreatureNameOverride");
+
+            Internal.NativeFunctions.nwnxPushString(sText);
+            Internal.NativeFunctions.nwnxPushObject(oCreature);
+            Internal.NativeFunctions.nwnxPushObject(oPlayer);
+
+            Internal.NativeFunctions.nwnxCallFunction();
+        }
+
     }
 }

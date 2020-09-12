@@ -21,7 +21,20 @@ namespace NWN.FinalFantasy.Core.NWNX
             return Internal.NativeFunctions.nwnxPopInt();
         }
 
-        // Returns a local variable at the specified index.
+
+        // @brief Gets the local variable at the provided index of the provided object.
+        // @param obj The object.
+        // @param index The index.
+        // @note Index bounds: 0 >= index < NWNX_Object_GetLocalVariableCount().
+        // @note As of build 8193.14 local variables no longer have strict ordering.
+        //       this means that any change to the variables can result in drastically
+        //       different order when iterating.
+        // @note As of build 8193.14, this function takes O(n) time, where n is the number
+        //       of locals on the object. Individual variable access with GetLocalXxx()
+        //       is now O(1) though.
+        // @note As of build 8193.14, this function may return variable type UNKNOWN
+        //       if the value is the default (0/0.0/""/OBJECT_INVALID) for the type.
+        // @return An NWNX_Object_LocalVariable struct.
         public static LocalVariable GetLocalVariable(uint obj, int index)
         {
             Internal.NativeFunctions.nwnxSetFunction(PLUGIN_NAME, "GetLocalVariable");
@@ -38,9 +51,10 @@ namespace NWN.FinalFantasy.Core.NWNX
         }
 
         // Set the provided object's position to the provided vector.
-        public static void SetPosition(uint obj, Vector3 pos)
+        public static void SetPosition(uint obj, Vector3 pos, bool updateSubareas = true)
         {
             Internal.NativeFunctions.nwnxSetFunction(PLUGIN_NAME, "SetPosition");
+            Internal.NativeFunctions.nwnxPushInt(updateSubareas ? 1 : 0);
             Internal.NativeFunctions.nwnxPushFloat(pos.X);
             Internal.NativeFunctions.nwnxPushFloat(pos.Y);
             Internal.NativeFunctions.nwnxPushFloat(pos.Z);
@@ -436,6 +450,37 @@ namespace NWN.FinalFantasy.Core.NWNX
         {
             public int Type;
             public string Key;
+        }
+
+        /// @brief Get an object's hit points.
+        /// @note Unlike the native GetCurrentHitpoints function, this excludes temporary hitpoints.
+        /// @param obj The object.
+        /// @return The hit points.
+        public static int GetCurrentHitPoints(uint creature)
+        {
+            Internal.NativeFunctions.nwnxSetFunction(PLUGIN_NAME, "GetCurrentHitPoints");
+            Internal.NativeFunctions.nwnxPushObject(creature);
+            Internal.NativeFunctions.nwnxCallFunction();
+
+            return Internal.NativeFunctions.nwnxPopInt();
+        }
+
+        public static int GetDoorHasVisibleModel(uint oDoor)
+        {
+            Internal.NativeFunctions.nwnxSetFunction(PLUGIN_NAME, "GetDoorHasVisibleModel");
+            Internal.NativeFunctions.nwnxPushObject(oDoor);
+            Internal.NativeFunctions.nwnxCallFunction();
+
+            return Internal.NativeFunctions.nwnxPopInt();
+        }
+
+        public static int GetIsDestroyable(uint oObject)
+        {
+            Internal.NativeFunctions.nwnxSetFunction(PLUGIN_NAME, "GetIsDestroyable");
+            Internal.NativeFunctions.nwnxPushObject(oObject);
+            Internal.NativeFunctions.nwnxCallFunction();
+
+            return Internal.NativeFunctions.nwnxPopInt();
         }
     }
 }

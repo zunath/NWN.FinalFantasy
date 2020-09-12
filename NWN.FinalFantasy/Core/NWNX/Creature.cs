@@ -999,5 +999,127 @@ namespace NWN.FinalFantasy.Core.NWNX
 
             return Internal.NativeFunctions.nwnxPopInt();
         }
+
+        /// @brief Move a creature to limbo.
+        /// @param oCreature The creature object.
+        public static void JumpToLimbo(uint oCreature)
+        {
+            Internal.NativeFunctions.nwnxSetFunction(PLUGIN_NAME, "JumpToLimbo");
+            Internal.NativeFunctions.nwnxPushObject(oCreature);
+            Internal.NativeFunctions.nwnxCallFunction();
+        }
+
+        /// @brief Sets the critical hit multiplier modifier for the creature
+        /// @param oCreature The target creature
+        /// @param nModifier The modifier to apply
+        /// @param nHand 0 for all attacks, 1 for Mainhand, 2 for Offhand
+        /// @param bPersist Whether the modifier should persist to .bic file if applicable
+        /// @note Persistence is activated each server reset by first use of either 'SetCriticalMultiplier*' functions. Recommended to trigger on a dummy target OnModuleLoad to enable persistence.
+        public static void SetCriticalMultiplierModifier(uint oCreature, int nModifier, int nHand = 0, bool bPersist = false)
+        {
+            Internal.NativeFunctions.nwnxSetFunction(PLUGIN_NAME, "SetCriticalMultiplierModifier");
+
+            Internal.NativeFunctions.nwnxPushInt(bPersist ? 1 : 0);
+            Internal.NativeFunctions.nwnxPushInt(nHand);
+            Internal.NativeFunctions.nwnxPushInt(nModifier);
+            Internal.NativeFunctions.nwnxPushObject(oCreature);
+
+            Internal.NativeFunctions.nwnxCallFunction();
+        }
+
+        /// @brief Gets the critical hit multiplier modifier for the Creature
+        /// @param oCreature The target creature
+        /// @param nHand 0 for all attacks, 1 for Mainhand, 2 for Offhand
+        /// @return the current critical hit multiplier modifier for the creature
+        public static int GetCriticalMultiplierModifier(uint oCreature, int nHand = 0)
+        {
+            Internal.NativeFunctions.nwnxSetFunction(PLUGIN_NAME, "GetCriticalMultiplierModifier");
+
+            Internal.NativeFunctions.nwnxPushInt(nHand);
+            Internal.NativeFunctions.nwnxPushObject(oCreature);
+            Internal.NativeFunctions.nwnxCallFunction();
+
+            return Internal.NativeFunctions.nwnxPopInt();
+        }
+
+        public static void SetCriticalMultiplierOverride(uint oCreature, int nOverride, int nHand = 0, bool bPersist = false)
+        {
+            Internal.NativeFunctions.nwnxSetFunction(PLUGIN_NAME, "SetCriticalMultiplierOverride");
+
+            Internal.NativeFunctions.nwnxPushInt(bPersist ? 1 : 0);
+            Internal.NativeFunctions.nwnxPushInt(nHand);
+            Internal.NativeFunctions.nwnxPushInt(nOverride);
+            Internal.NativeFunctions.nwnxPushObject(oCreature);
+
+            Internal.NativeFunctions.nwnxCallFunction();
+        }
+
+        public static int GetCriticalMultiplierOverride(uint oCreature, int nHand = 0)
+        {
+            Internal.NativeFunctions.nwnxSetFunction(PLUGIN_NAME, "GetCriticalMultiplierOverride");
+
+            Internal.NativeFunctions.nwnxPushInt(nHand);
+            Internal.NativeFunctions.nwnxPushObject(oCreature);
+            Internal.NativeFunctions.nwnxCallFunction();
+
+            return Internal.NativeFunctions.nwnxPopInt();
+        }
+
+        public static void SetCriticalRangeModifier(uint oCreature, int nModifier, int nHand = 0, bool bPersist = false)
+        {
+            Internal.NativeFunctions.nwnxSetFunction(PLUGIN_NAME, "SetCriticalRangeModifier");
+
+            Internal.NativeFunctions.nwnxPushInt(bPersist ? 1 : 0);
+            Internal.NativeFunctions.nwnxPushInt(nHand);
+            Internal.NativeFunctions.nwnxPushInt(nModifier);
+            Internal.NativeFunctions.nwnxPushObject(oCreature);
+
+            Internal.NativeFunctions.nwnxCallFunction();
+        }
+
+        public static int GetCriticalRangeModifier(uint oCreature, int nHand = 0)
+        {
+            Internal.NativeFunctions.nwnxSetFunction(PLUGIN_NAME, "GetCriticalRangeModifier");
+
+            Internal.NativeFunctions.nwnxPushInt(nHand);
+            Internal.NativeFunctions.nwnxPushObject(oCreature);
+            Internal.NativeFunctions.nwnxCallFunction();
+
+            return Internal.NativeFunctions.nwnxPopInt();
+        }
+
+        public static void SetCriticalRangeOverride(uint oCreature, int nOverride, int nHand = 0, bool bPersist = false)
+        {
+            Internal.NativeFunctions.nwnxSetFunction(PLUGIN_NAME, "SetCriticalRangeOverride");
+
+            Internal.NativeFunctions.nwnxPushInt(bPersist ? 1 : 0);
+            Internal.NativeFunctions.nwnxPushInt(nHand);
+            Internal.NativeFunctions.nwnxPushInt(nOverride);
+            Internal.NativeFunctions.nwnxPushObject(oCreature);
+
+            Internal.NativeFunctions.nwnxCallFunction();
+        }
+
+        public static int NWNX_Creature_GetCriticalRangeOverride(uint oCreature, int nHand = 0)
+        {
+            Internal.NativeFunctions.nwnxSetFunction(PLUGIN_NAME, "GetCriticalRangeOverride");
+
+            Internal.NativeFunctions.nwnxPushInt(nHand);
+            Internal.NativeFunctions.nwnxPushObject(oCreature);
+            Internal.NativeFunctions.nwnxCallFunction();
+
+            return Internal.NativeFunctions.nwnxPopInt();
+        }
+
+        public static void AddAssociate(uint oCreature, uint oAssociate, int nAssociateType)
+        {
+            Internal.NativeFunctions.nwnxSetFunction(PLUGIN_NAME, "AddAssociate");
+
+            Internal.NativeFunctions.nwnxPushInt(nAssociateType);
+            Internal.NativeFunctions.nwnxPushObject(oAssociate);
+            Internal.NativeFunctions.nwnxPushObject(oCreature);
+
+            Internal.NativeFunctions.nwnxCallFunction();
+        }
     }
 }

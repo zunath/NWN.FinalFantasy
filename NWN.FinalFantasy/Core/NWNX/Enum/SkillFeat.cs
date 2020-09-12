@@ -6,7 +6,7 @@ namespace NWN.FinalFantasy.Core.NWNX.Enum
         public int feat { get; set; }
         public int modifier { get; set; }
         public int focusFeat { get; set; }
-        public string? classes { get; set; }
+        public string classes { get; set; }
 
         public float classLevelMod { get; set; }
         public int areaFlagsRequired { get; set; }

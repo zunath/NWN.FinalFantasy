@@ -411,44 +411,6 @@ namespace NWN.FinalFantasy.Core.NWNX
             Internal.NativeFunctions.nwnxCallFunction();
         }
 
-        // Gets one of creature's cleric domains (either 1 or 2).
-        public static ClericDomain GetClericDomain(uint creature, int index)
-        {
-            Internal.NativeFunctions.nwnxSetFunction(PLUGIN_NAME, "GetClericDomain");
-            Internal.NativeFunctions.nwnxPushInt(index);
-            Internal.NativeFunctions.nwnxPushObject(creature);
-            Internal.NativeFunctions.nwnxCallFunction();
-            return (ClericDomain)Internal.NativeFunctions.nwnxPopInt();
-        }
-
-        // Sets one of creature's cleric domains (either 1 or 2).
-        public static void SetClericDomain(uint creature, int index, ClericDomain domain)
-        {
-            Internal.NativeFunctions.nwnxSetFunction(PLUGIN_NAME, "SetClericDomain");
-            Internal.NativeFunctions.nwnxPushInt((int)domain);
-            Internal.NativeFunctions.nwnxPushInt(index);
-            Internal.NativeFunctions.nwnxPushObject(creature);
-            Internal.NativeFunctions.nwnxCallFunction();
-        }
-
-        // Gets whether or not creature has a specialist school of wizardry.
-        public static int GetWizardSpecialization(uint creature)
-        {
-            Internal.NativeFunctions.nwnxSetFunction(PLUGIN_NAME, "GetWizardSpecialization");
-            Internal.NativeFunctions.nwnxPushObject(creature);
-            Internal.NativeFunctions.nwnxCallFunction();
-            return Internal.NativeFunctions.nwnxPopInt();
-        }
-
-        // Sets creature's wizard specialist school.
-        public static void SetWizardSpecialization(uint creature, int school)
-        {
-            Internal.NativeFunctions.nwnxSetFunction(PLUGIN_NAME, "SetWizardSpecialization");
-            Internal.NativeFunctions.nwnxPushInt(school);
-            Internal.NativeFunctions.nwnxPushObject(creature);
-            Internal.NativeFunctions.nwnxCallFunction();
-        }
-
         // Get the soundset index for creature.
         public static int GetSoundset(uint creature)
         {
@@ -925,6 +887,117 @@ namespace NWN.FinalFantasy.Core.NWNX
             Internal.NativeFunctions.nwnxPushObject(creature);
             Internal.NativeFunctions.nwnxCallFunction();
             return Internal.NativeFunctions.nwnxPopInt() == 1;
+        }
+
+
+        /// @brief Set the encounter source of oCreature.
+        /// @param oCreature The target creature.
+        /// @param oEncounter The source encounter
+        public static void SetEncounter(uint oCreature, uint oEncounter)
+        {
+            Internal.NativeFunctions.nwnxSetFunction(PLUGIN_NAME, "SetEncounter");
+
+            Internal.NativeFunctions.nwnxPushObject(oEncounter);
+            Internal.NativeFunctions.nwnxPushObject(oCreature);
+            Internal.NativeFunctions.nwnxCallFunction();
+        }
+
+        /// @brief Get the encounter source of oCreature.
+        /// @param oCreature The target creature.
+        /// @return The encounter, OBJECT_INVALID if not part of an encounter or on error
+        public static uint GetEncounter(uint oCreature)
+        {
+            Internal.NativeFunctions.nwnxSetFunction(PLUGIN_NAME, "GetEncounter");
+
+            Internal.NativeFunctions.nwnxPushObject(oCreature);
+            Internal.NativeFunctions.nwnxCallFunction();
+
+            return Internal.NativeFunctions.nwnxPopObject();
+        }
+
+
+        /// @brief Set whether an effect icon is flashing or not.
+        /// @param oCreature The target creature.
+        /// @param nIconId The icon id, see effecticons.2da.
+        /// @param bFlashing TRUE for flashing, FALSE for not flashing.
+        public static void SetEffectIconFlashing(uint oCreature, int nIconId, bool bFlashing)
+        {
+            Internal.NativeFunctions.nwnxSetFunction(PLUGIN_NAME, "SetEffectIconFlashing");
+
+            Internal.NativeFunctions.nwnxPushInt(bFlashing ? 1 : 0);
+            Internal.NativeFunctions.nwnxPushInt(nIconId);
+            Internal.NativeFunctions.nwnxPushObject(oCreature);
+            Internal.NativeFunctions.nwnxCallFunction();
+        }
+
+
+        /// @brief Override the damage level of oCreature.
+        /// @note Damage levels are the damage state under a creature's name, for example: 'Near Death'
+        /// @param oCreature The target creature.
+        /// @param nDamageLevel A damage level, see damagelevels.2da. Allowed values: 0-255 or -1 to remove the override.
+        public static void OverrideDamageLevel(uint oCreature, int nDamageLevel)
+        {
+            Internal.NativeFunctions.nwnxSetFunction(PLUGIN_NAME, "OverrideDamageLevel");
+
+            Internal.NativeFunctions.nwnxPushInt(nDamageLevel);
+            Internal.NativeFunctions.nwnxPushObject(oCreature);
+            Internal.NativeFunctions.nwnxCallFunction();
+        }
+
+
+        /// @brief Get if oCreature is currently bartering.
+        /// @param oCreature The target creature.
+        /// @return TRUE if oCreature is bartering, FALSE if not or on error.
+        public static bool GetIsBartering(uint oCreature)
+        {
+            Internal.NativeFunctions.nwnxSetFunction(PLUGIN_NAME, "GetIsBartering");
+
+            Internal.NativeFunctions.nwnxPushObject(oCreature);
+            Internal.NativeFunctions.nwnxCallFunction();
+
+            return Internal.NativeFunctions.nwnxPopInt() == 1;
+        }
+
+
+        /// @brief Sets caster level for the last item used. Use in a spellhook or spell event before to set caster level for any spells cast from the item.
+        /// @param oCreature the creature who used the item.
+        /// @param nCasterLvl the desired caster level.
+        public static void SetLastItemCasterLevel(uint oCreature, int nCasterLvl)
+        {
+            Internal.NativeFunctions.nwnxSetFunction(PLUGIN_NAME, "SetLastItemCasterLevel");
+
+            Internal.NativeFunctions.nwnxPushInt(nCasterLvl);
+            Internal.NativeFunctions.nwnxPushObject(oCreature);
+            Internal.NativeFunctions.nwnxCallFunction();
+        }
+
+        /// @brief Gets the caster level of the last item used.
+        /// @param oCreature the creature who used the item.
+        /// @return returns the creatures last used item's level.
+        public static int GetLastItemCasterLevel(uint oCreature)
+        {
+            Internal.NativeFunctions.nwnxSetFunction(PLUGIN_NAME, "GetLastItemCasterLevel");
+
+            Internal.NativeFunctions.nwnxPushObject(oCreature);
+            Internal.NativeFunctions.nwnxCallFunction();
+            return Internal.NativeFunctions.nwnxPopInt();
+        }
+
+        /// @brief Gets the Armor classed of attacked against versus
+        /// @param oAttacked The one being attacked
+        /// @param oVersus The one doing the attacking
+        /// @param nTouch TRUE for touch attacks
+        /// @return -255 on Error, Flat footed AC if oVersus is invalid or the Attacked AC versus oVersus.
+        public static int GetArmorClassVersus(uint oAttacked, uint oVersus, bool nTouch = false)
+        {
+            Internal.NativeFunctions.nwnxSetFunction(PLUGIN_NAME, "GetArmorClassVersus");
+
+            Internal.NativeFunctions.nwnxPushInt(nTouch ? 1 : 0);
+            Internal.NativeFunctions.nwnxPushObject(oVersus);
+            Internal.NativeFunctions.nwnxPushObject(oAttacked);
+            Internal.NativeFunctions.nwnxCallFunction();
+
+            return Internal.NativeFunctions.nwnxPopInt();
         }
     }
 }

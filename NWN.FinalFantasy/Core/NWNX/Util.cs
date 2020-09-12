@@ -115,5 +115,53 @@ namespace NWN.FinalFantasy.Core.NWNX
             Internal.NativeFunctions.nwnxCallFunction();
             return Internal.NativeFunctions.nwnxPopInt();
         }
+
+        /// @brief Get the world time as calendar day and time of day.
+        /// @note This function is useful for calculating effect expiry times.
+        /// @param fAdjustment An adjustment in seconds, 0.0f will return the current world time,
+        /// positive or negative values will return a world time in the future or past.
+        /// @return A NWNX_Util_WorldTime struct with the calendar day and time of day.
+        public static WorldTime GetWorldTime(float fAdjustment = 0.0f)
+        {
+            Internal.NativeFunctions.nwnxSetFunction(PLUGIN_NAME, "GetWorldTime");
+
+            Internal.NativeFunctions.nwnxPushFloat(fAdjustment);
+            Internal.NativeFunctions.nwnxCallFunction();
+
+            return new WorldTime
+            {
+                TimeOfDay = Internal.NativeFunctions.nwnxPopInt(),
+                CalendarDay = Internal.NativeFunctions.nwnxPopInt()
+            };
+        }
+
+        public struct WorldTime
+        {
+            public int CalendarDay { get; set; }
+            public int TimeOfDay { get; set; }
+        }
+
+
+        public static void SetResourceOverride(int nResType, string sOldName, string sNewName)
+        {
+            Internal.NativeFunctions.nwnxSetFunction(PLUGIN_NAME, "SetResourceOverride");
+
+            Internal.NativeFunctions.nwnxPushString(sNewName);
+            Internal.NativeFunctions.nwnxPushString(sOldName);
+            Internal.NativeFunctions.nwnxPushInt(nResType);
+
+            Internal.NativeFunctions.nwnxCallFunction();
+        }
+
+        public static string GetResourceOverride(int nResType, string sName)
+        {
+            Internal.NativeFunctions.nwnxSetFunction(PLUGIN_NAME, "GetResourceOverride");
+
+            Internal.NativeFunctions.nwnxPushString(sName);
+            Internal.NativeFunctions.nwnxPushInt(nResType);
+            Internal.NativeFunctions.nwnxCallFunction();
+
+            return Internal.NativeFunctions.nwnxPopString();
+        }
     }
 }

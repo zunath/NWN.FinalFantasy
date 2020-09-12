@@ -136,5 +136,20 @@ namespace NWN.FinalFantasy.Core.NWNX
             Internal.NativeFunctions.nwnxCallFunction();
             return Internal.NativeFunctions.nwnxPopObject();
         }
+
+
+        /// @brief replace an already applied effect on an object
+        /// Only duration, subtype, tag and spell related fields can be overwritten.
+        /// @note eNew and eOld need to have the same type.
+        /// @return Number of internal effects updated.
+        public static int ReplaceEffect(uint obj, Core.Effect eOld, Core.Effect eNew)
+        {
+            Internal.NativeFunctions.nwnxSetFunction(PLUGIN_NAME, "ReplaceEffect");
+            Internal.NativeFunctions.nwnxPushEffect(eNew);
+            Internal.NativeFunctions.nwnxPushEffect(eOld);
+            Internal.NativeFunctions.nwnxPushObject(obj);
+
+            return Internal.NativeFunctions.nwnxPopInt();
+        }
     }
 }

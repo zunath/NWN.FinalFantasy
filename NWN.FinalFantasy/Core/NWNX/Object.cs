@@ -402,6 +402,36 @@ namespace NWN.FinalFantasy.Core.NWNX
             return Internal.NativeFunctions.nwnxPopInt();
         }
 
+
+        /// @brief Checks for specific spell immunity. Should only be called in spellscripts
+        /// @param oDefender The object defending against the spell.
+        /// @param oCaster The object casting the spell.
+        /// @return -1 if defender has no immunity, 2 if the defender is immune
+        public static int DoSpellImmunity(uint oDefender, uint oCaster)
+        {
+            Internal.NativeFunctions.nwnxSetFunction(PLUGIN_NAME, "DoSpellImmunity");
+
+            Internal.NativeFunctions.nwnxPushObject(oCaster);
+            Internal.NativeFunctions.nwnxPushObject(oDefender);
+            Internal.NativeFunctions.nwnxCallFunction();
+
+            return Internal.NativeFunctions.nwnxPopInt();
+        }
+
+        /// @brief Checks for spell school/level immunities and mantles. Should only be called in spellscripts
+        /// @param oDefender The object defending against the spell.
+        /// @param oCaster The object casting the spell.
+        /// @return -1 defender no immunity. 2 if immune. 3 if immune, but the immunity has a limit (example: mantles)
+        public static int DoSpellLevelAbsorption(uint oDefender, uint oCaster)
+        {
+            Internal.NativeFunctions.nwnxSetFunction(PLUGIN_NAME, "DoSpellLevelAbsorption");
+            Internal.NativeFunctions.nwnxPushObject(oCaster);
+            Internal.NativeFunctions.nwnxPushObject(oDefender);
+            Internal.NativeFunctions.nwnxCallFunction();
+
+            return Internal.NativeFunctions.nwnxPopInt();
+        }
+
         public struct LocalVariable
         {
             public int Type;

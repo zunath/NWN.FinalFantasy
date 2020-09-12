@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Numerics;
 using NWN.FinalFantasy.Core.NWNX.Enum;
+using NWN.FinalFantasy.Core.NWScript.Enum;
 
 
 namespace NWN.FinalFantasy.Core.NWNX
@@ -417,6 +418,81 @@ namespace NWN.FinalFantasy.Core.NWNX
             Internal.NativeFunctions.nwnxPushString(resName);
             Internal.NativeFunctions.nwnxPushInt(resType);
             Internal.NativeFunctions.nwnxPushObject(player);
+            Internal.NativeFunctions.nwnxCallFunction();
+        }
+
+        // @brief Toggle oPlayer's PlayerDM status.
+        // @note This function does nothing for actual DMClient DMs or players with a client version < 8193.14
+        // @param oPlayer The player.
+        // @param bIsDM TRUE to toggle dm mode on, FALSE for off.
+        public static void ToggleDM(uint oPlayer, bool bIsDM)
+        {
+            Internal.NativeFunctions.nwnxSetFunction(PLUGIN_NAME, "ToggleDM");
+
+            Internal.NativeFunctions.nwnxPushInt(bIsDM ? 1 : 0);
+            Internal.NativeFunctions.nwnxPushObject(oPlayer);
+            Internal.NativeFunctions.nwnxCallFunction();
+        }
+
+
+        /// @brief Override the mouse cursor of oObject for oPlayer only
+        /// @param oPlayer The player object.
+        /// @param oObject The object.
+        /// @param nCursor The cursor, one of MOUSECURSOR_*. -1 to clear the override.
+        public static void SetObjectMouseCursorOverride(uint oPlayer, uint oObject, MouseCursor nCursor)
+        {
+            Internal.NativeFunctions.nwnxSetFunction(PLUGIN_NAME, "SetObjectMouseCursorOverride");
+
+            Internal.NativeFunctions.nwnxPushInt((int)nCursor);
+            Internal.NativeFunctions.nwnxPushObject(oObject);
+            Internal.NativeFunctions.nwnxPushObject(oPlayer);
+
+            Internal.NativeFunctions.nwnxCallFunction();
+        }
+
+        /// @brief Override the hilite color of oObject for oPlayer only
+        /// @param oPlayer The player object.
+        /// @param oObject The object.
+        /// @param nColor The color in 0xRRGGBB format, -1 to clear the override.
+        public static void SetObjectHiliteColorOverride(uint oPlayer, uint oObject, int nColor)
+        {
+            Internal.NativeFunctions.nwnxSetFunction(PLUGIN_NAME, "SetObjectHiliteColorOverride");
+
+            Internal.NativeFunctions.nwnxPushInt(nColor);
+            Internal.NativeFunctions.nwnxPushObject(oObject);
+            Internal.NativeFunctions.nwnxPushObject(oPlayer);
+
+            Internal.NativeFunctions.nwnxCallFunction();
+        }
+
+        /// @brief Remove effects with sEffectTag from oPlayer's TURD
+        /// @note This function should be called in the NWNX_ON_CLIENT_DISCONNECT_AFTER event, OnClientLeave is too early for the TURD to exist.
+        /// @param oPlayer The player object.
+        /// @param sEffectTag The effect tag.
+        public static void RemoveEffectFromTURD(uint oPlayer, string sEffectTag)
+        {
+            Internal.NativeFunctions.nwnxSetFunction(PLUGIN_NAME, "RemoveEffectFromTURD");
+            Internal.NativeFunctions.nwnxPushString(sEffectTag);
+            Internal.NativeFunctions.nwnxPushObject(oPlayer);
+            Internal.NativeFunctions.nwnxCallFunction();
+        }
+
+        /// @brief Set the location oPlayer will spawn when logging in to the server.
+        /// @note This function is best called in the NWNX_ON_ELC_VALIDATE_CHARACTER_BEFORE event, OnClientEnter will be too late.
+        /// @param The player object.
+        /// @param locSpawn The location.
+        public static void SetSpawnLocation(uint oPlayer, Location locSpawn)
+        {
+            var vPosition = NWScript.NWScript.GetPositionFromLocation(locSpawn);
+
+            Internal.NativeFunctions.nwnxSetFunction(PLUGIN_NAME, "SetSpawnLocation");
+            Internal.NativeFunctions.nwnxPushFloat(NWScript.NWScript.GetFacingFromLocation(locSpawn));
+            Internal.NativeFunctions.nwnxPushFloat(vPosition.Z);
+            Internal.NativeFunctions.nwnxPushFloat(vPosition.Y);
+            Internal.NativeFunctions.nwnxPushFloat(vPosition.X);
+            Internal.NativeFunctions.nwnxPushObject(NWScript.NWScript.GetAreaFromLocation(locSpawn));
+            Internal.NativeFunctions.nwnxPushObject(oPlayer);
+
             Internal.NativeFunctions.nwnxCallFunction();
         }
     }

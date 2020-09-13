@@ -104,7 +104,14 @@ namespace NWN.FinalFantasy.Service
                 var deserialized = Object.Deserialize(item.Value.Data);
                 Object.AcquireItem(merchant, deserialized);
 
+                var originalBaseGPValue = Core.NWNX.Item.GetBaseGoldPieceValue(deserialized);
+                var originalAdditionalGPValue = Core.NWNX.Item.GetAddGoldPieceValue(deserialized);
+
+                SetLocalInt(deserialized, "ORIGINAL_BASE_GP_VALUE", originalBaseGPValue);
+                SetLocalInt(deserialized, "ORIGINAL_ADDITIONAL_GP_VALUE", originalAdditionalGPValue);
+
                 Core.NWNX.Item.SetBaseGoldPieceValue(deserialized, item.Value.Price);
+                Core.NWNX.Item.SetAddGoldPieceValue(deserialized, 0);
             }
 
             return merchant;
@@ -271,6 +278,16 @@ namespace NWN.FinalFantasy.Service
             dbPlayerStore.Till += taxed;
             dbPlayerStore.ItemsForSale.Remove(itemId);
             DB.Set(sellerPlayerId, dbPlayerStore);
+
+            // Set pricing back to normal
+            var originalBaseGPValue = GetLocalInt(item, "ORIGINAL_BASE_GP_VALUE");
+            var originalAdditionalGPValue = GetLocalInt(item, "ORIGINAL_ADDITIONAL_GP_VALUE");
+
+            Core.NWNX.Item.SetBaseGoldPieceValue(item, originalBaseGPValue);
+            Core.NWNX.Item.SetAddGoldPieceValue(item, originalAdditionalGPValue);
+
+            DeleteLocalInt(item, "ORIGINAL_BASE_GP_VALUE");
+            DeleteLocalInt(item, "ORIGINAL_ADDITIONAL_GP_VALUE");
         }
 
     }

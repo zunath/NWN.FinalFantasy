@@ -22,7 +22,6 @@ namespace NWN.FinalFantasy.Entity
     public class PlayerStoreItem
     {
         public string Name { get; set; }
-        public string Note { get; set; }
         public int Price { get; set; }
         public int StackSize { get; set; }
         public string Data { get; set; }

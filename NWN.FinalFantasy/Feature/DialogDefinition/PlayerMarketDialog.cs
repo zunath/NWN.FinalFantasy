@@ -1,10 +1,13 @@
 ﻿using System;
 using NWN.FinalFantasy.Core;
 using NWN.FinalFantasy.Core.NWNX;
+using NWN.FinalFantasy.Core.NWScript.Enum;
 using NWN.FinalFantasy.Entity;
 using NWN.FinalFantasy.Service;
 using NWN.FinalFantasy.Service.DialogService;
 using static NWN.FinalFantasy.Core.NWScript.NWScript;
+using Object = NWN.FinalFantasy.Core.NWNX.Object;
+using Player = NWN.FinalFantasy.Entity.Player;
 
 namespace NWN.FinalFantasy.Feature.DialogDefinition
 {
@@ -15,6 +18,9 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
             public bool IsConfirmingExtendMaximum { get; set; }
             public bool IsConfirmingExtend7Days { get; set; }
             public bool IsConfirmingExtend1Day { get; set; }
+            public bool IsConfirmingRemoveItem { get; set; }
+
+            public string SelectedItemId { get; set; }
         }
 
         private const string MainPageId = "MAIN_PAGE";
@@ -23,30 +29,19 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
         private const string ChangeStoreNamePageId = "CHANGE_STORE_NAME_PAGE";
         private const string EditItemListPageId = "EDIT_ITEM_LIST_PAGE";
         private const string ExtendLeasePageId = "EXTEND_LEASE_PAGE";
+        private const string ListingPageId = "LISTING_PAGE";
 
         public override PlayerDialog SetUp(uint player)
         {
             var builder = new DialogBuilder()
                 .WithDataModel(new Model())
-                .AddPage(MainPageId, page =>
-                {
-                    page.Header = "Please select an option.";
-
-                    page.AddResponse("View Shops", () =>
-                    {
-                        ChangePage(ViewShopsPageId);
-                    });
-
-                    page.AddResponse("Edit My Shop", () =>
-                    {
-                        ChangePage(EditMyShopPageId);
-                    });
-                })
+                .AddPage(MainPageId, MainInit)
                 .AddPage(ViewShopsPageId, ViewShopsInit)
                 .AddPage(EditMyShopPageId, EditMyShopInit)
                 .AddPage(ChangeStoreNamePageId, ChangeStoreNameInit)
                 .AddPage(EditItemListPageId, EditItemListInit)
                 .AddPage(ExtendLeasePageId, ExtendLeaseInit)
+                .AddPage(ListingPageId, ListingInit)
                 .AddBackAction((oldPage, newPage) =>
                 {
                     ClearTemporaryVariables();
@@ -64,8 +59,25 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
             model.IsConfirmingExtendMaximum = false;
             model.IsConfirmingExtend7Days = false;
             model.IsConfirmingExtend1Day = false;
+            model.IsConfirmingRemoveItem = false;
             DeleteLocalString(player, "NEW_STORE_NAME");
             DeleteLocalBool(player, "IS_SETTING_STORE_NAME");
+        }
+
+        private void MainInit(DialogPage page)
+        {
+            page.Header = "Please select an option.";
+
+            page.AddResponse("View Shops", () =>
+            {
+                ChangePage(ViewShopsPageId);
+            });
+
+            page.AddResponse("Edit My Shop", () =>
+            {
+                ChangePage(EditMyShopPageId);
+            });
+
         }
 
         private void ViewShopsInit(DialogPage page)
@@ -179,7 +191,141 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
 
         private void EditItemListInit(DialogPage page)
         {
+            var player = GetPC();
+            var playerId = GetObjectUUID(player);
+            var dbPlayer = DB.Get<Player>(playerId);
+            var dbPlayerStore = DB.Get<PlayerStore>(playerId);
+            var model = GetDataModel<Model>();
+            var itemLimit = 5 + dbPlayer.SeedProgress.Rank * 5;
 
+            page.Header = ColorToken.Green("Listing Limit: ") + dbPlayerStore.ItemsForSale.Count + " / " + itemLimit + "\n" +
+                          ColorToken.Green("SeeD Rank: ") + dbPlayer.SeedProgress.Rank + "\n\n" + 
+                          "Please select the 'List Items' option to add an item to your store. Otherwise select any other option to edit that listing.";
+
+            page.AddResponse($"{ColorToken.Green("List Items")}", () =>
+            {
+                if (dbPlayerStore.ItemsForSale.Count >= itemLimit)
+                {
+                    FloatingTextStringOnCreature("You have reached your listing limit. Increase your SeeD rank or remove another listing.", player, false);
+                    return;
+                }
+
+                var terminal = OBJECT_SELF;
+
+                SetEventScript(terminal, EventScript.Placeable_OnOpen, "mkt_term_open");
+                SetEventScript(terminal, EventScript.Placeable_OnClosed, "mkt_term_closed");
+                SetEventScript(terminal, EventScript.Placeable_OnInventoryDisturbed, "mkt_term_dist");
+                SetEventScript(terminal, EventScript.Placeable_OnUsed, string.Empty);
+                
+                AssignCommand(player, () => ActionInteractObject(terminal));
+            });
+
+            foreach (var (itemId, item) in dbPlayerStore.ItemsForSale)
+            {
+                var responseName = $"{item.StackSize}x {item.Name} [{item.Price} gil]";
+
+                page.AddResponse(responseName, () =>
+                {
+                    // Someone bought the item already. Don't let them progress.
+                    if (!dbPlayerStore.ItemsForSale.ContainsKey(itemId))
+                    {
+                        FloatingTextStringOnCreature("This item has already been sold. Please select another.", player, false);
+                        return;
+                    }
+
+                    model.SelectedItemId = itemId;
+                    ChangePage(ListingPageId);
+                });
+            }
+        }
+
+        private void ListingInit(DialogPage page)
+        {
+            var player = GetPC();
+            var playerId = GetObjectUUID(player);
+            var dbPlayerStore = DB.Get<PlayerStore>(playerId);
+            var model = GetDataModel<Model>();
+            var item = dbPlayerStore.ItemsForSale[model.SelectedItemId];
+
+            void AdjustPrice(int amount)
+            {
+                item.Price += amount;
+
+                if (item.Price <= 0)
+                    item.Price = 1;
+                else if (item.Price > 999999)
+                    item.Price = 999999;
+
+                DB.Set(playerId, dbPlayerStore);
+            }
+
+            page.Header = ColorToken.Green("Item: ") + item.StackSize + "x " + item.Name + "\n" +
+                          ColorToken.Green("Price: ") + item.Price + "\n\n" +
+                          "Please select an option.";
+
+            if (model.IsConfirmingRemoveItem)
+            {
+                page.AddResponse(ColorToken.Red("CONFIRM REMOVE ITEM"), () =>
+                {
+                    var inWorldItem = Object.Deserialize(item.Data);
+                    Object.AcquireItem(player, inWorldItem);
+                    dbPlayerStore.ItemsForSale.Remove(model.SelectedItemId);
+
+                    DB.Set(playerId, dbPlayerStore);
+
+                    ChangePage(EditItemListPageId);
+                    model.IsConfirmingRemoveItem = false;
+                });
+            }
+            else
+            {
+                page.AddResponse(ColorToken.Red("Remove Item"), () =>
+                {
+                    model.IsConfirmingRemoveItem = true;
+                });
+            }
+
+            page.AddResponse("Increase by 10,000 gil", () =>
+            {
+                AdjustPrice(10000);
+            });
+            page.AddResponse("Increase by 1,000 gil", () =>
+            {
+                AdjustPrice(1000);
+            });
+            page.AddResponse("Increase by 100 gil", () =>
+            {
+                AdjustPrice(100);
+            });
+            page.AddResponse("Increase by 10 gil", () =>
+            {
+                AdjustPrice(10);
+            });
+            page.AddResponse("Increase by 1 gil", () =>
+            {
+                AdjustPrice(1);
+            });
+
+            page.AddResponse("Decrease by 10,000 gil", () =>
+            {
+                AdjustPrice(-10000);
+            });
+            page.AddResponse("Decrease by 1,000 gil", () =>
+            {
+                AdjustPrice(-1000);
+            });
+            page.AddResponse("Decrease by 100 gil", () =>
+            {
+                AdjustPrice(-100);
+            });
+            page.AddResponse("Decrease by 10 gil", () =>
+            {
+                AdjustPrice(-10);
+            });
+            page.AddResponse("Decrease by 1 gil", () =>
+            {
+                AdjustPrice(-1);
+            });
         }
 
         private void ExtendLeaseInit(DialogPage page)

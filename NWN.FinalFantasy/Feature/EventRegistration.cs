@@ -459,6 +459,40 @@ namespace NWN.FinalFantasy.Feature
             Events.SubscribeEvent("NWNX_ON_RESOURCE_ADDED", "resource_added");
             Events.SubscribeEvent("NWNX_ON_RESOURCE_REMOVED", "resource_removed");
             Events.SubscribeEvent("NWNX_ON_RESOURCE_MODIFIED", "resource_modified");
+
+            // ELC Events
+            Events.SubscribeEvent("NWNX_ON_ELC_VALIDATE_CHARACTER_BEFORE", "elc_validate_bef");
+            Events.SubscribeEvent("NWNX_ON_ELC_VALIDATE_CHARACTER_AFTER", "elc_validate_aft");
+
+            // Quickbar Events
+            Events.SubscribeEvent("NWNX_ON_QUICKBAR_SET_BUTTON_BEFORE", "qb_set_bef");
+            Events.SubscribeEvent("NWNX_ON_QUICKBAR_SET_BUTTON_AFTER", "qb_set_aft");
+
+            // Calendar Events
+            Events.SubscribeEvent("NWNX_ON_CALENDAR_HOUR", "calendar_hour");
+            Events.SubscribeEvent("NWNX_ON_CALENDAR_DAY", "calendar_day");
+            Events.SubscribeEvent("NWNX_ON_CALENDAR_MONTH", "calendar_month");
+            Events.SubscribeEvent("NWNX_ON_CALENDAR_YEAR", "calendar_year");
+            Events.SubscribeEvent("NWNX_ON_CALENDAR_DAWN", "calendar_dawn");
+            Events.SubscribeEvent("NWNX_ON_CALENDAR_DUSK", "calendar_dusk");
+
+            // Broadcast Spell Cast Events
+            Events.SubscribeEvent("NWNX_ON_BROADCAST_CAST_SPELL_BEFORE", "cast_spell_bef");
+            Events.SubscribeEvent("NWNX_ON_BROADCAST_CAST_SPELL_AFTER", "cast_spell_aft");
+
+            // RunScript Debug Events
+            Events.SubscribeEvent("NWNX_ON_DEBUG_RUN_SCRIPT_BEFORE", "debug_script_bef");
+            Events.SubscribeEvent("NWNX_ON_DEBUG_RUN_SCRIPT_AFTER", "debug_script_aft");
+
+            // RunScriptChunk Debug Events
+            Events.SubscribeEvent("NWNX_ON_DEBUG_RUN_SCRIPT_CHUNK_BEFORE", "debug_chunk_bef");
+            Events.SubscribeEvent("NWNX_ON_DEBUG_RUN_SCRIPT_CHUNK_AFTER", "debug_chunk_aft");
+
+            // Buy/Sell Store Events
+            Events.SubscribeEvent("NWNX_ON_STORE_REQUEST_BUY_BEFORE", "store_buy_bef");
+            Events.SubscribeEvent("NWNX_ON_STORE_REQUEST_BUY_AFTER", "store_buy_aft");
+            Events.SubscribeEvent("NWNX_ON_STORE_REQUEST_SELL_BEFORE", "store_sell_bef");
+            Events.SubscribeEvent("NWNX_ON_STORE_REQUEST_SELL_AFTER", "store_sell_aft");
         }
 
         /// <summary>

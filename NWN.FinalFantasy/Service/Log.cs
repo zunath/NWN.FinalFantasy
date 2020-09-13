@@ -15,7 +15,8 @@ namespace NWN.FinalFantasy.Service
         Death,
         Server,
         PerkRefund,
-        PlayerHousing
+        PlayerHousing,
+        PlayerMarket
     }
 
     public static class Log

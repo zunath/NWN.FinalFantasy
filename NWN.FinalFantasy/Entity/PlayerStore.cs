@@ -10,6 +10,7 @@ namespace NWN.FinalFantasy.Entity
             ItemsForSale = new Dictionary<string, PlayerStoreItem>();
             DateLeaseExpires = DateTime.UtcNow;
             IsOpen = false;
+            TaxRate = 0.05f;
         }
 
         public string StoreName { get; set; }
@@ -17,6 +18,8 @@ namespace NWN.FinalFantasy.Entity
         public override string KeyPrefix => "PlayerStore";
         public DateTime DateLeaseExpires { get; set; }
         public bool IsOpen { get; set; }
+        public int Till { get; set; }
+        public float TaxRate { get; set; }
     }
 
     public class PlayerStoreItem

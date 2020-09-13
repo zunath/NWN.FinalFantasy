@@ -119,8 +119,21 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
 
             page.Header = ColorToken.Green("Store Name: ") + dbPlayerStore.StoreName + "\n" +
                 ColorToken.Green("Lease Expires: ") + GetLeaseStatus() + "\n" +
+                ColorToken.Green("Tax Rate: ") + (int)(dbPlayerStore.TaxRate * 100) + "%\n" +
                 ColorToken.Green("Status: ") + (dbPlayerStore.IsOpen ? "OPEN" : "CLOSED") + "\n\n" +
                 "Please select an option.";
+
+            // The Till will be filled only if the player sold an item.
+            if (dbPlayerStore.Till > 0)
+            {
+                page.AddResponse(ColorToken.Green($"Retrieve {dbPlayerStore.Till} Gil"), () =>
+                {
+                    GiveGoldToCreature(player, dbPlayerStore.Till);
+                    dbPlayerStore.Till = 0;
+                    DB.Set(playerId, dbPlayerStore);
+                    PlayerMarket.UpdateCacheEntry(playerId, dbPlayerStore);
+                });
+            }
 
             page.AddResponse("Change Store Name", () =>
             {
@@ -129,6 +142,12 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
 
             page.AddResponse("Edit Item List", () =>
             {
+                if (PlayerMarket.IsStoreBeingAccessed(playerId))
+                {
+                    FloatingTextStringOnCreature("Your store is currently being accessed by another player. Close your store and wait until they finish to try this action again.", player, false);
+                    return;
+                }
+
                 ChangePage(EditItemListPageId);
             });
 
@@ -145,6 +164,7 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
             });
 
             DB.Set(playerId, dbPlayerStore);
+            PlayerMarket.UpdateCacheEntry(playerId, dbPlayerStore);
         }
 
         [NWNEventHandler("on_nwnx_chat")]
@@ -257,6 +277,7 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
                     item.Price = 999999;
 
                 DB.Set(playerId, dbPlayerStore);
+                PlayerMarket.UpdateCacheEntry(playerId, dbPlayerStore);
             }
 
             page.Header = ColorToken.Green("Item: ") + item.StackSize + "x " + item.Name + "\n" +
@@ -272,8 +293,9 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
                     dbPlayerStore.ItemsForSale.Remove(model.SelectedItemId);
 
                     DB.Set(playerId, dbPlayerStore);
+                    PlayerMarket.UpdateCacheEntry(playerId, dbPlayerStore);
 
-                    ChangePage(EditItemListPageId);
+                    ChangePage(EditItemListPageId, false);
                     model.IsConfirmingRemoveItem = false;
                 });
             }

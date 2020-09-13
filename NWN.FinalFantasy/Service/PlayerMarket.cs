@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using NWN.FinalFantasy.Core;
+using NWN.FinalFantasy.Core.NWNX;
 using NWN.FinalFantasy.Core.NWScript.Enum;
 using NWN.FinalFantasy.Core.NWScript.Enum.Item;
 using NWN.FinalFantasy.Entity;
@@ -9,6 +10,7 @@ using NWN.FinalFantasy.Feature.DialogDefinition;
 using static NWN.FinalFantasy.Core.NWScript.NWScript;
 using Object = NWN.FinalFantasy.Core.NWNX.Object;
 using ObjectType = NWN.FinalFantasy.Core.NWScript.Enum.ObjectType;
+using Player = NWN.FinalFantasy.Entity.Player;
 
 namespace NWN.FinalFantasy.Service
 {
@@ -21,6 +23,9 @@ namespace NWN.FinalFantasy.Service
 
         // Tracks the merchant object which contains the items being sold by a store.
         private static Dictionary<string, uint> StoreMerchants { get; } = new Dictionary<string, uint>();
+
+        // Tracks the number of players accessing each store.
+        private static Dictionary<string, int> StoresOpen { get; } = new Dictionary<string, int>();
 
         /// <summary>
         /// When the module loads, look for all player stores and see if they're open and active.
@@ -45,9 +50,11 @@ namespace NWN.FinalFantasy.Service
         /// <returns>true if store is available, false otherwise</returns>
         public static bool IsStoreOpen(PlayerStore store)
         {
+            var validItemsForSale = store.ItemsForSale.Count(x => x.Value.Price > 0);
+
             if (store.IsOpen &&
-                DateTime.UtcNow < store.DateLeaseExpires)
-                //store.ItemsForSale.Count > 0) // todo: add back
+                DateTime.UtcNow < store.DateLeaseExpires &&
+                validItemsForSale > 0) 
             {
                 return true;
             }
@@ -66,28 +73,29 @@ namespace NWN.FinalFantasy.Service
             return ActiveStoreNames.ToDictionary(x => x.Key, y => y.Value);
         }
 
-        public static void OpenPlayerStore(uint player, string storeOwnerPlayerId)
+        public static void OpenPlayerStore(uint player, string sellerPlayerId)
         {
             uint merchant;
 
-            if (StoreMerchants.ContainsKey(storeOwnerPlayerId))
+            if (StoreMerchants.ContainsKey(sellerPlayerId))
             {
-                merchant = StoreMerchants[storeOwnerPlayerId];
+                merchant = StoreMerchants[sellerPlayerId];
             }
             else
             {
-                var dbPlayerStore = DB.Get<PlayerStore>(storeOwnerPlayerId);
-                merchant = CreateMerchantObject(dbPlayerStore);
-                StoreMerchants[storeOwnerPlayerId] = merchant;
+                var dbPlayerStore = DB.Get<PlayerStore>(sellerPlayerId);
+                merchant = CreateMerchantObject(sellerPlayerId, dbPlayerStore);
+                StoreMerchants[sellerPlayerId] = merchant;
             }
 
             OpenStore(merchant, player);
         }
 
-        private static uint CreateMerchantObject(PlayerStore dbPlayerStore)
+        private static uint CreateMerchantObject(string sellerPlayerId, PlayerStore dbPlayerStore)
         {
             const string StoreResref = "player_store";
             var merchant = CreateObject(ObjectType.Store, StoreResref, GetLocation(OBJECT_SELF));
+            SetLocalString(merchant, "SELLER_PLAYER_ID", sellerPlayerId);
 
             foreach (var item in dbPlayerStore.ItemsForSale)
             {
@@ -124,6 +132,17 @@ namespace NWN.FinalFantasy.Service
         }
 
         /// <summary>
+        /// Returns true if one or more players are accessing a store.
+        /// Otherwise, returns false.
+        /// </summary>
+        /// <param name="sellerPlayerId">The player Id of the seller.</param>
+        /// <returns>True if being accessed, false otherwise</returns>
+        public static bool IsStoreBeingAccessed(string sellerPlayerId)
+        {
+            return StoresOpen.ContainsKey(sellerPlayerId) && StoresOpen[sellerPlayerId] > 0;
+        }
+
+        /// <summary>
         /// When an item is added to the terminal, track it and reopen the market terminal dialog.
         /// </summary>
         [NWNEventHandler("mkt_term_dist")]
@@ -139,8 +158,6 @@ namespace NWN.FinalFantasy.Service
             var itemId = GetObjectUUID(item);
             var serialized = Object.Serialize(item);
             var listingLimit = 5 + dbPlayer.SeedProgress.Rank * 5;
-
-            SendMessageToPC(player, $"Listing limit: {dbPlayerStore.ItemsForSale.Count} / {5 + dbPlayer.SeedProgress.Rank * 5}");
 
             if (dbPlayerStore.ItemsForSale.Count >= listingLimit || // Listing limit reached.
                 GetBaseItemType(item) == BaseItem.Gold ||           // Gold can't be listed.
@@ -163,6 +180,7 @@ namespace NWN.FinalFantasy.Service
             DB.Set(playerId, dbPlayerStore);
             DestroyObject(item);
 
+            SendMessageToPC(player, $"Listing limit: {dbPlayerStore.ItemsForSale.Count} / {5 + dbPlayer.SeedProgress.Rank * 5}");
         }
 
         /// <summary>
@@ -186,6 +204,73 @@ namespace NWN.FinalFantasy.Service
             SetEventScript(terminal, EventScript.Placeable_OnClosed, string.Empty);
             SetEventScript(terminal, EventScript.Placeable_OnInventoryDisturbed, string.Empty);
             SetEventScript(terminal, EventScript.Placeable_OnUsed, "start_convo");
+        }
+
+        /// <summary>
+        /// When a player's shop is opened, 
+        /// </summary>
+        [NWNEventHandler("plyr_shop_open")]
+        public static void PlayerShopOpened()
+        {
+            var store = OBJECT_SELF;
+            var sellerPlayerId = GetLocalString(store, "SELLER_PLAYER_ID");
+
+            if (!StoresOpen.ContainsKey(sellerPlayerId))
+            {
+                StoresOpen[sellerPlayerId] = 1;
+            }
+            else
+            {
+                StoresOpen[sellerPlayerId]--;
+            }
+        }
+
+        /// <summary>
+        /// When a player's shop is closed, 
+        /// </summary>
+        [NWNEventHandler("plyr_shop_closed")]
+        public static void PlayerShopClosed()
+        {
+            var store = OBJECT_SELF;
+            var sellerPlayerId = GetLocalString(store, "SELLER_PLAYER_ID");
+
+            StoresOpen[sellerPlayerId]--;
+
+            // If no one's accessing the store right now, destroy it and remove it from cache.
+            if (StoresOpen[sellerPlayerId] <= 0)
+            {
+                StoreMerchants.Remove(sellerPlayerId);
+                StoresOpen.Remove(sellerPlayerId);
+
+                DestroyObject(store);
+            }
+        }
+
+        /// <summary>
+        /// When a player buys an item, deposit that gil into their store till and remove the item from the database.
+        /// </summary>
+        [NWNEventHandler("store_buy_aft")]
+        public static void PlayerShopBuyItem()
+        {
+            var buyer = OBJECT_SELF;
+            var item = StringToObject(Events.GetEventData("ITEM"));
+            var price = Convert.ToInt32(Events.GetEventData("PRICE"));
+            var store = StringToObject(Events.GetEventData("STORE"));
+            var sellerPlayerId = GetLocalString(store, "SELLER_PLAYER_ID");
+            var dbPlayer = DB.Get<Player>(sellerPlayerId);
+            var dbPlayerStore = DB.Get<PlayerStore>(sellerPlayerId);
+            var itemId = GetObjectUUID(item);
+
+            // Audit the purchase.
+            Log.Write(LogGroup.PlayerMarket, $"{GetName(buyer)} purchased item '{GetName(item)}' x{GetItemStackSize(item)} for {price} gil from {dbPlayer.Name}'s store.");
+
+            var taxed = price - (int)(price * dbPlayerStore.TaxRate);
+            if (taxed < 1)
+                taxed = 1;
+
+            dbPlayerStore.Till += taxed;
+            dbPlayerStore.ItemsForSale.Remove(itemId);
+            DB.Set(sellerPlayerId, dbPlayerStore);
         }
 
     }

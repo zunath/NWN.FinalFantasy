@@ -62,6 +62,41 @@
           "type": "resref",
           "value": "b_garden_int"
         }
+      },
+      {
+        "__struct_id": 6,
+        "Area_Name": {
+          "type": "resref",
+          "value": "fire_cavern_1"
+        }
+      },
+      {
+        "__struct_id": 6,
+        "Area_Name": {
+          "type": "resref",
+          "value": "gdn_t_2"
+        }
+      },
+      {
+        "__struct_id": 6,
+        "Area_Name": {
+          "type": "resref",
+          "value": "gdn_t_3"
+        }
+      },
+      {
+        "__struct_id": 6,
+        "Area_Name": {
+          "type": "resref",
+          "value": "gdn_t_4"
+        }
+      },
+      {
+        "__struct_id": 6,
+        "Area_Name": {
+          "type": "resref",
+          "value": "gdn_t_5"
+        }
       }
     ]
   },
@@ -83,7 +118,9 @@
   },
   "Mod_Description": {
     "type": "cexolocstring",
-    "value": {}
+    "value": {
+      "0": ""
+    }
   },
   "Mod_DuskHour": {
     "type": "byte",
@@ -103,15 +140,15 @@
   },
   "Mod_Entry_X": {
     "type": "float",
-    "value": 8.453210830688477
+    "value": 8.0
   },
   "Mod_Entry_Y": {
     "type": "float",
-    "value": 6.893314361572266
+    "value": 6.0
   },
   "Mod_Entry_Z": {
     "type": "float",
-    "value": 0.003608226776123047
+    "value": 0.0
   },
   "Mod_Expan_List": {
     "type": "list",
@@ -150,6 +187,13 @@
         "Mod_Hak": {
           "type": "cexostring",
           "value": "ffo_placeable"
+        }
+      },
+      {
+        "__struct_id": 8,
+        "Mod_Hak": {
+          "type": "cexostring",
+          "value": "ffo_skyboxes"
         }
       },
       {
@@ -291,6 +335,27 @@
           "type": "cexostring",
           "value": "q_vfxgui"
         }
+      },
+      {
+        "__struct_id": 8,
+        "Mod_Hak": {
+          "type": "cexostring",
+          "value": "pk_rocky_v11.5"
+        }
+      },
+      {
+        "__struct_id": 8,
+        "Mod_Hak": {
+          "type": "cexostring",
+          "value": "pk_textures_v2.0"
+        }
+      },
+      {
+        "__struct_id": 8,
+        "Mod_Hak": {
+          "type": "cexostring",
+          "value": "wrm_scorche"
+        }
       }
     ]
   },
@@ -304,7 +369,7 @@
   },
   "Mod_MinGameVer": {
     "type": "cexostring",
-    "value": "1.80"
+    "value": "1.81"
   },
   "Mod_MinPerHour": {
     "type": "byte",

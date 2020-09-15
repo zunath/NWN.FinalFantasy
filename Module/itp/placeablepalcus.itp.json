@@ -9558,6 +9558,28 @@
                     "__struct_id": 0,
                     "NAME": {
                       "type": "cexostring",
+                      "value": "Fence 1"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "fence002"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Fence 2"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "fence2"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
                       "value": "Home Point"
                     },
                     "RESREF": {
@@ -9630,6 +9652,17 @@
                       "type": "resref",
                       "value": "trash_can"
                     }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Wall 1"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "fence1"
+                    }
                   }
                 ]
               },
@@ -9643,6 +9676,440 @@
               "ID": {
                 "type": "byte",
                 "value": 1
+              },
+              "LIST": {
+                "type": "list",
+                "value": [
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "D Log"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "dlog"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "D Phil 1"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "dphil1"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "D Phil 10"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "dphil10"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "D Phil 2"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "dphil2"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "D Phil 3"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "dphil3"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "D Phil 4"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "dphil4"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "D Phil 5"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "dphil5"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "D Phil 6"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "dphil6"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "D Phil 7"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "dphil7"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "D Phil 8"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "dphil8"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "D Phil 9"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "dphil9"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "D Statue 1"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "dstatue1"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "D Statue 2"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "dstatue2"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "D Tree"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "dtree"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "D Tree Palm "
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "dtreepalm"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "D Tree Palm 1"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "dtreepalm1"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "D Tree Palm 2"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "dtreepalm2"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "D Tree Palm 3"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "dtreepalm3"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "D Tree Palm 4"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "dtreepalm4"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "D Tree Palm 5"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "dtreepalm5"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "D Tree Palm 6"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "dtreepalm6"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "D Veg 1"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "dveg1"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "D Veg 2"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "dveg2"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "D Veg 3"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "dveg3"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "D Veg 4"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "dveg4"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "D Veg 5"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "dveg5"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "D Vine"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "dvine"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "D Vine 1"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "dvine1"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "D Vine 2"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "dvine2"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "D Vine 3"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "dvine3"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "D Vine 4"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "dvine4"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "D Vine 5"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "dvine5"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "D Vine 6"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "dvine6"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "L Train Corridor"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "ltraincorridor"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "L Training Cliff"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "ltrainingcliff"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "L Tree 1"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "ltree1"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "L Vine 1"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "lvine1"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "L Vine 2"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "lvine2"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "waterfall"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "waterfall"
+                    }
+                  }
+                ]
               },
               "STRREF": {
                 "type": "dword",

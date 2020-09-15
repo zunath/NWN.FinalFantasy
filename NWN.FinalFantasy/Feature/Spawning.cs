@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using NWN.FinalFantasy.Core;
 using NWN.FinalFantasy.Core.NWNX;
 using NWN.FinalFantasy.Core.NWScript.Enum;
@@ -363,7 +364,7 @@ namespace NWN.FinalFantasy.Feature
             if (!string.IsNullOrWhiteSpace(detail.SerializedObject))
             {
                 var deserialized = Object.Deserialize(detail.SerializedObject);
-                var position = new Vector(detail.X, detail.Y, detail.Z);
+                var position = new Vector3(detail.X, detail.Y, detail.Z);
                 Object.AddToArea(deserialized, detail.Area, position);
 
                 AssignCommand(deserialized, () => SetFacing(detail.Facing));
@@ -385,7 +386,7 @@ namespace NWN.FinalFantasy.Feature
                     return OBJECT_INVALID;
                 }
 
-                var position = new Vector(detail.X, detail.Y, detail.Z);
+                var position = new Vector3(detail.X, detail.Y, detail.Z);
                 var location = Location(detail.Area, position, detail.Facing);
 
                 var spawn = CreateObject(objectType, resref, location);

@@ -11,14 +11,15 @@ namespace NWN.FinalFantasy.Service
 {
     internal class DB
     {
+        private static ApplicationSettings _appSettings;
         private static readonly Dictionary<Type, string> _keyPrefixByType = new Dictionary<Type, string>();
         private static ConnectionMultiplexer _multiplexer;
 
         [NWNEventHandler("mod_preload")]
         public static void Load()
         {
-            var appSettings = ApplicationSettings.Get();
-            _multiplexer = ConnectionMultiplexer.Connect(appSettings.RedisIPAddress);
+            _appSettings = ApplicationSettings.Get();
+            _multiplexer = ConnectionMultiplexer.Connect(_appSettings.RedisIPAddress);
             LoadKeyPrefixes();
         }
 
@@ -151,5 +152,20 @@ namespace NWN.FinalFantasy.Service
 
             _multiplexer.GetDatabase().KeyDelete($"{keyPrefixOverride}:{key}");
         }
+
+        /// <summary>
+        /// Retrieves a list of keys associated with a given key prefix.
+        /// </summary>
+        /// <param name="keyPrefix">The key to search for.</param>
+        /// <returns>A list of keys found associated with the prefix.</returns>
+        public static IEnumerable<string> SearchKeys(string keyPrefix)
+        {
+            foreach (var key in _multiplexer.GetServer(_multiplexer.GetEndPoints()[0])
+                .Keys(pattern: $"{keyPrefix}*", pageSize: 9999))
+            {
+                yield return key.ToString().Split(':')[1];
+            }
+        }
+
     }
 }

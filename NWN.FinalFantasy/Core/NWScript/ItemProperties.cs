@@ -1,3 +1,4 @@
+using System;
 using NWN.FinalFantasy.Core.NWScript.Enum;
 using NWN.FinalFantasy.Core.NWScript.Enum.Item;
 using NWN.FinalFantasy.Core.NWScript.Enum.Item.Property;
@@ -21,7 +22,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         {
             Internal.NativeFunctions.StackPushFloat(fDuration);
             Internal.NativeFunctions.StackPushObject(oItem);
-            Internal.NativeFunctions.StackPushItemProperty(ipProperty.Handle);
+            Internal.NativeFunctions.StackPushGameDefinedStructure((int)EngineStructure.ItemProperty, ipProperty);
             Internal.NativeFunctions.StackPushInteger((int)nDurationType);
             Internal.NativeFunctions.CallBuiltIn(609);
         }
@@ -31,7 +32,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         /// </summary>
         public static void RemoveItemProperty(uint oItem, ItemProperty ipProperty)
         {
-            Internal.NativeFunctions.StackPushItemProperty(ipProperty.Handle);
+            Internal.NativeFunctions.StackPushGameDefinedStructure((int)EngineStructure.ItemProperty, ipProperty);
             Internal.NativeFunctions.StackPushObject(oItem);
             Internal.NativeFunctions.CallBuiltIn(610);
         }
@@ -41,7 +42,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         /// </summary>
         public static bool GetIsItemPropertyValid(ItemProperty ipProperty)
         {
-            Internal.NativeFunctions.StackPushItemProperty(ipProperty.Handle);
+            Internal.NativeFunctions.StackPushGameDefinedStructure((int)EngineStructure.ItemProperty, ipProperty);
             Internal.NativeFunctions.CallBuiltIn(611);
             return Internal.NativeFunctions.StackPopInteger() == 1;
         }
@@ -53,7 +54,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         {
             Internal.NativeFunctions.StackPushObject(oItem);
             Internal.NativeFunctions.CallBuiltIn(612);
-            return new ItemProperty(Internal.NativeFunctions.StackPopItemProperty());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.ItemProperty);
         }
 
         /// <summary>
@@ -64,7 +65,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         {
             Internal.NativeFunctions.StackPushObject(oItem);
             Internal.NativeFunctions.CallBuiltIn(613);
-            return new ItemProperty(Internal.NativeFunctions.StackPopItemProperty());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.ItemProperty);
         }
 
         /// <summary>
@@ -72,7 +73,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         /// </summary>
         public static ItemPropertyType GetItemPropertyType(ItemProperty ip)
         {
-            Internal.NativeFunctions.StackPushItemProperty(ip.Handle);
+            Internal.NativeFunctions.StackPushGameDefinedStructure((int)EngineStructure.ItemProperty, ip);
             Internal.NativeFunctions.CallBuiltIn(614);
             return (ItemPropertyType)Internal.NativeFunctions.StackPopInteger();
         }
@@ -82,7 +83,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         /// </summary>
         public static DurationType GetItemPropertyDurationType(ItemProperty ip)
         {
-            Internal.NativeFunctions.StackPushItemProperty(ip.Handle);
+            Internal.NativeFunctions.StackPushGameDefinedStructure((int)EngineStructure.ItemProperty, ip);
             Internal.NativeFunctions.CallBuiltIn(615);
             return (DurationType)Internal.NativeFunctions.StackPopInteger();
         }
@@ -97,7 +98,7 @@ namespace NWN.FinalFantasy.Core.NWScript
             Internal.NativeFunctions.StackPushInteger(nBonus);
             Internal.NativeFunctions.StackPushInteger((int)nAbility);
             Internal.NativeFunctions.CallBuiltIn(616);
-            return new ItemProperty(Internal.NativeFunctions.StackPopItemProperty());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.ItemProperty);
         }
 
         /// <summary>
@@ -109,7 +110,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         {
             Internal.NativeFunctions.StackPushInteger(nBonus);
             Internal.NativeFunctions.CallBuiltIn(617);
-            return new ItemProperty(Internal.NativeFunctions.StackPopItemProperty());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.ItemProperty);
         }
 
         /// <summary>
@@ -124,7 +125,7 @@ namespace NWN.FinalFantasy.Core.NWScript
             Internal.NativeFunctions.StackPushInteger(ACBonus);
             Internal.NativeFunctions.StackPushInteger((int)nAlignGroup);
             Internal.NativeFunctions.CallBuiltIn(618);
-            return new ItemProperty(Internal.NativeFunctions.StackPopItemProperty());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.ItemProperty);
         }
 
         /// <summary>
@@ -140,7 +141,7 @@ namespace NWN.FinalFantasy.Core.NWScript
             Internal.NativeFunctions.StackPushInteger(ACBonus);
             Internal.NativeFunctions.StackPushInteger((int)nDamageType);
             Internal.NativeFunctions.CallBuiltIn(619);
-            return new ItemProperty(Internal.NativeFunctions.StackPopItemProperty());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.ItemProperty);
         }
 
         /// <summary>
@@ -154,7 +155,7 @@ namespace NWN.FinalFantasy.Core.NWScript
             Internal.NativeFunctions.StackPushInteger(nACBonus);
             Internal.NativeFunctions.StackPushInteger((int)nRace);
             Internal.NativeFunctions.CallBuiltIn(620);
-            return new ItemProperty(Internal.NativeFunctions.StackPopItemProperty());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.ItemProperty);
         }
 
         /// <summary>
@@ -168,7 +169,7 @@ namespace NWN.FinalFantasy.Core.NWScript
             Internal.NativeFunctions.StackPushInteger(nACBonus);
             Internal.NativeFunctions.StackPushInteger((int)nAlign);
             Internal.NativeFunctions.CallBuiltIn(621);
-            return new ItemProperty(Internal.NativeFunctions.StackPopItemProperty());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.ItemProperty);
         }
 
         /// <summary>
@@ -180,7 +181,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         {
             Internal.NativeFunctions.StackPushInteger(nEnhancementBonus);
             Internal.NativeFunctions.CallBuiltIn(622);
-            return new ItemProperty(Internal.NativeFunctions.StackPopItemProperty());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.ItemProperty);
         }
 
         /// <summary>
@@ -195,7 +196,7 @@ namespace NWN.FinalFantasy.Core.NWScript
             Internal.NativeFunctions.StackPushInteger(nBonus);
             Internal.NativeFunctions.StackPushInteger((int)nAlignGroup);
             Internal.NativeFunctions.CallBuiltIn(623);
-            return new ItemProperty(Internal.NativeFunctions.StackPopItemProperty());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.ItemProperty);
         }
 
         /// <summary>
@@ -209,7 +210,7 @@ namespace NWN.FinalFantasy.Core.NWScript
             Internal.NativeFunctions.StackPushInteger(nBonus);
             Internal.NativeFunctions.StackPushInteger((int)nRace);
             Internal.NativeFunctions.CallBuiltIn(624);
-            return new ItemProperty(Internal.NativeFunctions.StackPopItemProperty());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.ItemProperty);
         }
 
         /// <summary>
@@ -224,7 +225,7 @@ namespace NWN.FinalFantasy.Core.NWScript
             Internal.NativeFunctions.StackPushInteger(nBonus);
             Internal.NativeFunctions.StackPushInteger((int)nAlign);
             Internal.NativeFunctions.CallBuiltIn(625);
-            return new ItemProperty(Internal.NativeFunctions.StackPopItemProperty());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.ItemProperty);
         }
 
         /// <summary>
@@ -236,7 +237,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         {
             Internal.NativeFunctions.StackPushInteger(nPenalty);
             Internal.NativeFunctions.CallBuiltIn(626);
-            return new ItemProperty(Internal.NativeFunctions.StackPopItemProperty());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.ItemProperty);
         }
 
         /// <summary>
@@ -247,7 +248,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         {
             Internal.NativeFunctions.StackPushInteger((int)nReduction);
             Internal.NativeFunctions.CallBuiltIn(627);
-            return new ItemProperty(Internal.NativeFunctions.StackPopItemProperty());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.ItemProperty);
         }
 
         /// <summary>
@@ -258,7 +259,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         {
             Internal.NativeFunctions.StackPushInteger((int)nFeat);
             Internal.NativeFunctions.CallBuiltIn(628);
-            return new ItemProperty(Internal.NativeFunctions.StackPopItemProperty());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.ItemProperty);
         }
 
         /// <summary>
@@ -272,7 +273,7 @@ namespace NWN.FinalFantasy.Core.NWScript
             Internal.NativeFunctions.StackPushInteger((int)nSpellLevel);
             Internal.NativeFunctions.StackPushInteger((int)nClass);
             Internal.NativeFunctions.CallBuiltIn(629);
-            return new ItemProperty(Internal.NativeFunctions.StackPopItemProperty());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.ItemProperty);
         }
 
         /// <summary>
@@ -294,7 +295,7 @@ namespace NWN.FinalFantasy.Core.NWScript
             Internal.NativeFunctions.StackPushInteger((int)nNumUses);
             Internal.NativeFunctions.StackPushInteger((int)nSpell);
             Internal.NativeFunctions.CallBuiltIn(630);
-            return new ItemProperty(Internal.NativeFunctions.StackPopItemProperty());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.ItemProperty);
         }
 
         /// <summary>
@@ -309,7 +310,7 @@ namespace NWN.FinalFantasy.Core.NWScript
             Internal.NativeFunctions.StackPushInteger((int)nDamage);
             Internal.NativeFunctions.StackPushInteger((int)nDamageType);
             Internal.NativeFunctions.CallBuiltIn(631);
-            return new ItemProperty(Internal.NativeFunctions.StackPopItemProperty());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.ItemProperty);
         }
 
         /// <summary>
@@ -326,7 +327,7 @@ namespace NWN.FinalFantasy.Core.NWScript
             Internal.NativeFunctions.StackPushInteger((int)nDamageType);
             Internal.NativeFunctions.StackPushInteger((int)nAlignGroup);
             Internal.NativeFunctions.CallBuiltIn(632);
-            return new ItemProperty(Internal.NativeFunctions.StackPopItemProperty());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.ItemProperty);
         }
 
         /// <summary>
@@ -343,7 +344,7 @@ namespace NWN.FinalFantasy.Core.NWScript
             Internal.NativeFunctions.StackPushInteger((int)nDamageType);
             Internal.NativeFunctions.StackPushInteger((int)nRace);
             Internal.NativeFunctions.CallBuiltIn(633);
-            return new ItemProperty(Internal.NativeFunctions.StackPopItemProperty());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.ItemProperty);
         }
 
         /// <summary>
@@ -360,7 +361,7 @@ namespace NWN.FinalFantasy.Core.NWScript
             Internal.NativeFunctions.StackPushInteger((int)nDamageType);
             Internal.NativeFunctions.StackPushInteger((int)nAlign);
             Internal.NativeFunctions.CallBuiltIn(634);
-            return new ItemProperty(Internal.NativeFunctions.StackPopItemProperty());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.ItemProperty);
         }
 
         /// <summary>
@@ -376,7 +377,7 @@ namespace NWN.FinalFantasy.Core.NWScript
             Internal.NativeFunctions.StackPushInteger((int)nImmuneBonus);
             Internal.NativeFunctions.StackPushInteger((int)nDamageType);
             Internal.NativeFunctions.CallBuiltIn(635);
-            return new ItemProperty(Internal.NativeFunctions.StackPopItemProperty());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.ItemProperty);
         }
 
         /// <summary>
@@ -389,7 +390,7 @@ namespace NWN.FinalFantasy.Core.NWScript
             if (nPenalty > 5) nPenalty = 5;
             Internal.NativeFunctions.StackPushInteger((int)nPenalty);
             Internal.NativeFunctions.CallBuiltIn(636);
-            return new ItemProperty(Internal.NativeFunctions.StackPopItemProperty());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.ItemProperty);
         }
 
         /// <summary>
@@ -403,7 +404,7 @@ namespace NWN.FinalFantasy.Core.NWScript
             Internal.NativeFunctions.StackPushInteger((int)nHPSoak);
             Internal.NativeFunctions.StackPushInteger((int)nEnhancement);
             Internal.NativeFunctions.CallBuiltIn(637);
-            return new ItemProperty(Internal.NativeFunctions.StackPopItemProperty());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.ItemProperty);
         }
 
         /// <summary>
@@ -417,7 +418,7 @@ namespace NWN.FinalFantasy.Core.NWScript
             Internal.NativeFunctions.StackPushInteger((int)nHPResist);
             Internal.NativeFunctions.StackPushInteger((int)nDamageType);
             Internal.NativeFunctions.CallBuiltIn(638);
-            return new ItemProperty(Internal.NativeFunctions.StackPopItemProperty());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.ItemProperty);
         }
 
         /// <summary>
@@ -431,7 +432,7 @@ namespace NWN.FinalFantasy.Core.NWScript
             Internal.NativeFunctions.StackPushInteger((int)nVulnerability);
             Internal.NativeFunctions.StackPushInteger((int)nDamageType);
             Internal.NativeFunctions.CallBuiltIn(639);
-            return new ItemProperty(Internal.NativeFunctions.StackPopItemProperty());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.ItemProperty);
         }
 
         /// <summary>
@@ -440,7 +441,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         public static ItemProperty ItemPropertyDarkvision()
         {
             Internal.NativeFunctions.CallBuiltIn(640);
-            return new ItemProperty(Internal.NativeFunctions.StackPopItemProperty());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.ItemProperty);
         }
 
         /// <summary>
@@ -453,7 +454,7 @@ namespace NWN.FinalFantasy.Core.NWScript
             Internal.NativeFunctions.StackPushInteger(nModifier);
             Internal.NativeFunctions.StackPushInteger((int)nAbility);
             Internal.NativeFunctions.CallBuiltIn(641);
-            return new ItemProperty(Internal.NativeFunctions.StackPopItemProperty());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.ItemProperty);
         }
 
         /// <summary>
@@ -466,7 +467,7 @@ namespace NWN.FinalFantasy.Core.NWScript
             Internal.NativeFunctions.StackPushInteger(nPenalty);
             Internal.NativeFunctions.StackPushInteger((int)nModifierType);
             Internal.NativeFunctions.CallBuiltIn(642);
-            return new ItemProperty(Internal.NativeFunctions.StackPopItemProperty());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.ItemProperty);
         }
 
         /// <summary>
@@ -479,7 +480,7 @@ namespace NWN.FinalFantasy.Core.NWScript
             Internal.NativeFunctions.StackPushInteger(nPenalty);
             Internal.NativeFunctions.StackPushInteger((int)nSkill);
             Internal.NativeFunctions.CallBuiltIn(643);
-            return new ItemProperty(Internal.NativeFunctions.StackPopItemProperty());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.ItemProperty);
         }
 
         /// <summary>
@@ -491,7 +492,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         {
             Internal.NativeFunctions.StackPushInteger((int)nContainerType);
             Internal.NativeFunctions.CallBuiltIn(644);
-            return new ItemProperty(Internal.NativeFunctions.StackPopItemProperty());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.ItemProperty);
         }
 
         /// <summary>
@@ -505,7 +506,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         {
             Internal.NativeFunctions.StackPushInteger((int)nDamageType);
             Internal.NativeFunctions.CallBuiltIn(645);
-            return new ItemProperty(Internal.NativeFunctions.StackPopItemProperty());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.ItemProperty);
         }
 
         /// <summary>
@@ -519,7 +520,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         {
             Internal.NativeFunctions.StackPushInteger((int)nDamageType);
             Internal.NativeFunctions.CallBuiltIn(646);
-            return new ItemProperty(Internal.NativeFunctions.StackPopItemProperty());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.ItemProperty);
         }
 
         /// <summary>
@@ -528,7 +529,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         public static ItemProperty ItemPropertyHaste()
         {
             Internal.NativeFunctions.CallBuiltIn(647);
-            return new ItemProperty(Internal.NativeFunctions.StackPopItemProperty());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.ItemProperty);
         }
 
         /// <summary>
@@ -537,7 +538,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         public static ItemProperty ItemPropertyHolyAvenger()
         {
             Internal.NativeFunctions.CallBuiltIn(648);
-            return new ItemProperty(Internal.NativeFunctions.StackPopItemProperty());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.ItemProperty);
         }
 
         /// <summary>
@@ -548,7 +549,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         {
             Internal.NativeFunctions.StackPushInteger((int)nImmunityType);
             Internal.NativeFunctions.CallBuiltIn(649);
-            return new ItemProperty(Internal.NativeFunctions.StackPopItemProperty());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.ItemProperty);
         }
 
         /// <summary>
@@ -557,7 +558,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         public static ItemProperty ItemPropertyImprovedEvasion()
         {
             Internal.NativeFunctions.CallBuiltIn(650);
-            return new ItemProperty(Internal.NativeFunctions.StackPopItemProperty());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.ItemProperty);
         }
 
         /// <summary>
@@ -568,7 +569,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         {
             Internal.NativeFunctions.StackPushInteger((int)nBonus);
             Internal.NativeFunctions.CallBuiltIn(651);
-            return new ItemProperty(Internal.NativeFunctions.StackPopItemProperty());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.ItemProperty);
         }
 
         /// <summary>
@@ -582,7 +583,7 @@ namespace NWN.FinalFantasy.Core.NWScript
             Internal.NativeFunctions.StackPushInteger(nBonus);
             Internal.NativeFunctions.StackPushInteger((int)nBonusType);
             Internal.NativeFunctions.CallBuiltIn(652);
-            return new ItemProperty(Internal.NativeFunctions.StackPopItemProperty());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.ItemProperty);
         }
 
         /// <summary>
@@ -596,7 +597,7 @@ namespace NWN.FinalFantasy.Core.NWScript
             Internal.NativeFunctions.StackPushInteger(nBonus);
             Internal.NativeFunctions.StackPushInteger((int)nBaseSaveType);
             Internal.NativeFunctions.CallBuiltIn(653);
-            return new ItemProperty(Internal.NativeFunctions.StackPopItemProperty());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.ItemProperty);
         }
 
         /// <summary>
@@ -606,7 +607,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         public static ItemProperty ItemPropertyKeen()
         {
             Internal.NativeFunctions.CallBuiltIn(654);
-            return new ItemProperty(Internal.NativeFunctions.StackPopItemProperty());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.ItemProperty);
         }
 
         /// <summary>
@@ -619,7 +620,7 @@ namespace NWN.FinalFantasy.Core.NWScript
             Internal.NativeFunctions.StackPushInteger((int)nColor);
             Internal.NativeFunctions.StackPushInteger((int)nBrightness);
             Internal.NativeFunctions.CallBuiltIn(655);
-            return new ItemProperty(Internal.NativeFunctions.StackPopItemProperty());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.ItemProperty);
         }
 
         /// <summary>
@@ -631,7 +632,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         {
             Internal.NativeFunctions.StackPushInteger(nModifier);
             Internal.NativeFunctions.CallBuiltIn(656);
-            return new ItemProperty(Internal.NativeFunctions.StackPopItemProperty());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.ItemProperty);
         }
 
         /// <summary>
@@ -641,7 +642,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         public static ItemProperty ItemPropertyNoDamage()
         {
             Internal.NativeFunctions.CallBuiltIn(657);
-            return new ItemProperty(Internal.NativeFunctions.StackPopItemProperty());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.ItemProperty);
         }
 
         /// <summary>
@@ -691,7 +692,7 @@ namespace NWN.FinalFantasy.Core.NWScript
             Internal.NativeFunctions.StackPushInteger(nSaveDC);
             Internal.NativeFunctions.StackPushInteger(nProperty);
             Internal.NativeFunctions.CallBuiltIn(658);
-            return new ItemProperty(Internal.NativeFunctions.StackPopItemProperty());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.ItemProperty);
         }
 
         /// <summary>
@@ -705,7 +706,7 @@ namespace NWN.FinalFantasy.Core.NWScript
             Internal.NativeFunctions.StackPushInteger(nPenalty);
             Internal.NativeFunctions.StackPushInteger((int)nBaseSaveType);
             Internal.NativeFunctions.CallBuiltIn(659);
-            return new ItemProperty(Internal.NativeFunctions.StackPopItemProperty());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.ItemProperty);
         }
 
         /// <summary>
@@ -719,7 +720,7 @@ namespace NWN.FinalFantasy.Core.NWScript
             Internal.NativeFunctions.StackPushInteger(nPenalty);
             Internal.NativeFunctions.StackPushInteger((int)nBonusType);
             Internal.NativeFunctions.CallBuiltIn(660);
-            return new ItemProperty(Internal.NativeFunctions.StackPopItemProperty());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.ItemProperty);
         }
 
         /// <summary>
@@ -730,7 +731,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         {
             Internal.NativeFunctions.StackPushInteger(nRegenAmount);
             Internal.NativeFunctions.CallBuiltIn(661);
-            return new ItemProperty(Internal.NativeFunctions.StackPopItemProperty());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.ItemProperty);
         }
 
         /// <summary>
@@ -743,7 +744,7 @@ namespace NWN.FinalFantasy.Core.NWScript
             Internal.NativeFunctions.StackPushInteger(nBonus);
             Internal.NativeFunctions.StackPushInteger((int)nSkill);
             Internal.NativeFunctions.CallBuiltIn(662);
-            return new ItemProperty(Internal.NativeFunctions.StackPopItemProperty());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.ItemProperty);
         }
 
         /// <summary>
@@ -754,7 +755,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         {
             Internal.NativeFunctions.StackPushInteger((int)nSpell);
             Internal.NativeFunctions.CallBuiltIn(663);
-            return new ItemProperty(Internal.NativeFunctions.StackPopItemProperty());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.ItemProperty);
         }
 
         /// <summary>
@@ -765,7 +766,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         {
             Internal.NativeFunctions.StackPushInteger((int)nSchool);
             Internal.NativeFunctions.CallBuiltIn(664);
-            return new ItemProperty(Internal.NativeFunctions.StackPopItemProperty());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.ItemProperty);
         }
 
         /// <summary>
@@ -776,7 +777,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         {
             Internal.NativeFunctions.StackPushInteger(nModifier);
             Internal.NativeFunctions.CallBuiltIn(665);
-            return new ItemProperty(Internal.NativeFunctions.StackPopItemProperty());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.ItemProperty);
         }
 
         /// <summary>
@@ -787,7 +788,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         {
             Internal.NativeFunctions.StackPushInteger(nBonus);
             Internal.NativeFunctions.CallBuiltIn(666);
-            return new ItemProperty(Internal.NativeFunctions.StackPopItemProperty());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.ItemProperty);
         }
 
         /// <summary>
@@ -801,7 +802,7 @@ namespace NWN.FinalFantasy.Core.NWScript
             Internal.NativeFunctions.StackPushInteger(nBonus);
             Internal.NativeFunctions.StackPushInteger((int)nAlignGroup);
             Internal.NativeFunctions.CallBuiltIn(667);
-            return new ItemProperty(Internal.NativeFunctions.StackPopItemProperty());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.ItemProperty);
         }
 
         /// <summary>
@@ -814,7 +815,7 @@ namespace NWN.FinalFantasy.Core.NWScript
             Internal.NativeFunctions.StackPushInteger(nBonus);
             Internal.NativeFunctions.StackPushInteger((int)nRace);
             Internal.NativeFunctions.CallBuiltIn(668);
-            return new ItemProperty(Internal.NativeFunctions.StackPopItemProperty());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.ItemProperty);
         }
 
         /// <summary>
@@ -827,7 +828,7 @@ namespace NWN.FinalFantasy.Core.NWScript
             Internal.NativeFunctions.StackPushInteger(nBonus);
             Internal.NativeFunctions.StackPushInteger((int)nAlignment);
             Internal.NativeFunctions.CallBuiltIn(669);
-            return new ItemProperty(Internal.NativeFunctions.StackPopItemProperty());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.ItemProperty);
         }
 
         /// <summary>
@@ -838,7 +839,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         {
             Internal.NativeFunctions.StackPushInteger(nPenalty);
             Internal.NativeFunctions.CallBuiltIn(670);
-            return new ItemProperty(Internal.NativeFunctions.StackPopItemProperty());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.ItemProperty);
         }
 
         /// <summary>
@@ -852,7 +853,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         {
             Internal.NativeFunctions.StackPushInteger((int)nAmmoDamage);
             Internal.NativeFunctions.CallBuiltIn(671);
-            return new ItemProperty(Internal.NativeFunctions.StackPopItemProperty());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.ItemProperty);
         }
 
         /// <summary>
@@ -863,7 +864,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         {
             Internal.NativeFunctions.StackPushInteger((int)nAlignGroup);
             Internal.NativeFunctions.CallBuiltIn(672);
-            return new ItemProperty(Internal.NativeFunctions.StackPopItemProperty());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.ItemProperty);
         }
 
         /// <summary>
@@ -874,7 +875,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         {
             Internal.NativeFunctions.StackPushInteger((int)nClass);
             Internal.NativeFunctions.CallBuiltIn(673);
-            return new ItemProperty(Internal.NativeFunctions.StackPopItemProperty());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.ItemProperty);
         }
 
         /// <summary>
@@ -885,7 +886,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         {
             Internal.NativeFunctions.StackPushInteger((int)nRace);
             Internal.NativeFunctions.CallBuiltIn(674);
-            return new ItemProperty(Internal.NativeFunctions.StackPopItemProperty());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.ItemProperty);
         }
 
         /// <summary>
@@ -896,7 +897,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         {
             Internal.NativeFunctions.StackPushInteger((int)nAlignment);
             Internal.NativeFunctions.CallBuiltIn(675);
-            return new ItemProperty(Internal.NativeFunctions.StackPopItemProperty());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.ItemProperty);
         }
 
         /// <summary>
@@ -905,7 +906,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         public static ItemProperty BadBadReplaceMeThisDoesNothing()
         {
             Internal.NativeFunctions.CallBuiltIn(676);
-            return new ItemProperty(Internal.NativeFunctions.StackPopItemProperty());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.ItemProperty);
         }
 
         /// <summary>
@@ -916,7 +917,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         {
             Internal.NativeFunctions.StackPushInteger(nRegenAmount);
             Internal.NativeFunctions.CallBuiltIn(677);
-            return new ItemProperty(Internal.NativeFunctions.StackPopItemProperty());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.ItemProperty);
         }
 
         /// <summary>
@@ -928,7 +929,7 @@ namespace NWN.FinalFantasy.Core.NWScript
             Internal.NativeFunctions.StackPushInteger((int)nTrapType);
             Internal.NativeFunctions.StackPushInteger((int)nTrapLevel);
             Internal.NativeFunctions.CallBuiltIn(678);
-            return new ItemProperty(Internal.NativeFunctions.StackPopItemProperty());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.ItemProperty);
         }
 
         /// <summary>
@@ -937,7 +938,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         public static ItemProperty ItemPropertyTrueSeeing()
         {
             Internal.NativeFunctions.CallBuiltIn(679);
-            return new ItemProperty(Internal.NativeFunctions.StackPopItemProperty());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.ItemProperty);
         }
 
         /// <summary>
@@ -966,7 +967,7 @@ namespace NWN.FinalFantasy.Core.NWScript
             Internal.NativeFunctions.StackPushInteger(nSpecial);
             Internal.NativeFunctions.StackPushInteger(nProperty);
             Internal.NativeFunctions.CallBuiltIn(680);
-            return new ItemProperty(Internal.NativeFunctions.StackPopItemProperty());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.ItemProperty);
         }
 
         /// <summary>
@@ -977,7 +978,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         {
             Internal.NativeFunctions.StackPushInteger(nModifier);
             Internal.NativeFunctions.CallBuiltIn(681);
-            return new ItemProperty(Internal.NativeFunctions.StackPopItemProperty());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.ItemProperty);
         }
 
         /// <summary>
@@ -988,7 +989,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         {
             Internal.NativeFunctions.StackPushInteger((int)nDamage);
             Internal.NativeFunctions.CallBuiltIn(682);
-            return new ItemProperty(Internal.NativeFunctions.StackPopItemProperty());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.ItemProperty);
         }
 
         /// <summary>
@@ -997,7 +998,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         public static ItemProperty ItemPropertyFreeAction()
         {
             Internal.NativeFunctions.CallBuiltIn(683);
-            return new ItemProperty(Internal.NativeFunctions.StackPopItemProperty());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.ItemProperty);
         }
 
         /// <summary>
@@ -1010,7 +1011,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         {
             Internal.NativeFunctions.StackPushInteger((int)nDamage);
             Internal.NativeFunctions.CallBuiltIn(684);
-            return new ItemProperty(Internal.NativeFunctions.StackPopItemProperty());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.ItemProperty);
         }
 
         /// <summary>
@@ -1023,7 +1024,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         {
             Internal.NativeFunctions.StackPushInteger(nLevel);
             Internal.NativeFunctions.CallBuiltIn(685);
-            return new ItemProperty(Internal.NativeFunctions.StackPopItemProperty());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.ItemProperty);
         }
 
         /// <summary>
@@ -1035,7 +1036,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         {
             Internal.NativeFunctions.StackPushInteger(0);
             Internal.NativeFunctions.CallBuiltIn(686);
-            return new ItemProperty(Internal.NativeFunctions.StackPopItemProperty());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.ItemProperty);
         }
 
         /// <summary>
@@ -1046,7 +1047,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         {
             Internal.NativeFunctions.StackPushInteger(nModifier);
             Internal.NativeFunctions.CallBuiltIn(687);
-            return new ItemProperty(Internal.NativeFunctions.StackPopItemProperty());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.ItemProperty);
         }
 
         /// <summary>
@@ -1057,7 +1058,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         {
             Internal.NativeFunctions.StackPushInteger((int)nWeight);
             Internal.NativeFunctions.CallBuiltIn(688);
-            return new ItemProperty(Internal.NativeFunctions.StackPopItemProperty());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.ItemProperty);
         }
 
         /// <summary>
@@ -1066,7 +1067,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         /// </summary>
         public static string GetItemPropertyTag(ItemProperty nProperty)
         {
-            Internal.NativeFunctions.StackPushItemProperty(nProperty.Handle);
+            Internal.NativeFunctions.StackPushGameDefinedStructure((int)EngineStructure.ItemProperty, nProperty);
             Internal.NativeFunctions.CallBuiltIn(854);
             return Internal.NativeFunctions.StackPopStringUTF8();
         }
@@ -1076,7 +1077,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         /// </summary>
         public static int GetItemPropertyCostTable(ItemProperty iProp)
         {
-            Internal.NativeFunctions.StackPushItemProperty(iProp.Handle);
+            Internal.NativeFunctions.StackPushGameDefinedStructure((int)EngineStructure.ItemProperty, iProp);
             Internal.NativeFunctions.CallBuiltIn(769);
             return Internal.NativeFunctions.StackPopInteger();
         }
@@ -1087,7 +1088,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         /// </summary>
         public static int GetItemPropertyCostTableValue(ItemProperty iProp)
         {
-            Internal.NativeFunctions.StackPushItemProperty(iProp.Handle);
+            Internal.NativeFunctions.StackPushGameDefinedStructure((int)EngineStructure.ItemProperty, iProp);
             Internal.NativeFunctions.CallBuiltIn(770);
             return Internal.NativeFunctions.StackPopInteger();
         }
@@ -1097,7 +1098,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         /// </summary>
         public static int GetItemPropertyParam1(ItemProperty iProp)
         {
-            Internal.NativeFunctions.StackPushItemProperty(iProp.Handle);
+            Internal.NativeFunctions.StackPushGameDefinedStructure((int)EngineStructure.ItemProperty, iProp);
             Internal.NativeFunctions.CallBuiltIn(771);
             return Internal.NativeFunctions.StackPopInteger();
         }
@@ -1107,7 +1108,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         /// </summary>
         public static int GetItemPropertyParam1Value(ItemProperty iProp)
         {
-            Internal.NativeFunctions.StackPushItemProperty(iProp.Handle);
+            Internal.NativeFunctions.StackPushGameDefinedStructure((int)EngineStructure.ItemProperty, iProp);
             Internal.NativeFunctions.CallBuiltIn(772);
             return Internal.NativeFunctions.StackPopInteger();
         }
@@ -1151,7 +1152,7 @@ namespace NWN.FinalFantasy.Core.NWScript
             Internal.NativeFunctions.StackPushInteger(nLevel);
             Internal.NativeFunctions.StackPushInteger((int)nSpell);
             Internal.NativeFunctions.CallBuiltIn(733);
-            return new ItemProperty(Internal.NativeFunctions.StackPopItemProperty());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.ItemProperty);
         }
 
         /// <summary>
@@ -1159,7 +1160,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         /// </summary>
         public static int GetItemPropertySubType(ItemProperty iProperty)
         {
-            Internal.NativeFunctions.StackPushItemProperty(iProperty.Handle);
+            Internal.NativeFunctions.StackPushGameDefinedStructure((int)EngineStructure.ItemProperty, iProperty);
             Internal.NativeFunctions.CallBuiltIn(734);
             return Internal.NativeFunctions.StackPopInteger();
         }
@@ -1171,9 +1172,9 @@ namespace NWN.FinalFantasy.Core.NWScript
         public static ItemProperty TagItemProperty(ItemProperty nProperty, string sNewTag)
         {
             Internal.NativeFunctions.StackPushStringUTF8(sNewTag);
-            Internal.NativeFunctions.StackPushItemProperty(nProperty.Handle);
+            Internal.NativeFunctions.StackPushGameDefinedStructure((int)EngineStructure.ItemProperty, nProperty);
             Internal.NativeFunctions.CallBuiltIn(855);
-            return new ItemProperty(Internal.NativeFunctions.StackPopItemProperty());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.ItemProperty);
         }
 
         /// <summary>
@@ -1182,7 +1183,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         /// </summary>
         public static int GetItemPropertyDuration(ItemProperty nProperty)
         {
-            Internal.NativeFunctions.StackPushItemProperty(nProperty.Handle);
+            Internal.NativeFunctions.StackPushGameDefinedStructure((int)EngineStructure.ItemProperty, nProperty);
             Internal.NativeFunctions.CallBuiltIn(856);
             return Internal.NativeFunctions.StackPopInteger();
         }
@@ -1193,7 +1194,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         /// </summary>
         public static int GetItemPropertyDurationRemaining(ItemProperty nProperty)
         {
-            Internal.NativeFunctions.StackPushItemProperty(nProperty.Handle);
+            Internal.NativeFunctions.StackPushGameDefinedStructure((int)EngineStructure.ItemProperty, nProperty);
             Internal.NativeFunctions.CallBuiltIn(857);
             return Internal.NativeFunctions.StackPopInteger();
         }
@@ -1208,7 +1209,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         {
             Internal.NativeFunctions.StackPushInteger(nMaterialType);
             Internal.NativeFunctions.CallBuiltIn(845);
-            return new ItemProperty(Internal.NativeFunctions.StackPopItemProperty());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.ItemProperty);
         }
 
         /// <summary>
@@ -1221,7 +1222,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         {
             Internal.NativeFunctions.StackPushInteger((int)nQuality);
             Internal.NativeFunctions.CallBuiltIn(846);
-            return new ItemProperty(Internal.NativeFunctions.StackPopItemProperty());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.ItemProperty);
         }
 
         /// <summary>
@@ -1234,7 +1235,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         {
             Internal.NativeFunctions.StackPushInteger((int)nAdditionalProperty);
             Internal.NativeFunctions.CallBuiltIn(847);
-            return new ItemProperty(Internal.NativeFunctions.StackPopItemProperty());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.ItemProperty);
         }
 
         /// <summary>
@@ -1245,7 +1246,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         {
             Internal.NativeFunctions.StackPushInteger((int)nModLevel);
             Internal.NativeFunctions.CallBuiltIn(758);
-            return new ItemProperty(Internal.NativeFunctions.StackPopItemProperty());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.ItemProperty);
         }
 
         /// <summary>
@@ -1256,7 +1257,33 @@ namespace NWN.FinalFantasy.Core.NWScript
         {
             Internal.NativeFunctions.StackPushInteger((int)nEffect);
             Internal.NativeFunctions.CallBuiltIn(739);
-            return new ItemProperty(Internal.NativeFunctions.StackPopItemProperty());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.ItemProperty);
+        }
+
+        /// <summary>
+        /// Returns the number of uses per day remaining of the given item and item property.
+        /// * Will return 0 if the given item does not have the requested item property,
+        ///   or the item property is not uses/day.
+        /// </summary>
+        public static int GetItemPropertyUsesPerDayRemaining(uint oItem, IntPtr ip)
+        {
+            Internal.NativeFunctions.StackPushGameDefinedStructure((int)EngineStructure.ItemProperty, ip);
+            Internal.NativeFunctions.StackPushObject(oItem);
+            Internal.NativeFunctions.CallBuiltIn(908);
+            return Internal.NativeFunctions.StackPopInteger();
+        }
+
+        /// <summary>
+        /// Sets the number of uses per day remaining of the given item and item property.
+        /// * Will do nothing if the given item and item property is not uses/day.
+        /// * Will constrain nUsesPerDay to the maximum allowed as the cost table defines.
+        /// </summary>
+        public static void SetItemPropertyUsesPerDayRemaining(uint oItem, IntPtr ip, int nUsesPerDay)
+        {
+            Internal.NativeFunctions.StackPushInteger(nUsesPerDay);
+            Internal.NativeFunctions.StackPushGameDefinedStructure((int)EngineStructure.ItemProperty, ip);
+            Internal.NativeFunctions.StackPushObject(oItem);
+            Internal.NativeFunctions.CallBuiltIn(909);
         }
     }
 }

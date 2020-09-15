@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NWN.FinalFantasy", "NWN.Fin
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NWN.FinalFantasy.Web", "NWN.FinalFantasy.Web\NWN.FinalFantasy.Web.csproj", "{3FE4A0B0-9D19-4066-A162-0951BA7300E6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWN.FinalFantasy.CLI", "NWN.FinalFantasy.CLI\NWN.FinalFantasy.CLI.csproj", "{F4422883-EB33-469E-8F04-F8595B162A5C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NWN.FinalFantasy.CLI", "NWN.FinalFantasy.CLI\NWN.FinalFantasy.CLI.csproj", "{F4422883-EB33-469E-8F04-F8595B162A5C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

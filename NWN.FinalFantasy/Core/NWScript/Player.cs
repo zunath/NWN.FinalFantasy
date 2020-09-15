@@ -336,5 +336,41 @@ namespace NWN.FinalFantasy.Core.NWScript
             Internal.NativeFunctions.StackPushObject(oPC);
             Internal.NativeFunctions.CallBuiltIn(388);
         }
+
+
+        /// <summary>
+        /// Returns the build number of oPlayer (i.e. 8193).
+        /// Returns 0 if the given object isn't a player or did not advertise their build info.
+        /// </summary>
+        public static int GetPlayerBuildVersionMajor(uint oPlayer)
+        {
+            Internal.NativeFunctions.StackPushObject(oPlayer);
+            Internal.NativeFunctions.CallBuiltIn(904);
+            return Internal.NativeFunctions.StackPopInteger();
+        }
+
+        /// <summary>
+        /// Returns the patch revision of oPlayer (i.e. 8).
+        /// Returns 0 if the given object isn't a player or did not advertise their build info.
+        /// </summary>
+        public static int GetPlayerBuildVersionMinor(uint oPlayer)
+        {
+            Internal.NativeFunctions.StackPushObject(oPlayer);
+            Internal.NativeFunctions.CallBuiltIn(905);
+            return Internal.NativeFunctions.StackPopInteger();
+        }
+
+
+        /// <summary>
+        /// Returns TRUE if the given player-controlled creature has DM privileges
+        /// gained through a player login (as opposed to the DM client).
+        /// Note: GetIsDM() also returns TRUE for player creature DMs.
+        /// </summary>
+        public static int GetIsPlayerDM(uint oCreature)
+        {
+            Internal.NativeFunctions.StackPushObject(oCreature);
+            Internal.NativeFunctions.CallBuiltIn(918);
+            return Internal.NativeFunctions.StackPopInteger();
+        }
     }
 }

@@ -42,7 +42,7 @@ namespace NWN.FinalFantasy.Feature
         [NWNEventHandler("mappin_add_bef")]
         public static void AddMapPin()
         {
-            var player = Internal.OBJECT_SELF;
+            var player = Core.Internal.OBJECT_SELF;
             if (!GetIsPC(player) || GetIsDM(player)) return;
 
             var mapPin = LoadMapPin(false);
@@ -67,7 +67,7 @@ namespace NWN.FinalFantasy.Feature
         [NWNEventHandler("mappin_rem_bef")]
         public static void DeleteMapPin()
         {
-            var player = Internal.OBJECT_SELF;
+            var player = Core.Internal.OBJECT_SELF;
             if (!GetIsPC(player) || GetIsDM(player)) return;
 
             var mapPin = LoadMapPin(true, true);
@@ -99,7 +99,7 @@ namespace NWN.FinalFantasy.Feature
         [NWNEventHandler("mappin_chg_bef")]
         public static void ChangeMapPin()
         {
-            var player = Internal.OBJECT_SELF;
+            var player = Core.Internal.OBJECT_SELF;
             if (!GetIsPC(player) || GetIsDM(player)) return;
 
             var mapPin = LoadMapPin();

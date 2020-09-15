@@ -4,7 +4,7 @@ namespace NWN.FinalFantasy.Core.NWNX.Enum
 {
     public class DamageEventData
     {
-        public uint? Damager { get; set; }
+        public uint Damager { get; set; }
 
         private int _bludgeoning;
         public int Bludgeoning

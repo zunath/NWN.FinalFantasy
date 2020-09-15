@@ -427,7 +427,7 @@ namespace NWN.FinalFantasy.Core.NWScript
             Internal.NativeFunctions.StackPushInteger((int)nFaction);
             Internal.NativeFunctions.StackPushStringUTF8(sTag);
             Internal.NativeFunctions.StackPushFloat(fSize);
-            Internal.NativeFunctions.StackPushLocation(lLocation.Handle);
+            Internal.NativeFunctions.StackPushGameDefinedStructure((int)EngineStructure.Location, lLocation);
             Internal.NativeFunctions.StackPushInteger((int)nTrapType);
             Internal.NativeFunctions.CallBuiltIn(809);
             return Internal.NativeFunctions.StackPopObject();

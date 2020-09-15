@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using NWN.FinalFantasy.Core;
 using NWN.FinalFantasy.Core.NWNX;
 using NWN.FinalFantasy.Core.NWNX.Enum;
@@ -254,7 +255,7 @@ namespace NWN.FinalFantasy.Feature
                 CommandPermissionType.Player | CommandPermissionType.DM | CommandPermissionType.Admin,
                 (user, target, location, args) =>
                 {
-                    Vector position = GetPosition(user);
+                    Vector3 position = GetPosition(user);
                     int cellX = (int)(position.X / 10);
                     int cellY = (int)(position.Y / 10);
 
@@ -787,13 +788,13 @@ namespace NWN.FinalFantasy.Feature
             var feat = (Feat)Convert.ToInt32(Events.GetEventData("FEAT_ID"));
             if (feat != Feat.ChatCommandTargeter) return;
 
-            var target = Object.StringToObject(Events.GetEventData("TARGET_OBJECT_ID"));
-            var area = Object.StringToObject(Events.GetEventData("AREA_OBJECT_ID"));
+            var target = StringToObject(Events.GetEventData("TARGET_OBJECT_ID"));
+            var area = StringToObject(Events.GetEventData("AREA_OBJECT_ID"));
             var targetX = (float)Convert.ToDouble(Events.GetEventData("TARGET_POSITION_X"));
             var targetY = (float)Convert.ToDouble(Events.GetEventData("TARGET_POSITION_Y"));
             var targetZ = (float)Convert.ToDouble(Events.GetEventData("TARGET_POSITION_Z"));
 
-            var targetLocation = Location(area, new Vector(targetX, targetY, targetZ), 0.0f);
+            var targetLocation = Location(area, new Vector3(targetX, targetY, targetZ), 0.0f);
             var command = GetLocalString(player, "CHAT_COMMAND");
             var args = GetLocalString(player, "CHAT_COMMAND_ARGS");
 

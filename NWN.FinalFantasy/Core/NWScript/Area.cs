@@ -1,3 +1,4 @@
+using System.Numerics;
 using NWN.FinalFantasy.Core.NWScript.Enum;
 using NWN.FinalFantasy.Core.NWScript.Enum.Area;
 
@@ -48,7 +49,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         ///   Get the position of oTarget
         ///   * Return value on error: vector (0.0f, 0.0f, 0.0f)
         /// </summary>
-        public static Vector GetPosition(uint oTarget)
+        public static Vector3 GetPosition(uint oTarget)
         {
             Internal.NativeFunctions.StackPushObject(oTarget);
             Internal.NativeFunctions.CallBuiltIn(27);
@@ -528,7 +529,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         {
             Internal.NativeFunctions.StackPushObject(oObject);
             Internal.NativeFunctions.CallBuiltIn(213);
-            return new Location(Internal.NativeFunctions.StackPopLocation());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Location);
         }
 
         /// <summary>
@@ -537,20 +538,20 @@ namespace NWN.FinalFantasy.Core.NWScript
         /// </summary>
         public static void ActionJumpToLocation(Location lLocation)
         {
-            Internal.NativeFunctions.StackPushLocation(lLocation.Handle);
+            Internal.NativeFunctions.StackPushGameDefinedStructure((int)EngineStructure.Location, lLocation);
             Internal.NativeFunctions.CallBuiltIn(214);
         }
 
         /// <summary>
         ///   Create a location.
         /// </summary>
-        public static Location Location(uint oArea, Vector? vPosition, float fOrientation)
+        public static Location Location(uint oArea, Vector3 vPosition, float fOrientation)
         {
             Internal.NativeFunctions.StackPushFloat(fOrientation);
-            Internal.NativeFunctions.StackPushVector(vPosition.HasValue ? vPosition.Value : new Vector());
+            Internal.NativeFunctions.StackPushVector(vPosition);
             Internal.NativeFunctions.StackPushObject(oArea);
             Internal.NativeFunctions.CallBuiltIn(215);
-            return new Location(Internal.NativeFunctions.StackPopLocation());
+            return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.Location);
         }
 
         /// <summary>
@@ -560,8 +561,8 @@ namespace NWN.FinalFantasy.Core.NWScript
             float fDuration = 0.0f)
         {
             Internal.NativeFunctions.StackPushFloat(fDuration);
-            Internal.NativeFunctions.StackPushLocation(lLocation.Handle);
-            Internal.NativeFunctions.StackPushEffect(eEffect.Handle);
+            Internal.NativeFunctions.StackPushGameDefinedStructure((int)EngineStructure.Location, lLocation);
+            Internal.NativeFunctions.StackPushGameDefinedStructure((int)EngineStructure.Effect, eEffect);
             Internal.NativeFunctions.StackPushInteger((int)nDurationType);
             Internal.NativeFunctions.CallBuiltIn(216);
         }
@@ -696,7 +697,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         /// </summary>
         public static int GetSurfaceMaterial(Location at)
         {
-            Internal.NativeFunctions.StackPushLocation(at.Handle);
+            Internal.NativeFunctions.StackPushGameDefinedStructure((int)EngineStructure.Location, at);
             Internal.NativeFunctions.CallBuiltIn(870);
             return Internal.NativeFunctions.StackPopInteger();
         }
@@ -707,7 +708,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         /// </summary>
         public static float GetGroundHeight(Location at)
         {
-            Internal.NativeFunctions.StackPushLocation(at.Handle);
+            Internal.NativeFunctions.StackPushGameDefinedStructure((int)EngineStructure.Location, at);
             Internal.NativeFunctions.CallBuiltIn(871);
             return Internal.NativeFunctions.StackPopFloat();
         }
@@ -736,7 +737,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         {
             Internal.NativeFunctions.StackPushInteger(nMainLight2Color);
             Internal.NativeFunctions.StackPushInteger(nMainLight1Color);
-            Internal.NativeFunctions.StackPushLocation(lTileLocation.Handle);
+            Internal.NativeFunctions.StackPushGameDefinedStructure((int)EngineStructure.Location, lTileLocation);
             Internal.NativeFunctions.CallBuiltIn(514);
         }
 
@@ -752,7 +753,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         {
             Internal.NativeFunctions.StackPushInteger(nSourceLight2Color);
             Internal.NativeFunctions.StackPushInteger(nSourceLight1Color);
-            Internal.NativeFunctions.StackPushLocation(lTileLocation.Handle);
+            Internal.NativeFunctions.StackPushGameDefinedStructure((int)EngineStructure.Location, lTileLocation);
             Internal.NativeFunctions.CallBuiltIn(515);
         }
 
@@ -763,7 +764,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         /// </summary>
         public static int GetTileMainLight1Color(Location lTile)
         {
-            Internal.NativeFunctions.StackPushLocation(lTile.Handle);
+            Internal.NativeFunctions.StackPushGameDefinedStructure((int)EngineStructure.Location, lTile);
             Internal.NativeFunctions.CallBuiltIn(517);
             return Internal.NativeFunctions.StackPopInteger();
         }
@@ -776,7 +777,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         /// </summary>
         public static int GetTileMainLight2Color(Location lTile)
         {
-            Internal.NativeFunctions.StackPushLocation(lTile.Handle);
+            Internal.NativeFunctions.StackPushGameDefinedStructure((int)EngineStructure.Location, lTile);
             Internal.NativeFunctions.CallBuiltIn(518);
             return Internal.NativeFunctions.StackPopInteger();
         }
@@ -789,7 +790,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         /// </summary>
         public static int GetTileSourceLight1Color(Location lTile)
         {
-            Internal.NativeFunctions.StackPushLocation(lTile.Handle);
+            Internal.NativeFunctions.StackPushGameDefinedStructure((int)EngineStructure.Location, lTile);
             Internal.NativeFunctions.CallBuiltIn(519);
             return Internal.NativeFunctions.StackPopInteger();
         }
@@ -802,7 +803,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         /// </summary>
         public static int GetTileSourceLight2Color(Location lTile)
         {
-            Internal.NativeFunctions.StackPushLocation(lTile.Handle);
+            Internal.NativeFunctions.StackPushGameDefinedStructure((int)EngineStructure.Location, lTile);
             Internal.NativeFunctions.CallBuiltIn(520);
             return Internal.NativeFunctions.StackPopInteger();
         }
@@ -824,7 +825,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         /// </summary>
         public static uint GetAreaFromLocation(Location lLocation)
         {
-            Internal.NativeFunctions.StackPushLocation(lLocation.Handle);
+            Internal.NativeFunctions.StackPushGameDefinedStructure((int)EngineStructure.Location, lLocation);
             Internal.NativeFunctions.CallBuiltIn(224);
             return Internal.NativeFunctions.StackPopObject();
         }
@@ -832,9 +833,9 @@ namespace NWN.FinalFantasy.Core.NWScript
         /// <summary>
         ///   Get the position vector from lLocation.
         /// </summary>
-        public static Vector GetPositionFromLocation(Location lLocation)
+        public static Vector3 GetPositionFromLocation(Location lLocation)
         {
-            Internal.NativeFunctions.StackPushLocation(lLocation.Handle);
+            Internal.NativeFunctions.StackPushGameDefinedStructure((int)EngineStructure.Location, lLocation);
             Internal.NativeFunctions.CallBuiltIn(223);
             return Internal.NativeFunctions.StackPopVector();
         }
@@ -858,5 +859,24 @@ namespace NWN.FinalFantasy.Core.NWScript
             Internal.NativeFunctions.StackPushInteger((int)nPredefinedAreaTransition);
             Internal.NativeFunctions.CallBuiltIn(203);
         }
+
+
+        /// <summary>
+        /// Sets the detailed wind data for oArea
+        /// The predefined values in the toolset are:
+        ///   NONE:  vDirection=(1.0, 1.0, 0.0), fMagnitude=0.0, fYaw=0.0,   fPitch=0.0
+        ///   LIGHT: vDirection=(1.0, 1.0, 0.0), fMagnitude=1.0, fYaw=100.0, fPitch=3.0
+        ///   HEAVY: vDirection=(1.0, 1.0, 0.0), fMagnitude=2.0, fYaw=150.0, fPitch=5.0
+        /// </summary>
+        public static void SetAreaWind(uint oArea, Vector3 vDirection, float fMagnitude, float fYaw, float fPitch)
+        {
+            Internal.NativeFunctions.StackPushFloat(fPitch);
+            Internal.NativeFunctions.StackPushFloat(fYaw);
+            Internal.NativeFunctions.StackPushFloat(fMagnitude);
+            Internal.NativeFunctions.StackPushVector(vDirection);
+            Internal.NativeFunctions.StackPushObject(oArea);
+            Internal.NativeFunctions.CallBuiltIn(919);
+        }
+
     }
 }

@@ -51,7 +51,7 @@ namespace NWN.FinalFantasy.Service
         public static uint GetAreaByResref(string resref)
         {
             if (!AreasByResref.ContainsKey(resref))
-                return Internal.OBJECT_INVALID;
+                return Core.Internal.OBJECT_INVALID;
 
             return AreasByResref[resref];
         }

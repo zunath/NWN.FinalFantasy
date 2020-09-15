@@ -15,7 +15,7 @@ namespace NWN.FinalFantasy.Feature
         public static void OnUseItem()
         {
             var creature = OBJECT_SELF;
-            var item = Object.StringToObject(Events.GetEventData("ITEM_OBJECT_ID"));
+            var item = StringToObject(Events.GetEventData("ITEM_OBJECT_ID"));
             var script = GetLocalString(item, "SCRIPT");
 
             // No script associated. Let it run the normal execution process.

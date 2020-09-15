@@ -79,5 +79,12 @@ namespace NWN.FinalFantasy.Feature
 
             Dialog.StartConversation(player, OBJECT_SELF, nameof(PlayerHouseDialog));
         }
+
+        [NWNEventHandler("test10")]
+        public static void SpawnGold()
+        {
+            var player = GetLastUsedBy();
+            GiveGoldToCreature(player, 5000);
+        }
     }
 }

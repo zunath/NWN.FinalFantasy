@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -7,8 +7,7 @@ using static NWN.FinalFantasy.Core.NWScript.NWScript;
 
 namespace NWN.FinalFantasy.Core
 {
-    [AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
-    public class NWNEventHandler : Attribute
+    public class Entrypoints
     {
         private const int MaxCharsInScriptName = 16;
         private const int ScriptHandled = 0;
@@ -18,38 +17,65 @@ namespace NWN.FinalFantasy.Core
 
         private static Dictionary<string, List<Action>> _scripts;
         private static Dictionary<string, List<ConditionalScriptDelegate>> _conditionalScripts;
-        private readonly string _script;
 
         private static DateTime _last1SecondIntervalCall = DateTime.UtcNow;
 
-        public NWNEventHandler(string script)
-        {
-            _script = script;
-        }
-
+        //
+        // This is called once every main loop frame, outside of object context
+        //
         public static void OnMainLoop(ulong frame)
         {
             RunOneSecondPCIntervalEvent();
         }
 
-        /// <summary>
-        /// Fires an event on every player every second.
-        /// We do it this way so we don't run into a situation
-        /// where we iterate over the player list more than once per second
-        /// </summary>
-        private static void RunOneSecondPCIntervalEvent()
+        //
+        // This is called every time a named script is scheduled to run.
+        // oidSelf is the object running the script (OBJECT_SELF), and script
+        // is the name given to the event handler (e.g. via SetEventScript).
+        // If the script is not handled in the managed code, and needs to be
+        // forwarded to the original NWScript VM, return SCRIPT_NOT_HANDLED.
+        // Otherwise, return either 0/SCRIPT_HANDLED for void main() scripts,
+        // or an int (0 or 1) for StartingConditionals
+        //
+        public static int OnRunScript(string script, uint oidSelf)
         {
-            var now = DateTime.UtcNow;
-            var delta = now - _last1SecondIntervalCall;
-            if (delta.Seconds < 1) return;
-            _last1SecondIntervalCall = now;
+            var retVal = RunScripts(script);
 
-            for (var player = GetFirstPC(); GetIsObjectValid(player); player = GetNextPC())
-            {
-                Internal.OBJECT_SELF = player;
-                RunScripts("interval_pc_1s");
-            }
+            if (retVal == -1) return ScriptNotHandled;
+            else return retVal;
         }
+
+        //
+        // This is called once when the internal structures have been initialized
+        // The module is not yet loaded, so most NWScript functions will fail if
+        // called here.
+        //
+        public static void OnStart()
+        {
+            Console.WriteLine("Registering scripts...");
+            LoadHandlersFromAssembly();
+            Console.WriteLine("Scripts registered successfully.");
+        }
+
+        //
+        // This is called once, just before the module load script is called.
+        // Unlike OnStart, NWScript functions are available to use here.
+        //
+        public static void OnModuleLoad()
+        {
+            Console.WriteLine("OnModuleLoad() called");
+        }
+
+        //
+        // This is called once, just before the server will shutdown. In here, you should
+        // save anything that might not be flushed to disk, and perform any last cleanup.
+        // NWScript functions are available to use.
+        //
+        public static void OnShutdown()
+        {
+            Console.WriteLine("OnShutdown() called");
+        }
+
 
         private static int RunScripts(string script)
         {
@@ -88,22 +114,8 @@ namespace NWN.FinalFantasy.Core
             return ScriptNotHandled;
         }
 
-        public static int OnRunScript(string script, uint oidSelf)
-        {
-            var retVal = RunScripts(script);
 
-            if (retVal == -1) return ScriptNotHandled;
-            else return retVal;
-        }
-
-        public static void OnStart()
-        {
-            Console.WriteLine("Registering scripts...");
-            LoadHandlersFromAssembly();
-            Console.WriteLine("Scripts registered successfully.");
-        }
-
-        public static void LoadHandlersFromAssembly()
+        private static void LoadHandlersFromAssembly()
         {
             _scripts = new Dictionary<string, List<Action>>();
             _conditionalScripts = new Dictionary<string, List<ConditionalScriptDelegate>>();
@@ -118,7 +130,7 @@ namespace NWN.FinalFantasy.Core
             {
                 foreach (var attr in mi.GetCustomAttributes(typeof(NWNEventHandler), false))
                 {
-                    var script = ((NWNEventHandler)attr)._script;
+                    var script = ((NWNEventHandler)attr).Script;
                     if (script.Length > MaxCharsInScriptName || script.Length == 0)
                     {
                         Console.WriteLine($"Script name '{script}' is invalid on method {mi.Name}.");
@@ -151,6 +163,25 @@ namespace NWN.FinalFantasy.Core
                     }
 
                 }
+            }
+        }
+
+        /// <summary>
+        /// Fires an event on every player every second.
+        /// We do it this way so we don't run into a situation
+        /// where we iterate over the player list more than once per second
+        /// </summary>
+        private static void RunOneSecondPCIntervalEvent()
+        {
+            var now = DateTime.UtcNow;
+            var delta = now - _last1SecondIntervalCall;
+            if (delta.Seconds < 1) return;
+            _last1SecondIntervalCall = now;
+
+            for (var player = GetFirstPC(); GetIsObjectValid(player); player = GetNextPC())
+            {
+                Internal.OBJECT_SELF = player;
+                RunScripts("interval_pc_1s");
             }
         }
     }

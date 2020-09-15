@@ -88,5 +88,62 @@ namespace NWN.FinalFantasy.Core.NWNX
             Internal.NativeFunctions.nwnxPushObject(encounter);
             Internal.NativeFunctions.nwnxCallFunction();
         }
+
+        public static int GetNumberOfSpawnPoints(uint encounter)
+        {
+            Internal.NativeFunctions.nwnxSetFunction(PLUGIN_NAME, "GetNumberOfSpawnPoints");
+
+            Internal.NativeFunctions.nwnxPushObject(encounter);
+            Internal.NativeFunctions.nwnxCallFunction();
+
+            return Internal.NativeFunctions.nwnxPopInt();
+        }
+
+
+        public static Location GetSpawnPointByIndex(uint encounter, int index)
+        {
+            Internal.NativeFunctions.nwnxSetFunction(PLUGIN_NAME, "GetSpawnPointByIndex");
+
+            Internal.NativeFunctions.nwnxPushInt(index);
+            Internal.NativeFunctions.nwnxPushObject(encounter);
+            Internal.NativeFunctions.nwnxCallFunction();
+
+            var o = Internal.NativeFunctions.nwnxPopFloat();
+            var z = Internal.NativeFunctions.nwnxPopFloat();
+            var y = Internal.NativeFunctions.nwnxPopFloat();
+            var x = Internal.NativeFunctions.nwnxPopFloat();
+
+            return NWScript.NWScript.Location(NWScript.NWScript.GetArea(encounter), NWScript.NWScript.Vector(x, y, z), o);
+        }
+
+        public static int GetMinNumSpawned(uint encounter)
+        {
+            Internal.NativeFunctions.nwnxSetFunction(PLUGIN_NAME, "GetMinNumSpawned");
+
+            Internal.NativeFunctions.nwnxPushObject(encounter);
+            Internal.NativeFunctions.nwnxCallFunction();
+
+            return Internal.NativeFunctions.nwnxPopInt();
+        }
+
+        public static int GetMaxNumSpawned(uint encounter)
+        {
+            Internal.NativeFunctions.nwnxSetFunction(PLUGIN_NAME, "GetMaxNumSpawned");
+
+            Internal.NativeFunctions.nwnxPushObject(encounter);
+            Internal.NativeFunctions.nwnxCallFunction();
+
+            return Internal.NativeFunctions.nwnxPopInt();
+        }
+
+        public static int GetCurrentNumSpawned(uint encounter)
+        {
+            Internal.NativeFunctions.nwnxSetFunction(PLUGIN_NAME, "GetCurrentNumSpawned");
+
+            Internal.NativeFunctions.nwnxPushObject(encounter);
+            Internal.NativeFunctions.nwnxCallFunction();
+
+            return Internal.NativeFunctions.nwnxPopInt();
+        }
     }
 }

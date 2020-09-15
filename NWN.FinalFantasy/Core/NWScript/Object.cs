@@ -1,3 +1,4 @@
+using System.Numerics;
 using NWN.FinalFantasy.Core.NWScript.Enum;
 
 namespace NWN.FinalFantasy.Core.NWScript
@@ -443,7 +444,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         {
             Internal.NativeFunctions.StackPushStringUTF8(sNewTag);
             Internal.NativeFunctions.StackPushObject(oOwner);
-            Internal.NativeFunctions.StackPushLocation(locLocation.Handle);
+            Internal.NativeFunctions.StackPushGameDefinedStructure((int)EngineStructure.Location, locLocation);
             Internal.NativeFunctions.StackPushObject(oSource);
             Internal.NativeFunctions.CallBuiltIn(600);
             return Internal.NativeFunctions.StackPopObject();
@@ -639,9 +640,9 @@ namespace NWN.FinalFantasy.Core.NWScript
         /// <summary>
         ///   Set the position of oSound.
         /// </summary>
-        public static void SoundObjectSetPosition(uint oSound, Vector? vPosition)
+        public static void SoundObjectSetPosition(uint oSound, Vector3 vPosition)
         {
-            Internal.NativeFunctions.StackPushVector(vPosition.HasValue ? vPosition.Value : new Vector());
+            Internal.NativeFunctions.StackPushVector(vPosition);
             Internal.NativeFunctions.StackPushObject(oSound);
             Internal.NativeFunctions.CallBuiltIn(416);
         }
@@ -709,7 +710,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         {
             Internal.NativeFunctions.StackPushStringUTF8(sNewTag);
             Internal.NativeFunctions.StackPushInteger(nUseAppearAnimation ? 1 : 0);
-            Internal.NativeFunctions.StackPushLocation(lLocation.Handle);
+            Internal.NativeFunctions.StackPushGameDefinedStructure((int)EngineStructure.Location, lLocation);
             Internal.NativeFunctions.StackPushStringUTF8(sTemplate);
             Internal.NativeFunctions.StackPushInteger((int)nObjectType);
             Internal.NativeFunctions.CallBuiltIn(243);
@@ -744,7 +745,7 @@ namespace NWN.FinalFantasy.Core.NWScript
             int nNth = 1)
         {
             Internal.NativeFunctions.StackPushInteger(nNth);
-            Internal.NativeFunctions.StackPushLocation(lLocation.Handle);
+            Internal.NativeFunctions.StackPushGameDefinedStructure((int)EngineStructure.Location, lLocation);
             Internal.NativeFunctions.StackPushInteger((int)nObjectType);
             Internal.NativeFunctions.CallBuiltIn(228);
             return Internal.NativeFunctions.StackPopObject();
@@ -820,5 +821,32 @@ namespace NWN.FinalFantasy.Core.NWScript
             Internal.NativeFunctions.CallBuiltIn(42);
             return Internal.NativeFunctions.StackPopInteger() != 0;
         }
+
+        /// <summary>
+        /// Convert sHex, a string containing a hexadecimal object id,
+        /// into a object reference. Counterpart to StringToObject().
+        /// </summary>
+        public static uint StringToObject(string sHex)
+        {
+            Internal.NativeFunctions.StackPushString(sHex);
+            Internal.NativeFunctions.CallBuiltIn(936);
+            return Internal.NativeFunctions.StackPopObject();
+        }
+
+
+        /// <summary>
+        /// Replace's oObject's texture sOld with sNew.
+        /// Specifying sNew = "" will restore the original texture.
+        /// If sNew cannot be found, the original texture will be restored.
+        /// sNew must refer to a simple texture, not PLT
+        /// </summary>
+        public static void ReplaceObjectTexture(uint oObject, string sOld, string sNew = "")
+        {
+            Internal.NativeFunctions.StackPushString(sNew);
+            Internal.NativeFunctions.StackPushString(sOld);
+            Internal.NativeFunctions.StackPushObject(oObject);
+            Internal.NativeFunctions.CallBuiltIn(920);
+        }
+
     }
 }

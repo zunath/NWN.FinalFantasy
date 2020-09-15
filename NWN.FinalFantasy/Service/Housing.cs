@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using NWN.FinalFantasy.Core;
-using NWN.FinalFantasy.Core.NWScript;
 using NWN.FinalFantasy.Core.NWScript.Enum;
 using NWN.FinalFantasy.Entity;
 using NWN.FinalFantasy.Enumeration;
 using NWN.FinalFantasy.Extension;
 using static NWN.FinalFantasy.Core.NWScript.NWScript;
-using Vector = NWN.FinalFantasy.Core.Vector;
 
 namespace NWN.FinalFantasy.Service
 {
@@ -16,7 +15,7 @@ namespace NWN.FinalFantasy.Service
     {
         private static readonly Dictionary<FurnitureType, FurnitureAttribute> _activeFurniture = new Dictionary<FurnitureType, FurnitureAttribute>();
         private static readonly Dictionary<PlayerHouseType, PlayerHouseAttribute> _activePlayerHouses = new Dictionary<PlayerHouseType, PlayerHouseAttribute>();
-        private static readonly Dictionary<PlayerHouseType, Vector> _houseEntrancePositions = new Dictionary<PlayerHouseType, Vector>();
+        private static readonly Dictionary<PlayerHouseType, Vector3> _houseEntrancePositions = new Dictionary<PlayerHouseType, Vector3>();
         private static readonly Dictionary<string, uint> _activeHouseInstances = new Dictionary<string, uint>();
 
         /// <summary>
@@ -71,7 +70,7 @@ namespace NWN.FinalFantasy.Service
         /// </summary>
         /// <param name="areaResref">The resref of the area to look for</param>
         /// <returns>X, Y, and Z coordinates of the entrance location</returns>
-        private static Vector GetEntrancePosition(string areaResref)
+        private static Vector3 GetEntrancePosition(string areaResref)
         {
             for (var area = GetFirstArea(); GetIsObjectValid(area); area = GetNextArea())
             {
@@ -86,7 +85,7 @@ namespace NWN.FinalFantasy.Service
                 }
             }
 
-            return new Vector();
+            return new Vector3();
         }
 
         /// <summary>
@@ -123,7 +122,7 @@ namespace NWN.FinalFantasy.Service
         /// </summary>
         /// <param name="type">The type of house layout to look for</param>
         /// <returns>The X, Y, and Z coordinates of the home layout's entrance.</returns>
-        public static Vector GetEntrancePosition(PlayerHouseType type)
+        public static Vector3 GetEntrancePosition(PlayerHouseType type)
         {
             return _houseEntrancePositions[type];
         }
@@ -255,7 +254,7 @@ namespace NWN.FinalFantasy.Service
                     continue;
                 }
 
-                var position = new Vector(furniture.X, furniture.Y, furniture.Z);
+                var position = new Vector3(furniture.X, furniture.Y, furniture.Z);
                 var location = Location(copy, position, furniture.Orientation);
 
                 var placeable = CreateObject(ObjectType.Placeable, furnitureDetail.Resref, location);

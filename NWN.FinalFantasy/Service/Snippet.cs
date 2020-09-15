@@ -19,13 +19,6 @@ namespace NWN.FinalFantasy.Service
 
     public static class Snippet
     {
-        /// <summary>
-        /// This dictionary tracks the original text of a node for a specific player.
-        /// Note that this doesn't ever clean up because there's not a reliable way to know when conversations created by builders end.
-        /// In theory this shouldn't cause too many memory issues because conversations are only so big.
-        /// </summary>
-        private static readonly Dictionary<uint, Dictionary<int, string>> _playerNodeOriginalText = new Dictionary<uint, Dictionary<int, string>>();
-
         private delegate bool AppearsWhenDelegate(uint player, string[] args);
         private delegate void ActionsTakenDelegate(uint player, string[] args);
 
@@ -33,10 +26,10 @@ namespace NWN.FinalFantasy.Service
         private static readonly Dictionary<string, ActionsTakenDelegate> _actionsTakenCommands = new Dictionary<string, ActionsTakenDelegate>();
 
         /// <summary>
-        /// When the module loads, all available conversation commands are loaded into the cache.
+        /// When the module loads, all available conversation snippets are loaded into the cache.
         /// </summary>
         [NWNEventHandler("mod_load")]
-        public static void RegisterConversationCommands()
+        public static void RegisterSnippets()
         {
             var methods = Assembly.GetExecutingAssembly()
                 .GetTypes()
@@ -69,13 +62,7 @@ namespace NWN.FinalFantasy.Service
         public static bool ConversationAppearsWhen()
         {
             var player = GetPCSpeaker();
-            var text = Core.NWNX.Dialog.GetCurrentNodeText();
-            var nodeId = Core.NWNX.Dialog.GetCurrentNodeID();
-            if(!_playerNodeOriginalText.ContainsKey(player))
-                _playerNodeOriginalText[player] = new Dictionary<int, string>();
-
-            _playerNodeOriginalText[player][nodeId] = text;
-            return ProcessConditions(player, text);
+            return ProcessConditions(player);
         }
 
         /// <summary>
@@ -86,8 +73,7 @@ namespace NWN.FinalFantasy.Service
         public static void ConversationAction()
         {
             var player = GetPCSpeaker();
-            var nodeId = Core.NWNX.Dialog.GetCurrentNodeID();
-            ProcessActions(player, nodeId);
+            ProcessActions(player);
         }
 
         /// <summary>
@@ -95,40 +81,22 @@ namespace NWN.FinalFantasy.Service
         /// If any of the conditions fail, false will be returned.
         /// </summary>
         /// <param name="player">The player running the conditions.</param>
-        /// <param name="text">The conversation message text.</param>
         /// <returns>true if all commands passed successfully, false otherwise</returns>
-        private static bool ProcessConditions(uint player, string text)
+        private static bool ProcessConditions(uint player)
         {
-            var (commands, newText) = ParseCommand(text);
-            if (commands.Count <= 0) return true;
-
-            Core.NWNX.Dialog.SetCurrentNodeText(newText);
-
-            // Iterate over each command. If the command doesn't exist or is on the wrong node, print out a warning to the log.
-            foreach (var command in commands)
+            foreach (var condition in _appearsWhenCommands)
             {
-                if (!command.ToLower().StartsWith("condition"))
-                {
-                    continue;
-                }
+                var param = GetScriptParam(condition.Key);
+                if (string.IsNullOrWhiteSpace(param)) continue;
 
-                var args = command.Split(' ').ToList();
-                var commandText = args[0];
-                args.RemoveAt(0);
-                if (!_appearsWhenCommands.ContainsKey(commandText))
-                {
-                    var error = $"Conversation snippet '{commandText}' is not valid. Make sure you typed the command correctly.";
-                    SendMessageToPC(player, error);
-                    Log.Write(LogGroup.Error, error);
-                    continue;
-                }
+                var args = param.Split(' ').ToList();
+                var snippetName = condition.Key;
 
                 // The first command that fails will result in failure.
-                var commandResult = _appearsWhenCommands[commandText](player, args.ToArray());
+                var commandResult = _appearsWhenCommands[snippetName](player, args.ToArray());
                 if (!commandResult) return false;
             }
 
-            // By this point, all commands have run and they've all returned true.
             return true;
         }
 
@@ -136,81 +104,18 @@ namespace NWN.FinalFantasy.Service
         /// Handles processing action commands.
         /// </summary>
         /// <param name="player">The player to run the commands against</param>
-        /// <param name="nodeId">The conversation node to execute.</param>
-        private static void ProcessActions(uint player, int nodeId)
+        private static void ProcessActions(uint player)
         {
-            if (!_playerNodeOriginalText.ContainsKey(player) || !_playerNodeOriginalText[player].ContainsKey(nodeId))
-                return;
-
-            var originalText = _playerNodeOriginalText[player][nodeId];
-            var (commands,_)= ParseCommand(originalText);
-            if (commands.Count <= 0) return;
-
-
-            foreach (var command in commands)
+            foreach (var action in _actionsTakenCommands)
             {
-                if (!command.ToLower().StartsWith("action"))
-                {
-                    continue;
-                }
+                var param = GetScriptParam(action.Key);
+                if (string.IsNullOrWhiteSpace(param)) continue;
 
-                var args = command.Split(' ').ToList();
-                var commandText = args[0];
-                args.RemoveAt(0);
-                if (!_actionsTakenCommands.ContainsKey(commandText))
-                {
-                    var error = $"Conversation snippet '{commandText}' is not valid. Make sure you typed the command correctly.";
-                    SendMessageToPC(player, error);
-                    Log.Write(LogGroup.Error, error);
-                    continue;
-                }
+                var args = param.Split(' ').ToList();
+                var commandText = action.Key;
 
-                // The first command that fails will result in failure.
                 _actionsTakenCommands[commandText](player, args.ToArray());
             }
         }
-
-
-        /// <summary>
-        /// Converts a node's text to lower, then parses out any commands wrapped with "{{" and "}}" brackets.
-        /// Commands returned exclude the brackets.
-        /// </summary>
-        /// <param name="text">The text to parse.</param>
-        /// <returns>A list of commands, or an empty list if none can be found.</returns>
-        private static (List<string>, string) ParseCommand(string text)
-        {
-            static (string, string) GetCommandString(string commandText)
-            {
-                // Commands are wrapped in {{ and }} brackets. 
-                const string OpeningBracket = "{{";
-                const string ClosingBracket = "}}";
-
-                // If a complete command isn't wrapped, we exit early.
-                if (!commandText.Contains(OpeningBracket) || !commandText.Contains(ClosingBracket)) return (string.Empty, commandText);
-
-                // Parse out the command, excluding the brackets.
-                var startIndex = commandText.IndexOf(OpeningBracket, StringComparison.Ordinal) + OpeningBracket.Length;
-                var length = commandText.IndexOf(ClosingBracket, StringComparison.Ordinal) - commandText.IndexOf(OpeningBracket, StringComparison.Ordinal) - OpeningBracket.Length;
-                var parsedCommand = commandText.Substring(startIndex, length).Trim();
-
-                // Modify the full text so we don't pick up this command on the next iteration.
-                var modifiedText = commandText.Remove(startIndex - OpeningBracket.Length, length + OpeningBracket.Length + ClosingBracket.Length);
-
-                return (parsedCommand, modifiedText);
-            }
-
-            // Parse out the text and look for commands.
-            var commands = new List<string>();
-            var (command, newText) = GetCommandString(text);
-            while (!string.IsNullOrWhiteSpace(command))
-            {
-                commands.Add(command);
-                text = newText;
-                (command, newText) = GetCommandString(text);
-            }
-
-            return (commands, newText);
-        }
-
     }
 }

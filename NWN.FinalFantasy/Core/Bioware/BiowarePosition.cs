@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Numerics;
 using System.Text;
 using static NWN.FinalFantasy.Core.NWScript.NWScript;
 
@@ -61,7 +62,7 @@ namespace NWN.FinalFantasy.Core.Bioware
         /// <param name="fDistance"></param>
         /// <param name="fAngle"></param>
         /// <returns></returns>
-        public static Vector GetChangedPosition(Vector vOriginal, float fDistance, float fAngle)
+        public static Vector3 GetChangedPosition(Vector3 vOriginal, float fDistance, float fAngle)
         {
             float changedZ = vOriginal.Z;
 

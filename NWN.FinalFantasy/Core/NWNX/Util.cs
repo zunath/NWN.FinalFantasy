@@ -115,5 +115,87 @@ namespace NWN.FinalFantasy.Core.NWNX
             Internal.NativeFunctions.nwnxCallFunction();
             return Internal.NativeFunctions.nwnxPopInt();
         }
+
+        /// @brief Get the world time as calendar day and time of day.
+        /// @note This function is useful for calculating effect expiry times.
+        /// @param fAdjustment An adjustment in seconds, 0.0f will return the current world time,
+        /// positive or negative values will return a world time in the future or past.
+        /// @return A NWNX_Util_WorldTime struct with the calendar day and time of day.
+        public static WorldTime GetWorldTime(float fAdjustment = 0.0f)
+        {
+            Internal.NativeFunctions.nwnxSetFunction(PLUGIN_NAME, "GetWorldTime");
+
+            Internal.NativeFunctions.nwnxPushFloat(fAdjustment);
+            Internal.NativeFunctions.nwnxCallFunction();
+
+            return new WorldTime
+            {
+                TimeOfDay = Internal.NativeFunctions.nwnxPopInt(),
+                CalendarDay = Internal.NativeFunctions.nwnxPopInt()
+            };
+        }
+
+        public struct WorldTime
+        {
+            public int CalendarDay { get; set; }
+            public int TimeOfDay { get; set; }
+        }
+
+
+        public static void SetResourceOverride(int nResType, string sOldName, string sNewName)
+        {
+            Internal.NativeFunctions.nwnxSetFunction(PLUGIN_NAME, "SetResourceOverride");
+
+            Internal.NativeFunctions.nwnxPushString(sNewName);
+            Internal.NativeFunctions.nwnxPushString(sOldName);
+            Internal.NativeFunctions.nwnxPushInt(nResType);
+
+            Internal.NativeFunctions.nwnxCallFunction();
+        }
+
+        public static string GetResourceOverride(int nResType, string sName)
+        {
+            Internal.NativeFunctions.nwnxSetFunction(PLUGIN_NAME, "GetResourceOverride");
+
+            Internal.NativeFunctions.nwnxPushString(sName);
+            Internal.NativeFunctions.nwnxPushInt(nResType);
+            Internal.NativeFunctions.nwnxCallFunction();
+
+            return Internal.NativeFunctions.nwnxPopString();
+        }
+
+        /// @brief Create a door.
+        /// @param sResRef The ResRef of the door.
+        /// @param locLocation The location to create the door at.
+        /// @param sNewTag An optional new tag for the door.
+        /// @return The door, or OBJECT_INVALID on failure.
+        public static uint CreateDoor(string sResRef, Location locLocation, string sNewTag)
+        {
+            Internal.NativeFunctions.nwnxSetFunction(PLUGIN_NAME, "CreateDoor");
+
+            var vPosition = NWScript.NWScript.GetPositionFromLocation(locLocation);
+
+            Internal.NativeFunctions.nwnxPushString(sNewTag);
+            Internal.NativeFunctions.nwnxPushFloat(NWScript.NWScript.GetFacingFromLocation(locLocation));
+            Internal.NativeFunctions.nwnxPushFloat(vPosition.Z);
+            Internal.NativeFunctions.nwnxPushFloat(vPosition.Y);
+            Internal.NativeFunctions.nwnxPushFloat(vPosition.X);
+            Internal.NativeFunctions.nwnxPushObject(NWScript.NWScript.GetAreaFromLocation(locLocation));
+            Internal.NativeFunctions.nwnxPushString(sResRef);
+            Internal.NativeFunctions.nwnxCallFunction();
+
+            return Internal.NativeFunctions.nwnxPopObject();
+        }
+
+        /// @brief Set the object that will be returned by GetItemActivator.
+        /// @param oObject An object.
+        public static void SetItemActivator(uint oObject)
+        {
+            Internal.NativeFunctions.nwnxSetFunction(PLUGIN_NAME, "SetItemActivator");
+
+            Internal.NativeFunctions.nwnxPushObject(oObject);
+            Internal.NativeFunctions.nwnxCallFunction();
+        }
+
     }
 }

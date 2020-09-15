@@ -850,7 +850,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         {
             Internal.NativeFunctions.StackPushFloat(fTimeout);
             Internal.NativeFunctions.StackPushInteger(bRun ? 1 : 0);
-            Internal.NativeFunctions.StackPushLocation(lDestination.Handle);
+            Internal.NativeFunctions.StackPushGameDefinedStructure((int)EngineStructure.Location, lDestination);
             Internal.NativeFunctions.CallBuiltIn(382);
         }
 
@@ -1039,7 +1039,7 @@ namespace NWN.FinalFantasy.Core.NWScript
             Internal.NativeFunctions.StackPushInteger(nSecondCriteriaValue);
             Internal.NativeFunctions.StackPushInteger(nSecondCriteriaType);
             Internal.NativeFunctions.StackPushInteger(nNth);
-            Internal.NativeFunctions.StackPushLocation(lLocation.Handle);
+            Internal.NativeFunctions.StackPushGameDefinedStructure((int)EngineStructure.Location, lLocation);
             Internal.NativeFunctions.StackPushInteger(nFirstCriteriaValue ? 1 : 0);
             Internal.NativeFunctions.StackPushInteger((int)nFirstCriteriaType);
             Internal.NativeFunctions.CallBuiltIn(226);

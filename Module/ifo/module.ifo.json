@@ -11,13 +11,6 @@
         "__struct_id": 6,
         "Area_Name": {
           "type": "resref",
-          "value": "area001"
-        }
-      },
-      {
-        "__struct_id": 6,
-        "Area_Name": {
-          "type": "resref",
           "value": "ooc_area"
         }
       },
@@ -32,42 +25,38 @@
         "__struct_id": 6,
         "Area_Name": {
           "type": "resref",
-          "value": "player_layout_1"
+          "value": "gdn_t_2"
         }
       },
       {
         "__struct_id": 6,
         "Area_Name": {
           "type": "resref",
-          "value": "player_layout_2"
+          "value": "gdn_t_3"
         }
       },
       {
         "__struct_id": 6,
         "Area_Name": {
           "type": "resref",
-          "value": "player_layout_3"
+          "value": "gdn_t_4"
         }
       },
       {
         "__struct_id": 6,
         "Area_Name": {
           "type": "resref",
-          "value": "player_layout_4"
+          "value": "gdn_t_5"
         }
       },
       {
         "__struct_id": 6,
         "Area_Name": {
           "type": "resref",
-          "value": "b_garden_int"
+          "value": "fire_cavern_1"
         }
       }
     ]
-  },
-  "Mod_CacheNSSList": {
-    "type": "list",
-    "value": []
   },
   "Mod_Creator_ID": {
     "type": "int",
@@ -87,7 +76,9 @@
   },
   "Mod_Description": {
     "type": "cexolocstring",
-    "value": {}
+    "value": {
+      "0": ""
+    }
   },
   "Mod_DuskHour": {
     "type": "byte",
@@ -95,7 +86,7 @@
   },
   "Mod_Entry_Area": {
     "type": "resref",
-    "value": "ooc_area"
+    "value": "gdn_t_2"
   },
   "Mod_Entry_Dir_X": {
     "type": "float",
@@ -107,15 +98,15 @@
   },
   "Mod_Entry_X": {
     "type": "float",
-    "value": 8.453210830688477
+    "value": 47.87091445922852
   },
   "Mod_Entry_Y": {
     "type": "float",
-    "value": 6.893314361572266
+    "value": 18.12440872192383
   },
   "Mod_Entry_Z": {
     "type": "float",
-    "value": 0.003608226776123047
+    "value": 0.0
   },
   "Mod_Expan_List": {
     "type": "list",
@@ -160,7 +151,7 @@
         "__struct_id": 8,
         "Mod_Hak": {
           "type": "cexostring",
-          "value": "ffo_t_garden"
+          "value": "ffo_skyboxes"
         }
       },
       {
@@ -295,12 +286,33 @@
           "type": "cexostring",
           "value": "q_vfxgui"
         }
+      },
+      {
+        "__struct_id": 8,
+        "Mod_Hak": {
+          "type": "cexostring",
+          "value": "pk_rocky_v11.5"
+        }
+      },
+      {
+        "__struct_id": 8,
+        "Mod_Hak": {
+          "type": "cexostring",
+          "value": "pk_textures_v2.0"
+        }
+      },
+      {
+        "__struct_id": 8,
+        "Mod_Hak": {
+          "type": "cexostring",
+          "value": "wrm_scorche"
+        }
       }
     ]
   },
   "Mod_ID": {
     "type": "void",
-    "value": "ÿÿÿÿ\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000"
+    "value": "¿ˆO\"\u0031‹­êjOî\u0025yEÒé"
   },
   "Mod_IsSaveGame": {
     "type": "byte",
@@ -308,7 +320,7 @@
   },
   "Mod_MinGameVer": {
     "type": "cexostring",
-    "value": "1.80"
+    "value": "1.81"
   },
   "Mod_MinPerHour": {
     "type": "byte",
@@ -431,7 +443,7 @@
         "__struct_id": 0,
         "Name": {
           "type": "cexostring",
-          "value": "ON_PLAYER_ENTER_5"
+          "value": "ON_PLAYER_ENTER_3"
         },
         "Type": {
           "type": "dword",
@@ -461,7 +473,7 @@
         "__struct_id": 0,
         "Name": {
           "type": "cexostring",
-          "value": "ON_PLAYER_LEAVE_2"
+          "value": "ON_PLAYER_LEAVE_1"
         },
         "Type": {
           "type": "dword",
@@ -476,7 +488,7 @@
         "__struct_id": 0,
         "Name": {
           "type": "cexostring",
-          "value": "ON_PLAYER_ENTER_2"
+          "value": "ON_PLAYER_ENTER_1"
         },
         "Type": {
           "type": "dword",
@@ -911,7 +923,7 @@
         "__struct_id": 0,
         "Name": {
           "type": "cexostring",
-          "value": "ON_PLAYER_LEAVE_3"
+          "value": "ON_PLAYER_LEAVE_2"
         },
         "Type": {
           "type": "dword",
@@ -1016,7 +1028,7 @@
         "__struct_id": 0,
         "Name": {
           "type": "cexostring",
-          "value": "ON_PLAYER_ENTER_6"
+          "value": "ON_PLAYER_ENTER_4"
         },
         "Type": {
           "type": "dword",
@@ -1031,7 +1043,7 @@
         "__struct_id": 0,
         "Name": {
           "type": "cexostring",
-          "value": "ON_PLAYER_LEAVE_4"
+          "value": "ON_PLAYER_LEAVE_3"
         },
         "Type": {
           "type": "dword",
@@ -1046,7 +1058,7 @@
         "__struct_id": 0,
         "Name": {
           "type": "cexostring",
-          "value": "ON_PLAYER_ENTER_4"
+          "value": "ON_PLAYER_ENTER_2"
         },
         "Type": {
           "type": "dword",
@@ -1055,771 +1067,6 @@
         "Value": {
           "type": "cexostring",
           "value": "Authorization.OnModuleEnter"
-        }
-      },
-      {
-        "__struct_id": 0,
-        "Name": {
-          "type": "cexostring",
-          "value": "ON_USE_FEAT_1"
-        },
-        "Type": {
-          "type": "dword",
-          "value": 3
-        },
-        "Value": {
-          "type": "cexostring",
-          "value": "Job.Scripts.UseFeat"
-        }
-      },
-      {
-        "__struct_id": 0,
-        "Name": {
-          "type": "cexostring",
-          "value": "FFO_ON_JOB_CHANGED_2"
-        },
-        "Type": {
-          "type": "dword",
-          "value": 3
-        },
-        "Value": {
-          "type": "cexostring",
-          "value": "Job.Scripts.UnequipAllItems"
-        }
-      },
-      {
-        "__struct_id": 0,
-        "Name": {
-          "type": "cexostring",
-          "value": "FFO_ON_JOB_CHANGED_3"
-        },
-        "Type": {
-          "type": "dword",
-          "value": 3
-        },
-        "Value": {
-          "type": "cexostring",
-          "value": "Job.Scripts.AdjustClass"
-        }
-      },
-      {
-        "__struct_id": 0,
-        "Name": {
-          "type": "cexostring",
-          "value": "FFO_ON_JOB_CHANGED_5"
-        },
-        "Type": {
-          "type": "dword",
-          "value": 3
-        },
-        "Value": {
-          "type": "cexostring",
-          "value": "Job.Scripts.RecalculateStats.OnJobChange"
-        }
-      },
-      {
-        "__struct_id": 0,
-        "Name": {
-          "type": "cexostring",
-          "value": "ON_ITEM_HIT_CAST_SPELL_1"
-        },
-        "Type": {
-          "type": "dword",
-          "value": 3
-        },
-        "Value": {
-          "type": "cexostring",
-          "value": "Job.Scripts.TagWeaponUse"
-        }
-      },
-      {
-        "__struct_id": 0,
-        "Name": {
-          "type": "cexostring",
-          "value": "ON_NWNX_EQUIP_ITEM_2"
-        },
-        "Type": {
-          "type": "dword",
-          "value": 3
-        },
-        "Value": {
-          "type": "cexostring",
-          "value": "Item.AttachSystemPropertiesToItem"
-        }
-      },
-      {
-        "__struct_id": 0,
-        "Name": {
-          "type": "cexostring",
-          "value": "FFO_ON_GAIN_JOB_XP_1"
-        },
-        "Type": {
-          "type": "dword",
-          "value": 3
-        },
-        "Value": {
-          "type": "cexostring",
-          "value": "Job.Scripts.GainXP"
-        }
-      },
-      {
-        "__struct_id": 0,
-        "Name": {
-          "type": "cexostring",
-          "value": "FFO_ON_JOB_LEVEL_UP_1"
-        },
-        "Type": {
-          "type": "dword",
-          "value": 3
-        },
-        "Value": {
-          "type": "cexostring",
-          "value": "Job.Scripts.ApplyFeats.OnLevelUp"
-        }
-      },
-      {
-        "__struct_id": 0,
-        "Name": {
-          "type": "cexostring",
-          "value": "FFO_ON_JOB_CHANGED_4"
-        },
-        "Type": {
-          "type": "dword",
-          "value": 3
-        },
-        "Value": {
-          "type": "cexostring",
-          "value": "Job.Scripts.ApplyFeats.OnJobChanged"
-        }
-      },
-      {
-        "__struct_id": 0,
-        "Name": {
-          "type": "cexostring",
-          "value": "FFO_ON_JOB_CHANGED_1"
-        },
-        "Type": {
-          "type": "dword",
-          "value": 3
-        },
-        "Value": {
-          "type": "cexostring",
-          "value": "Job.Scripts.SaveHotBar"
-        }
-      },
-      {
-        "__struct_id": 0,
-        "Name": {
-          "type": "cexostring",
-          "value": "FFO_ON_JOB_CHANGED_6"
-        },
-        "Type": {
-          "type": "dword",
-          "value": 3
-        },
-        "Value": {
-          "type": "cexostring",
-          "value": "Job.Scripts.LoadHotBar"
-        }
-      },
-      {
-        "__struct_id": 0,
-        "Name": {
-          "type": "cexostring",
-          "value": "ON_EXAMINE_1"
-        },
-        "Type": {
-          "type": "dword",
-          "value": 3
-        },
-        "Value": {
-          "type": "cexostring",
-          "value": "Item.ResetDescription"
-        }
-      },
-      {
-        "__struct_id": 0,
-        "Name": {
-          "type": "cexostring",
-          "value": "ON_EXAMINE_2"
-        },
-        "Type": {
-          "type": "dword",
-          "value": 3
-        },
-        "Value": {
-          "type": "cexostring",
-          "value": "Job.Scripts.DisplayAbilityDetails"
-        }
-      },
-      {
-        "__struct_id": 0,
-        "Name": {
-          "type": "cexostring",
-          "value": "ON_NWNX_EQUIP_ITEM_3"
-        },
-        "Type": {
-          "type": "dword",
-          "value": 3
-        },
-        "Value": {
-          "type": "cexostring",
-          "value": "Item.PreventCombatItemSwaps.OnEquipItem"
-        }
-      },
-      {
-        "__struct_id": 0,
-        "Name": {
-          "type": "cexostring",
-          "value": "ON_NWNX_UNEQUIP_ITEM_1"
-        },
-        "Type": {
-          "type": "dword",
-          "value": 3
-        },
-        "Value": {
-          "type": "cexostring",
-          "value": "Item.PreventCombatItemSwaps.OnUnequipItem"
-        }
-      },
-      {
-        "__struct_id": 0,
-        "Name": {
-          "type": "cexostring",
-          "value": "FFO_ON_GAIN_JOB_XP_2"
-        },
-        "Type": {
-          "type": "dword",
-          "value": 3
-        },
-        "Value": {
-          "type": "cexostring",
-          "value": "Job.Scripts.GainAP"
-        }
-      },
-      {
-        "__struct_id": 0,
-        "Name": {
-          "type": "cexostring",
-          "value": "FFO_ON_ABILITY_MASTERED_1"
-        },
-        "Type": {
-          "type": "dword",
-          "value": 3
-        },
-        "Value": {
-          "type": "cexostring",
-          "value": "Job.Scripts.MasterAbility"
-        }
-      },
-      {
-        "__struct_id": 0,
-        "Name": {
-          "type": "cexostring",
-          "value": "ON_EQUIP_ITEM_1"
-        },
-        "Type": {
-          "type": "dword",
-          "value": 3
-        },
-        "Value": {
-          "type": "cexostring",
-          "value": "Job.Scripts.ActiveAbilityCache.CacheAbilitiesOnItem"
-        }
-      },
-      {
-        "__struct_id": 0,
-        "Name": {
-          "type": "cexostring",
-          "value": "ON_UNEQUIP_ITEM_1"
-        },
-        "Type": {
-          "type": "dword",
-          "value": 3
-        },
-        "Value": {
-          "type": "cexostring",
-          "value": "Job.Scripts.ActiveAbilityCache.DecacheAbilitiesOnItem"
-        }
-      },
-      {
-        "__struct_id": 0,
-        "Name": {
-          "type": "cexostring",
-          "value": "ON_PLAYER_ENTER_1"
-        },
-        "Type": {
-          "type": "dword",
-          "value": 3
-        },
-        "Value": {
-          "type": "cexostring",
-          "value": "Item.PreventLoginEquipEvents.MarkPlayerLoggingIn"
-        }
-      },
-      {
-        "__struct_id": 0,
-        "Name": {
-          "type": "cexostring",
-          "value": "ON_PLAYER_ENTER_99"
-        },
-        "Type": {
-          "type": "dword",
-          "value": 3
-        },
-        "Value": {
-          "type": "cexostring",
-          "value": "Item.PreventLoginEquipEvents.UnmarkPlayerLoggingIn"
-        }
-      },
-      {
-        "__struct_id": 0,
-        "Name": {
-          "type": "cexostring",
-          "value": "ON_NWNX_EQUIP_ITEM_1"
-        },
-        "Type": {
-          "type": "dword",
-          "value": 3
-        },
-        "Value": {
-          "type": "cexostring",
-          "value": "Item.PreventLoginEquipEvents.PreventEquipEventOnLogin"
-        }
-      },
-      {
-        "__struct_id": 0,
-        "Name": {
-          "type": "cexostring",
-          "value": "ON_PLAYER_ENTER_3"
-        },
-        "Type": {
-          "type": "dword",
-          "value": 3
-        },
-        "Value": {
-          "type": "cexostring",
-          "value": "Job.Scripts.SetLevelToNormal"
-        }
-      },
-      {
-        "__struct_id": 0,
-        "Name": {
-          "type": "cexostring",
-          "value": "SERVER_ON_DISCONNECT_1"
-        },
-        "Type": {
-          "type": "dword",
-          "value": 3
-        },
-        "Value": {
-          "type": "cexostring",
-          "value": "Job.Scripts.SetLevelTo1"
-        }
-      },
-      {
-        "__struct_id": 0,
-        "Name": {
-          "type": "cexostring",
-          "value": "FFO_ON_JOB_LEVEL_UP_2"
-        },
-        "Type": {
-          "type": "dword",
-          "value": 3
-        },
-        "Value": {
-          "type": "cexostring",
-          "value": "Job.Scripts.RecalculateStats.OnLevelUp"
-        }
-      },
-      {
-        "__struct_id": 0,
-        "Name": {
-          "type": "cexostring",
-          "value": "ON_NWNX_EQUIP_ITEM_4"
-        },
-        "Type": {
-          "type": "dword",
-          "value": 3
-        },
-        "Value": {
-          "type": "cexostring",
-          "value": "Job.Scripts.CheckDualWield"
-        }
-      },
-      {
-        "__struct_id": 0,
-        "Name": {
-          "type": "cexostring",
-          "value": "FFO_ON_STATS_RECALCULATED_1"
-        },
-        "Type": {
-          "type": "dword",
-          "value": 3
-        },
-        "Value": {
-          "type": "cexostring",
-          "value": "Job.Scripts.Traits.ApplyHPBoostTrait"
-        }
-      },
-      {
-        "__struct_id": 0,
-        "Name": {
-          "type": "cexostring",
-          "value": "FFO_ON_STATS_RECALCULATED_2"
-        },
-        "Type": {
-          "type": "dword",
-          "value": 3
-        },
-        "Value": {
-          "type": "cexostring",
-          "value": "Job.Scripts.Traits.ApplyDefenseBonusTrait"
-        }
-      },
-      {
-        "__struct_id": 0,
-        "Name": {
-          "type": "cexostring",
-          "value": "ON_EQUIP_ITEM_2"
-        },
-        "Type": {
-          "type": "dword",
-          "value": 3
-        },
-        "Value": {
-          "type": "cexostring",
-          "value": "Job.Scripts.RecalculateStats.OnEquipItem"
-        }
-      },
-      {
-        "__struct_id": 0,
-        "Name": {
-          "type": "cexostring",
-          "value": "ON_UNEQUIP_ITEM_2"
-        },
-        "Type": {
-          "type": "dword",
-          "value": 3
-        },
-        "Value": {
-          "type": "cexostring",
-          "value": "Job.Scripts.RecalculateStats.OnUnequipItem"
-        }
-      },
-      {
-        "__struct_id": 0,
-        "Name": {
-          "type": "cexostring",
-          "value": "FFO_ON_STATS_RECALCULATED_3"
-        },
-        "Type": {
-          "type": "dword",
-          "value": 3
-        },
-        "Value": {
-          "type": "cexostring",
-          "value": "Job.Scripts.Traits.ApplyWeaponMasteryTrait"
-        }
-      },
-      {
-        "__struct_id": 0,
-        "Name": {
-          "type": "cexostring",
-          "value": "ON_HEARTBEAT_1"
-        },
-        "Type": {
-          "type": "dword",
-          "value": 3
-        },
-        "Value": {
-          "type": "cexostring",
-          "value": "Roleplay.DistributeRoleplayXP"
-        }
-      },
-      {
-        "__struct_id": 0,
-        "Name": {
-          "type": "cexostring",
-          "value": "ON_NWNX_CHAT_3"
-        },
-        "Type": {
-          "type": "dword",
-          "value": 3
-        },
-        "Value": {
-          "type": "cexostring",
-          "value": "Roleplay.ProcessRPMessage"
-        }
-      },
-      {
-        "__struct_id": 0,
-        "Name": {
-          "type": "cexostring",
-          "value": "CREATURE_ON_DAMAGED_2"
-        },
-        "Type": {
-          "type": "dword",
-          "value": 3
-        },
-        "Value": {
-          "type": "cexostring",
-          "value": "AI.Scripts.NPCEnmity.OnDamaged"
-        }
-      },
-      {
-        "__struct_id": 0,
-        "Name": {
-          "type": "cexostring",
-          "value": "CREATURE_ON_ATTACKED_2"
-        },
-        "Type": {
-          "type": "dword",
-          "value": 3
-        },
-        "Value": {
-          "type": "cexostring",
-          "value": "AI.Scripts.NPCEnmity.OnPhysicallyAttacked"
-        }
-      },
-      {
-        "__struct_id": 0,
-        "Name": {
-          "type": "cexostring",
-          "value": "CREATURE_ON_DEATH_2"
-        },
-        "Type": {
-          "type": "dword",
-          "value": 3
-        },
-        "Value": {
-          "type": "cexostring",
-          "value": "AI.Scripts.NPCEnmity.OnDeath"
-        }
-      },
-      {
-        "__struct_id": 0,
-        "Name": {
-          "type": "cexostring",
-          "value": "CREATURE_ON_BLOCKED_1"
-        },
-        "Type": {
-          "type": "dword",
-          "value": 3
-        },
-        "Value": {
-          "type": "cexostring",
-          "value": "AI.Scripts.Default.OnBlocked"
-        }
-      },
-      {
-        "__struct_id": 0,
-        "Name": {
-          "type": "cexostring",
-          "value": "CREATURE_ON_COMBAT_ROUND_END_1"
-        },
-        "Type": {
-          "type": "dword",
-          "value": 3
-        },
-        "Value": {
-          "type": "cexostring",
-          "value": "AI.Scripts.Default.OnCombatRoundEnd"
-        }
-      },
-      {
-        "__struct_id": 0,
-        "Name": {
-          "type": "cexostring",
-          "value": "CREATURE_ON_CONVERSATION_1"
-        },
-        "Type": {
-          "type": "dword",
-          "value": 3
-        },
-        "Value": {
-          "type": "cexostring",
-          "value": "AI.Scripts.Default.OnConversation"
-        }
-      },
-      {
-        "__struct_id": 0,
-        "Name": {
-          "type": "cexostring",
-          "value": "CREATURE_ON_DAMAGED_1"
-        },
-        "Type": {
-          "type": "dword",
-          "value": 3
-        },
-        "Value": {
-          "type": "cexostring",
-          "value": "AI.Scripts.Default.OnDamaged"
-        }
-      },
-      {
-        "__struct_id": 0,
-        "Name": {
-          "type": "cexostring",
-          "value": "CREATURE_ON_DEATH_1"
-        },
-        "Type": {
-          "type": "dword",
-          "value": 3
-        },
-        "Value": {
-          "type": "cexostring",
-          "value": "AI.Scripts.Default.OnDeath"
-        }
-      },
-      {
-        "__struct_id": 0,
-        "Name": {
-          "type": "cexostring",
-          "value": "CREATURE_ON_DISTURBED_1"
-        },
-        "Type": {
-          "type": "dword",
-          "value": 3
-        },
-        "Value": {
-          "type": "cexostring",
-          "value": "AI.Scripts.Default.OnDisturbed"
-        }
-      },
-      {
-        "__struct_id": 0,
-        "Name": {
-          "type": "cexostring",
-          "value": "CREATURE_ON_HEARTBEAT_1"
-        },
-        "Type": {
-          "type": "dword",
-          "value": 3
-        },
-        "Value": {
-          "type": "cexostring",
-          "value": "AI.Scripts.Default.OnHeartbeat"
-        }
-      },
-      {
-        "__struct_id": 0,
-        "Name": {
-          "type": "cexostring",
-          "value": "CREATURE_ON_PERCEPTION_1"
-        },
-        "Type": {
-          "type": "dword",
-          "value": 3
-        },
-        "Value": {
-          "type": "cexostring",
-          "value": "AI.Scripts.Default.OnPerception"
-        }
-      },
-      {
-        "__struct_id": 0,
-        "Name": {
-          "type": "cexostring",
-          "value": "CREATURE_ON_ATTACKED_1"
-        },
-        "Type": {
-          "type": "dword",
-          "value": 3
-        },
-        "Value": {
-          "type": "cexostring",
-          "value": "AI.Scripts.Default.OnPhysicallyAttacked"
-        }
-      },
-      {
-        "__struct_id": 0,
-        "Name": {
-          "type": "cexostring",
-          "value": "CREATURE_ON_RESTED_1"
-        },
-        "Type": {
-          "type": "dword",
-          "value": 3
-        },
-        "Value": {
-          "type": "cexostring",
-          "value": "AI.Scripts.Default.OnRested"
-        }
-      },
-      {
-        "__struct_id": 0,
-        "Name": {
-          "type": "cexostring",
-          "value": "CREATURE_ON_SPAWN_1"
-        },
-        "Type": {
-          "type": "dword",
-          "value": 3
-        },
-        "Value": {
-          "type": "cexostring",
-          "value": "AI.Scripts.Default.OnSpawn"
-        }
-      },
-      {
-        "__struct_id": 0,
-        "Name": {
-          "type": "cexostring",
-          "value": "CREATURE_ON_SPELL_CAST_AT_1"
-        },
-        "Type": {
-          "type": "dword",
-          "value": 3
-        },
-        "Value": {
-          "type": "cexostring",
-          "value": "AI.Scripts.Default.OnSpellCastAt"
-        }
-      },
-      {
-        "__struct_id": 0,
-        "Name": {
-          "type": "cexostring",
-          "value": "CREATURE_ON_USER_DEFINED_1"
-        },
-        "Type": {
-          "type": "dword",
-          "value": 3
-        },
-        "Value": {
-          "type": "cexostring",
-          "value": "AI.Scripts.Default.OnUserDefined"
-        }
-      },
-      {
-        "__struct_id": 0,
-        "Name": {
-          "type": "cexostring",
-          "value": "CREATURE_ON_HEARTBEAT_2"
-        },
-        "Type": {
-          "type": "dword",
-          "value": 3
-        },
-        "Value": {
-          "type": "cexostring",
-          "value": "AI.Scripts.NPCEnmity.CleanUpEnmity"
-        }
-      },
-      {
-        "__struct_id": 0,
-        "Name": {
-          "type": "cexostring",
-          "value": "CREATURE_ON_HEARTBEAT_3"
-        },
-        "Type": {
-          "type": "dword",
-          "value": 3
-        },
-        "Value": {
-          "type": "cexostring",
-          "value": "AI.Scripts.NPCEnmity.AttackHighestEnmity"
         }
       }
     ]

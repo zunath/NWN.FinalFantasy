@@ -14,22 +14,6 @@
                 "type": "byte",
                 "value": 0
               },
-              "LIST": {
-                "type": "list",
-                "value": [
-                  {
-                    "__struct_id": 0,
-                    "NAME": {
-                      "type": "cexostring",
-                      "value": "Spawn Point Template"
-                    },
-                    "RESREF": {
-                      "type": "resref",
-                      "value": "spawn_point"
-                    }
-                  }
-                ]
-              },
               "STRREF": {
                 "type": "dword",
                 "value": 6688
@@ -91,22 +75,6 @@
         "ID": {
           "type": "byte",
           "value": 5
-        },
-        "LIST": {
-          "type": "list",
-          "value": [
-            {
-              "__struct_id": 0,
-              "NAME": {
-                "type": "cexostring",
-                "value": "Default Respawn Point"
-              },
-              "RESREF": {
-                "type": "resref",
-                "value": "death_default_re"
-              }
-            }
-          ]
         },
         "STRREF": {
           "type": "dword",

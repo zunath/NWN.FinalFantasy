@@ -148,7 +148,7 @@
   },
   "Tag": {
     "type": "cexostring",
-    "value": "debug_area"
+    "value": "ooc_area"
   },
   "Tile_List": {
     "type": "list",
@@ -333,7 +333,7 @@
   },
   "Version": {
     "type": "dword",
-    "value": 40
+    "value": 5
   },
   "Width": {
     "type": "int",

@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using NWN.FinalFantasy.CLI.Model;
@@ -30,8 +30,15 @@ namespace NWN.FinalFantasy.CLI
             {
                 if (hak.CompileModels)
                 {
-                    // todo: compile step
+                    Console.WriteLine("Model compilation is currently disabled. Building hakpak without model compilation...");
                     CompileHakpak(hak.Name, hak.Path);
+
+                    //var compilationFolder = $"{_config.OutputPath}compile_{hak.Name}/";
+                    //Directory.CreateDirectory(compilationFolder);
+
+                    //CompileModels(hak.Path, compilationFolder);
+                    //CompileHakpak(hak.Name, compilationFolder);
+                    //Directory.Delete(compilationFolder, true);
                 }
                 else
                 {
@@ -71,6 +78,11 @@ namespace NWN.FinalFantasy.CLI
             Directory.CreateDirectory(_config.OutputPath);
         }
 
+        /// <summary>
+        /// Creates a new background process used for running external programs.
+        /// </summary>
+        /// <param name="command">The command to pass into the cmd instance.</param>
+        /// <returns>A new process</returns>
         private Process CreateProcess(string command)
         {
             var process = new Process
@@ -88,6 +100,11 @@ namespace NWN.FinalFantasy.CLI
             return process;
         }
 
+        /// <summary>
+        /// Compiles files contained in a folder into a hakpak.
+        /// </summary>
+        /// <param name="hakName">The name of the hak without the .hak extension</param>
+        /// <param name="folderPath">The folder where the assets are.</param>
         private void CompileHakpak(string hakName, string folderPath)
         {
             var command = $"nwn_erf -f \"{_config.OutputPath}{hakName}.hak\" -e HAK -c ./{folderPath}";
@@ -106,5 +123,37 @@ namespace NWN.FinalFantasy.CLI
             }
         }
 
+        /// <summary>
+        /// Compiles all models found in a folder and places them into an output folder.
+        /// Any files which don't have a .mdl extension will be copied to the output folder with no changes.
+        /// CompileHakpak should be run on the output folder to build the hak.
+        /// </summary>
+        /// <param name="inputFolder">The source folder containing the assets to compile.</param>
+        /// <param name="outputFolder">The output folder where the compiled (and non-compiled) assets will be moved to.</param>
+        private void CompileModels(string inputFolder, string outputFolder)
+        {
+            // Start by compiling all mdl files
+            var command = $"nwnmdlcomp {inputFolder}*.mdl {outputFolder} -e";
+
+            Console.WriteLine($"Compiling models in folder: {inputFolder}");
+
+            using (var process = CreateProcess(command))
+            {
+                process.Start();
+
+                process.StandardInput.Flush();
+                process.StandardInput.Close();
+
+                process.StandardOutput.ReadToEnd();
+
+                process.WaitForExit();
+            }
+
+            // Now move all non-mdl files over to the output folder.
+            foreach (var file in Directory.GetFiles(inputFolder).Where(x => !x.EndsWith(".mdl")))
+            {
+                File.Copy(file, outputFolder + Path.GetFileName(file));
+            }
+        }
     }
 }

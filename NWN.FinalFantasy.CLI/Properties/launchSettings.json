@@ -2,7 +2,7 @@
   "profiles": {
     "NWN.FinalFantasy.CLI": {
       "commandName": "Project",
-      "commandLineArgs": "-f"
+      "commandLineArgs": "-k"
     }
   }
 }

@@ -14,6 +14,18 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="hakbuilder.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="nwnmdlcomp.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="nwn_erf.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="pcre64.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Templates\furniture_0000.uti.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

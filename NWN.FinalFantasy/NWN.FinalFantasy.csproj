@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -25,6 +25,6 @@
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="python $(SolutionDir)deployBuild.py -b $(ProjectDir)$(OutDir)" />
+    <Exec Command="$(SolutionDir)NWN.Python\deployBuild.exe -b $(ProjectDir)$(OutDir)" />
   </Target>
 </Project>

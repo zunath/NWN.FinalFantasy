@@ -1,4 +1,6 @@
-﻿using NWN.FinalFantasy.Entity;
+﻿using NWN.FinalFantasy.Core;
+using NWN.FinalFantasy.Core.NWScript.Enum;
+using NWN.FinalFantasy.Entity;
 using NWN.FinalFantasy.Service;
 using NWN.FinalFantasy.Service.DialogService;
 using NWN.FinalFantasy.Service.TripleTriadService;
@@ -24,6 +26,8 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
         {
             var builder = new DialogBuilder()
                 .WithDataModel(new Model())
+                .AddInitializationAction(() => SetLocalBool(player, "CARD_MENU_OPEN", true))
+                .AddEndAction(() => DeleteLocalBool(player, "CARD_MENU_OPEN"))
                 .AddPage(MainPageId, MainPageInit)
                 .AddPage(ViewCardLevelsPageId, ViewCardLevelsPageInit)
                 .AddPage(ViewCardsPageId, ViewCardsPageInit)
@@ -107,6 +111,15 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
         private void ManageDecksPageInit(DialogPage page)
         {
 
+        }
+
+        [NWNEventHandler("interval_pc_1s")]
+        public static void DisplayCard()
+        {
+            var player = OBJECT_SELF;
+            if (!GetLocalBool(player, "CARD_MENU_OPEN")) return;
+
+            PostString(player, "a", 0, 0, ScreenAnchor.TopLeft, 10f, Gui.ColorWhite, Gui.ColorWhite, 8888, "fnt_card_1");
         }
 
     }

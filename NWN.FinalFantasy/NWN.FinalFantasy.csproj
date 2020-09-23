@@ -25,6 +25,6 @@
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="xcopy &quot;$(OutDir)&quot; &quot;%25USERPROFILE%25/Documents/Neverwinter Nights/dotnet&quot; /Y /E" />
+    <Exec Command="python $(SolutionDir)deployBuild.py -b $(ProjectDir)$(OutDir)" />
   </Target>
 </Project>

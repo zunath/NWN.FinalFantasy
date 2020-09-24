@@ -20,6 +20,7 @@ namespace NWN.FinalFantasy.Feature
 
             var playerId = GetObjectUUID(player);
             var dbPlayer = DB.Get<Player>(playerId);
+            if (dbPlayer == null) return;
             dbPlayer.HP = GetCurrentHitPoints(player);
 
             DB.Set(playerId, dbPlayer);
@@ -37,6 +38,7 @@ namespace NWN.FinalFantasy.Feature
             var playerId = GetObjectUUID(player);
             var dbPlayer = DB.Get<Player>(playerId);
             if (dbPlayer == null) return;
+            if (dbPlayer.MaxHP <= 0) return; // Check whether MaxHP is initialized
 
             int hp = GetCurrentHitPoints(player);
             int damage;

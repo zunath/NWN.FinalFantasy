@@ -62,7 +62,7 @@
         },
         "ChallengeRating": {
           "type": "float",
-          "value": 0.3333333432674408
+          "value": 0.125
         },
         "ClassList": {
           "type": "list",
@@ -542,7 +542,7 @@
         },
         "XOrientation": {
           "type": "float",
-          "value": 0.1950905472040176
+          "value": 0.195092186331749
         },
         "XPosition": {
           "type": "float",
@@ -550,7 +550,7 @@
         },
         "YOrientation": {
           "type": "float",
-          "value": -0.9807852506637573
+          "value": -0.9807848930358887
         },
         "YPosition": {
           "type": "float",
@@ -577,7 +577,7 @@
         },
         "ChallengeRating": {
           "type": "float",
-          "value": 0.25
+          "value": 0.125
         },
         "ClassList": {
           "type": "list",
@@ -1057,7 +1057,7 @@
         },
         "XOrientation": {
           "type": "float",
-          "value": -0.5758083462715149
+          "value": -0.5758097171783447
         },
         "XPosition": {
           "type": "float",
@@ -1065,7 +1065,7 @@
         },
         "YOrientation": {
           "type": "float",
-          "value": -0.8175846934318543
+          "value": -0.8175837397575378
         },
         "YPosition": {
           "type": "float",
@@ -1092,7 +1092,7 @@
         },
         "ChallengeRating": {
           "type": "float",
-          "value": 0.25
+          "value": 0.125
         },
         "ClassList": {
           "type": "list",
@@ -1572,7 +1572,7 @@
         },
         "XOrientation": {
           "type": "float",
-          "value": 0.9142097234725952
+          "value": 0.9142094254493713
         },
         "XPosition": {
           "type": "float",
@@ -1580,7 +1580,7 @@
         },
         "YOrientation": {
           "type": "float",
-          "value": 0.4052413702011108
+          "value": 0.4052420258522034
         },
         "YPosition": {
           "type": "float",
@@ -1607,7 +1607,7 @@
         },
         "ChallengeRating": {
           "type": "float",
-          "value": 0.25
+          "value": 0.125
         },
         "ClassList": {
           "type": "list",
@@ -2087,7 +2087,7 @@
         },
         "XOrientation": {
           "type": "float",
-          "value": 0.9142097234725952
+          "value": 0.9142094254493713
         },
         "XPosition": {
           "type": "float",
@@ -2095,7 +2095,7 @@
         },
         "YOrientation": {
           "type": "float",
-          "value": 0.4052413702011108
+          "value": 0.4052420258522034
         },
         "YPosition": {
           "type": "float",
@@ -2122,7 +2122,7 @@
         },
         "ChallengeRating": {
           "type": "float",
-          "value": 0.25
+          "value": 0.125
         },
         "ClassList": {
           "type": "list",
@@ -2602,7 +2602,7 @@
         },
         "XOrientation": {
           "type": "float",
-          "value": 3.894143674187944e-007
+          "value": 2.296763113918132e-006
         },
         "XPosition": {
           "type": "float",

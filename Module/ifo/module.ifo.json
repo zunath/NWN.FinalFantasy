@@ -97,6 +97,13 @@
           "type": "resref",
           "value": "gdn_t_5"
         }
+      },
+      {
+        "__struct_id": 6,
+        "Area_Name": {
+          "type": "resref",
+          "value": "tt_arena"
+        }
       }
     ]
   },
@@ -201,6 +208,13 @@
         "Mod_Hak": {
           "type": "cexostring",
           "value": "ffo_t_garden"
+        }
+      },
+      {
+        "__struct_id": 8,
+        "Mod_Hak": {
+          "type": "cexostring",
+          "value": "ffo_triple_triad"
         }
       },
       {
@@ -356,12 +370,47 @@
           "type": "cexostring",
           "value": "wrm_scorche"
         }
+      },
+      {
+        "__struct_id": 8,
+        "Mod_Hak": {
+          "type": "cexostring",
+          "value": "rl_gothic_int"
+        }
+      },
+      {
+        "__struct_id": 8,
+        "Mod_Hak": {
+          "type": "cexostring",
+          "value": "rl_gothicestates"
+        }
+      },
+      {
+        "__struct_id": 8,
+        "Mod_Hak": {
+          "type": "cexostring",
+          "value": "rl_gothicgarden"
+        }
+      },
+      {
+        "__struct_id": 8,
+        "Mod_Hak": {
+          "type": "cexostring",
+          "value": "[dt]starship_0_4"
+        }
+      },
+      {
+        "__struct_id": 8,
+        "Mod_Hak": {
+          "type": "cexostring",
+          "value": "phod_bunkers"
+        }
       }
     ]
   },
   "Mod_ID": {
     "type": "void",
-    "value": "ÿÿÿÿ\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000"
+    "value": "ÿÿÿÿ\u0001\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000"
   },
   "Mod_IsSaveGame": {
     "type": "byte",

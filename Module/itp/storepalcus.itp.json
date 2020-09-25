@@ -25,6 +25,22 @@
                 "type": "byte",
                 "value": 0
               },
+              "LIST": {
+                "type": "list",
+                "value": [
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Player Store"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "player_store"
+                    }
+                  }
+                ]
+              },
               "STRREF": {
                 "type": "dword",
                 "value": 6688

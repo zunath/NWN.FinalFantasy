@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices.ComTypes;
+﻿using System.Collections.Generic;
+using System.Linq;
 using NWN.FinalFantasy.Core;
 using NWN.FinalFantasy.Core.NWNX;
 using NWN.FinalFantasy.Core.NWScript.Enum;
@@ -18,6 +19,8 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
             public CardType SelectedCardType { get; set; }
             public int SelectedDeckId { get; set; }
             public bool IsConfirming { get; set; }
+            public int CurrentCardNumber { get; set; }
+            public Stack<DialogNavigation> NavigationStackBeforeDeckBuilding { get; set; }
         }
 
         private enum Mode
@@ -35,6 +38,9 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
         private const string DeckListPageId = "DECK_LIST_PAGE";
         private const string DeckDetailsPageId = "DECK_DETAILS_PAGE";
         private const string ChangeDeckNamePageId = "CHANGE_DECK_NAME_PAGE";
+        private const string DeckCardSelectionLevelsPageId = "DECK_CARD_SELECTION_LEVELS_PAGE";
+        private const string DeckCardSelectionListPageId = "DECK_CARD_SELECTION_LIST_PAGE";
+        private const string DeckCardSelectionConfirmDeckPageId = "DECK_CARD_SELECTION_CONFIRM_DECK_PAGE";
 
         // Gui details
         private const int CardParts = 6; // Top, Left/Right, Bottom, Background, Graphic, Element (Note: Left/Right are on the same Id)
@@ -45,12 +51,20 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
         // Constants
         private const int MaxDeckNameLength = 30;
 
+        /// <summary>
+        /// When the module loads, reserve enough Gui Ids to display all necessary Gui elements.
+        /// </summary>
         [NWNEventHandler("mod_load")]
         public static void ReserveGuiIds()
         {
             _idReservation = Gui.ReserveIds(nameof(CardDialog), CardParts * DeckSize);
         }
 
+        /// <summary>
+        /// Sets up all pages.
+        /// </summary>
+        /// <param name="player">The player this dialog is being set up for.</param>
+        /// <returns>The constructed player dialog</returns>
         public override PlayerDialog SetUp(uint player)
         {
             var builder = new DialogBuilder()
@@ -63,11 +77,17 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
                 .AddPage(ViewCardDetailsPageId, ViewCardDetailsPageInit)
                 .AddPage(DeckListPageId, DeckListPageInit)
                 .AddPage(DeckDetailsPageId, DeckDetailsPageInit)
-                .AddPage(ChangeDeckNamePageId, ChangeDeckNamePageInit);
+                .AddPage(ChangeDeckNamePageId, ChangeDeckNamePageInit)
+                .AddPage(DeckCardSelectionLevelsPageId, DeckCardSelectionLevelsPageInit)
+                .AddPage(DeckCardSelectionListPageId, DeckCardSelectionListPageInit)
+                .AddPage(DeckCardSelectionConfirmDeckPageId, DeckCardSelectionConfirmDeckPageInit);
 
             return builder.Build();
         }
 
+        /// <summary>
+        /// Clears all temporary variables stored on the player.
+        /// </summary>
         private void ClearTemporaryVariables()
         {
             var player = GetPC();
@@ -77,6 +97,11 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
             DeleteLocalString(player, "CARD_MENU_DECK_NAME");
         }
 
+        /// <summary>
+        /// Clears specific temporary variables stored on the player when they click the back button.
+        /// </summary>
+        /// <param name="oldPage">The old page</param>
+        /// <param name="newPage">The new page</param>
         private void Back(string oldPage, string newPage)
         {
             var player = GetPC();
@@ -98,8 +123,22 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
                 DeleteLocalBool(player, "CARD_MENU_LISTENING_FOR_NAME_CHANGE");
                 DeleteLocalString(player, "CARD_MENU_DECK_NAME");
             }
+
+            if (oldPage == DeckCardSelectionLevelsPageId)
+            {
+                LoadDeckOntoPC(model.SelectedDeckId);
+            }
+
+            if (oldPage == DeckCardSelectionConfirmDeckPageId)
+            {
+                RemoveTopMostCard();
+            }
         }
 
+        /// <summary>
+        /// Handles main page logic. 
+        /// </summary>
+        /// <param name="page">The page to build</param>
         private void MainPageInit(DialogPage page)
         {
             var player = GetPC();
@@ -116,6 +155,10 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
             });
         }
 
+        /// <summary>
+        /// Handles the card level list logic.
+        /// </summary>
+        /// <param name="page">The page to build</param>
         private void ViewCardLevelsPageInit(DialogPage page)
         {
             var model = GetDataModel<Model>();
@@ -132,6 +175,10 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
             }
         }
 
+        /// <summary>
+        /// Handles the card list logic.
+        /// </summary>
+        /// <param name="page">The page to build</param>
         private void ViewCardsPageInit(DialogPage page)
         {
             var model = GetDataModel<Model>();
@@ -162,6 +209,10 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
 
         }
 
+        /// <summary>
+        /// Handles the card details logic.
+        /// </summary>
+        /// <param name="page">The page to build</param>
         private void ViewCardDetailsPageInit(DialogPage page)
         {
             var player = GetPC();
@@ -178,6 +229,10 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
                           $"{ColorToken.Green("Date Acquired: ")} {dateAcquired}";
         }
 
+        /// <summary>
+        /// Handles the deck list logic.
+        /// </summary>
+        /// <param name="page">The page to build</param>
         private void DeckListPageInit(DialogPage page)
         {
             var player = GetPC();
@@ -199,20 +254,24 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
                 page.AddResponse($"Deck #{deck}: {deckName}", () =>
                 {
                     model.SelectedDeckId = deckId;
-                    LoadDeckOntoPC();
+                    LoadDeckOntoPC(deckId);
                     SetLocalInt(player, "CARD_MENU_CURRENT_MODE", (int)Mode.DeckBuilder);
                     ChangePage(DeckDetailsPageId);
                 });
             }
         }
 
-        private void LoadDeckOntoPC()
+        /// <summary>
+        /// Loads a player's deck onto their local variables.
+        /// These local variables are picked up by the Gui display methods.
+        /// This is necessary because script calls do not have access to the dialog's model data.
+        /// </summary>
+        /// <param name="deckId">The deck Id to load.</param>
+        private void LoadDeckOntoPC(int deckId)
         {
             var player = GetPC();
             var playerId = GetObjectUUID(player);
             var dbPlayerTripleTriad = DB.Get<PlayerTripleTriad>(playerId);
-            var model = GetDataModel<Model>();
-            var deckId = model.SelectedDeckId;
             var cardId1 = (int)CardType.Invalid;
             var cardId2 = (int)CardType.Invalid;
             var cardId3 = (int)CardType.Invalid;
@@ -236,6 +295,10 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
 
         }
 
+        /// <summary>
+        /// Handles the deck details logic.
+        /// </summary>
+        /// <param name="page">The page to build</param>
         private void DeckDetailsPageInit(DialogPage page)
         {
             var player = GetPC();
@@ -249,16 +312,24 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
             page.Header = $"{ColorToken.Green("Deck Name: ")} {deck.Name}\n\n" +
                 "What would you like to do with this deck?";
 
+            // Deck Renaming
             page.AddResponse("Change Name", () =>
             {
                 model.IsConfirming = false;
                 ChangePage(ChangeDeckNamePageId);
             });
 
+            // Card Selection
             page.AddResponse("Select Cards", () =>
             {
                 model.IsConfirming = false;
+                LoadDeckOntoPC(-1); // Intentionally blank out the card display since we're picking new cards.
+                model.CurrentCardNumber = 1;
 
+                // Clone the stack. We will revert back to this state when the player finishes building the deck.
+                model.NavigationStackBeforeDeckBuilding = new Stack<DialogNavigation>(NavigationStack.Reverse());
+
+                ChangePage(DeckCardSelectionLevelsPageId);
             });
 
             // Deck Deletion
@@ -272,6 +343,7 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
                         DB.Set(playerId, dbPlayerTripleTriad);
                     }
 
+                    LoadDeckOntoPC(model.SelectedDeckId);
                     model.IsConfirming = false;
                 });
             }
@@ -284,6 +356,10 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
             }
         }
 
+        /// <summary>
+        /// Handles the deck name change logic.
+        /// </summary>
+        /// <param name="page">The page to build</param>
         private void ChangeDeckNamePageInit(DialogPage page)
         {
             var player = GetPC();
@@ -319,6 +395,168 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
             SetLocalBool(player, "CARD_MENU_LISTENING_FOR_NAME_CHANGE", true);
         }
 
+        /// <summary>
+        /// Handles the card selection level logic for deck building.
+        /// This differs from the card viewer in that levels show based on which cards the player owns.
+        /// </summary>
+        /// <param name="page">The page to build.</param>
+        private void DeckCardSelectionLevelsPageInit(DialogPage page)
+        {
+            var player = GetPC();
+            var playerId = GetObjectUUID(player);
+            var dbPlayerTripleTriad = DB.Get<PlayerTripleTriad>(playerId);
+            var model = GetDataModel<Model>();
+            var levels = new HashSet<int>();
+
+            page.Header = "Please select cards to add to this deck.";
+
+            if (model.CurrentCardNumber > 1)
+            {
+                page.AddResponse(ColorToken.Red("Remove Card"), RemoveTopMostCard);
+            }
+
+            foreach (var (cardType, _) in dbPlayerTripleTriad.AvailableCards)
+            {
+                var card = TripleTriad.GetCardByType(cardType);
+
+                if (!card.IsVisibleInMenu) continue;
+
+                if (!levels.Contains(card.Level))
+                    levels.Add(card.Level);
+            }
+
+            page.Header = $"{ColorToken.Green("Select card #")} {model.CurrentCardNumber}";
+
+            foreach (var level in levels)
+            {
+                page.AddResponse($"Level {level}", () =>
+                {
+                    model.SelectedCardLevel = level;
+                    ChangePage(DeckCardSelectionListPageId);
+                });
+            }
+        }
+
+        /// <summary>
+        /// Handles the card selection logic for deck building.
+        /// This differs from the card viewer in that cards show based on which cards the player owns.
+        /// </summary>
+        /// <param name="page">The page to build.</param>
+        private void DeckCardSelectionListPageInit(DialogPage page)
+        {
+            var player = GetPC();
+            var playerId = GetObjectUUID(player);
+            var dbPlayerTripleTriad = DB.Get<PlayerTripleTriad>(playerId);
+            var model = GetDataModel<Model>();
+            var cardsAtLevel = TripleTriad.GetAllCardsAtLevel(model.SelectedCardLevel);
+
+            page.Header = $"{ColorToken.Green("Level: ")} {model.SelectedCardLevel}\n\n" +
+                "Please select cards to add to this deck.";
+
+            if (model.CurrentCardNumber > 1)
+            {
+                page.AddResponse(ColorToken.Red("Remove Card"), RemoveTopMostCard);
+            }
+
+            foreach (var (cardType, card) in cardsAtLevel)
+            {
+                if (!card.IsVisibleInMenu) continue;
+
+                // Only one of each card type can be added to decks.
+                if(IsInActiveDeck(cardType)) continue;
+
+                if (dbPlayerTripleTriad.AvailableCards.ContainsKey(cardType))
+                {
+                    page.AddResponse($"Add: {card.Name}", () =>
+                    {
+                        SetLocalInt(player, $"CARD_MENU_DECK_CARD_{model.CurrentCardNumber}", (int)cardType);
+                        model.CurrentCardNumber++;
+
+                        // This was the last card. 
+                        if (model.CurrentCardNumber > 5)
+                        {
+                            ChangePage(DeckCardSelectionConfirmDeckPageId);
+                        }
+                    });
+                }
+            }
+        }
+
+        /// <summary>
+        /// Handles the card selection 'confirm deck' logic.
+        /// </summary>
+        /// <param name="page">The page to build.</param>
+        private void DeckCardSelectionConfirmDeckPageInit(DialogPage page)
+        {
+            page.Header = "Is this deck okay?";
+
+            page.AddResponse($"{ColorToken.Green("Confirm Deck")}", () =>
+            {
+                var player = GetPC();
+                var playerId = GetObjectUUID(player);
+                var dbPlayerTripleTriad = DB.Get<PlayerTripleTriad>(playerId);
+                var model = GetDataModel<Model>();
+                var deck = dbPlayerTripleTriad.Decks.ContainsKey(model.SelectedDeckId)
+                    ? dbPlayerTripleTriad.Decks[model.SelectedDeckId]
+                    : new CardDeck {Name = "New Deck"};
+
+                deck.Card1 = (CardType)GetLocalInt(player, "CARD_MENU_DECK_CARD_1");
+                deck.Card2 = (CardType)GetLocalInt(player, "CARD_MENU_DECK_CARD_2");
+                deck.Card3 = (CardType)GetLocalInt(player, "CARD_MENU_DECK_CARD_3");
+                deck.Card4 = (CardType)GetLocalInt(player, "CARD_MENU_DECK_CARD_4");
+                deck.Card5 = (CardType)GetLocalInt(player, "CARD_MENU_DECK_CARD_5");
+
+                dbPlayerTripleTriad.Decks[model.SelectedDeckId] = deck;
+                DB.Set(playerId, dbPlayerTripleTriad);
+
+                DeleteLocalInt(player, "CARD_MENU_CURRENT_MODE");
+
+                NavigationStack = model.NavigationStackBeforeDeckBuilding;
+                ChangePage(DeckListPageId, false);
+            });
+        }
+
+        /// <summary>
+        /// Removes the top-most card from the deck builder.
+        /// </summary>
+        private void RemoveTopMostCard()
+        {
+            var player = GetPC();
+            var model = GetDataModel<Model>();
+            var cardNumber = model.CurrentCardNumber;
+            cardNumber--;
+
+            DeleteLocalInt(player, $"CARD_MENU_DECK_CARD_{cardNumber}");
+
+            if (cardNumber < 1)
+                cardNumber = 1;
+
+            model.CurrentCardNumber = cardNumber;
+        }
+
+        /// <summary>
+        /// Checks whether the specified card is in the deck the player is actively building.
+        /// </summary>
+        /// <param name="cardType">The card type to look for.</param>
+        /// <returns>true if the card exists in the active deck, false otherwise</returns>
+        private bool IsInActiveDeck(CardType cardType)
+        {
+            var player = GetPC();
+            var cardTypeId = (int) cardType;
+
+            if (GetLocalInt(player, "CARD_MENU_DECK_CARD_1") == cardTypeId ||
+                GetLocalInt(player, "CARD_MENU_DECK_CARD_2") == cardTypeId ||
+                GetLocalInt(player, "CARD_MENU_DECK_CARD_3") == cardTypeId ||
+                GetLocalInt(player, "CARD_MENU_DECK_CARD_4") == cardTypeId ||
+                GetLocalInt(player, "CARD_MENU_DECK_CARD_5") == cardTypeId)
+                return true;
+
+            return false;
+        }
+
+        /// <summary>
+        /// Handles listening for deck name changes.
+        /// </summary>
         [NWNEventHandler("on_nwnx_chat")]
         public static void ListenForDeckNameChange()
         {
@@ -337,6 +575,9 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
             Chat.SkipMessage();
         }
 
+        /// <summary>
+        /// Handles displaying cards on-screen with PostString.
+        /// </summary>
         [NWNEventHandler("interval_pc_1s")]
         public static void DisplayCards()
         {
@@ -355,6 +596,10 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
             }
         }
 
+        /// <summary>
+        /// Handles displaying the card viewer textures.
+        /// </summary>
+        /// <param name="player">The player to draw for.</param>
         private static void DisplayCardViewer(uint player)
         {
             var selectedCardId = GetLocalInt(player, "CARD_MENU_SELECTED_CARD_ID");
@@ -364,6 +609,10 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
             DrawCard(player, selectedCardType, 20, 7, 1);
         }
 
+        /// <summary>
+        /// Handles displaying a deck's card textures.
+        /// </summary>
+        /// <param name="player">The player to draw for</param>
         private static void DisplayDeck(uint player)
         {
             var cardType1 = (CardType)GetLocalInt(player, "CARD_MENU_DECK_CARD_1");
@@ -379,6 +628,14 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
             DrawCard(player, cardType5, 53, 12, 5);
         }
 
+        /// <summary>
+        /// Draws a single card at a location on the player's screen.
+        /// </summary>
+        /// <param name="player">The player to draw for.</param>
+        /// <param name="cardType">The type of card to draw on screen.</param>
+        /// <param name="x">The X coordinate to draw at.</param>
+        /// <param name="y">The Y coordinate to draw at.</param>
+        /// <param name="deckSlot">The deck card slot to draw at (between 1 and 5)</param>
         private static void DrawCard(uint player, CardType cardType, int x, int y, int deckSlot)
         {
             var card = TripleTriad.GetCardByType(cardType);

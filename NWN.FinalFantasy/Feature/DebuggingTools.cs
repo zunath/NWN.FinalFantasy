@@ -162,20 +162,20 @@ namespace NWN.FinalFantasy.Feature
         [NWNEventHandler("test12")]
         public static void UseCard()
         {
-            var card = OBJECT_SELF;
+            var player = GetLastUsedBy();
+            if (!GetIsPC(player) || GetIsDM(player)) return;
 
-            var val = GetLocalBool(card, "USED");
+            var playerId = GetObjectUUID(player);
+            var dbPlayerTripleTriad = DB.Get<PlayerTripleTriad>(playerId) ?? new PlayerTripleTriad();
 
-            if (val)
+            foreach (var (cardType, card) in TripleTriad.GetAllAvailableCards())
             {
-                AssignCommand(card, () => ClearAllActions());
-                AssignCommand(card, () => ActionPlayAnimation(Animation.PlaceableDeactivate, 1f, 99999f));
+                dbPlayerTripleTriad.AvailableCards[cardType] = DateTime.UtcNow;
             }
-            else
-            {
-                AssignCommand(card, () => ClearAllActions());
-                AssignCommand(card, () => ActionPlayAnimation(Animation.PlaceableActivate, 1f, 99999f));
-            }
+
+            DB.Set(playerId, dbPlayerTripleTriad);
+
+            SendMessageToPC(player, "All Triple Triad cards received! OMGZ");
         }
 
     }

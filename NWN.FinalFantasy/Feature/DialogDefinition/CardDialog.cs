@@ -1,4 +1,5 @@
-﻿using NWN.FinalFantasy.Core;
+﻿using System.Runtime.InteropServices.ComTypes;
+using NWN.FinalFantasy.Core;
 using NWN.FinalFantasy.Core.NWScript.Enum;
 using NWN.FinalFantasy.Entity;
 using NWN.FinalFantasy.Service;
@@ -22,12 +23,24 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
         private const string ViewCardDetailsPageId = "VIEW_CARD_DETAILS_PAGE";
         private const string ManageDecksPageId = "MANAGE_DECKS_PAGE";
 
+        // Gui details
+        private const int CardParts = 6; // Top, Left/Right, Bottom, Background, Graphic, Element (Note: Left/Right are on the same Id)
+        private const int DeckSize = 5;
+        private static Gui.IdReservation _idReservation;
+        private const string TextureGlyph = "a";
+
+        [NWNEventHandler("mod_load")]
+        public static void ReserveGuiIds()
+        {
+            _idReservation = Gui.ReserveIds(nameof(CardDialog), CardParts * DeckSize);
+        }
+
         public override PlayerDialog SetUp(uint player)
         {
             var builder = new DialogBuilder()
                 .WithDataModel(new Model())
-                .AddInitializationAction(() => SetLocalBool(player, "CARD_MENU_OPEN", true))
-                .AddEndAction(() => DeleteLocalBool(player, "CARD_MENU_OPEN"))
+                .AddBackAction((oldPage, newPage) => DeleteLocalInt(GetPC(), "CARD_MENU_SELECTED_CARD_ID"))
+                .AddEndAction(ClearTemporaryVariables)
                 .AddPage(MainPageId, MainPageInit)
                 .AddPage(ViewCardLevelsPageId, ViewCardLevelsPageInit)
                 .AddPage(ViewCardsPageId, ViewCardsPageInit)
@@ -35,6 +48,12 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
                 .AddPage(ManageDecksPageId, ManageDecksPageInit);
 
             return builder.Build();
+        }
+
+        private void ClearTemporaryVariables()
+        {
+            var player = GetPC();
+            DeleteLocalInt(player, "CARD_MENU_SELECTED_CARD_ID");
         }
 
         private void MainPageInit(DialogPage page)
@@ -70,7 +89,7 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
             var availableCards = TripleTriad.GetAllCardsAtLevel(model.SelectedCardLevel);
 
             page.Header = $"{ColorToken.Green("Level: ")} {model.SelectedCardLevel}\n\n" +
-                $"The following is the full list of cards available. Cards in {ColorToken.Green("GREEN")} have been acquired. Those in {ColorToken.Red("RED")} have not. Only one card per type can be collected.\n\n" +
+                $"The following is the list of cards available at this level. Cards in {ColorToken.Green("GREEN")} have been acquired. Those in {ColorToken.Red("RED")} have not. Only one card per type can be collected.\n\n" +
                 "Please select a card.";
 
             foreach (var (type, card) in availableCards)
@@ -84,6 +103,7 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
                 page.AddResponse(option, () =>
                 {
                     model.SelectedCardType = type;
+                    SetLocalInt(player, "CARD_MENU_SELECTED_CARD_ID", (int)model.SelectedCardType);
                     ChangePage(ViewCardDetailsPageId);
                 });
             }
@@ -104,8 +124,6 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
             page.Header = $"{ColorToken.Green("Name: ")} {card.Name}\n" +
                           $"{ColorToken.Green("Level: ")} {card.Level}\n" +
                           $"{ColorToken.Green("Date Acquired: ")} {dateAcquired}";
-
-            // todo: Display a PostString version of the card, power, and element
         }
 
         private void ManageDecksPageInit(DialogPage page)
@@ -114,12 +132,23 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
         }
 
         [NWNEventHandler("interval_pc_1s")]
-        public static void DisplayCard()
+        public static void DisplayCards()
         {
             var player = OBJECT_SELF;
-            if (!GetLocalBool(player, "CARD_MENU_OPEN")) return;
+            var selectedCardId = GetLocalInt(player, "CARD_MENU_SELECTED_CARD_ID");
+            if (selectedCardId <= 0) return;
 
-            PostString(player, "a", 0, 0, ScreenAnchor.TopLeft, 10f, Gui.ColorWhite, Gui.ColorWhite, 8888, "fnt_card_1");
+            var selectedCardType = (CardType) selectedCardId;
+            DrawCard(player, selectedCardType, 37, 1, 1);
+        }
+
+        private static void DrawCard(uint player, CardType cardType, int x, int y, int deckSlot)
+        {
+            var card = TripleTriad.GetCardByType(cardType);
+
+            var startId = _idReservation.StartId + (deckSlot * CardParts);
+            PostString(player, TextureGlyph, x, y, ScreenAnchor.TopLeft, 1f, Gui.ColorWhite, Gui.ColorWhite, startId, card.Texture);
+            PostString(player, TextureGlyph, x, y, ScreenAnchor.TopLeft, 1f, Gui.ColorWhite, Gui.ColorWhite, startId + 1, "fnt_card_back");
         }
 
     }

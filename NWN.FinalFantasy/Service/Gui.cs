@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using NWN.FinalFantasy.Core.NWScript.Enum;
 using static NWN.FinalFantasy.Core.NWScript.NWScript;
 
@@ -6,6 +7,13 @@ namespace NWN.FinalFantasy.Service
 {
     public static class Gui
     {
+        public class IdReservation
+        {
+            public int Count { get; set; }
+            public int StartId { get; set; }
+            public int EndId { get; set; }
+        }
+
         /// <summary>
         /// Name of the texture used for the GUI elements.
         /// </summary>
@@ -55,6 +63,43 @@ namespace NWN.FinalFantasy.Service
         public static int ColorManaBar = Convert.ToInt32("0x00008BFF", 16);
         public static int ColorStaminaBar = Convert.ToInt32("0x008B00FF", 16);
 
+
+        private static int ReservedIdCount;
+
+        private static readonly Dictionary<string, IdReservation> _systemReservedIdCount = new Dictionary<string, IdReservation>();
+
+        /// <summary>
+        /// Reserves the specified number of Ids for a given system.
+        /// </summary>
+        /// <param name="systemName">The name of the system. This should be unique across Id sets.</param>
+        /// <param name="amount">The number of Ids to reserve.</param>
+        /// <returns>An object containing Id reservation details.</returns>
+        public static IdReservation ReserveIds(string systemName, int amount)
+        {
+            // Ids haven't been reserved yet. Do that now.
+            if (!_systemReservedIdCount.ContainsKey(systemName))
+            {
+                _systemReservedIdCount[systemName] = new IdReservation();
+                _systemReservedIdCount[systemName].Count = amount;
+                _systemReservedIdCount[systemName].StartId = ReservedIdCount;
+                _systemReservedIdCount[systemName].EndId = ReservedIdCount + amount - 1;
+
+                ReservedIdCount += amount;
+            }
+
+            return _systemReservedIdCount[systemName];
+        }
+
+        /// <summary>
+        /// Retrieves a system's Id reservation.
+        /// Throws an exception if the system has not yet been registered.
+        /// </summary>
+        /// <param name="systemName">The system to retrieve by.</param>
+        /// <returns>An object containing Id reservation details.</returns>
+        public static IdReservation GetSystemReservation(string systemName)
+        {
+            return _systemReservedIdCount[systemName];
+        }
 
         public static void DrawWindow(uint player, int startId, ScreenAnchor anchor, int x, int y, int width, int height, float lifeTime = 10.0f)
         {

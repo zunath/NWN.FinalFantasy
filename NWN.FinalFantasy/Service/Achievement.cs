@@ -12,7 +12,14 @@ namespace NWN.FinalFantasy.Service
 {
     public static class Achievement
     {
+        private static Gui.IdReservation _idReservation;
         private static readonly Dictionary<AchievementType, AchievementAttribute> _activeAchievements = new Dictionary<AchievementType, AchievementAttribute>();
+
+        [NWNEventHandler("mod_load")]
+        public static void ReserveGuiIds()
+        {
+            _idReservation = Gui.ReserveIds(nameof(Achievement), 6);
+        }
 
         /// <summary>
         /// When the module loads, read all achievement types and store them into the cache.
@@ -65,18 +72,14 @@ namespace NWN.FinalFantasy.Service
         /// </summary>
         private static void DisplayAchievementNotificationWindow(uint player, string name)
         {
-            const int HeaderId = 200;
-            const int NameId = 201;
-            const int WindowId = 202;
-
             const int WindowX = 2;
             const int WindowY = 2;
             const int WindowWidth = 26;
 
             var centerWindowX = Gui.CenterStringInWindow(name, WindowX, WindowWidth);
-            PostString(player, "Achievement Unlocked", centerWindowX-1, WindowY+1, ScreenAnchor.TopLeft, 10.0f, Gui.ColorWhite, Gui.ColorYellow, HeaderId,Gui.TextName);
-            PostString(player, " " + name, centerWindowX-1, WindowY+3, ScreenAnchor.TopLeft, 10.0f, Gui.ColorWhite, Gui.ColorYellow, NameId, Gui.TextName);
-            Gui.DrawWindow(player, WindowId, ScreenAnchor.TopLeft, WindowX, WindowY, WindowWidth, 4);
+            PostString(player, "Achievement Unlocked", centerWindowX-1, WindowY+1, ScreenAnchor.TopLeft, 10.0f, Gui.ColorWhite, Gui.ColorYellow, _idReservation.StartId,Gui.TextName);
+            PostString(player, " " + name, centerWindowX-1, WindowY+3, ScreenAnchor.TopLeft, 10.0f, Gui.ColorWhite, Gui.ColorYellow, _idReservation.StartId + 1, Gui.TextName);
+            Gui.DrawWindow(player, _idReservation.StartId + 2, ScreenAnchor.TopLeft, WindowX, WindowY, WindowWidth, 4);
         }
 
         /// <summary>

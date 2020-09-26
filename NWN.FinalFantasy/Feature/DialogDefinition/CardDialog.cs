@@ -1,5 +1,6 @@
 ﻿using System.Runtime.InteropServices.ComTypes;
 using NWN.FinalFantasy.Core;
+using NWN.FinalFantasy.Core.NWNX;
 using NWN.FinalFantasy.Core.NWScript.Enum;
 using NWN.FinalFantasy.Entity;
 using NWN.FinalFantasy.Service;
@@ -16,6 +17,7 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
             public int SelectedCardLevel { get; set; }
             public CardType SelectedCardType { get; set; }
             public int SelectedDeckId { get; set; }
+            public bool IsConfirming { get; set; }
         }
 
         private enum Mode
@@ -25,18 +27,23 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
             DeckBuilder = 2
         }
 
+        // Page names
         private const string MainPageId = "MAIN_PAGE";
         private const string ViewCardLevelsPageId = "VIEW_CARD_LEVELS_PAGE";
         private const string ViewCardsPageId = "VIEW_CARDS_PAGE";
         private const string ViewCardDetailsPageId = "VIEW_CARD_DETAILS_PAGE";
         private const string DeckListPageId = "DECK_LIST_PAGE";
         private const string DeckDetailsPageId = "DECK_DETAILS_PAGE";
+        private const string ChangeDeckNamePageId = "CHANGE_DECK_NAME_PAGE";
 
         // Gui details
         private const int CardParts = 6; // Top, Left/Right, Bottom, Background, Graphic, Element (Note: Left/Right are on the same Id)
         private const int DeckSize = 5;
         private static Gui.IdReservation _idReservation;
         private const string TextureGlyph = "a";
+
+        // Constants
+        private const int MaxDeckNameLength = 30;
 
         [NWNEventHandler("mod_load")]
         public static void ReserveGuiIds()
@@ -55,7 +62,8 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
                 .AddPage(ViewCardsPageId, ViewCardsPageInit)
                 .AddPage(ViewCardDetailsPageId, ViewCardDetailsPageInit)
                 .AddPage(DeckListPageId, DeckListPageInit)
-                .AddPage(DeckDetailsPageId, DeckDetailsPageInit);
+                .AddPage(DeckDetailsPageId, DeckDetailsPageInit)
+                .AddPage(ChangeDeckNamePageId, ChangeDeckNamePageInit);
 
             return builder.Build();
         }
@@ -65,18 +73,30 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
             var player = GetPC();
             DeleteLocalInt(player, "CARD_MENU_SELECTED_CARD_ID");
             DeleteLocalInt(player, "CARD_MENU_CURRENT_MODE");
+            DeleteLocalBool(player, "CARD_MENU_LISTENING_FOR_NAME_CHANGE");
+            DeleteLocalString(player, "CARD_MENU_DECK_NAME");
         }
 
         private void Back(string oldPage, string newPage)
         {
+            var player = GetPC();
+            var model = GetDataModel<Model>();
+            model.IsConfirming = false;
+
             if (oldPage == ViewCardDetailsPageId)
             {
-                DeleteLocalInt(GetPC(), "CARD_MENU_SELECTED_CARD_ID");
+                DeleteLocalInt(player, "CARD_MENU_SELECTED_CARD_ID");
             }
 
             if (oldPage == DeckDetailsPageId)
             {
-                DeleteLocalInt(GetPC(), "CARD_MENU_CURRENT_MODE");
+                DeleteLocalInt(player, "CARD_MENU_CURRENT_MODE");
+            }
+
+            if (oldPage == ChangeDeckNamePageId)
+            {
+                DeleteLocalBool(player, "CARD_MENU_LISTENING_FOR_NAME_CHANGE");
+                DeleteLocalString(player, "CARD_MENU_DECK_NAME");
             }
         }
 
@@ -218,7 +238,103 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
 
         private void DeckDetailsPageInit(DialogPage page)
         {
+            var player = GetPC();
+            var playerId = GetObjectUUID(player);
+            var dbPlayerTripleTriad = DB.Get<PlayerTripleTriad>(playerId);
+            var model = GetDataModel<Model>();
+            var deck = dbPlayerTripleTriad.Decks.ContainsKey(model.SelectedDeckId)
+                ? dbPlayerTripleTriad.Decks[model.SelectedDeckId]
+                : new CardDeck{ Name = $"Deck #{model.SelectedDeckId}"};
 
+            page.Header = $"{ColorToken.Green("Deck Name: ")} {deck.Name}\n\n" +
+                "What would you like to do with this deck?";
+
+            page.AddResponse("Change Name", () =>
+            {
+                model.IsConfirming = false;
+                ChangePage(ChangeDeckNamePageId);
+            });
+
+            page.AddResponse("Select Cards", () =>
+            {
+                model.IsConfirming = false;
+
+            });
+
+            // Deck Deletion
+            if (model.IsConfirming)
+            {
+                page.AddResponse($"{ColorToken.Red("CONFIRM DELETE DECK")}", () =>
+                {
+                    if (dbPlayerTripleTriad.Decks.ContainsKey(model.SelectedDeckId))
+                    {
+                        dbPlayerTripleTriad.Decks.Remove(model.SelectedDeckId);
+                        DB.Set(playerId, dbPlayerTripleTriad);
+                    }
+
+                    model.IsConfirming = false;
+                });
+            }
+            else
+            {
+                page.AddResponse($"{ColorToken.Red("Delete Deck")}", () =>
+                {
+                    model.IsConfirming = true;
+                });
+            }
+        }
+
+        private void ChangeDeckNamePageInit(DialogPage page)
+        {
+            var player = GetPC();
+            var playerId = GetObjectUUID(player);
+            var dbPlayerTripleTriad = DB.Get<PlayerTripleTriad>(playerId);
+            var model = GetDataModel<Model>();
+            var deck = dbPlayerTripleTriad.Decks.ContainsKey(model.SelectedDeckId)
+                ? dbPlayerTripleTriad.Decks[model.SelectedDeckId]
+                : new CardDeck();
+            var deckName = string.IsNullOrWhiteSpace(deck.Name) ? "[None]" : deck.Name;
+            var selectedDeckName = GetLocalString(player, "CARD_MENU_DECK_NAME");
+            var newDeckName = selectedDeckName;
+            if (string.IsNullOrWhiteSpace(newDeckName))
+                newDeckName = ColorToken.Yellow("[NO CHANGE]");
+
+            page.Header = $"{ColorToken.Green("Current Deck Name: ")} {deckName}\n" +
+                $"{ColorToken.Green("New Deck Name: ")} {newDeckName}\n\n" +
+                $"Please type the new name of your deck into the chat bar. Note that deck names may be no longer than {MaxDeckNameLength} characters. Use 'Refresh' to see the changes. Use 'Set Name' to confirm the change.";
+
+            page.AddResponse(ColorToken.Green("Refresh"), () => { });
+
+            if (!string.IsNullOrWhiteSpace(selectedDeckName))
+            {
+                page.AddResponse("Set Name", () =>
+                {
+                    deck.Name = selectedDeckName;
+                    DeleteLocalString(player, "CARD_MENU_DECK_NAME");
+
+                    DB.Set(playerId, dbPlayerTripleTriad);
+                });
+            }
+
+            SetLocalBool(player, "CARD_MENU_LISTENING_FOR_NAME_CHANGE", true);
+        }
+
+        [NWNEventHandler("on_nwnx_chat")]
+        public static void ListenForDeckNameChange()
+        {
+            var player = Chat.GetSender();
+            if (!GetLocalBool(player, "CARD_MENU_LISTENING_FOR_NAME_CHANGE")) return;
+
+            var message = Chat.GetMessage();
+            if (message.Length > MaxDeckNameLength)
+            {
+                message = message.Substring(0, MaxDeckNameLength);
+            }
+
+            SetLocalString(player, "CARD_MENU_DECK_NAME", message);
+            SendMessageToPC(player, "Press 'Refresh' to see changes.");
+
+            Chat.SkipMessage();
         }
 
         [NWNEventHandler("interval_pc_1s")]
@@ -274,12 +390,22 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
             var leftPower = card.LeftPower > 9 ? "A" : card.LeftPower.ToString();
             var rightPower = card.RightPower > 9 ? "A" : card.RightPower.ToString();
 
-            PostString(player, topPower, x + 3, y+1, ScreenAnchor.TopLeft, 1f, Gui.ColorWhite, Gui.ColorWhite, startId, Gui.TextName);
-            PostString(player, leftPower + " " + rightPower, x + 2, y+2, ScreenAnchor.TopLeft, 1f, Gui.ColorWhite, Gui.ColorWhite, startId + 1, Gui.TextName);
-            PostString(player, bottomPower, x + 3, y+3, ScreenAnchor.TopLeft, 1f, Gui.ColorWhite, Gui.ColorWhite, startId + 2, Gui.TextName);
-            PostString(player, TextureGlyph, x + 10, y + 1, ScreenAnchor.TopLeft, 1f, Gui.ColorWhite, Gui.ColorWhite, startId + 3, elementTexture);
-            PostString(player, TextureGlyph, x, y, ScreenAnchor.TopLeft, 1f, Gui.ColorWhite, Gui.ColorWhite, startId + 4, card.Texture);
-            PostString(player, TextureGlyph, x, y, ScreenAnchor.TopLeft, 1f, Gui.ColorWhite, Gui.ColorWhite, startId + 5, "fnt_card_back");
+            // Display the power ranks if all of them are greater than zero.
+            if (card.TopPower > 0 && card.BottomPower > 0 && card.LeftPower > 0 && card.RightPower > 0)
+            {
+                PostString(player, topPower, x + 3, y + 1, ScreenAnchor.TopLeft, 1.1f, Gui.ColorWhite, Gui.ColorWhite, startId, Gui.TextName);
+                PostString(player, leftPower + " " + rightPower, x + 2, y + 2, ScreenAnchor.TopLeft, 1.1f, Gui.ColorWhite, Gui.ColorWhite, startId + 1, Gui.TextName);
+                PostString(player, bottomPower, x + 3, y + 3, ScreenAnchor.TopLeft, 1.1f, Gui.ColorWhite, Gui.ColorWhite, startId + 2, Gui.TextName);
+            }
+            // Otherwise assume a card isn't selected. Only display the card deck slot in this case.
+            else
+            {
+                PostString(player, $"Card #{deckSlot}", x + 3, y + 1, ScreenAnchor.TopLeft, 1.1f, Gui.ColorWhite, Gui.ColorWhite, startId, Gui.TextName);
+            }
+
+            PostString(player, TextureGlyph, x + 10, y + 1, ScreenAnchor.TopLeft, 1.1f, Gui.ColorWhite, Gui.ColorWhite, startId + 3, elementTexture);
+            PostString(player, TextureGlyph, x, y, ScreenAnchor.TopLeft, 1.1f, Gui.ColorWhite, Gui.ColorWhite, startId + 4, card.Texture);
+            PostString(player, TextureGlyph, x, y, ScreenAnchor.TopLeft, 1.1f, Gui.ColorWhite, Gui.ColorWhite, startId + 5, "fnt_card_back");
         }
 
     }

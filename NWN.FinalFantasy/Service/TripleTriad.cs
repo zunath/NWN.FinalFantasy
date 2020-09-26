@@ -757,6 +757,8 @@ namespace NWN.FinalFantasy.Service
         /// <param name="y">The Y position of the card that was just placed</param>
         private static void CardFight(string gameId, int x, int y)
         {
+            var state = GameStates[gameId];
+
             int DeterminePower(CardType cardType, CardDirection direction)
             {
                 var card = AvailableCards[cardType];
@@ -795,16 +797,21 @@ namespace NWN.FinalFantasy.Service
                     defender.CurrentOwner = attacker.CurrentOwner;
                 }
 
-                // todo: "Same" rule would go here. If same power, attacker gets control
+                // "Same" rule - If ranks are the same, attacker gains ownership
+                if (state.Rules.HasFlag(CardRuleType.Same))
+                {
+                    if (attackerPower == defenderPower)
+                    {
+                        defender.CurrentOwner = attacker.CurrentOwner;
+                    }
+                }
 
                 // todo: "Combo" rule would go here.
-
 
                 FlipBoardCard(gameId, attacker.Placeable);
                 FlipBoardCard(gameId, defender.Placeable);
             }
 
-            var state = GameStates[gameId];
             var boardCard = state.Board[x, y];
 
             // Row 1

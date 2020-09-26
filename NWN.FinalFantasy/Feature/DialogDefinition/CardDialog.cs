@@ -139,16 +139,26 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
             if (selectedCardId <= 0) return;
 
             var selectedCardType = (CardType) selectedCardId;
-            DrawCard(player, selectedCardType, 37, 1, 1);
+            DrawCard(player, selectedCardType, 20, 7, 1);
         }
 
         private static void DrawCard(uint player, CardType cardType, int x, int y, int deckSlot)
         {
             var card = TripleTriad.GetCardByType(cardType);
+            var elementTexture = TripleTriad.GetElementTexture(card.Element);
 
             var startId = _idReservation.StartId + (deckSlot * CardParts);
-            PostString(player, TextureGlyph, x, y, ScreenAnchor.TopLeft, 1f, Gui.ColorWhite, Gui.ColorWhite, startId, card.Texture);
-            PostString(player, TextureGlyph, x, y, ScreenAnchor.TopLeft, 1f, Gui.ColorWhite, Gui.ColorWhite, startId + 1, "fnt_card_back");
+            var topPower = card.TopPower > 9 ? "A" : card.TopPower.ToString();
+            var bottomPower = card.BottomPower > 9 ? "A" : card.BottomPower.ToString();
+            var leftPower = card.LeftPower > 9 ? "A" : card.LeftPower.ToString();
+            var rightPower = card.RightPower > 9 ? "A" : card.RightPower.ToString();
+
+            PostString(player, topPower, x + 3, y+1, ScreenAnchor.TopLeft, 1f, Gui.ColorWhite, Gui.ColorWhite, startId, Gui.TextName);
+            PostString(player, leftPower + " " + rightPower, x + 2, y+2, ScreenAnchor.TopLeft, 1f, Gui.ColorWhite, Gui.ColorWhite, startId + 1, Gui.TextName);
+            PostString(player, bottomPower, x + 3, y+3, ScreenAnchor.TopLeft, 1f, Gui.ColorWhite, Gui.ColorWhite, startId + 2, Gui.TextName);
+            PostString(player, TextureGlyph, x + 10, y + 1, ScreenAnchor.TopLeft, 1f, Gui.ColorWhite, Gui.ColorWhite, startId + 3, elementTexture);
+            PostString(player, TextureGlyph, x, y, ScreenAnchor.TopLeft, 1f, Gui.ColorWhite, Gui.ColorWhite, startId + 4, card.Texture);
+            PostString(player, TextureGlyph, x, y, ScreenAnchor.TopLeft, 1f, Gui.ColorWhite, Gui.ColorWhite, startId + 5, "fnt_card_back");
         }
 
     }

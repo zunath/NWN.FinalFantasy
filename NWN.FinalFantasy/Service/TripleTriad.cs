@@ -554,7 +554,7 @@ namespace NWN.FinalFantasy.Service
         /// </summary>
         /// <param name="elementType">The card's element type</param>
         /// <returns>A texture string matching the specified element type.</returns>
-        private static string GetElementTexture(CardElementType elementType)
+        public static string GetElementTexture(CardElementType elementType)
         {
             switch (elementType)
             {

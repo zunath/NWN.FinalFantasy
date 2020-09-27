@@ -3,9 +3,11 @@ using NWN.FinalFantasy.Core;
 using NWN.FinalFantasy.Core.NWNX;
 using NWN.FinalFantasy.Core.NWScript;
 using NWN.FinalFantasy.Core.NWScript.Enum;
+using NWN.FinalFantasy.Entity;
 using NWN.FinalFantasy.Enumeration;
 using NWN.FinalFantasy.Feature.DialogDefinition;
 using NWN.FinalFantasy.Service;
+using NWN.FinalFantasy.Service.TripleTriadService;
 using static NWN.FinalFantasy.Core.NWScript.NWScript;
 using Dialog = NWN.FinalFantasy.Service.Dialog;
 using Skill = NWN.FinalFantasy.Service.Skill;
@@ -86,5 +88,51 @@ namespace NWN.FinalFantasy.Feature
             var player = GetLastUsedBy();
             GiveGoldToCreature(player, 5000);
         }
+
+        [NWNEventHandler("test11")]
+        public static void SimulateTripleTriad()
+        {
+            var player1 = GetFirstPC();
+            var player2 = GetNextPC();
+
+            // Single player mode
+            if (!GetIsObjectValid(player2))
+            {
+                var player = GetLastUsedBy();
+                var deck1 = TripleTriad.BuildRandomDeck(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+                var deck2 = TripleTriad.BuildRandomDeck(10, 9, 8, 7);
+
+                TripleTriad.StartGame(player, deck1, player, deck2);
+            }
+
+            // Two player mode
+            else
+            {
+                var deck1 = TripleTriad.BuildRandomDeck(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+                var deck2 = TripleTriad.BuildRandomDeck(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+
+                TripleTriad.StartGame(player1, deck1, player2, deck2);
+            }
+        }
+
+        [NWNEventHandler("test12")]
+        public static void UseCard()
+        {
+            var player = GetLastUsedBy();
+            if (!GetIsPC(player) || GetIsDM(player)) return;
+
+            var playerId = GetObjectUUID(player);
+            var dbPlayerTripleTriad = DB.Get<PlayerTripleTriad>(playerId) ?? new PlayerTripleTriad();
+
+            foreach (var (cardType, card) in TripleTriad.GetAllAvailableCards())
+            {
+                dbPlayerTripleTriad.AvailableCards[cardType] = DateTime.UtcNow;
+            }
+
+            DB.Set(playerId, dbPlayerTripleTriad);
+
+            SendMessageToPC(player, "All Triple Triad cards received! OMGZ");
+        }
+
     }
 }

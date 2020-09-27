@@ -9,19 +9,15 @@ namespace NWN.FinalFantasy.Feature
 {
     public static class PlayerStatusWindow
     {
-        private const int HPTextGuiID = 1;
-        private const int MPTextGuiID = 2;
-        private const int STMTextGuiID = 3;
-
-        private const int HPGuiID = 4;
-        private const int MPGuiID = 5;
-        private const int STMGuiID = 6;
-
-        private const int HPBackgroundGuiID = 7;
-        private const int MPBackgroundGuiID = 8;
-        private const int STMBackgroundGuiID = 9;
+        private static Gui.IdReservation _idReservation;
 
         private const int WindowId = 10;
+
+        [NWNEventHandler("mod_load")]
+        public static void ReserveIds()
+        {
+            _idReservation = Gui.ReserveIds(nameof(PlayerStatusWindow), 14);
+        }
 
         /// <summary>
         /// On module heartbeat, draws all GUI elements on every player's screen.
@@ -66,23 +62,23 @@ namespace NWN.FinalFantasy.Feature
             var mpText = "MP:".PadRight(5, ' ') + $"{currentMP.ToString().PadLeft(4, ' ')} / {maxMP.ToString().PadLeft(4, ' ')}";
             var stmText = "STM:".PadRight(5, ' ') + $"{currentSTM.ToString().PadLeft(4, ' ')} / {maxSTM.ToString().PadLeft(4, ' ')}";
             
-            PostString(player, hpText, centerWindowX + 8, windowY + 1, ScreenAnchor.TopRight, 0.0f, Gui.ColorWhite, Gui.ColorWhite, HPTextGuiID, Gui.TextName);
-            PostString(player, mpText, centerWindowX + 8, windowY + 2, ScreenAnchor.TopRight, 0.0f, Gui.ColorWhite, Gui.ColorWhite, MPTextGuiID, Gui.TextName);
-            PostString(player, stmText, centerWindowX + 8, windowY + 3, ScreenAnchor.TopRight, 0.0f, Gui.ColorWhite, Gui.ColorWhite, STMTextGuiID, Gui.TextName);
+            PostString(player, hpText, centerWindowX + 8, windowY + 1, ScreenAnchor.TopRight, 0.0f, Gui.ColorWhite, Gui.ColorWhite, _idReservation.StartId, Gui.TextName);
+            PostString(player, mpText, centerWindowX + 8, windowY + 2, ScreenAnchor.TopRight, 0.0f, Gui.ColorWhite, Gui.ColorWhite, _idReservation.StartId + 1, Gui.TextName);
+            PostString(player, stmText, centerWindowX + 8, windowY + 3, ScreenAnchor.TopRight, 0.0f, Gui.ColorWhite, Gui.ColorWhite, _idReservation.StartId + 2, Gui.TextName);
 
             // Draw the bars
-            PostString(player, hpBar, centerWindowX + 2, windowY + 1, ScreenAnchor.TopRight, 0.0f, Gui.ColorHealthBar, Gui.ColorHealthBar, HPGuiID, Gui.FontName);
-            PostString(player, mpBar, centerWindowX + 2, windowY + 2, ScreenAnchor.TopRight, 0.0f, Gui.ColorManaBar, Gui.ColorManaBar, MPGuiID, Gui.FontName);
-            PostString(player, stmBar, centerWindowX + 2, windowY + 3, ScreenAnchor.TopRight, 0.0f, Gui.ColorStaminaBar, Gui.ColorStaminaBar, STMGuiID, Gui.FontName);
+            PostString(player, hpBar, centerWindowX + 2, windowY + 1, ScreenAnchor.TopRight, 0.0f, Gui.ColorHealthBar, Gui.ColorHealthBar, _idReservation.StartId + 3, Gui.FontName);
+            PostString(player, mpBar, centerWindowX + 2, windowY + 2, ScreenAnchor.TopRight, 0.0f, Gui.ColorManaBar, Gui.ColorManaBar, _idReservation.StartId + 4, Gui.FontName);
+            PostString(player, stmBar, centerWindowX + 2, windowY + 3, ScreenAnchor.TopRight, 0.0f, Gui.ColorStaminaBar, Gui.ColorStaminaBar, _idReservation.StartId + 5, Gui.FontName);
 
             // Draw the backgrounds
             if (!GetLocalBool(player, "PLAYERSTATUSWINDOW_BACKGROUND_DRAWN"))
             {
-                PostString(player, backgroundBar, centerWindowX + 2, windowY + 1, ScreenAnchor.TopRight, 0.0f, Gui.ColorBlack, Gui.ColorBlack, HPBackgroundGuiID, Gui.FontName);
-                PostString(player, backgroundBar, centerWindowX + 2, windowY + 2, ScreenAnchor.TopRight, 0.0f, Gui.ColorBlack, Gui.ColorBlack, MPBackgroundGuiID, Gui.FontName);
-                PostString(player, backgroundBar, centerWindowX + 2, windowY + 3, ScreenAnchor.TopRight, 0.0f, Gui.ColorBlack, Gui.ColorBlack, STMBackgroundGuiID, Gui.FontName);
+                PostString(player, backgroundBar, centerWindowX + 2, windowY + 1, ScreenAnchor.TopRight, 0.0f, Gui.ColorBlack, Gui.ColorBlack, _idReservation.StartId + 6, Gui.FontName);
+                PostString(player, backgroundBar, centerWindowX + 2, windowY + 2, ScreenAnchor.TopRight, 0.0f, Gui.ColorBlack, Gui.ColorBlack, _idReservation.StartId + 7, Gui.FontName);
+                PostString(player, backgroundBar, centerWindowX + 2, windowY + 3, ScreenAnchor.TopRight, 0.0f, Gui.ColorBlack, Gui.ColorBlack, _idReservation.StartId + 8, Gui.FontName);
 
-                Gui.DrawWindow(player, WindowId, ScreenAnchor.TopRight, windowX, windowY, windowWidth-2, 3);
+                Gui.DrawWindow(player, _idReservation.StartId + 9, ScreenAnchor.TopRight, windowX, windowY, windowWidth-2, 3);
             }
         }
 

@@ -11,10 +11,13 @@ namespace NWN.FinalFantasy.Feature
     {
         /// <summary>
         /// Saves a player's position to the database.
+        /// Does nothing for NPCs and DMs.
         /// </summary>
         /// <param name="player">The player whose data will be stored to the database.</param>
-        private static void PerformSave(uint player)
+        public static void SaveLocation(uint player)
         {
+            if (!GetIsPC(player) || GetIsDM(player)) return;
+
             var area = GetArea(player);
             var position = GetPosition(player);
             var orientation = GetFacing(player);
@@ -44,7 +47,7 @@ namespace NWN.FinalFantasy.Feature
             // If the area isn't in the cache, it must be an instance. Don't save locations inside instances.
             if (Cache.GetAreaByResref(areaResref) == OBJECT_INVALID) return;
 
-            PerformSave(player);
+            SaveLocation(player);
         }
 
         /// <summary>
@@ -56,7 +59,7 @@ namespace NWN.FinalFantasy.Feature
             var player = GetLastPCRested();
             if (!GetIsPC(player) || GetIsDM(player) || GetLastRestEventType() != RestEventType.Started) return;
 
-            PerformSave(player);
+            SaveLocation(player);
         }
 
         /// <summary>
@@ -68,14 +71,14 @@ namespace NWN.FinalFantasy.Feature
             var player = GetExitingObject();
             if (!GetIsPC(player) || GetIsDM(player)) return;
 
-            PerformSave(player);
+            SaveLocation(player);
         }
 
         /// <summary>
         /// Loads a player's location if they enter an area with the tag "ooc_area".
         /// </summary>
         [NWNEventHandler("area_enter")]
-        public static void LoadLocation()
+        public static void LoadLocationOnEnter()
         {
             var player = GetEnteringObject();
             var area = GetArea(player);
@@ -83,6 +86,18 @@ namespace NWN.FinalFantasy.Feature
 
             // Must be a player entering the OOC entry area, otherwise we exit early.
             if (!GetIsPC(player) || GetIsDM(player) || areaTag != "ooc_area") return;
+
+            LoadLocation(player);
+        }
+
+        /// <summary>
+        /// Loads a player's persistent location from the database and jumps them there.
+        /// Does not work for DMs or NPCs.
+        /// </summary>
+        /// <param name="player"></param>
+        public static void LoadLocation(uint player)
+        {
+            if (!GetIsPC(player) || GetIsDM(player)) return;
 
             var playerID = GetObjectUUID(player);
             var dbPlayer = DB.Get<Player>(playerID);

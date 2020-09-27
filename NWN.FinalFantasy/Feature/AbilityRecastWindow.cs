@@ -11,9 +11,13 @@ namespace NWN.FinalFantasy.Feature
     public static class AbilityRecastWindow
     {
         private const int MaxNumberOfRecastTimers = 10;
+        private static Gui.IdReservation _idReservation;
 
-        private const int RecastStartId = 50;
-        private const int WindowId = 61;
+        [NWNEventHandler("mod_load")]
+        public static void ReserveGuiIds()
+        {
+            _idReservation = Gui.ReserveIds(nameof(AbilityRecastWindow), MaxNumberOfRecastTimers * 2);
+        }
 
         [NWNEventHandler("interval_pc_1s")]
         public static void DrawGuiElements()
@@ -44,12 +48,12 @@ namespace NWN.FinalFantasy.Feature
                 var centerWindowX = Gui.CenterStringInWindow(text, WindowX, WindowWidth);
 
                 numberOfRecasts++;
-                PostString(player, text, centerWindowX+2, WindowY + numberOfRecasts, ScreenAnchor.TopRight, 1.1f, Gui.ColorWhite, Gui.ColorWhite, RecastStartId + numberOfRecasts, Gui.TextName);
+                PostString(player, text, centerWindowX+2, WindowY + numberOfRecasts, ScreenAnchor.TopRight, 1.1f, Gui.ColorWhite, Gui.ColorWhite, _idReservation.StartId + numberOfRecasts, Gui.TextName);
             }
 
             if (numberOfRecasts > 0)
             {
-                Gui.DrawWindow(player, WindowId, ScreenAnchor.TopRight, WindowX, WindowY, WindowWidth-2, 1 + numberOfRecasts, 1.1f);
+                Gui.DrawWindow(player, _idReservation.StartId + MaxNumberOfRecastTimers, ScreenAnchor.TopRight, WindowX, WindowY, WindowWidth-2, 1 + numberOfRecasts, 1.1f);
             }
         }
 

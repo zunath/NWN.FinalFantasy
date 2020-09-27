@@ -1676,7 +1676,7 @@
         },
         "Conversation": {
           "type": "resref",
-          "value": ""
+          "value": "demo_card_game"
         },
         "CRAdjust": {
           "type": "int",
@@ -1737,7 +1737,7 @@
           "id": 12634,
           "type": "cexolocstring",
           "value": {
-            "0": "Boy"
+            "0": "Card Boy"
           }
         },
         "fortbonus": {

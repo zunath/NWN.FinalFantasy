@@ -259,8 +259,45 @@ namespace NWN.FinalFantasy.Service
             CardDeck player2Deck,
             CardRuleType rules = CardRuleType.None)
         {
+            uint WarpOrCloneIntoArena(uint player, uint area, string locationId)
+            {
+                var playerStartLocation = GetLocalLocation(area, locationId);
+                // Players get warped into the arena.
+                if (GetIsPC(player))
+                {
+                    SetLocalLocation(player, "TRIPLE_TRIAD_WARP_POINT", GetLocation(player));
+
+                    AssignCommand(player, () => ActionJumpToLocation(playerStartLocation));
+                }
+                // NPCs are cloned in the arena.
+                else
+                {
+                    player = CopyObject(player, playerStartLocation);
+                    SetImmortal(player, true);
+
+                    SetEventScript(player, EventScript.Creature_OnHeartbeat, string.Empty);
+                    SetEventScript(player, EventScript.Creature_OnNotice, string.Empty);
+                    SetEventScript(player, EventScript.Creature_OnSpellCastAt, string.Empty);
+                    SetEventScript(player, EventScript.Creature_OnMeleeAttacked, string.Empty);
+                    SetEventScript(player, EventScript.Creature_OnDamaged, string.Empty);
+                    SetEventScript(player, EventScript.Creature_OnDisturbed, string.Empty);
+                    SetEventScript(player, EventScript.Creature_OnEndCombatRound, string.Empty);
+                    SetEventScript(player, EventScript.Creature_OnDialogue, string.Empty);
+                    SetEventScript(player, EventScript.Creature_OnSpawnIn, string.Empty);
+                    SetEventScript(player, EventScript.Creature_OnRested, string.Empty);
+                    SetEventScript(player, EventScript.Creature_OnDeath, string.Empty);
+                    SetEventScript(player, EventScript.Creature_OnUserDefined, string.Empty);
+                    SetEventScript(player, EventScript.Creature_OnBlockedByDoor, string.Empty);
+                }
+
+                return player;
+            }
+
             var arenaArea = CreateArena();
-            
+
+            player1 = WarpOrCloneIntoArena(player1, arenaArea, "PLAYER_1_START");
+            player2 = WarpOrCloneIntoArena(player2, arenaArea, "PLAYER_2_START");
+
             // Register the game state
             var state = new CardGameState(arenaArea, player1, player2);
             var gameId = Guid.NewGuid().ToString();
@@ -282,22 +319,6 @@ namespace NWN.FinalFantasy.Service
             state.Players[CardPlayerType.Player2].Hand[3].Type = player2Deck.Card3;
             state.Players[CardPlayerType.Player2].Hand[4].Type = player2Deck.Card4;
             state.Players[CardPlayerType.Player2].Hand[5].Type = player2Deck.Card5;
-
-            if (GetIsPC(player1))
-            {
-                SetLocalLocation(player1, "TRIPLE_TRIAD_WARP_POINT", GetLocation(player1));
-
-                var playerStartLocation1 = GetLocalLocation(arenaArea, "PLAYER_1_START");
-                AssignCommand(player1, () => ActionJumpToLocation(playerStartLocation1));
-            }
-
-            if (GetIsPC(player2))
-            {
-                SetLocalLocation(player2, "TRIPLE_TRIAD_WARP_POINT", GetLocation(player2));
-
-                var playerStartLocation2 = GetLocalLocation(arenaArea, "PLAYER_2_START");
-                AssignCommand(player2, () => ActionJumpToLocation(playerStartLocation2));
-            }
         }
 
         /// <summary>
@@ -426,6 +447,7 @@ namespace NWN.FinalFantasy.Service
         private static bool ProcessEndGameLogic(string gameId)
         {
             var state = GameStates[gameId];
+            if (state.IsGameCleaningUp) return true;
 
             // Is game ending normally?
             if (state.IsGameEnding)
@@ -435,14 +457,24 @@ namespace NWN.FinalFantasy.Service
 
                 if (state.GameEndingTicks >= 3) // Roughly 18 seconds after ending, the game will clean up.
                 {
-                    // Send the players back to their saved locations if they're still in the arena.
-                    foreach (var player in state.Players)
+                    foreach (var (_, value) in state.Players)
                     {
-                        AssignCommand(player.Value.Player, () =>
+                        var player = value.Player;
+
+                        // Send the players back to their saved locations if they're still in the arena.
+                        if (GetIsPC(player))
                         {
-                            ClearAllActions();
-                            ActionJumpToLocation(GetLocalLocation(player.Value.Player, "TRIPLE_TRIAD_WARP_POINT"));
-                        });
+                            AssignCommand(player, () =>
+                            {
+                                ClearAllActions();
+                                ActionJumpToLocation(GetLocalLocation(value.Player, "TRIPLE_TRIAD_WARP_POINT"));
+                            });
+                        }
+                        // NPCs get destroyed instead.
+                        else
+                        {
+                            DestroyObject(player);
+                        }
                     }
 
                     // Clear game state and area.
@@ -452,7 +484,7 @@ namespace NWN.FinalFantasy.Service
                         GameStates.Remove(gameId);
                     });
 
-                    state.IsGameEnding = false;
+                    state.IsGameCleaningUp = true;
                 }
 
                 return true;
@@ -492,11 +524,47 @@ namespace NWN.FinalFantasy.Service
         private static void ProcessNPCLogic(string gameId, CardPlayerType playerNumber)
         {
             var state = GameStates[gameId];
-            var player = state.Players[playerNumber].Player;
+            var playerData = state.Players[playerNumber];
+            var player = playerData.Player;
 
             if (GetIsPC(player)) return; // Not an NPC, so exit early.
             if (state.CurrentPlayerTurn != playerNumber) return; // Not the NPC's turn, skip for now.
 
+            // NPC player makes a decision roughly every 12 seconds.
+            playerData.DecisionCounter++;
+            if (playerData.DecisionCounter < 2) return;
+
+            // todo: Make this logic smarter.
+
+            // Pick a random card to play.
+            var cardToPlay = playerData.Hand.ElementAt(Random.Next(playerData.Hand.Count));
+            var card = AvailableCards[cardToPlay.Value.Type];
+
+            // Identify the open board positions.
+            var availableSlots = new List<Tuple<int, int>>();
+
+            for (var x = 0; x <= 2; x++)
+            {
+                for (var y = 0; y <= 2; y++)
+                {
+                    if (state.Board[x, y].CardType == CardType.Invalid)
+                    {
+                        availableSlots.Add(new Tuple<int, int>(x, y));
+                    }
+                }
+            }
+
+            // Pick a position to play at randomly.
+            var index = Random.Next(availableSlots.Count - 1);
+            var (boardX, boardY) = availableSlots[index];
+
+            // Update the selected card.
+            state.Players[playerNumber].CardSelection.CardHandId = cardToPlay.Key;
+
+            DoCardPlacement(gameId, boardX, boardY);
+
+            SendMessageToAllPlayers(gameId, $"{GetName(player)} plays '{card.Name}' at position ({boardX}, {boardY}).");
+            playerData.DecisionCounter = 0;
         }
 
         private static void ChangeTurn(string gameId, CardPlayerType playerTurn)
@@ -713,26 +781,34 @@ namespace NWN.FinalFantasy.Service
                 return;
             }
 
+            DoCardPlacement(gameId, x, y);
+        }
+
+        private static void DoCardPlacement(string gameId, int x, int y)
+        {
+            var state = GameStates[gameId];
+            var selection = state.Players[state.CurrentPlayerTurn].CardSelection;
+
             // We've got a valid location. Update the selected card in this position, remove the card from the player's hand, and run game rules on this change.
             var hand = state.Players[state.CurrentPlayerTurn].Hand;
 
             // Remove the card from the player's hand
             var handCard = hand[selection.CardHandId];
             if (handCard.Placeable != null)
-                DestroyObject((uint) handCard.Placeable);
+                DestroyObject((uint)handCard.Placeable);
 
             // Destroy the selection placeable
             if (selection.Placeable != null)
             {
-                DestroyObject((uint) selection.Placeable);
+                DestroyObject((uint)selection.Placeable);
                 selection.Placeable = null;
             }
 
             // Destroy the blank card on the board
-            DestroyObject(placeable);
+            DestroyObject(state.Board[x, y].Placeable);
 
             // Spawn a new card onto the board in the same position.
-            placeable = SpawnCard(gameId, $"BOARD_{x}_{y}", handCard.Type);
+            var placeable = SpawnCard(gameId, $"BOARD_{x}_{y}", handCard.Type);
             SetUseableFlag(placeable, false);
             SetLocalInt(placeable, "TRIPLE_TRIAD_X", x);
             SetLocalInt(placeable, "TRIPLE_TRIAD_Y", y);

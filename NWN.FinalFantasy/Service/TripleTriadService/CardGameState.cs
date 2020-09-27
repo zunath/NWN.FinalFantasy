@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Pipelines.Sockets.Unofficial.Arenas;
 
 namespace NWN.FinalFantasy.Service.TripleTriadService
 {
@@ -21,6 +20,7 @@ namespace NWN.FinalFantasy.Service.TripleTriadService
 
         public int GameEndingTicks { get; set; }
         public bool IsGameEnding { get; set; }
+        public bool IsGameCleaningUp { get; set; }
 
         public bool IsPlayingSelf => Players[CardPlayerType.Player1].Player == Players[CardPlayerType.Player2].Player;
 

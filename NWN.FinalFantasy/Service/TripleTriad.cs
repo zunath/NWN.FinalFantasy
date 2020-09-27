@@ -369,6 +369,7 @@ namespace NWN.FinalFantasy.Service
             foreach (var (type, player) in state.Players)
             {
                 var playerNumber = type == CardPlayerType.Player1 ? 1 : 2;
+                var animation = type == CardPlayerType.Player1 ? Animation.PlaceableDeactivate : Animation.PlaceableActivate;
 
                 // Spawn player's hand
                 for (var index = 1; index <= 5; index++)
@@ -380,7 +381,7 @@ namespace NWN.FinalFantasy.Service
                     SetLocalInt(placeable, "TRIPLE_TRIAD_CARD_HAND_SLOT", index);
                     SetLocalInt(placeable, "TRIPLE_TRIAD_CARD_OWNER", playerNumber);
                     SetEventScript(placeable, EventScript.Placeable_OnLeftClick, "tt_card_select");
-                    AssignCommand(placeable, () => ActionPlayAnimation(Animation.PlaceableDeactivate));
+                    AssignCommand(placeable, () => ActionPlayAnimation(animation));
                 }
             }
 

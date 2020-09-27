@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -12,21 +13,31 @@ namespace NWN.FinalFantasy.CLI
     {
         private const string ConfigFilePath = "./hakbuilder.json";
         private HakBuilderConfig _config;
+        private List<HakBuilderHakpak> _haksToProcess;
+        private readonly Dictionary<string, string> _checksumDictionary = new Dictionary<string, string>();
 
         public void Process()
         {
             // Read the config file.
             _config = GetConfig();
-
+            _haksToProcess = _config.HakList.ToList();
             // Clean the output folder.
             CleanOutputFolder();
 
             // Copy the TLK to the output folder.
             Console.WriteLine($"Copying TLK: {_config.TlkPath}");
-            File.Copy(_config.TlkPath, $"{_config.OutputPath}{Path.GetFileName(_config.TlkPath)}");
+
+            if (File.Exists(_config.TlkPath))
+            {
+                File.Copy(_config.TlkPath, $"{_config.OutputPath}{Path.GetFileName(_config.TlkPath)}");
+            }
+            else
+            {
+                Console.WriteLine("Error: TLK does not exist");
+            }
 
             // Iterate over every configured hakpak folder and compile it.
-            Parallel.ForEach(_config.HakList, hak =>
+            Parallel.ForEach(_haksToProcess, hak =>
             {
                 if (hak.CompileModels)
                 {
@@ -70,12 +81,63 @@ namespace NWN.FinalFantasy.CLI
         /// </summary>
         private void CleanOutputFolder()
         {
-            if (Directory.Exists(_config.OutputPath))
             {
-                Directory.Delete(_config.OutputPath, true);
-            }
+                if (Directory.Exists(_config.OutputPath))
+                {
+                    // Delete .tlk
+                    if (File.Exists($"{_config.OutputPath}{Path.GetFileName(_config.TlkPath)}"))
+                    {
+                        File.Delete($"{_config.OutputPath}{Path.GetFileName(_config.TlkPath)}");
+                    }
 
-            Directory.CreateDirectory(_config.OutputPath);
+                    Parallel.ForEach(_config.HakList, hak =>
+                    {
+                        // Check whether .hak file exists
+                        if (!File.Exists(_config.OutputPath + hak.Name + ".hak"))
+                        {
+                            Console.WriteLine(hak.Name + " needs to be built");
+                            return;
+                        }
+
+                        var checksumFolder = ChecksumUtil.ChecksumFolder(hak.Path);
+                        _checksumDictionary.Add(hak.Name, checksumFolder);
+
+                        // Check whether .sha checksum file exists
+                        if (!File.Exists(_config.OutputPath + hak.Name + ".md5"))
+                        {
+                            Console.WriteLine(hak.Name + " needs to be built");
+                            return;
+                        }
+
+                        // When checksums are equal or hak folder doesn't exist -> remove hak from the list
+                        var checksumFile = ChecksumUtil.ReadChecksumFile(_config.OutputPath + hak.Name + ".md5");
+                        if (checksumFolder == checksumFile)
+                        {
+                            _haksToProcess.Remove(hak);
+                            Console.WriteLine(hak.Name + " is up to date");
+                        }
+                    });
+
+                    // Delete outdated haks and checksums
+                    Parallel.ForEach(_haksToProcess, hak =>
+                    {
+                        var filePath = _config.OutputPath + hak.Name;
+                        if (File.Exists(filePath + ".hak"))
+                        {
+                            File.Delete(filePath + ".hak");
+                        }
+
+                        if (File.Exists(filePath + ".md5"))
+                        {
+                            File.Delete(filePath + ".md5");
+                        }
+                    });
+                }
+                else
+                {
+                    Directory.CreateDirectory(_config.OutputPath);
+                }
+            }
         }
 
         /// <summary>
@@ -121,6 +183,13 @@ namespace NWN.FinalFantasy.CLI
 
                 process.WaitForExit();
             }
+
+            if (!_checksumDictionary.TryGetValue(hakName, out var checksum))
+            {
+                checksum = ChecksumUtil.ChecksumFolder(folderPath);
+            }
+
+            ChecksumUtil.WriteChecksumFile(_config.OutputPath + hakName + ".md5", checksum);
         }
 
         /// <summary>

@@ -33,8 +33,28 @@
       "CompileModels": false
     },
     {
-      "Name": "pk_rocky_v11",
+      "Name": "ffo_triple_triad",
+      "Path": "./ffo_triple_triad/",
+      "CompileModels": false
+    },
+    {
+      "Name": "phod_bunkers",
+      "Path": "./phod_bunkers/",
+      "CompileModels": false
+    },
+    {
+      "Name": "pk_rocky_v11.5",
       "Path": "./pk_rocky_v11.5/",
+      "CompileModels": false
+    },
+    {
+      "Name": "pk_textures_v2.0",
+      "Path": "./pk_textures_v2.0/",
+      "CompileModels": false
+    },
+    {
+      "Name": "q_!armoury",
+      "Path": "./q_!armoury/",
       "CompileModels": false
     },
     {
@@ -128,8 +148,28 @@
       "CompileModels": false
     },
     {
+      "Name": "RL_gothic_int",
+      "Path": "./RL_gothic_int/",
+      "CompileModels": false
+    },
+    {
+      "Name": "rl_gothicestates",
+      "Path": "./rl_gothicestates/",
+      "CompileModels": false
+    },
+    {
+      "Name": "RL_gothicgarden",
+      "Path": "./RL_gothicgarden/",
+      "CompileModels": false
+    },
+    {
       "Name": "wrm_scorche",
       "Path": "./wrm_scorche/",
+      "CompileModels": false
+    },
+    {
+      "Name":  "[DT]Starship_0_4",
+      "Path": "./[DT]Starship_0_4/",
       "CompileModels": false
     }
   ]

@@ -26,5 +26,6 @@ namespace NWN.FinalFantasy.Entity
         public uint DrawsAgainstNPCs { get; set; }
 
         public uint TriadPoints { get; set; }
+        public int LastDeckId { get; set; }
     }
 }

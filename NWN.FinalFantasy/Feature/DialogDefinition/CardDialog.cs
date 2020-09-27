@@ -184,7 +184,7 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
             var model = GetDataModel<Model>();
             var player = GetPC();
             var playerId = GetObjectUUID(player);
-            var dbPlayerTripleTriad = DB.Get<PlayerTripleTriad>(playerId);
+            var dbPlayerTripleTriad = DB.Get<PlayerTripleTriad>(playerId) ?? new PlayerTripleTriad();
             var availableCards = TripleTriad.GetAllCardsAtLevel(model.SelectedCardLevel);
 
             page.Header = $"{ColorToken.Green("Level: ")} {model.SelectedCardLevel}\n\n" +
@@ -328,6 +328,9 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
 
                 // Clone the stack. We will revert back to this state when the player finishes building the deck.
                 model.NavigationStackBeforeDeckBuilding = new Stack<DialogNavigation>(NavigationStack.Reverse());
+                // The topmost navigation points back to the deck list page which leads to users having to click "Back" twice after confirming their deck selections.
+                // Pop this since we only need one.
+                model.NavigationStackBeforeDeckBuilding.Pop(); 
 
                 ChangePage(DeckCardSelectionLevelsPageId);
             });

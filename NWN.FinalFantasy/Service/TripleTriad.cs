@@ -60,9 +60,6 @@ namespace NWN.FinalFantasy.Service
         private static Dictionary<CardType, Card> AvailableCards { get; set; }
         private static Dictionary<int, List<CardType>> CardsByLevel { get; set; } = new Dictionary<int, List<CardType>>();
 
-        // Tracks all of the available NPC deck choices
-        private static Dictionary<int, CardDeck> NPCDeckTypes { get; set; } = CardNPCDecks.CreateNPCDecks();
-
         // Tracks all of the active game states
         private static Dictionary<string, CardGameState> GameStates { get; set; } = new Dictionary<string, CardGameState>();
 
@@ -251,44 +248,19 @@ namespace NWN.FinalFantasy.Service
         /// Starts a new Triple Triad game. At least one player must be a PC or the system won't function properly.
         /// </summary>
         /// <param name="player1">The first player</param>
-        /// <param name="player1DeckId">The first player's deck Id.</param>
+        /// <param name="player1Deck">The first player's deck.</param>
         /// <param name="player2">The second player</param>
-        /// <param name="player2DeckId">The second player's deck Id.</param>
+        /// <param name="player2Deck">The second player's deck.</param>
         /// <param name="rules">The set of rules to use for this game.</param>
         public static void StartGame(
             uint player1, 
-            int player1DeckId,
+            CardDeck player1Deck,
             uint player2,
-            int player2DeckId,
+            CardDeck player2Deck,
             CardRuleType rules = CardRuleType.None)
         {
             var arenaArea = CreateArena();
-            CardDeck player1Deck;
-            CardDeck player2Deck;
-
-            if (GetIsPC(player1))
-            {
-                var player1Id = GetObjectUUID(player1);
-                var dbPlayer1TT = DB.Get<PlayerTripleTriad>(player1Id);
-                player1Deck = dbPlayer1TT.Decks[player1DeckId];
-            }
-            else
-            {
-                player1Deck = NPCDeckTypes[player1DeckId];
-            }
-
-            if (GetIsPC(player2))
-            {
-                var player2Id = GetObjectUUID(player2);
-                var dbPlayer2TT = DB.Get<PlayerTripleTriad>(player2Id);
-                player2Deck = dbPlayer2TT.Decks[player2DeckId];
-            }
-            else
-            {
-                player2Deck = NPCDeckTypes[player2DeckId];
-            }
-
-
+            
             // Register the game state
             var state = new CardGameState(arenaArea, player1, player2);
             var gameId = Guid.NewGuid().ToString();
@@ -1077,6 +1049,57 @@ namespace NWN.FinalFantasy.Service
             ReplaceObjectTexture(state.Player2ScorePlaceable, DefaultCardTexture, string.Empty);
             ReplaceObjectTexture(state.Player1ScorePlaceable, DefaultCardTexture, player1ScoreTexture);
             ReplaceObjectTexture(state.Player2ScorePlaceable, DefaultCardTexture, player2ScoreTexture);
+        }
+
+        /// <summary>
+        /// Builds a deck of five cards randomly from a given set of levels.
+        /// If the level shows up more than once or falls outside of the range 1-10, it will be ignored.
+        /// If no cards can be pulled, an exception will be raised.
+        /// </summary>
+        /// <param name="level">The level to select from</param>
+        /// <param name="levels">Optional, additional levels to pull from.</param>
+        /// <returns>A deck of five cards</returns>
+        public static CardDeck BuildRandomDeck(int level, params int[] levels)
+        {
+            var deck = new CardDeck{ Name = "Random Deck" };
+            var possibleCards = GetAllCardsAtLevel(level).Keys.ToList();
+
+            foreach (var additionalLevel in levels)
+            {
+                possibleCards.AddRange(GetAllCardsAtLevel(additionalLevel).Keys.ToList());
+            }
+
+            // Distinct, in case the same level showed up more than once.
+            possibleCards = possibleCards.Distinct().ToList();
+
+            if (possibleCards.Count < 5)
+            {
+                throw new Exception("Not enough cards are available. Must be at least 5 cards available to build a deck randomly.");
+            }
+
+            // Pick a card randomly from the list for each card in the deck.
+            // After selecting, remove the card from the possible list so that it doesn't come in twice.
+            var index = Random.Next(possibleCards.Count);
+            deck.Card1 = possibleCards[index];
+            possibleCards.RemoveAt(index);
+
+            index = Random.Next(possibleCards.Count);
+            deck.Card2 = possibleCards[index];
+            possibleCards.RemoveAt(index);
+
+            index = Random.Next(possibleCards.Count);
+            deck.Card3 = possibleCards[index];
+            possibleCards.RemoveAt(index);
+
+            index = Random.Next(possibleCards.Count);
+            deck.Card4 = possibleCards[index];
+            possibleCards.RemoveAt(index);
+
+            index = Random.Next(possibleCards.Count);
+            deck.Card5 = possibleCards[index];
+            possibleCards.RemoveAt(index);
+
+            return deck;
         }
     }
 }

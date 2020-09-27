@@ -93,70 +93,26 @@ namespace NWN.FinalFantasy.Feature
         public static void SimulateTripleTriad()
         {
             var player1 = GetFirstPC();
-            var player1Id = GetObjectUUID(player1);
             var player2 = GetNextPC();
-            var player2Id = GetObjectUUID(player2);
 
             // Single player mode
             if (!GetIsObjectValid(player2))
             {
                 var player = GetLastUsedBy();
-                var playerId = GetObjectUUID(player);
-                var dbTTPlayer = DB.Get<PlayerTripleTriad>(playerId) ?? new PlayerTripleTriad();
-                dbTTPlayer.Decks[1] = new CardDeck
-                {
-                    Name = "Player Deck",
-                    Card1 = CardType.Belhelmel,
-                    Card2 = CardType.Thrustaevis,
-                    Card3 = CardType.Anacondaur,
-                    Card4 = CardType.Creeps,
-                    Card5 = CardType.Grendel,
-                };
-                dbTTPlayer.Decks[2] = new CardDeck
-                {
-                    Name = "Player Deck",
-                    Card1 = CardType.Zell,
-                    Card2 = CardType.GrandMantis,
-                    Card3 = CardType.Buel,
-                    Card4 = CardType.Mesmerize,
-                    Card5 = CardType.GlacialEye,
-                };
-                DB.Set(playerId, dbTTPlayer);
+                var deck1 = TripleTriad.BuildRandomDeck(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+                var deck2 = TripleTriad.BuildRandomDeck(10, 9, 8, 7);
 
-                TripleTriad.StartGame(player, 1, player, 2);
+                TripleTriad.StartGame(player, deck1, player, deck2);
             }
 
             // Two player mode
             else
             {
-                var dbTTPlayer1 = DB.Get<PlayerTripleTriad>(player1Id) ?? new PlayerTripleTriad();
-                dbTTPlayer1.Decks[1] = new CardDeck
-                {
-                    Name = "Player Deck",
-                    Card1 = CardType.Gayla,
-                    Card2 = CardType.Gesper,
-                    Card3 = CardType.FastitocalonF,
-                    Card4 = CardType.BloodSoul,
-                    Card5 = CardType.Caterchipillar,
-                };
-                DB.Set(player1Id, dbTTPlayer1);
+                var deck1 = TripleTriad.BuildRandomDeck(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+                var deck2 = TripleTriad.BuildRandomDeck(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
 
-                var dbTTPlayer2 = DB.Get<PlayerTripleTriad>(player2Id) ?? new PlayerTripleTriad();
-                dbTTPlayer2.Decks[1] = new CardDeck
-                {
-                    Name = "Player Deck",
-                    Card1 = CardType.Zell,
-                    Card2 = CardType.Grat,
-                    Card3 = CardType.Buel,
-                    Card4 = CardType.Mesmerize,
-                    Card5 = CardType.GlacialEye,
-                };
-                DB.Set(player2Id, dbTTPlayer2);
-
-                TripleTriad.StartGame(player1, 1, player2, 1);
+                TripleTriad.StartGame(player1, deck1, player2, deck2);
             }
-
-
         }
 
         [NWNEventHandler("test12")]

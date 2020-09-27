@@ -45,13 +45,13 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
         private void MainPageInit(DialogPage page)
         {
             var player = GetPC();
+            var playerId = GetObjectUUID(player);
+            var dbPlayerTripleTriad = DB.Get<PlayerTripleTriad>(playerId);
             var model = GetDataModel<Model>();
             var deckSelected = ColorToken.Yellow("[NO DECK SELECTED]");
 
             if (model.SelectedDeckId > 0)
             {
-                var playerId = GetObjectUUID(player);
-                var dbPlayerTripleTriad = DB.Get<PlayerTripleTriad>(playerId);
                 var deck = dbPlayerTripleTriad.Decks[model.SelectedDeckId];
                 deckSelected = string.IsNullOrWhiteSpace(deck.Name)
                     ? $"Deck #{model.SelectedDeckId}"
@@ -97,11 +97,12 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
 
                 if (model.SelectedDeckId > 0)
                 {
+                    var deck = dbPlayerTripleTriad.Decks[model.SelectedDeckId];
                     page.AddResponse("Create New Game", () =>
                     {
                         TripleTriad.CreatePendingGame(player, new CardPendingGame
                         {
-                            Player1DeckId = model.SelectedDeckId
+                            Player1Deck = deck
                         });
 
                         EndConversation();
@@ -121,7 +122,7 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
                             }
 
                             EndConversation();
-                            TripleTriad.StartGame(gameOwner, pendingGame.Player1DeckId, player, model.SelectedDeckId); // todo: rule config
+                            TripleTriad.StartGame(gameOwner, pendingGame.Player1Deck, player, deck); // todo: rule config
                         });
                     }
                 }

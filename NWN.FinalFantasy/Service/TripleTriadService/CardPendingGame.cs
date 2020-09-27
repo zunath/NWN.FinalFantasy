@@ -2,7 +2,7 @@
 {
     public class CardPendingGame
     {
-        public int Player1DeckId { get; set; }
+        public CardDeck Player1Deck { get; set; }
         public CardRuleType Rules { get; set; }
     }
 }

@@ -235,10 +235,10 @@ namespace NWN.FinalFantasy.Service
         /// </summary>
         /// <param name="placeable">The hand card placeable</param>
         /// <returns>The card game player and the index of the card in the hand.</returns>
-        private static (CardGamePlayer, int) GetCardHandDetails(uint placeable)
+        private static (CardPlayerType, int) GetCardHandDetails(uint placeable)
         {
             var playerNumber = GetLocalInt(placeable, "TRIPLE_TRIAD_CARD_OWNER");
-            var cardGamePlayer = playerNumber == 1 ? CardGamePlayer.Player1 : CardGamePlayer.Player2;
+            var cardGamePlayer = playerNumber == 1 ? CardPlayerType.Player1 : CardPlayerType.Player2;
             var handSlot = GetLocalInt(placeable, "TRIPLE_TRIAD_CARD_HAND_SLOT");
 
             return (cardGamePlayer, handSlot);
@@ -270,18 +270,18 @@ namespace NWN.FinalFantasy.Service
             state.Rules = rules;
 
             // Register player 1's hand
-            state.Player1Hand[1].Type = player1Deck.Card1;
-            state.Player1Hand[2].Type = player1Deck.Card2;
-            state.Player1Hand[3].Type = player1Deck.Card3;
-            state.Player1Hand[4].Type = player1Deck.Card4;
-            state.Player1Hand[5].Type = player1Deck.Card5;
+            state.Players[CardPlayerType.Player1].Hand[1].Type = player1Deck.Card1;
+            state.Players[CardPlayerType.Player1].Hand[2].Type = player1Deck.Card2;
+            state.Players[CardPlayerType.Player1].Hand[3].Type = player1Deck.Card3;
+            state.Players[CardPlayerType.Player1].Hand[4].Type = player1Deck.Card4;
+            state.Players[CardPlayerType.Player1].Hand[5].Type = player1Deck.Card5;
 
             // Register player 2's hand
-            state.Player2Hand[1].Type = player2Deck.Card1;
-            state.Player2Hand[2].Type = player2Deck.Card2;
-            state.Player2Hand[3].Type = player2Deck.Card3;
-            state.Player2Hand[4].Type = player2Deck.Card4;
-            state.Player2Hand[5].Type = player2Deck.Card5;
+            state.Players[CardPlayerType.Player2].Hand[1].Type = player2Deck.Card1;
+            state.Players[CardPlayerType.Player2].Hand[2].Type = player2Deck.Card2;
+            state.Players[CardPlayerType.Player2].Hand[3].Type = player2Deck.Card3;
+            state.Players[CardPlayerType.Player2].Hand[4].Type = player2Deck.Card4;
+            state.Players[CardPlayerType.Player2].Hand[5].Type = player2Deck.Card5;
 
             if (GetIsPC(player1))
             {
@@ -322,68 +322,13 @@ namespace NWN.FinalFantasy.Service
             }
             else if(state.HasInitialized)
             {
-                // Is game ending normally?
-                if (state.IsGameEnding)
-                {
-                    state.GameEndingTicks++;
-                    SendMessageToPC(state.Player1, "Game will be ending soon...");
-                    SendMessageToPC(state.Player2, "Game will be ending soon...");
+                // Check if the game needs to end. If it does, don't bother running any other logic.
+                var isEnding = ProcessEndGameLogic(gameId);
+                if (isEnding) return;
 
-                    if (state.GameEndingTicks >= 3) // Roughly 18 seconds after ending, the game will clean up.
-                    {
-                        // Send the players back to their saved locations if they're still in the arena.
-                        if (GetArea(state.Player1) == state.ArenaArea)
-                        {
-                            AssignCommand(state.Player1, () =>
-                            {
-                                ClearAllActions();
-                                ActionJumpToLocation(GetLocalLocation(state.Player1, "TRIPLE_TRIAD_WARP_POINT"));
-                            });
-                        }
-
-                        if (GetArea(state.Player2) == state.ArenaArea)
-                        {
-                            AssignCommand(state.Player2, () =>
-                            {
-                                ClearAllActions();
-                                ActionJumpToLocation(GetLocalLocation(state.Player2, "TRIPLE_TRIAD_WARP_POINT"));
-                            });
-                        }
-
-                        // Clear game state and area.
-                        DelayCommand(30f, () =>
-                        {
-                            DestroyArea(state.ArenaArea);
-                            GameStates.Remove(gameId);
-                        });
-
-                        state.IsGameEnding = false;
-                    }
-                }
-                // Otherwise handle player disconnection logic.
-                else
-                {
-                    // One or more player has left the area or disconnected.
-                    if (GetArea(state.Player1) != state.ArenaArea ||
-                        GetArea(state.Player2) != state.ArenaArea)
-                    {
-                        state.DisconnectionCheckCounter++;
-                    }
-                    // Both players are in the arena, reset the counter.
-                    else
-                    {
-                        state.DisconnectionCheckCounter = 0;
-                    }
-
-                    // Counter has reached limit. End the game prematurely.
-                    if (state.DisconnectionCheckCounter >= 10)
-                    {
-                        SendMessageToPC(state.Player1, "One or more players have left the Triple Triad arena. The game will end now.");
-                        SendMessageToPC(state.Player2, "One or more players have left the Triple Triad arena. The game will end now.");
-
-                        EndGame(gameId, true);
-                    }
-                }
+                // Otherwise process NPC AI, if applicable to this game
+                ProcessNPCLogic(gameId, CardPlayerType.Player1);
+                ProcessNPCLogic(gameId, CardPlayerType.Player2);
             }
         }
 
@@ -396,34 +341,26 @@ namespace NWN.FinalFantasy.Service
             var state = GameStates[gameId];
 
             // Both players must physically be in the arena to initialize.
-            if (GetArea(state.Player1) != state.ArenaArea ||
-                GetArea(state.Player2) != state.ArenaArea)
+            if (GetArea(state.Players[CardPlayerType.Player1].Player) != state.ArenaArea ||
+                GetArea(state.Players[CardPlayerType.Player2].Player) != state.ArenaArea)
                 return;
 
-            // Spawn player 1's hand
-            for (var index = 1; index <= 5; index++)
+            foreach (var (type, player) in state.Players)
             {
-                var cardType = state.Player1Hand[index].Type;
-                var placeable = SpawnCard(gameId, $"PLAYER_1_HAND_{index}", cardType, HandCardScale);
-                state.Player1Hand[index].Placeable = placeable;
-                state.Player1Hand[index].Type = cardType;
-                SetLocalInt(placeable, "TRIPLE_TRIAD_CARD_HAND_SLOT", index);
-                SetLocalInt(placeable, "TRIPLE_TRIAD_CARD_OWNER", 1);
-                SetEventScript(placeable, EventScript.Placeable_OnLeftClick, "tt_card_select");
-                AssignCommand(placeable, () => ActionPlayAnimation(Animation.PlaceableDeactivate));
-            }
+                var playerNumber = type == CardPlayerType.Player1 ? 1 : 2;
 
-            // Spawn player 2's hand
-            for (var index = 1; index <= 5; index++)
-            {
-                var cardType = state.Player2Hand[index].Type;
-                var placeable = SpawnCard(gameId, $"PLAYER_2_HAND_{index}", cardType, HandCardScale);
-                state.Player2Hand[index].Placeable = placeable;
-                state.Player2Hand[index].Type = cardType;
-                SetLocalInt(placeable, "TRIPLE_TRIAD_CARD_HAND_SLOT", index);
-                SetLocalInt(placeable, "TRIPLE_TRIAD_CARD_OWNER", 2);
-                SetEventScript(placeable, EventScript.Placeable_OnLeftClick, "tt_card_select");
-                AssignCommand(placeable, () => ActionPlayAnimation(Animation.PlaceableActivate));
+                // Spawn player's hand
+                for (var index = 1; index <= 5; index++)
+                {
+                    var cardType = player.Hand[index].Type;
+                    var placeable = SpawnCard(gameId, $"PLAYER_{playerNumber}_HAND_{index}", cardType, HandCardScale);
+                    player.Hand[index].Placeable = placeable;
+                    player.Hand[index].Type = cardType;
+                    SetLocalInt(placeable, "TRIPLE_TRIAD_CARD_HAND_SLOT", index);
+                    SetLocalInt(placeable, "TRIPLE_TRIAD_CARD_OWNER", playerNumber);
+                    SetEventScript(placeable, EventScript.Placeable_OnLeftClick, "tt_card_select");
+                    AssignCommand(placeable, () => ActionPlayAnimation(Animation.PlaceableDeactivate));
+                }
             }
 
             // Spawn blank cards on the board
@@ -459,38 +396,123 @@ namespace NWN.FinalFantasy.Service
 
             if (Random.D100(1) <= 50)
             {
-                state.CurrentPlayerTurn = CardGamePlayer.Player1;
-                SendMessageToPC(state.Player1, "Player 1 won the coin toss and goes first.");
-                SendMessageToPC(state.Player2, "Player 1 won the coin toss and goes first.");
+                state.CurrentPlayerTurn = CardPlayerType.Player1;
+                SendMessageToAllPlayers(gameId, $"{GetName(state.Players[CardPlayerType.Player1].Player)} won the coin toss and goes first.");
             }
             else
             {
-                state.CurrentPlayerTurn = CardGamePlayer.Player2;
-                SendMessageToPC(state.Player1, "Player 2 won the coin toss and goes first.");
-                SendMessageToPC(state.Player2, "Player 2 won the coin toss and goes first.");
+                state.CurrentPlayerTurn = CardPlayerType.Player2;
+                SendMessageToAllPlayers(gameId, $"{GetName(state.Players[CardPlayerType.Player2].Player)} won the coin toss and goes first.");
             }
-
 
             state.HasInitialized = true;
         }
 
-        private static void ChangeTurn(string gameId, CardGamePlayer playerTurn)
+        private static void SendMessageToAllPlayers(string gameId, string message)
         {
             var state = GameStates[gameId];
 
+            foreach (var player in state.Players)
+            {
+                SendMessageToPC(player.Value.Player, message);
+            }
+        }
+
+        /// <summary>
+        /// Processes the "End Game" logic used during processing.
+        /// </summary>
+        /// <param name="gameId">The game's state Id</param>
+        /// <returns>true if the game is ending, false otherwise</returns>
+        private static bool ProcessEndGameLogic(string gameId)
+        {
+            var state = GameStates[gameId];
+
+            // Is game ending normally?
+            if (state.IsGameEnding)
+            {
+                state.GameEndingTicks++;
+                SendMessageToAllPlayers(gameId, "Game will be ending soon...");
+
+                if (state.GameEndingTicks >= 3) // Roughly 18 seconds after ending, the game will clean up.
+                {
+                    // Send the players back to their saved locations if they're still in the arena.
+                    foreach (var player in state.Players)
+                    {
+                        AssignCommand(player.Value.Player, () =>
+                        {
+                            ClearAllActions();
+                            ActionJumpToLocation(GetLocalLocation(player.Value.Player, "TRIPLE_TRIAD_WARP_POINT"));
+                        });
+                    }
+
+                    // Clear game state and area.
+                    DelayCommand(30f, () =>
+                    {
+                        DestroyArea(state.ArenaArea);
+                        GameStates.Remove(gameId);
+                    });
+
+                    state.IsGameEnding = false;
+                }
+
+                return true;
+            }
+            // Otherwise handle player disconnection logic.
+            else
+            {
+                // One or more player has left the area or disconnected.
+                if (GetArea(state.Players[CardPlayerType.Player1].Player) != state.ArenaArea ||
+                    GetArea(state.Players[CardPlayerType.Player2].Player) != state.ArenaArea)
+                {
+                    state.DisconnectionCheckCounter++;
+                }
+                // Both players are in the arena, reset the counter.
+                else
+                {
+                    state.DisconnectionCheckCounter = 0;
+                }
+
+                // Counter has reached limit. End the game prematurely.
+                if (state.DisconnectionCheckCounter >= 10)
+                {
+                    SendMessageToAllPlayers(gameId, "One or more players have left the Triple Triad arena. The game will end now.");
+                    EndGame(gameId, true);
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Processes NPC AI logic to simulate playing.
+        /// </summary>
+        /// <param name="gameId">The game's state Id</param>
+        /// <param name="playerNumber">Which player number is associated with the NPC we want to process.</param>
+        private static void ProcessNPCLogic(string gameId, CardPlayerType playerNumber)
+        {
+            var state = GameStates[gameId];
+            var player = state.Players[playerNumber].Player;
+
+            if (GetIsPC(player)) return; // Not an NPC, so exit early.
+            if (state.CurrentPlayerTurn != playerNumber) return; // Not the NPC's turn, skip for now.
+
+        }
+
+        private static void ChangeTurn(string gameId, CardPlayerType playerTurn)
+        {
+            var state = GameStates[gameId];
             state.CurrentPlayerTurn = playerTurn;
 
-            if (playerTurn == CardGamePlayer.Player1)
+            if (playerTurn == CardPlayerType.Player1)
             {
-                var message = $"It is {GetName(state.Player1)}'s turn.";
-                SendMessageToPC(state.Player1, message);
-                SendMessageToPC(state.Player2, message);
+                var message = $"It is {GetName(state.Players[CardPlayerType.Player1].Player)}'s turn.";
+                SendMessageToAllPlayers(gameId, message);
             }
             else
             {
-                var message = $"It is {GetName(state.Player2)}'s turn.";
-                SendMessageToPC(state.Player1, message);
-                SendMessageToPC(state.Player2, message);
+                var message = $"It is {GetName(state.Players[CardPlayerType.Player2].Player)}'s turn.";
+                SendMessageToAllPlayers(gameId, message);
             }
         }
 
@@ -558,11 +580,11 @@ namespace NWN.FinalFantasy.Service
             var y = GetLocalInt(placeable, "TRIPLE_TRIAD_Y");
             var boardCard = state.Board[x, y];
 
-            if (boardCard.CurrentOwner == CardGamePlayer.Player1)
+            if (boardCard.CurrentOwner == CardPlayerType.Player1)
             {
                 AssignCommand(boardCard.Placeable, () => ActionPlayAnimation(Animation.PlaceableDeactivate));
             }
-            else if (boardCard.CurrentOwner == CardGamePlayer.Player2)
+            else if (boardCard.CurrentOwner == CardPlayerType.Player2)
             {
                 AssignCommand(boardCard.Placeable, () => ActionPlayAnimation(Animation.PlaceableActivate));
             }
@@ -613,59 +635,37 @@ namespace NWN.FinalFantasy.Service
 
             AssignCommand(player, () => ClearAllActions());
 
-            if (player != state.Player1 && owner == CardGamePlayer.Player1 ||
-                player != state.Player2 && owner == CardGamePlayer.Player2)
+            if (player != state.Players[CardPlayerType.Player1].Player && owner == CardPlayerType.Player1 ||
+                player != state.Players[CardPlayerType.Player2].Player && owner == CardPlayerType.Player2)
             {
                 SendMessageToPC(player, "You do not own that card.");
                 return;
             }
 
-            if (owner == CardGamePlayer.Player1)
+            var selection = state.Players[owner].CardSelection;
+            var resref = owner == CardPlayerType.Player1 ? Player1SelectionResref : Player2SelectionResref;
+            var opponentType = owner == CardPlayerType.Player1 ? CardPlayerType.Player2 : CardPlayerType.Player1;
+
+            if (selection.Placeable != null)
             {
-                if (state.Player1Selection.Placeable != null)
-                {
-                    Object.SetPosition((uint)state.Player1Selection.Placeable, GetPosition(placeable));
-                }
-                else
-                {
-                    var selectionPlaceable = CreateObject(ObjectType.Placeable, Player1SelectionResref, GetLocation(placeable));
-                    state.Player1Selection.Placeable = selectionPlaceable;
-
-                    // Do this check just in case the player is playing against himself.
-                    if (state.Player1 != state.Player2)
-                    {
-                        Visibility.SetVisibilityOverride(state.Player1, selectionPlaceable, VisibilityType.Visible);
-                        Visibility.SetVisibilityOverride(state.Player2, selectionPlaceable, VisibilityType.Hidden);
-                    }
-                }
-
-                state.Player1Selection.CardHandId = cardHandId;
-                var card = AvailableCards[state.Player1Hand[cardHandId].Type];
-                SendMessageToPC(state.Player1, $"{card.Name}: [Top = {card.TopPower}, Bottom = {card.BottomPower}, Left = {card.LeftPower}, Right = {card.RightPower}]");
+                Object.SetPosition((uint)selection.Placeable, GetPosition(placeable));
             }
-            else if (owner == CardGamePlayer.Player2)
+            else
             {
-                if (state.Player2Selection.Placeable != null)
-                {
-                    Object.SetPosition((uint) state.Player2Selection.Placeable, GetPosition(placeable));
-                }
-                else
-                {
-                    var selectionPlaceable = CreateObject(ObjectType.Placeable, Player2SelectionResref, GetLocation(placeable));
-                    state.Player2Selection.Placeable = selectionPlaceable;
+                var selectionPlaceable = CreateObject(ObjectType.Placeable, resref, GetLocation(placeable));
+                selection.Placeable = selectionPlaceable;
 
-                    // Do this check just in case the player is playing against himself.
-                    if (state.Player1 != state.Player2)
-                    {
-                        Visibility.SetVisibilityOverride(state.Player1, selectionPlaceable, VisibilityType.Hidden);
-                        Visibility.SetVisibilityOverride(state.Player2, selectionPlaceable, VisibilityType.Visible);
-                    }
+                // Do this check just in case the player is playing against himself.
+                if (!state.IsPlayingSelf)
+                {
+                    Visibility.SetVisibilityOverride(state.Players[owner].Player, selectionPlaceable, VisibilityType.Visible);
+                    Visibility.SetVisibilityOverride(state.Players[opponentType].Player, selectionPlaceable, VisibilityType.Hidden);
                 }
-
-                state.Player2Selection.CardHandId = cardHandId;
-                var card = AvailableCards[state.Player2Hand[cardHandId].Type];
-                SendMessageToPC(state.Player2, $"{card.Name}: [Top = {card.TopPower}, Bottom = {card.BottomPower}, Left = {card.LeftPower}, Right = {card.RightPower}]");
             }
+
+            state.Players[owner].CardSelection.CardHandId = cardHandId;
+            var card = AvailableCards[state.Players[owner].Hand[cardHandId].Type];
+            SendMessageToPC(player, $"{card.Name}: [Top = {card.TopPower}, Bottom = {card.BottomPower}, Left = {card.LeftPower}, Right = {card.RightPower}]");
         }
 
         /// <summary>
@@ -685,22 +685,20 @@ namespace NWN.FinalFantasy.Service
             AssignCommand(player, () => ClearAllActions());
 
             // Is it this the player's turn?
-            if (state.CurrentPlayerTurn == CardGamePlayer.Player1 &&
-                state.Player1 != player)
+            if (state.CurrentPlayerTurn == CardPlayerType.Player1 &&
+                state.Players[CardPlayerType.Player1].Player != player)
             {
                 SendMessageToPC(player, "It is currently player 2's turn. Please wait your turn.");
                 return;
             }
-            else if (state.CurrentPlayerTurn == CardGamePlayer.Player2 &&
-                     state.Player2 != player)
+            else if (state.CurrentPlayerTurn == CardPlayerType.Player2 &&
+                state.Players[CardPlayerType.Player2].Player != player)
             {
                 SendMessageToPC(player, "It is currently player 1's turn. Please wait your turn.");
                 return;
             }
 
-            var selection = state.CurrentPlayerTurn == CardGamePlayer.Player1
-                ? state.Player1Selection
-                : state.Player2Selection;
+            var selection = state.Players[state.CurrentPlayerTurn].CardSelection;
 
             // Player hasn't selected a card yet.
             if (selection.Placeable == null)
@@ -716,9 +714,7 @@ namespace NWN.FinalFantasy.Service
             }
 
             // We've got a valid location. Update the selected card in this position, remove the card from the player's hand, and run game rules on this change.
-            var hand = state.CurrentPlayerTurn == CardGamePlayer.Player1 
-                ? state.Player1Hand 
-                : state.Player2Hand;
+            var hand = state.Players[state.CurrentPlayerTurn].Hand;
 
             // Remove the card from the player's hand
             var handCard = hand[selection.CardHandId];
@@ -753,9 +749,9 @@ namespace NWN.FinalFantasy.Service
             hand.Remove(selection.CardHandId);
 
             // Change turns
-            var nextTurn = state.CurrentPlayerTurn == CardGamePlayer.Player1
-                ? CardGamePlayer.Player2
-                : CardGamePlayer.Player1;
+            var nextTurn = state.CurrentPlayerTurn == CardPlayerType.Player1
+                ? CardPlayerType.Player2
+                : CardPlayerType.Player1;
 
             // Handle card fighting
             CardFight(gameId, x, y);
@@ -986,44 +982,43 @@ namespace NWN.FinalFantasy.Service
 
             var state = GameStates[gameId];
             var (player1Points, player2Points) = state.CalculatePoints();
+            var player1 = state.Players[CardPlayerType.Player1];
+            var player2 = state.Players[CardPlayerType.Player2];
 
             // Player 1 wins
             if (player1Points > player2Points)
             {
-                var message = $"{GetName(state.Player1)} has won the game!";
-                SendMessageToPC(state.Player1, message);
-                SendMessageToPC(state.Player2, message);
+                var message = $"{GetName(player1.Player)} has won the game!";
+                SendMessageToAllPlayers(gameId, message);
 
                 if (!endedPrematurely)
                 {
-                    GrantRewards(state.Player1, true, GetIsPC(state.Player2));
-                    GrantRewards(state.Player2, false, GetIsPC(state.Player1));
+                    GrantRewards(player1.Player, true, GetIsPC(player2.Player));
+                    GrantRewards(player2.Player, false, GetIsPC(player1.Player));
                 }
             }
             // Player 2 wins
             else if (player2Points > player1Points)
             {
-                var message = $"{GetName(state.Player2)} has won the game!";
-                SendMessageToPC(state.Player1, message);
-                SendMessageToPC(state.Player2, message);
+                var message = $"{GetName(player2.Player)} has won the game!";
+                SendMessageToAllPlayers(gameId, message);
 
                 if (!endedPrematurely)
                 {
-                    GrantRewards(state.Player1, false, GetIsPC(state.Player2));
-                    GrantRewards(state.Player2, true, GetIsPC(state.Player1));
+                    GrantRewards(player1.Player, false, GetIsPC(player2.Player));
+                    GrantRewards(player2.Player, true, GetIsPC(player1.Player));
                 }
             }
             // Draw
             else
             {
                 var message = $"The game ended in a draw!";
-                SendMessageToPC(state.Player1, message);
-                SendMessageToPC(state.Player2, message);
+                SendMessageToAllPlayers(gameId, message);
 
                 if (!endedPrematurely)
                 {
-                    GrantRewards(state.Player1, null, GetIsPC(state.Player2));
-                    GrantRewards(state.Player2, null, GetIsPC(state.Player1));
+                    GrantRewards(player1.Player, null, GetIsPC(player2.Player));
+                    GrantRewards(player2.Player, null, GetIsPC(player1.Player));
                 }
             }
 

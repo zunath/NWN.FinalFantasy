@@ -8,17 +8,11 @@ namespace NWN.FinalFantasy.Service.TripleTriadService
         public uint ArenaArea { get; set; }
 
         public bool HasInitialized { get; set; }
-        public uint Player1 { get; set; }
-        public uint Player2 { get; set; }
+        public Dictionary<CardPlayerType, CardPlayer> Players { get; set; }
+
         public CardBoardPosition[,] Board { get; set; }
-        public CardGamePlayer CurrentPlayerTurn { get; set; }
+        public CardPlayerType CurrentPlayerTurn { get; set; }
         public CardRuleType Rules { get; set; }
-
-        public Dictionary<int, CardHand> Player1Hand { get; set; }
-        public Dictionary<int, CardHand> Player2Hand { get; set; }
-
-        public CardSelection Player1Selection { get; set; }
-        public CardSelection Player2Selection { get; set; }
 
         public int DisconnectionCheckCounter { get; set; }
 
@@ -27,6 +21,8 @@ namespace NWN.FinalFantasy.Service.TripleTriadService
 
         public int GameEndingTicks { get; set; }
         public bool IsGameEnding { get; set; }
+
+        public bool IsPlayingSelf => Players[CardPlayerType.Player1].Player == Players[CardPlayerType.Player2].Player;
 
         /// <summary>
         /// Calculates the points for each player.
@@ -37,8 +33,8 @@ namespace NWN.FinalFantasy.Service.TripleTriadService
         public (int, int) CalculatePoints()
         {
             // Cards in hands count for one point each.
-            var player1Points = Player1Hand.Count;
-            var player2Points = Player2Hand.Count;
+            var player1Points = Players[CardPlayerType.Player1].Hand.Count;
+            var player2Points = Players[CardPlayerType.Player2].Hand.Count;
 
             // Iterate over the board and count up the number of cards owned by this player.
             for (var x = 0; x < 3; x++)
@@ -50,11 +46,11 @@ namespace NWN.FinalFantasy.Service.TripleTriadService
                     {
                         var card = Board[x, y];
 
-                        if (card.CurrentOwner == CardGamePlayer.Player1)
+                        if (card.CurrentOwner == CardPlayerType.Player1)
                         {
                             player1Points++;
                         }
-                        else if (card.CurrentOwner == CardGamePlayer.Player2)
+                        else if (card.CurrentOwner == CardPlayerType.Player2)
                         {
                             player2Points++;
                         }
@@ -68,9 +64,11 @@ namespace NWN.FinalFantasy.Service.TripleTriadService
         public CardGameState(uint arenaArea, uint player1, uint player2)
         {
             ArenaArea = arenaArea;
-
-            Player1 = player1;
-            Player2 = player2;
+            Players = new Dictionary<CardPlayerType, CardPlayer>
+            {
+                [CardPlayerType.Player1] = new CardPlayer(player1),
+                [CardPlayerType.Player2] = new CardPlayer(player2)
+            };
 
             Board = new CardBoardPosition[3,3];
             Board[0, 0] = new CardBoardPosition();
@@ -84,26 +82,6 @@ namespace NWN.FinalFantasy.Service.TripleTriadService
             Board[2, 0] = new CardBoardPosition();
             Board[2, 1] = new CardBoardPosition();
             Board[2, 2] = new CardBoardPosition();
-
-            Player1Hand = new Dictionary<int, CardHand>
-            {
-                {1, new CardHand()},
-                {2, new CardHand()},
-                {3, new CardHand()},
-                {4, new CardHand()},
-                {5, new CardHand()},
-            };
-            Player2Hand = new Dictionary<int, CardHand>
-            {
-                {1, new CardHand()},
-                {2, new CardHand()},
-                {3, new CardHand()},
-                {4, new CardHand()},
-                {5, new CardHand()},
-            };
-
-            Player1Selection = new CardSelection();
-            Player2Selection = new CardSelection();
         }
     }
 }

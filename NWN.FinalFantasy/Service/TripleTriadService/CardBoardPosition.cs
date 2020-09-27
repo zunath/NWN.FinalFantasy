@@ -3,7 +3,7 @@
     public class CardBoardPosition
     {
         public CardType CardType { get; set; }
-        public CardGamePlayer CurrentOwner { get; set; }
+        public CardPlayerType CurrentOwner { get; set; }
         public uint Placeable { get; set; }
     }
 }

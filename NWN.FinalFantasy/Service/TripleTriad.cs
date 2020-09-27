@@ -535,9 +535,18 @@ namespace NWN.FinalFantasy.Service
             playerData.DecisionCounter++;
             if (playerData.DecisionCounter < 2) return;
 
+            // Attempt to determine the best play.
+            // Will not find a play if no cards are on the board or if none of player's cards will be opponent's cards.
             var (handCardId, x, y) = DetermineBestPlay(gameId, playerNumber);
 
-            // Best play couldn't be determined. Pick a random location.
+            // Best play couldn't be determined. Pick the best corner play.
+            // Will not find a play if a card exists in all four corners.
+            if (handCardId <= -1)
+            {
+                (handCardId, x, y) = DetermineCornerPlay(gameId, playerNumber);
+            }
+
+            // Best play and Corner play couldn't be determined. Pick a random location.
             if (handCardId <= -1)
             {
                 (handCardId, x, y) = DetermineRandomPlay(gameId, playerNumber);
@@ -584,8 +593,8 @@ namespace NWN.FinalFantasy.Service
                                 state.Board[x, y].CardType == CardType.Invalid &&       // Potential location must not already have a card.
                                 card.LeftPower > opponentCard.RightPower)               // Power check
                             {
-                                Console.WriteLine($"Picked: {card.Name} at ({x}, {y})   (LEFT vs RIGHT)");
-                                Console.WriteLine($"Against: {opponentCard.Name} [{card.LeftPower} vs {opponentCard.RightPower}]");
+                                //Console.WriteLine($"Picked: {card.Name} at ({x}, {y})   (LEFT vs RIGHT)");
+                                //Console.WriteLine($"Against: {opponentCard.Name} [{card.LeftPower} vs {opponentCard.RightPower}]");
                                 return (index, x, y);
                             }
                         }
@@ -600,8 +609,8 @@ namespace NWN.FinalFantasy.Service
                                 state.Board[x, y].CardType == CardType.Invalid &&       // Potential location must not already have a card.
                                 card.BottomPower > opponentCard.TopPower)               // Power check
                             {
-                                Console.WriteLine($"Picked: {card.Name} at ({x}, {y})   (BOTTOM vs TOP)");
-                                Console.WriteLine($"Against: {opponentCard.Name} [{card.BottomPower} vs {opponentCard.TopPower}]");
+                                //Console.WriteLine($"Picked: {card.Name} at ({x}, {y})   (BOTTOM vs TOP)");
+                                //Console.WriteLine($"Against: {opponentCard.Name} [{card.BottomPower} vs {opponentCard.TopPower}]");
                                 return (index, x, y);
                             }
                         }
@@ -616,8 +625,8 @@ namespace NWN.FinalFantasy.Service
                                 state.Board[x, y].CardType == CardType.Invalid &&       // Potential location must not already have a card.
                                 card.RightPower > opponentCard.LeftPower)               // Power check
                             {
-                                Console.WriteLine($"Picked: {card.Name} at ({x}, {y})   (RIGHT vs LEFT)");
-                                Console.WriteLine($"Against: {opponentCard.Name} [{card.RightPower} vs {opponentCard.LeftPower}]");
+                                //Console.WriteLine($"Picked: {card.Name} at ({x}, {y})   (RIGHT vs LEFT)");
+                                //Console.WriteLine($"Against: {opponentCard.Name} [{card.RightPower} vs {opponentCard.LeftPower}]");
                                 return (index, x, y);
                             }
                         }
@@ -632,8 +641,8 @@ namespace NWN.FinalFantasy.Service
                                 state.Board[x, y].CardType == CardType.Invalid &&       // Potential location must not already have a card.
                                 card.TopPower > opponentCard.BottomPower)               // Power check
                             {
-                                Console.WriteLine($"Picked: {card.Name} at ({x}, {y})   (TOP vs BOTTOM)");
-                                Console.WriteLine($"Against: {opponentCard.Name} [{card.TopPower} vs {opponentCard.BottomPower}]");
+                                //Console.WriteLine($"Picked: {card.Name} at ({x}, {y})   (TOP vs BOTTOM)");
+                                //Console.WriteLine($"Against: {opponentCard.Name} [{card.TopPower} vs {opponentCard.BottomPower}]");
                                 return (index, x, y);
                             }
                         }
@@ -642,6 +651,96 @@ namespace NWN.FinalFantasy.Service
             }
 
             return (-1, -1, -1);
+        }
+
+        /// <summary>
+        /// Determines the corner play to make based on the player's highest powered cards in their hand.
+        /// If all corners are occupied, no play will be determined.
+        /// </summary>
+        /// <param name="gameId">The game's Id</param>
+        /// <param name="playerNumber">The player to determine the play for</param>
+        /// <returns>The handId, board X position, and board Y position.</returns>
+        private static (int, int, int) DetermineCornerPlay(string gameId, CardPlayerType playerNumber)
+        {
+            var state = GameStates[gameId];
+            var corners = new List<Tuple<int, int>>();
+            if (state.Board[0, 0].CardType == CardType.Invalid)
+                corners.Add(new Tuple<int, int>(0, 0));
+            if (state.Board[0, 2].CardType == CardType.Invalid)
+                corners.Add(new Tuple<int, int>(0, 2));
+            if (state.Board[2, 0].CardType == CardType.Invalid)
+                corners.Add(new Tuple<int, int>(2, 0));
+            if (state.Board[2, 2].CardType == CardType.Invalid)
+                corners.Add(new Tuple<int, int>(2, 2));
+
+            // No corners are available.
+            if (corners.Count <= 0)
+                return (-1, -1, -1);
+
+            // Pick a random corner
+            var (x, y) = corners.ElementAt(Random.Next(corners.Count));
+            var handId = 0;
+
+            // (0, 0) - Get highest right and bottom
+            if (x == 0 && y == 0)
+            {
+                var highestAmount = 0;
+                
+                foreach (var handCard in state.Players[playerNumber].Hand)
+                {
+                    var card = AvailableCards[handCard.Value.Type];
+                    if (card.RightPower + card.BottomPower > highestAmount)
+                    {
+                        handId = handCard.Key;
+                    }
+                }
+            }
+            // (0, 2) - Get highest left and bottom
+            else if (x == 0 && y == 2)
+            {
+                var highestAmount = 0;
+
+                foreach (var handCard in state.Players[playerNumber].Hand)
+                {
+                    var card = AvailableCards[handCard.Value.Type];
+                    if (card.LeftPower + card.BottomPower > highestAmount)
+                    {
+                        handId = handCard.Key;
+                    }
+                }
+            }
+            // (2, 0) - Get highest right and top
+            else if (x == 2 && y == 0)
+            {
+                var highestAmount = 0;
+
+                foreach (var handCard in state.Players[playerNumber].Hand)
+                {
+                    var card = AvailableCards[handCard.Value.Type];
+                    if (card.RightPower + card.TopPower > highestAmount)
+                    {
+                        handId = handCard.Key;
+                    }
+                }
+            }
+            // (2, 2) - Get highest left and top
+            else if (x == 2 && y == 2)
+            {
+                var highestAmount = 0;
+
+                foreach (var handCard in state.Players[playerNumber].Hand)
+                {
+                    var card = AvailableCards[handCard.Value.Type];
+                    if (card.LeftPower + card.TopPower > highestAmount)
+                    {
+                        handId = handCard.Key;
+                    }
+                }
+            }
+
+            //Console.WriteLine($"Picked: {AvailableCards[state.Players[playerNumber].Hand[handId].Type].Name} at ({x}, {y})");
+
+            return (handId, x, y);
         }
 
         /// <summary>
@@ -676,7 +775,7 @@ namespace NWN.FinalFantasy.Service
             var index = Random.Next(availableSlots.Count - 1);
             var (boardX, boardY) = availableSlots[index];
 
-            Console.WriteLine($"Random play: {cardToPlay.Key}, ({boardX}, {boardY})");
+            //Console.WriteLine($"Random play: {cardToPlay.Key}, ({boardX}, {boardY})");
 
             return (cardToPlay.Key, boardX, boardY);
         }

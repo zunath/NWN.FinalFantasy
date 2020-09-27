@@ -535,11 +535,128 @@ namespace NWN.FinalFantasy.Service
             playerData.DecisionCounter++;
             if (playerData.DecisionCounter < 2) return;
 
-            // todo: Make this logic smarter.
+            var (handCardId, x, y) = DetermineBestPlay(gameId, playerNumber);
+
+            // Best play couldn't be determined. Pick a random location.
+            if (handCardId <= -1)
+            {
+                (handCardId, x, y) = DetermineRandomPlay(gameId, playerNumber);
+            }
+
+            var handCard = playerData.Hand[handCardId];
+            var card = AvailableCards[handCard.Type];
+
+            // Update the selected card.
+            state.Players[playerNumber].CardSelection.CardHandId = handCardId;
+            DoCardPlacement(gameId, x, y);
+
+            SendMessageToAllPlayers(gameId, $"{GetName(player)} plays '{card.Name}' at position ({x}, {y}).");
+            playerData.DecisionCounter = 0;
+        }
+
+        /// <summary>
+        /// Determines the best play to make based on the player's hand and board state.
+        /// If a best play can't be determined, all return values will be -1.
+        /// </summary>
+        /// <param name="gameId">The game's Id</param>
+        /// <param name="playerNumber">The player to make the play determination for.</param>
+        /// <returns>A hand card Id, board's X position, and board's Y position. All values will be -1 if play cannot be determined.</returns>
+        private static (int, int, int) DetermineBestPlay(string gameId, CardPlayerType playerNumber)
+        {
+            var state = GameStates[gameId];
+            var hand = state.Players[playerNumber].Hand;
+
+            for (var x = 0; x <= 2; x++)
+            {
+                for (var y = 0; y <= 2; y++)
+                {
+                    foreach (var (index, handCard) in hand)
+                    {
+                        var card = AvailableCards[handCard.Type];
+
+                        // Compare card's LEFT rank with opponent's RIGHT power
+                        if (y != 0)
+                        {
+                            var boardCard = state.Board[x, y - 1];
+                            var opponentCard = AvailableCards[boardCard.CardType];
+                            if (state.Board[x, y - 1].CurrentOwner != playerNumber &&   // Adjacent card must be owned by opponent.
+                                state.Board[x, y - 1].CardType != CardType.Invalid &&     // Adjacent card must exist.
+                                state.Board[x, y].CardType == CardType.Invalid &&       // Potential location must not already have a card.
+                                card.LeftPower > opponentCard.RightPower)               // Power check
+                            {
+                                Console.WriteLine($"Picked: {card.Name} at ({x}, {y})   (LEFT vs RIGHT)");
+                                Console.WriteLine($"Against: {opponentCard.Name} [{card.LeftPower} vs {opponentCard.RightPower}]");
+                                return (index, x, y);
+                            }
+                        }
+
+                        // Compare card's BOTTOM rank with oponent's TOP power
+                        if (x != 2)
+                        {
+                            var boardCard = state.Board[x + 1, y];
+                            var opponentCard = AvailableCards[boardCard.CardType];
+                            if (state.Board[x + 1, y].CurrentOwner != playerNumber &&   // Adjacent card must be owned by opponent.
+                                state.Board[x + 1, y].CardType != CardType.Invalid &&   // Adjacent card must exist.
+                                state.Board[x, y].CardType == CardType.Invalid &&       // Potential location must not already have a card.
+                                card.BottomPower > opponentCard.TopPower)               // Power check
+                            {
+                                Console.WriteLine($"Picked: {card.Name} at ({x}, {y})   (BOTTOM vs TOP)");
+                                Console.WriteLine($"Against: {opponentCard.Name} [{card.BottomPower} vs {opponentCard.TopPower}]");
+                                return (index, x, y);
+                            }
+                        }
+
+                        // Compare card's RIGHT rank with opponent's LEFT power
+                        if (y != 2)
+                        {
+                            var boardCard = state.Board[x, y + 1];
+                            var opponentCard = AvailableCards[boardCard.CardType];
+                            if (state.Board[x, y + 1].CurrentOwner != playerNumber &&   // Adjacent card must be owned by opponent.
+                                state.Board[x, y + 1].CardType != CardType.Invalid &&   // Adjacent card must exist.
+                                state.Board[x, y].CardType == CardType.Invalid &&       // Potential location must not already have a card.
+                                card.RightPower > opponentCard.LeftPower)               // Power check
+                            {
+                                Console.WriteLine($"Picked: {card.Name} at ({x}, {y})   (RIGHT vs LEFT)");
+                                Console.WriteLine($"Against: {opponentCard.Name} [{card.RightPower} vs {opponentCard.LeftPower}]");
+                                return (index, x, y);
+                            }
+                        }
+
+                        // Compare card's TOP rank with the opponent's BOTTOM power
+                        if (x != 0)
+                        {
+                            var boardCard = state.Board[x - 1, y];
+                            var opponentCard = AvailableCards[boardCard.CardType];
+                            if (state.Board[x - 1, y].CurrentOwner != playerNumber &&   // Adjacent card must be owned by opponent.
+                                state.Board[x - 1, y].CardType != CardType.Invalid &&   // Adjacent card must exist.
+                                state.Board[x, y].CardType == CardType.Invalid &&       // Potential location must not already have a card.
+                                card.TopPower > opponentCard.BottomPower)               // Power check
+                            {
+                                Console.WriteLine($"Picked: {card.Name} at ({x}, {y})   (TOP vs BOTTOM)");
+                                Console.WriteLine($"Against: {opponentCard.Name} [{card.TopPower} vs {opponentCard.BottomPower}]");
+                                return (index, x, y);
+                            }
+                        }
+                    }
+                }
+            }
+
+            return (-1, -1, -1);
+        }
+
+        /// <summary>
+        /// Randomly select a card and location on the board to play.
+        /// </summary>
+        /// <param name="gameId">The game's Id</param>
+        /// <param name="playerNumber">The player to make the play for</param>
+        /// <returns>A hand card Id, board's X position, and board's Y position</returns>
+        private static (int, int, int) DetermineRandomPlay(string gameId, CardPlayerType playerNumber)
+        {
+            var state = GameStates[gameId];
+            var hand = state.Players[playerNumber].Hand;
 
             // Pick a random card to play.
-            var cardToPlay = playerData.Hand.ElementAt(Random.Next(playerData.Hand.Count));
-            var card = AvailableCards[cardToPlay.Value.Type];
+            var cardToPlay = hand.ElementAt(Random.Next(hand.Count));
 
             // Identify the open board positions.
             var availableSlots = new List<Tuple<int, int>>();
@@ -559,13 +676,9 @@ namespace NWN.FinalFantasy.Service
             var index = Random.Next(availableSlots.Count - 1);
             var (boardX, boardY) = availableSlots[index];
 
-            // Update the selected card.
-            state.Players[playerNumber].CardSelection.CardHandId = cardToPlay.Key;
+            Console.WriteLine($"Random play: {cardToPlay.Key}, ({boardX}, {boardY})");
 
-            DoCardPlacement(gameId, boardX, boardY);
-
-            SendMessageToAllPlayers(gameId, $"{GetName(player)} plays '{card.Name}' at position ({boardX}, {boardY}).");
-            playerData.DecisionCounter = 0;
+            return (cardToPlay.Key, boardX, boardY);
         }
 
         private static void ChangeTurn(string gameId, CardPlayerType playerTurn)

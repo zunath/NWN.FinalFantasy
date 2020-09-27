@@ -9679,6 +9679,17 @@
                     "__struct_id": 0,
                     "NAME": {
                       "type": "cexostring",
+                      "value": "Triple Triad Game Registration"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "tt_terminal"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
                       "value": "Triple Triad Placemat"
                     },
                     "RESREF": {

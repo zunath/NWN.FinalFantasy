@@ -10,13 +10,6 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
 {
     public class TripleTriadGameTerminal: DialogBase
     {
-        private class PendingGame
-        {
-            public int Player1DeckId { get; set; }
-            public CardRuleType Rules { get; set; }
-        }
-        private static readonly Dictionary<uint, PendingGame> _pendingGames = new Dictionary<uint,PendingGame>();
-
         private class Model
         {
             public int SelectedDeckId { get; set; }
@@ -65,13 +58,14 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
                     : deck.Name;
             }
 
-            page.Header = "You can create or join Triple Triad games here. You can customize your decks and view your cards from the rest menu (press 'R').\n\n" +
+            page.Header = "You can create or join Triple Triad games here. You can customize your decks and view your cards from the rest menu (press 'R') or by clicking 'View Cards' here.\n\n" +
                 ColorToken.Green("Deck: ") + deckSelected;
 
             page.AddResponse(ColorToken.Green("Refresh"), () => { });
+            page.AddResponse("View Cards", () => SwitchConversation("CardDialog"));
 
             // Player has a game reservation. Give them the option to close it.
-            if (_pendingGames.ContainsKey(player))
+            if (TripleTriad.DoesPlayerHavePendingGame(player))
             {
                 if (model.IsConfirming)
                 {
@@ -79,8 +73,8 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
                     {
                         model.IsConfirming = false;
 
-                        if (_pendingGames.ContainsKey(player))
-                            _pendingGames.Remove(player);
+                        if (TripleTriad.DoesPlayerHavePendingGame(player))
+                            TripleTriad.RemovePlayerPendingGame(player);
 
                         FloatingTextStringOnCreature("Game reservation has been cancelled.", player, false);
                     });
@@ -105,22 +99,22 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
                 {
                     page.AddResponse("Create New Game", () =>
                     {
-                        _pendingGames[player] = new PendingGame
+                        TripleTriad.CreatePendingGame(player, new CardPendingGame
                         {
                             Player1DeckId = model.SelectedDeckId
-                        };
+                        });
 
                         EndConversation();
                         FloatingTextStringOnCreature("Game has been created. Please wait for another player to join. Leaving the area or server will remove your game reservation.", player, false);
                     });
 
-                    foreach (var (gameOwner, pendingGame) in _pendingGames)
+                    foreach (var (gameOwner, pendingGame) in TripleTriad.GetAllPendingGames())
                     {
                         page.AddResponse($"Join Game: {GetName(gameOwner)}", () =>
                         {
-                            if (!_pendingGames.ContainsKey(gameOwner) ||         // Game no longer exists
-                                !GetIsObjectValid(gameOwner) ||                  // Game owner is no longer valid
-                                GetTag(GetArea(gameOwner)) == "tt_arena")  // Game owner has entered a game
+                            if (!TripleTriad.DoesPlayerHavePendingGame(gameOwner) || // Game no longer exists
+                                !GetIsObjectValid(gameOwner) ||                      // Game owner is no longer valid
+                                GetTag(GetArea(gameOwner)) == "tt_arena")      // Game owner has entered a game
                             {
                                 FloatingTextStringOnCreature("This game is no longer available.", player, false);
                                 return;
@@ -173,8 +167,7 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
         public static void ClearPendingGameOnExit()
         {
             var player = GetExitingObject();
-            if (_pendingGames.ContainsKey(player))
-                _pendingGames.Remove(player);
+            TripleTriad.RemovePlayerPendingGame(player);
         }
 
     }

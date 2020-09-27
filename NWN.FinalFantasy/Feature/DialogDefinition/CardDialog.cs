@@ -151,6 +151,12 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
             });
             page.AddResponse("Manage Decks", () =>
             {
+                if (TripleTriad.DoesPlayerHavePendingGame(player))
+                {
+                    FloatingTextStringOnCreature("Decks cannot be managed while you have a game reservation pending. Cancel the reservation to manage your decks.", player, false);
+                    return;
+                }
+
                 ChangePage(DeckListPageId);
             });
         }

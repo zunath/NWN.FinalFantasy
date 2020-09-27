@@ -66,6 +66,8 @@ namespace NWN.FinalFantasy.Service
         // Tracks all of the active game states
         private static Dictionary<string, CardGameState> GameStates { get; set; } = new Dictionary<string, CardGameState>();
 
+        // Tracks all of the pending games that players can join.
+        private static readonly Dictionary<uint, CardPendingGame> _pendingGames = new Dictionary<uint, CardPendingGame>();
 
         /// <summary>
         /// When the module loads, all card data is cached and sorted for quick lookups.
@@ -122,6 +124,46 @@ namespace NWN.FinalFantasy.Service
         public static Card GetCardByType(CardType cardType)
         {
             return AvailableCards[cardType];
+        }
+
+        /// <summary>
+        /// Returns true if player has an active pending game.
+        /// </summary>
+        /// <param name="player">The player to check</param>
+        /// <returns>true if player has a pending game, false otherwise</returns>
+        public static bool DoesPlayerHavePendingGame(uint player)
+        {
+            return _pendingGames.ContainsKey(player);
+        }
+
+        /// <summary>
+        /// Removes a player's pending game.
+        /// </summary>
+        /// <param name="player">The player whose pending game will be removed</param>
+        public static void RemovePlayerPendingGame(uint player)
+        {
+            if (!DoesPlayerHavePendingGame(player)) return;
+
+            _pendingGames.Remove(player);
+        }
+
+        /// <summary>
+        /// Creates a new pending game associated with a player.
+        /// </summary>
+        /// <param name="player">The player creating the pending game.</param>
+        /// <param name="pendingGame">The pending game details</param>
+        public static void CreatePendingGame(uint player, CardPendingGame pendingGame)
+        {
+            _pendingGames[player] = pendingGame;
+        }
+
+        /// <summary>
+        /// Returns all of the pending games available to select from.
+        /// </summary>
+        /// <returns>A dictionary containing all pending games.</returns>
+        public static Dictionary<uint, CardPendingGame> GetAllPendingGames()
+        {
+            return _pendingGames.ToDictionary(x => x.Key, y => y.Value);
         }
 
         /// <summary>
@@ -271,7 +313,7 @@ namespace NWN.FinalFantasy.Service
 
             if (GetIsPC(player1))
             {
-                PersistentLocation.SaveLocation(player1);
+                SetLocalLocation(player1, "TRIPLE_TRIAD_WARP_POINT", GetLocation(player1));
 
                 var playerStartLocation1 = GetLocalLocation(arenaArea, "PLAYER_1_START");
                 AssignCommand(player1, () => ActionJumpToLocation(playerStartLocation1));
@@ -279,7 +321,7 @@ namespace NWN.FinalFantasy.Service
 
             if (GetIsPC(player2))
             {
-                PersistentLocation.SaveLocation(player1);
+                SetLocalLocation(player2, "TRIPLE_TRIAD_WARP_POINT", GetLocation(player2));
 
                 var playerStartLocation2 = GetLocalLocation(arenaArea, "PLAYER_2_START");
                 AssignCommand(player2, () => ActionJumpToLocation(playerStartLocation2));
@@ -320,12 +362,20 @@ namespace NWN.FinalFantasy.Service
                         // Send the players back to their saved locations if they're still in the arena.
                         if (GetArea(state.Player1) == state.ArenaArea)
                         {
-                            PersistentLocation.LoadLocation(state.Player1);
+                            AssignCommand(state.Player1, () =>
+                            {
+                                ClearAllActions();
+                                ActionJumpToLocation(GetLocalLocation(state.Player1, "TRIPLE_TRIAD_WARP_POINT"));
+                            });
                         }
 
                         if (GetArea(state.Player2) == state.ArenaArea)
                         {
-                            PersistentLocation.LoadLocation(state.Player2);
+                            AssignCommand(state.Player2, () =>
+                            {
+                                ClearAllActions();
+                                ActionJumpToLocation(GetLocalLocation(state.Player2, "TRIPLE_TRIAD_WARP_POINT"));
+                            });
                         }
 
                         // Clear game state and area.
@@ -361,10 +411,7 @@ namespace NWN.FinalFantasy.Service
 
                         EndGame(gameId, true);
                     }
-
                 }
-
-
             }
         }
 
@@ -621,6 +668,8 @@ namespace NWN.FinalFantasy.Service
                 }
 
                 state.Player1Selection.CardHandId = cardHandId;
+                var card = AvailableCards[state.Player1Hand[cardHandId].Type];
+                SendMessageToPC(state.Player1, $"{card.Name}: [Top = {card.TopPower}, Bottom = {card.BottomPower}, Left = {card.LeftPower}, Right = {card.RightPower}]");
             }
             else if (owner == CardGamePlayer.Player2)
             {
@@ -642,6 +691,8 @@ namespace NWN.FinalFantasy.Service
                 }
 
                 state.Player2Selection.CardHandId = cardHandId;
+                var card = AvailableCards[state.Player2Hand[cardHandId].Type];
+                SendMessageToPC(state.Player2, $"{card.Name}: [Top = {card.TopPower}, Bottom = {card.BottomPower}, Left = {card.LeftPower}, Right = {card.RightPower}]");
             }
         }
 

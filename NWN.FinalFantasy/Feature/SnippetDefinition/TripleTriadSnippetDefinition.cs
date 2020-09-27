@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using NWN.FinalFantasy.Feature.DialogDefinition;
 using NWN.FinalFantasy.Service;
 using static NWN.FinalFantasy.Core.NWScript.NWScript;
 
@@ -9,11 +11,40 @@ namespace NWN.FinalFantasy.Feature.SnippetDefinition
         [Snippet("action-card-game")]
         public static void StartCardGame(uint player, string[] args)
         {
-            // todo: Deck selection
+            var npc = OBJECT_SELF;
+            var levels = new List<int>();
 
-            var playerDeck = TripleTriad.BuildRandomDeck(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
-            var npcDeck = TripleTriad.BuildRandomDeck(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
-            TripleTriad.StartGame(player, playerDeck, OBJECT_SELF, npcDeck);
+            foreach (var arg in args)
+            {
+                if (int.TryParse(arg, out var level))
+                {
+                    if (level >= 1 && level <= 10)
+                    {
+                        levels.Add(level);
+                    }
+                }
+            }
+
+            if (levels.Count <= 0)
+            {
+                SpeakString("ERROR: Deck levels were not defined! Notify an admin that this conversation is broken.");
+                return;
+            }
+
+            // Build a random NPC deck out of the levels assigned.
+            var firstLevel = levels[0];
+            levels.RemoveAt(0);
+            var npcDeck = TripleTriad.BuildRandomDeck(firstLevel, levels.ToArray());
+            SetLocalInt(npc, "NPC_DECK_CARD_1", (int)npcDeck.Card1);
+            SetLocalInt(npc, "NPC_DECK_CARD_2", (int)npcDeck.Card2);
+            SetLocalInt(npc, "NPC_DECK_CARD_3", (int)npcDeck.Card3);
+            SetLocalInt(npc, "NPC_DECK_CARD_4", (int)npcDeck.Card4);
+            SetLocalInt(npc, "NPC_DECK_CARD_5", (int)npcDeck.Card5);
+
+            DelayCommand(0.1f, () =>
+            {
+                Dialog.StartConversation(player, npc, nameof(TripleTriadVersusDialog));
+            });
         }
     }
 }

@@ -62,7 +62,7 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
                 ColorToken.Green("Deck: ") + deckSelected;
 
             page.AddResponse(ColorToken.Green("Refresh"), () => { });
-            page.AddResponse("View Cards", () => SwitchConversation("CardDialog"));
+            page.AddResponse("View Cards", () => SwitchConversation(nameof(TripleTriadPlayerDialog)));
 
             // Player has a game reservation. Give them the option to close it.
             if (TripleTriad.DoesPlayerHavePendingGame(player))

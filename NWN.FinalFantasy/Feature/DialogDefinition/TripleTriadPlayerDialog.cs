@@ -11,7 +11,7 @@ using static NWN.FinalFantasy.Core.NWScript.NWScript;
 
 namespace NWN.FinalFantasy.Feature.DialogDefinition
 {
-    public class CardDialog: DialogBase
+    public class TripleTriadPlayerDialog: DialogBase
     {
         private class Model
         {
@@ -57,7 +57,7 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
         [NWNEventHandler("mod_load")]
         public static void ReserveGuiIds()
         {
-            _idReservation = Gui.ReserveIds(nameof(CardDialog), CardParts * DeckSize);
+            _idReservation = Gui.ReserveIds(nameof(TripleTriadPlayerDialog), CardParts * DeckSize);
         }
 
         /// <summary>

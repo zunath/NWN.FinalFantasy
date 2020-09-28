@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
 using NWN.FinalFantasy.Core;
 using NWN.FinalFantasy.Core.NWNX;
 using NWN.FinalFantasy.Core.NWScript;
@@ -90,48 +92,27 @@ namespace NWN.FinalFantasy.Feature
         }
 
         [NWNEventHandler("test11")]
-        public static void SimulateTripleTriad()
+        public static async void ThreadProcessing()
         {
-            var player1 = GetFirstPC();
-            var player2 = GetNextPC();
-
-            // Single player mode
-            if (!GetIsObjectValid(player2))
+            var id = Guid.NewGuid().ToString();
+            Console.WriteLine($"thread processing started. ID = {id}");
+            Console.WriteLine($"Thread = {Thread.CurrentThread.ManagedThreadId}");
+            var task1 = Task.Run(() =>
             {
-                var player = GetLastUsedBy();
-                var deck1 = TripleTriad.BuildRandomDeck(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
-                var deck2 = TripleTriad.BuildRandomDeck(10, 9, 8, 7);
+                var threadId = Thread.CurrentThread.ManagedThreadId;
+                Console.WriteLine($"Hello from thread: {threadId}");
 
-                TripleTriad.StartGame(player, deck1, player, deck2);
-            }
+                Thread.Sleep(10000);
+                Console.WriteLine($"stage 1 thread done thread id = {Thread.CurrentThread.ManagedThreadId}");
+                Thread.Sleep(5000);
+                Console.WriteLine($"stage 2 thread done thread id = {Thread.CurrentThread.ManagedThreadId}");
+                Thread.Sleep(1000);
+                Console.WriteLine($"stage 3 thread done thread id = {Thread.CurrentThread.ManagedThreadId}");
+            });
 
-            // Two player mode
-            else
-            {
-                var deck1 = TripleTriad.BuildRandomDeck(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
-                var deck2 = TripleTriad.BuildRandomDeck(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+            await NWTask.WhenAll(task1);
 
-                TripleTriad.StartGame(player1, deck1, player2, deck2);
-            }
-        }
-
-        [NWNEventHandler("test12")]
-        public static void UseCard()
-        {
-            var player = GetLastUsedBy();
-            if (!GetIsPC(player) || GetIsDM(player)) return;
-
-            var playerId = GetObjectUUID(player);
-            var dbPlayerTripleTriad = DB.Get<PlayerTripleTriad>(playerId) ?? new PlayerTripleTriad();
-
-            foreach (var (cardType, card) in TripleTriad.GetAllAvailableCards())
-            {
-                dbPlayerTripleTriad.AvailableCards[cardType] = DateTime.UtcNow;
-            }
-
-            DB.Set(playerId, dbPlayerTripleTriad);
-
-            SendMessageToPC(player, "All Triple Triad cards received! OMGZ");
+            Console.WriteLine($"thread processing done. ID = {id}");
         }
 
     }

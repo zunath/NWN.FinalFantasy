@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using NWN.FinalFantasy.Extension;
+using NWN.FinalFantasy.Service;
 using static NWN.FinalFantasy.Core.NWScript.NWScript;
 
 namespace NWN.FinalFantasy.Core
@@ -19,13 +20,28 @@ namespace NWN.FinalFantasy.Core
         private static Dictionary<string, List<ConditionalScriptDelegate>> _conditionalScripts;
 
         private static DateTime _last1SecondIntervalCall = DateTime.UtcNow;
+        private static readonly NWTask.TaskRunner _taskRunner = new NWTask.TaskRunner();
+        public static event Action OnScriptContextBegin;
+        public static event Action OnScriptContextEnd;
 
         //
         // This is called once every main loop frame, outside of object context
         //
         public static void OnMainLoop(ulong frame)
         {
+            OnScriptContextBegin?.Invoke();
             RunOneSecondPCIntervalEvent();
+
+            try
+            {
+                _taskRunner.Process();
+            }
+            catch (Exception ex)
+            {
+                Log.Write(LogGroup.Error, ex.ToMessageAndCompleteStacktrace());
+            }
+
+            OnScriptContextEnd?.Invoke();
         }
 
         //

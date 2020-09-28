@@ -44,7 +44,6 @@ namespace NWN.FinalFantasy.Core
             internal void Process()
             {
                 _isInScriptContext = true;
-
                 lock (_schedulerLock)
                 {
                     _scheduledItems.RemoveWhere(item =>

@@ -53,7 +53,7 @@ namespace NWN.FinalFantasy.Feature
         public static void CacheData()
         {
             LoadSpawnTables();
-            StoreSpawns();
+            //StoreSpawns();
         }
 
         /// <summary>

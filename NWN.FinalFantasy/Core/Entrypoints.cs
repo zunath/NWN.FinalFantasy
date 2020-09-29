@@ -35,6 +35,7 @@ namespace NWN.FinalFantasy.Core
             try
             {
                 _taskRunner.Process();
+                Scheduler.Process();
             }
             catch (Exception ex)
             {

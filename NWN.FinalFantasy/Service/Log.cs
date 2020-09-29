@@ -16,7 +16,8 @@ namespace NWN.FinalFantasy.Service
         Server,
         PerkRefund,
         PlayerHousing,
-        PlayerMarket
+        PlayerMarket,
+        AI
     }
 
     public static class Log
@@ -41,7 +42,8 @@ namespace NWN.FinalFantasy.Service
         /// </summary>
         /// <param name="group">The group to audit this log under.</param>
         /// <param name="details">The details about the entry which will be written to disk.</param>
-        public static void Write(LogGroup group, string details)
+        /// <param name="printToConsole">If true, the details will be printed to the console.</param>
+        public static void Write(LogGroup group, string details, bool printToConsole = false)
         {
             if (!_loggers.ContainsKey(group))
             {
@@ -52,7 +54,7 @@ namespace NWN.FinalFantasy.Service
                     .WriteTo.Async(a => a.File(path, rollingInterval: RollingInterval.Day));
 
                 // Errors should also be print to the console.
-                if (group == LogGroup.Error)
+                if (group == LogGroup.Error || printToConsole)
                 {
                     logger.WriteTo.Console();
                 }

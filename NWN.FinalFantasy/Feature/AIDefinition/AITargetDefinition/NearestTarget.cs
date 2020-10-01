@@ -1,17 +1,29 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading;
-using NWN.FinalFantasy.Core.NWScript;
-using NWN.FinalFantasy.Service;
+using System.Threading.Tasks;
+using NWN.FinalFantasy.Core;
 using NWN.FinalFantasy.Service.AIService;
+using static NWN.FinalFantasy.Core.NWScript.NWScript;
+using Type = NWN.FinalFantasy.Core.NWScript.Enum.Creature.Type;
 
 namespace NWN.FinalFantasy.Feature.AIDefinition.AITargetDefinition
 {
     public class NearestTarget: IAITargets
     {
-        public List<uint> GetTargets()
+        public async Task<List<uint>> GetTargetsAsync(uint creature)
         {
-            Thread.Sleep(200);
-            return new List<uint>(AI.Players);
+            var nearest = OBJECT_INVALID;
+            var task = NWTask.Run(() =>
+            {
+                //Console.WriteLine($"Requesting nearest creature on NWN thread. ID = {Thread.CurrentThread.ManagedThreadId}. Self = {GetName(creature)}");
+                nearest = GetNearestCreature(Type.PlayerCharacter, 1, creature);
+                return Task.CompletedTask;
+            });
+
+            await NWTask.WhenAll(task);
+
+            return new List<uint>{ nearest };
         }
     }
 }

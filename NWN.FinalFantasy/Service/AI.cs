@@ -64,14 +64,11 @@ namespace NWN.FinalFantasy.Service
         /// </summary>
         private static void ProcessCreatureCommandQueue()
         {
-            Console.WriteLine("Processing creature commands queue");
             const int MaxCommandsPerCycle = 100;
             var processedAmount = 0;
 
             while (CreatureCommandQueue.TryDequeue(out var command))
             {
-                Console.WriteLine($"Processing command: {command.Action} on {GetName(command.Creature)}");
-
                 // Creature is no longer valid.
                 if (!GetIsObjectValid(command.Creature))
                 {
@@ -90,7 +87,11 @@ namespace NWN.FinalFantasy.Service
                 if (processedAmount >= MaxCommandsPerCycle) 
                     break;
             }
-            Console.WriteLine($"Processed {processedAmount} commands in queue.");
+
+            if (processedAmount > 0)
+            {
+                //Console.WriteLine($"Processed {processedAmount} commands in queue.");
+            }
         }
 
         /// <summary>
@@ -171,7 +172,7 @@ namespace NWN.FinalFantasy.Service
         /// <summary>
         /// Processes the AI logic for all creatures.
         /// </summary>
-        private static void AILogicAsync()
+        private static async Task AILogicAsync()
         {
             var stopwatch = new Stopwatch();
             stopwatch.Start();
@@ -190,7 +191,6 @@ namespace NWN.FinalFantasy.Service
                     ProcessCreatures(deltaTime);
 
                     stopwatch.Restart();
-                    Thread.Sleep(100);
                 }
 
                 Log.Write(LogGroup.AI, "AI Thread Stopped", true);
@@ -203,7 +203,7 @@ namespace NWN.FinalFantasy.Service
                 if (AIThreadFailures < 10)
                 {
                     Log.Write(LogGroup.AI, $"AI Thread is restarting due to failure...", true);
-                    AILogicAsync();
+                    await AILogicAsync();
                 }
             }
         }
@@ -246,16 +246,17 @@ namespace NWN.FinalFantasy.Service
         {
             const double UpdateFrequency = 1.0d;
 
-            foreach (var (creature, state) in Creatures)
+            Parallel.ForEach(Creatures, async pair =>
             {
+                var (creature, state) = pair;
                 state.ProcessTime += deltaTime;
 
                 if (state.ProcessTime >= UpdateFrequency)
                 {
-                    ProcessCreatureAI(creature, state.InstructionSetId);
+                    await ProcessCreatureAIAsync(creature, state.InstructionSetId);
                     state.ProcessTime = 0d;
                 }
-            }
+            });
         }
 
         /// <summary>
@@ -263,20 +264,27 @@ namespace NWN.FinalFantasy.Service
         /// </summary>
         /// <param name="creature">The creature to process</param>
         /// <param name="instructionSetId">The instruction set Id to use</param>
-        private static void ProcessCreatureAI(uint creature, string instructionSetId)
+        private static async Task ProcessCreatureAIAsync(uint creature, string instructionSetId)
         {
+            var stopwatch = new Stopwatch();
+            stopwatch.Start();
+
             var instructionSet = InstructionSets[instructionSetId];
 
             // Instructions are processed from top to bottom. As soon as a valid target is determined,
             // the action is performed.
             foreach (var instruction in instructionSet)
             {
-                var targets = instruction.Target.GetTargets();
+                var targets = await instruction.Target.GetTargetsAsync(creature);
                 if (targets.Count > 0)
                 {
                     CreatureCommandQueue.Enqueue(new AICreatureCommand(creature, targets, instruction.Action));
                 }
             }
+
+            stopwatch.Stop();
+
+            //Console.WriteLine($"ProcessCreatureAIAsync on creature {creature} ran in {stopwatch.ElapsedMilliseconds}ms");
         }
 
         #endregion

@@ -179,6 +179,13 @@
         "__struct_id": 8,
         "Mod_Hak": {
           "type": "cexostring",
+          "value": "ffo_clothes"
+        }
+      },
+      {
+        "__struct_id": 8,
+        "Mod_Hak": {
+          "type": "cexostring",
           "value": "ffo_gui"
         }
       },

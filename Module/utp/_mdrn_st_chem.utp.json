@@ -1,0 +1,696 @@
+{
+  "__data_type": "UTP ",
+  "AnimationState": {
+    "type": "byte",
+    "value": 0
+  },
+  "Appearance": {
+    "type": "dword",
+    "value": 157
+  },
+  "AutoRemoveKey": {
+    "type": "byte",
+    "value": 0
+  },
+  "BodyBag": {
+    "type": "byte",
+    "value": 0
+  },
+  "CloseLockDC": {
+    "type": "byte",
+    "value": 0
+  },
+  "Comment": {
+    "type": "cexostring",
+    "value": "Fill this up with whatever mechanical supplies you'd like people to be able to craft."
+  },
+  "Conversation": {
+    "type": "resref",
+    "value": ""
+  },
+  "CurrentHP": {
+    "type": "short",
+    "value": 15
+  },
+  "Description": {
+    "id": 14585,
+    "type": "cexolocstring",
+    "value": {
+      "0": "This is the Craft Chemical Supply."
+    }
+  },
+  "DisarmDC": {
+    "type": "byte",
+    "value": 15
+  },
+  "Faction": {
+    "type": "dword",
+    "value": 1
+  },
+  "Fort": {
+    "type": "byte",
+    "value": 16
+  },
+  "Hardness": {
+    "type": "byte",
+    "value": 5
+  },
+  "HasInventory": {
+    "type": "byte",
+    "value": 1
+  },
+  "HP": {
+    "type": "short",
+    "value": 15
+  },
+  "Interruptable": {
+    "type": "byte",
+    "value": 1
+  },
+  "ItemList": {
+    "type": "list",
+    "value": [
+      {
+        "__struct_id": 0,
+        "InventoryRes": {
+          "type": "resref",
+          "value": "_mdrn_ot_acid1"
+        },
+        "Repos_PosX": {
+          "type": "word",
+          "value": 0
+        },
+        "Repos_Posy": {
+          "type": "word",
+          "value": 0
+        }
+      },
+      {
+        "__struct_id": 1,
+        "InventoryRes": {
+          "type": "resref",
+          "value": "_mdrn_it_acidb"
+        },
+        "Repos_PosX": {
+          "type": "word",
+          "value": 1
+        },
+        "Repos_Posy": {
+          "type": "word",
+          "value": 0
+        }
+      },
+      {
+        "__struct_id": 2,
+        "InventoryRes": {
+          "type": "resref",
+          "value": "_mdrn_ot_chemkit"
+        },
+        "Repos_PosX": {
+          "type": "word",
+          "value": 2
+        },
+        "Repos_Posy": {
+          "type": "word",
+          "value": 0
+        }
+      },
+      {
+        "__struct_id": 3,
+        "InventoryRes": {
+          "type": "resref",
+          "value": "_mdrn_it_disgkit"
+        },
+        "Repos_PosX": {
+          "type": "word",
+          "value": 4
+        },
+        "Repos_Posy": {
+          "type": "word",
+          "value": 0
+        }
+      },
+      {
+        "__struct_id": 4,
+        "InventoryRes": {
+          "type": "resref",
+          "value": "_mdrn_it_invkit"
+        },
+        "Repos_PosX": {
+          "type": "word",
+          "value": 0
+        },
+        "Repos_Posy": {
+          "type": "word",
+          "value": 1
+        }
+      },
+      {
+        "__struct_id": 5,
+        "InventoryRes": {
+          "type": "resref",
+          "value": "_mdrn_it_acidbmb"
+        },
+        "Repos_PosX": {
+          "type": "word",
+          "value": 6
+        },
+        "Repos_Posy": {
+          "type": "word",
+          "value": 0
+        }
+      },
+      {
+        "__struct_id": 6,
+        "InventoryRes": {
+          "type": "resref",
+          "value": "_mdrn_ot_expl1"
+        },
+        "Repos_PosX": {
+          "type": "word",
+          "value": 2
+        },
+        "Repos_Posy": {
+          "type": "word",
+          "value": 2
+        }
+      },
+      {
+        "__struct_id": 7,
+        "InventoryRes": {
+          "type": "resref",
+          "value": "_mdrn_ot_gas1"
+        },
+        "Repos_PosX": {
+          "type": "word",
+          "value": 6
+        },
+        "Repos_Posy": {
+          "type": "word",
+          "value": 1
+        }
+      },
+      {
+        "__struct_id": 8,
+        "InventoryRes": {
+          "type": "resref",
+          "value": "_mdrn_it_lstick"
+        },
+        "Repos_PosX": {
+          "type": "word",
+          "value": 4
+        },
+        "Repos_Posy": {
+          "type": "word",
+          "value": 2
+        }
+      },
+      {
+        "__struct_id": 9,
+        "InventoryRes": {
+          "type": "resref",
+          "value": "_mdrn_ot_fireext"
+        },
+        "Repos_PosX": {
+          "type": "word",
+          "value": 5
+        },
+        "Repos_Posy": {
+          "type": "word",
+          "value": 2
+        }
+      },
+      {
+        "__struct_id": 10,
+        "InventoryRes": {
+          "type": "resref",
+          "value": "_mdrn_it_gasmask"
+        },
+        "Repos_PosX": {
+          "type": "word",
+          "value": 0
+        },
+        "Repos_Posy": {
+          "type": "word",
+          "value": 3
+        }
+      },
+      {
+        "__struct_id": 11,
+        "InventoryRes": {
+          "type": "resref",
+          "value": "_mdrn_it_stove"
+        },
+        "Repos_PosX": {
+          "type": "word",
+          "value": 0
+        },
+        "Repos_Posy": {
+          "type": "word",
+          "value": 5
+        }
+      },
+      {
+        "__struct_id": 12,
+        "InventoryRes": {
+          "type": "resref",
+          "value": "d20_ammo_box_220"
+        },
+        "Repos_PosX": {
+          "type": "word",
+          "value": 6
+        },
+        "Repos_Posy": {
+          "type": "word",
+          "value": 2
+        }
+      },
+      {
+        "__struct_id": 13,
+        "InventoryRes": {
+          "type": "resref",
+          "value": "d20_ammo_box_303"
+        },
+        "Repos_PosX": {
+          "type": "word",
+          "value": 6
+        },
+        "Repos_Posy": {
+          "type": "word",
+          "value": 3
+        }
+      },
+      {
+        "__struct_id": 14,
+        "InventoryRes": {
+          "type": "resref",
+          "value": "d20_ammo_box_320"
+        },
+        "Repos_PosX": {
+          "type": "word",
+          "value": 2
+        },
+        "Repos_Posy": {
+          "type": "word",
+          "value": 4
+        }
+      },
+      {
+        "__struct_id": 15,
+        "InventoryRes": {
+          "type": "resref",
+          "value": "d20_ammo_box_357"
+        },
+        "Repos_PosX": {
+          "type": "word",
+          "value": 3
+        },
+        "Repos_Posy": {
+          "type": "word",
+          "value": 4
+        }
+      },
+      {
+        "__struct_id": 16,
+        "InventoryRes": {
+          "type": "resref",
+          "value": "d20_ammo_box_380"
+        },
+        "Repos_PosX": {
+          "type": "word",
+          "value": 4
+        },
+        "Repos_Posy": {
+          "type": "word",
+          "value": 4
+        }
+      },
+      {
+        "__struct_id": 17,
+        "InventoryRes": {
+          "type": "resref",
+          "value": "d20_ammo_box_444"
+        },
+        "Repos_PosX": {
+          "type": "word",
+          "value": 5
+        },
+        "Repos_Posy": {
+          "type": "word",
+          "value": 4
+        }
+      },
+      {
+        "__struct_id": 18,
+        "InventoryRes": {
+          "type": "resref",
+          "value": "d20_ammo_box_450"
+        },
+        "Repos_PosX": {
+          "type": "word",
+          "value": 6
+        },
+        "Repos_Posy": {
+          "type": "word",
+          "value": 4
+        }
+      },
+      {
+        "__struct_id": 19,
+        "InventoryRes": {
+          "type": "resref",
+          "value": "d20_ammo_box_500"
+        },
+        "Repos_PosX": {
+          "type": "word",
+          "value": 2
+        },
+        "Repos_Posy": {
+          "type": "word",
+          "value": 5
+        }
+      },
+      {
+        "__struct_id": 20,
+        "InventoryRes": {
+          "type": "resref",
+          "value": "d20_ammo_box_556"
+        },
+        "Repos_PosX": {
+          "type": "word",
+          "value": 3
+        },
+        "Repos_Posy": {
+          "type": "word",
+          "value": 5
+        }
+      },
+      {
+        "__struct_id": 21,
+        "InventoryRes": {
+          "type": "resref",
+          "value": "d20_ammo_box_762"
+        },
+        "Repos_PosX": {
+          "type": "word",
+          "value": 4
+        },
+        "Repos_Posy": {
+          "type": "word",
+          "value": 5
+        }
+      },
+      {
+        "__struct_id": 22,
+        "InventoryRes": {
+          "type": "resref",
+          "value": "d20_ammo_box_900"
+        },
+        "Repos_PosX": {
+          "type": "word",
+          "value": 5
+        },
+        "Repos_Posy": {
+          "type": "word",
+          "value": 5
+        }
+      },
+      {
+        "__struct_id": 23,
+        "InventoryRes": {
+          "type": "resref",
+          "value": "d20_ammo_box_201"
+        },
+        "Repos_PosX": {
+          "type": "word",
+          "value": 6
+        },
+        "Repos_Posy": {
+          "type": "word",
+          "value": 5
+        }
+      },
+      {
+        "__struct_id": 24,
+        "InventoryRes": {
+          "type": "resref",
+          "value": "d20_ammo_box_801"
+        },
+        "Repos_PosX": {
+          "type": "word",
+          "value": 2
+        },
+        "Repos_Posy": {
+          "type": "word",
+          "value": 6
+        }
+      },
+      {
+        "__struct_id": 25,
+        "InventoryRes": {
+          "type": "resref",
+          "value": "_mdrn_ot_frag"
+        },
+        "Repos_PosX": {
+          "type": "word",
+          "value": 3
+        },
+        "Repos_Posy": {
+          "type": "word",
+          "value": 6
+        }
+      },
+      {
+        "__struct_id": 26,
+        "InventoryRes": {
+          "type": "resref",
+          "value": "_mdrn_ot_knock"
+        },
+        "Repos_PosX": {
+          "type": "word",
+          "value": 4
+        },
+        "Repos_Posy": {
+          "type": "word",
+          "value": 6
+        }
+      },
+      {
+        "__struct_id": 27,
+        "InventoryRes": {
+          "type": "resref",
+          "value": "_mdrn_ot_smoke"
+        },
+        "Repos_PosX": {
+          "type": "word",
+          "value": 5
+        },
+        "Repos_Posy": {
+          "type": "word",
+          "value": 6
+        }
+      },
+      {
+        "__struct_id": 28,
+        "InventoryRes": {
+          "type": "resref",
+          "value": "_mdrn_ot_phosp"
+        },
+        "Repos_PosX": {
+          "type": "word",
+          "value": 6
+        },
+        "Repos_Posy": {
+          "type": "word",
+          "value": 6
+        }
+      },
+      {
+        "__struct_id": 29,
+        "InventoryRes": {
+          "type": "resref",
+          "value": "_mdrn_ot_tear"
+        },
+        "Repos_PosX": {
+          "type": "word",
+          "value": 2
+        },
+        "Repos_Posy": {
+          "type": "word",
+          "value": 7
+        }
+      }
+    ]
+  },
+  "KeyName": {
+    "type": "cexostring",
+    "value": ""
+  },
+  "KeyRequired": {
+    "type": "byte",
+    "value": 0
+  },
+  "Lockable": {
+    "type": "byte",
+    "value": 0
+  },
+  "Locked": {
+    "type": "byte",
+    "value": 0
+  },
+  "LocName": {
+    "id": 5650,
+    "type": "cexolocstring",
+    "value": {
+      "0": "Chemical Supply"
+    }
+  },
+  "OnClick": {
+    "type": "resref",
+    "value": ""
+  },
+  "OnClosed": {
+    "type": "resref",
+    "value": ""
+  },
+  "OnDamaged": {
+    "type": "resref",
+    "value": ""
+  },
+  "OnDeath": {
+    "type": "resref",
+    "value": ""
+  },
+  "OnDisarm": {
+    "type": "resref",
+    "value": ""
+  },
+  "OnHeartbeat": {
+    "type": "resref",
+    "value": ""
+  },
+  "OnInvDisturbed": {
+    "type": "resref",
+    "value": "_mdrn_dist_mech"
+  },
+  "OnLock": {
+    "type": "resref",
+    "value": ""
+  },
+  "OnMeleeAttacked": {
+    "type": "resref",
+    "value": ""
+  },
+  "OnOpen": {
+    "type": "resref",
+    "value": ""
+  },
+  "OnSpellCastAt": {
+    "type": "resref",
+    "value": ""
+  },
+  "OnTrapTriggered": {
+    "type": "resref",
+    "value": ""
+  },
+  "OnUnlock": {
+    "type": "resref",
+    "value": ""
+  },
+  "OnUsed": {
+    "type": "resref",
+    "value": ""
+  },
+  "OnUserDefined": {
+    "type": "resref",
+    "value": ""
+  },
+  "OpenLockDC": {
+    "type": "byte",
+    "value": 18
+  },
+  "PaletteID": {
+    "type": "byte",
+    "value": 4
+  },
+  "Plot": {
+    "type": "byte",
+    "value": 1
+  },
+  "PortraitId": {
+    "type": "word",
+    "value": 515
+  },
+  "Ref": {
+    "type": "byte",
+    "value": 0
+  },
+  "Static": {
+    "type": "byte",
+    "value": 0
+  },
+  "Tag": {
+    "type": "cexostring",
+    "value": "_mdrn_st_chem"
+  },
+  "TemplateResRef": {
+    "type": "resref",
+    "value": "_mdrn_st_chem"
+  },
+  "TrapDetectable": {
+    "type": "byte",
+    "value": 1
+  },
+  "TrapDetectDC": {
+    "type": "byte",
+    "value": 0
+  },
+  "TrapDisarmable": {
+    "type": "byte",
+    "value": 1
+  },
+  "TrapFlag": {
+    "type": "byte",
+    "value": 0
+  },
+  "TrapOneShot": {
+    "type": "byte",
+    "value": 1
+  },
+  "TrapType": {
+    "type": "byte",
+    "value": 0
+  },
+  "Type": {
+    "type": "byte",
+    "value": 0
+  },
+  "Useable": {
+    "type": "byte",
+    "value": 1
+  },
+  "VarTable": {
+    "type": "list",
+    "value": [
+      {
+        "__struct_id": 0,
+        "Name": {
+          "type": "cexostring",
+          "value": "nSkill"
+        },
+        "Type": {
+          "type": "dword",
+          "value": 3
+        },
+        "Value": {
+          "type": "cexostring",
+          "value": "Chemical"
+        }
+      }
+    ]
+  },
+  "Will": {
+    "type": "byte",
+    "value": 0
+  }
+}

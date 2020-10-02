@@ -1,0 +1,221 @@
+{
+  "__data_type": "UTP ",
+  "AnimationState": {
+    "type": "byte",
+    "value": 0
+  },
+  "Appearance": {
+    "type": "dword",
+    "value": 157
+  },
+  "AutoRemoveKey": {
+    "type": "byte",
+    "value": 0
+  },
+  "BodyBag": {
+    "type": "byte",
+    "value": 0
+  },
+  "CloseLockDC": {
+    "type": "byte",
+    "value": 0
+  },
+  "Comment": {
+    "type": "cexostring",
+    "value": "Standard store for use in conversations.  It is set non-useable and invisible so that it will only be used when someone talks to a nearby store clerk.  \r\n\r\nPlace it right in front of a salesperson with the _mdrn_conv_shop conversation (or a modified form), facing the same way as the salesperson.\r\n\r\nNOTE: To make an item unlimited for the store, set an Int variable called nMdrnShopUnlimited to a value of 1.  You can do this under the Description tab for the item, where it says Variables."
+  },
+  "Conversation": {
+    "type": "resref",
+    "value": ""
+  },
+  "CurrentHP": {
+    "type": "short",
+    "value": 15
+  },
+  "Description": {
+    "id": 14585,
+    "type": "cexolocstring",
+    "value": {
+      "0": "This is a store's inventory.  To buy an item, pick it up and close the container.  A Wealth check will be made according to the value of the item.  The value is converted into a DC according to the following formula:\n\nDC = ln(value in $)*3.48-6.65\n\nA character can Take 10 on a purchase, so anything with a DC less than or equal to 10 + Wealth is automatically purchased.  Otherwise, a d20 is used.  If the character succeeds on the Wealth check, the character gains the object. If the character fails, he or she can't afford the object at the time.\n\nAny time a character SUCESSFULLY purchases an object or service with a purchase DC higher than his or her current Wealth bonus, or one with a purchase DC of 15 or higher, the character's Wealth bonus goes down. How much the Wealth bonus is reduced depends on how expensive the object is.\n\nDC                     Wealth Bonus Decrease\n-----                       ------------------------------\nWealth + 10                    1\nWealth + 11-15              1d6\nWealth + 16 or more       2d6\n\nAlong with this loss, any time a character buys an object or service with a purchase DC of 15 or higher, the character reduces his or her current Wealth bonus by an additional 1 point. \n\nThe same formula is used for SELLING items (including an additional 1 point for DC 15 or higher), though the sell DC value for items is always 3 less (6 less for Stolen items sold on the black market)."
+    }
+  },
+  "DisarmDC": {
+    "type": "byte",
+    "value": 15
+  },
+  "Faction": {
+    "type": "dword",
+    "value": 1
+  },
+  "Fort": {
+    "type": "byte",
+    "value": 16
+  },
+  "Hardness": {
+    "type": "byte",
+    "value": 5
+  },
+  "HasInventory": {
+    "type": "byte",
+    "value": 1
+  },
+  "HP": {
+    "type": "short",
+    "value": 15
+  },
+  "Interruptable": {
+    "type": "byte",
+    "value": 1
+  },
+  "KeyName": {
+    "type": "cexostring",
+    "value": ""
+  },
+  "KeyRequired": {
+    "type": "byte",
+    "value": 0
+  },
+  "Lockable": {
+    "type": "byte",
+    "value": 0
+  },
+  "Locked": {
+    "type": "byte",
+    "value": 0
+  },
+  "LocName": {
+    "id": 5650,
+    "type": "cexolocstring",
+    "value": {
+      "0": "Wealth-Based Store (For Conversations)"
+    }
+  },
+  "OnClick": {
+    "type": "resref",
+    "value": ""
+  },
+  "OnClosed": {
+    "type": "resref",
+    "value": ""
+  },
+  "OnDamaged": {
+    "type": "resref",
+    "value": ""
+  },
+  "OnDeath": {
+    "type": "resref",
+    "value": ""
+  },
+  "OnDisarm": {
+    "type": "resref",
+    "value": ""
+  },
+  "OnHeartbeat": {
+    "type": "resref",
+    "value": "_mdrn_sp_store"
+  },
+  "OnInvDisturbed": {
+    "type": "resref",
+    "value": "_mrdn_store"
+  },
+  "OnLock": {
+    "type": "resref",
+    "value": ""
+  },
+  "OnMeleeAttacked": {
+    "type": "resref",
+    "value": ""
+  },
+  "OnOpen": {
+    "type": "resref",
+    "value": ""
+  },
+  "OnSpellCastAt": {
+    "type": "resref",
+    "value": ""
+  },
+  "OnTrapTriggered": {
+    "type": "resref",
+    "value": ""
+  },
+  "OnUnlock": {
+    "type": "resref",
+    "value": ""
+  },
+  "OnUsed": {
+    "type": "resref",
+    "value": ""
+  },
+  "OnUserDefined": {
+    "type": "resref",
+    "value": ""
+  },
+  "OpenLockDC": {
+    "type": "byte",
+    "value": 18
+  },
+  "PaletteID": {
+    "type": "byte",
+    "value": 4
+  },
+  "Plot": {
+    "type": "byte",
+    "value": 1
+  },
+  "PortraitId": {
+    "type": "word",
+    "value": 515
+  },
+  "Ref": {
+    "type": "byte",
+    "value": 0
+  },
+  "Static": {
+    "type": "byte",
+    "value": 0
+  },
+  "Tag": {
+    "type": "cexostring",
+    "value": "_mdrn_store"
+  },
+  "TemplateResRef": {
+    "type": "resref",
+    "value": "_mdrn_store001"
+  },
+  "TrapDetectable": {
+    "type": "byte",
+    "value": 1
+  },
+  "TrapDetectDC": {
+    "type": "byte",
+    "value": 0
+  },
+  "TrapDisarmable": {
+    "type": "byte",
+    "value": 1
+  },
+  "TrapFlag": {
+    "type": "byte",
+    "value": 0
+  },
+  "TrapOneShot": {
+    "type": "byte",
+    "value": 1
+  },
+  "TrapType": {
+    "type": "byte",
+    "value": 0
+  },
+  "Type": {
+    "type": "byte",
+    "value": 0
+  },
+  "Useable": {
+    "type": "byte",
+    "value": 1
+  },
+  "Will": {
+    "type": "byte",
+    "value": 0
+  }
+}

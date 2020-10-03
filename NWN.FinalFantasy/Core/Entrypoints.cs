@@ -20,7 +20,6 @@ namespace NWN.FinalFantasy.Core
         private static Dictionary<string, List<Action>> _scripts;
         private static Dictionary<string, List<ConditionalScriptDelegate>> _conditionalScripts;
 
-        private static DateTime _last1SecondIntervalCall = DateTime.UtcNow;
         private static readonly NWTask.TaskRunner _taskRunner = new NWTask.TaskRunner();
         public static event Action OnScriptContextBegin;
         public static event Action OnScriptContextEnd;
@@ -31,11 +30,6 @@ namespace NWN.FinalFantasy.Core
         public static void OnMainLoop(ulong frame)
         {
             OnScriptContextBegin?.Invoke();
-
-            using (new Profiler($"{nameof(OnMainLoop)}:OneSecondPCInterval"))
-            {
-                RunOneSecondPCIntervalEvent();
-            }
 
             using (new Profiler($"{nameof(OnMainLoop)}:TaskRunner & Scheduler"))
             {
@@ -96,6 +90,7 @@ namespace NWN.FinalFantasy.Core
         public static void OnModuleLoad()
         {
             Console.WriteLine("OnModuleLoad() called");
+            Scheduler.ScheduleRepeating(RunOneSecondPCIntervalEvent, TimeSpan.FromSeconds(1));
         }
 
         //
@@ -205,15 +200,13 @@ namespace NWN.FinalFantasy.Core
         /// </summary>
         private static void RunOneSecondPCIntervalEvent()
         {
-            var now = DateTime.UtcNow;
-            var delta = now - _last1SecondIntervalCall;
-            if (delta.Seconds < 1) return;
-            _last1SecondIntervalCall = now;
-
-            for (var player = GetFirstPC(); GetIsObjectValid(player); player = GetNextPC())
+            using (new Profiler(nameof(RunOneSecondPCIntervalEvent)))
             {
-                Internal.OBJECT_SELF = player;
-                RunScripts("interval_pc_1s");
+                for (var player = GetFirstPC(); GetIsObjectValid(player); player = GetNextPC())
+                {
+                    Internal.OBJECT_SELF = player;
+                    RunScripts("interval_pc_1s");
+                }
             }
         }
     }

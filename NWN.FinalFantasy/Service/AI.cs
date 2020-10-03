@@ -20,10 +20,6 @@ namespace NWN.FinalFantasy.Service
 
         #endregion
 
-        #region AI Thread Data
-
-        #endregion
-
         #region Shared Data (both threads)
 
         private static volatile bool _isShuttingDown;
@@ -74,15 +70,19 @@ namespace NWN.FinalFantasy.Service
         {
             var stopwatch = new Stopwatch();
             stopwatch.Start();
-            const int MaxCommandsPerCycle = 100;
+            const int MaxCommandsPerCycle = 500;
             var processedAmount = 0;
+            var skippedAmount = 0;
 
             while (CreatureCommandQueue.TryDequeue(out var command))
             {
                 // Creature is no longer valid.
-                if (!GetIsObjectValid(command.Creature))
+                if (!GetIsObjectValid(command.Creature) ||
+                    !Creatures.ContainsKey(command.Creature))
                 {
                     RemovalQueue.Enqueue(command.Creature);
+
+                    skippedAmount++;
                 }
                 // Otherwise, process the action.
                 else
@@ -91,17 +91,18 @@ namespace NWN.FinalFantasy.Service
                     {
                         command.Action.Action(command.Creature, command.CalculatedTargets.ToArray());
                     });
+
+                    processedAmount++;
                 }
 
-                processedAmount++;
                 if (processedAmount >= MaxCommandsPerCycle) 
                     break;
             }
 
             stopwatch.Stop();
-            if (processedAmount > 0)
+            if (processedAmount > 0 || skippedAmount > 0)
             {
-                Console.WriteLine($"Processed {processedAmount} commands in queue. (Took {stopwatch.ElapsedMilliseconds}ms)");
+                Console.WriteLine($"Processed {processedAmount} commands in queue. Skipped {skippedAmount} commands. (Took {stopwatch.ElapsedMilliseconds}ms)");
             }
         }
 
@@ -243,6 +244,10 @@ namespace NWN.FinalFantasy.Service
                     ProcessCreatures(deltaTime);
 
                     deltaTime = stopwatch.Elapsed.TotalSeconds;
+
+                    //if (stopwatch.ElapsedMilliseconds > 0)
+                    //    Console.WriteLine($"AI thread: {stopwatch.ElapsedMilliseconds}ms");
+
                     stopwatch.Restart();
                 }
 
@@ -341,7 +346,16 @@ namespace NWN.FinalFantasy.Service
             // the action is performed.
             foreach (var instruction in instructionSet)
             {
-                var meetsConditions = instruction.Action.Item1.All(condition => condition.MeetsCondition(creature));
+                var meetsConditions = true;
+
+                Parallel.ForEach(instruction.Action.Item1, (condition, state) =>
+                {
+                    if (!condition.MeetsCondition(creature))
+                    {
+                        meetsConditions = false;
+                        state.Break();
+                    }
+                });
 
                 if (meetsConditions)
                 {
@@ -349,6 +363,7 @@ namespace NWN.FinalFantasy.Service
                     if (targets.Count > 0)
                     {
                         CreatureCommandQueue.Enqueue(new AICreatureCommand(creature, targets, instruction.Action.Item2));
+                        break;
                     }
                 }
             }

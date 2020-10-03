@@ -10,7 +10,7 @@ namespace NWN.FinalFantasy.Feature.AIDefinition.AIConditionDefinition
     {
         public bool MeetsCondition(uint creature)
         {
-            Thread.Sleep(50);
+            //Thread.Sleep(50);
 
             return true;
         }

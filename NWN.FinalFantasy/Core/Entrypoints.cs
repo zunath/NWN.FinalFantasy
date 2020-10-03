@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using NWN.FinalFantasy.Core.NWNX;
 using NWN.FinalFantasy.Extension;
 using NWN.FinalFantasy.Service;
 using static NWN.FinalFantasy.Core.NWScript.NWScript;
@@ -30,16 +31,24 @@ namespace NWN.FinalFantasy.Core
         public static void OnMainLoop(ulong frame)
         {
             OnScriptContextBegin?.Invoke();
-            RunOneSecondPCIntervalEvent();
 
-            try
+            using (new Profiler($"{nameof(OnMainLoop)}:OneSecondPCInterval"))
             {
-                _taskRunner.Process();
-                Scheduler.Process();
+                RunOneSecondPCIntervalEvent();
             }
-            catch (Exception ex)
+
+            using (new Profiler($"{nameof(OnMainLoop)}:TaskRunner & Scheduler"))
             {
-                Log.Write(LogGroup.Error, ex.ToMessageAndCompleteStacktrace());
+                try
+                {
+                    _taskRunner.Process();
+                    Scheduler.Process();
+                }
+                catch (Exception ex)
+                {
+                    Log.Write(LogGroup.Error, ex.ToMessageAndCompleteStacktrace());
+                }
+
             }
 
             OnScriptContextEnd?.Invoke();
@@ -56,10 +65,13 @@ namespace NWN.FinalFantasy.Core
         //
         public static int OnRunScript(string script, uint oidSelf)
         {
-            var retVal = RunScripts(script);
+            using (new Profiler(script))
+            {
+                var retVal = RunScripts(script);
 
-            if (retVal == -1) return ScriptNotHandled;
-            else return retVal;
+                if (retVal == -1) return ScriptNotHandled;
+                else return retVal;
+            }
         }
 
         //
@@ -69,9 +81,12 @@ namespace NWN.FinalFantasy.Core
         //
         public static void OnStart()
         {
-            Console.WriteLine("Registering scripts...");
-            LoadHandlersFromAssembly();
-            Console.WriteLine("Scripts registered successfully.");
+            using (new Profiler(nameof(OnStart)))
+            {
+                Console.WriteLine("Registering scripts...");
+                LoadHandlersFromAssembly();
+                Console.WriteLine("Scripts registered successfully.");
+            }
         }
 
         //

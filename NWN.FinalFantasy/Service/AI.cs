@@ -41,7 +41,7 @@ namespace NWN.FinalFantasy.Service
         public static async void OnModuleLoad()
         {
             CacheData();
-            Scheduler.ScheduleRepeating(UpdateSharedData, TimeSpan.FromSeconds(0.05d));
+            Scheduler.ScheduleRepeating(UpdateSharedData, TimeSpan.FromSeconds(0.5d));
             Scheduler.ScheduleRepeating(ProcessCreatureCommandQueue, TimeSpan.FromSeconds(0.25d));
             await StartAIThreadAsync();
         }

@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using Newtonsoft.Json;
+using MessagePack;
 using NWN.FinalFantasy.Core;
 using NWN.FinalFantasy.Entity;
 using StackExchange.Redis;
@@ -58,7 +57,7 @@ namespace NWN.FinalFantasy.Service
                 keyPrefixOverride = _keyPrefixByType[typeof(T)];
             }
 
-            var data = JsonConvert.SerializeObject(entity);
+            var data = MessagePackSerializer.Serialize(entity);
             _multiplexer.GetDatabase().StringSet($"{keyPrefixOverride}:{key}", data);
         }
 
@@ -75,7 +74,7 @@ namespace NWN.FinalFantasy.Service
             if(string.IsNullOrWhiteSpace(keyPrefix))
                 throw new ArgumentException($"{nameof(keyPrefix)} cannot be null or whitespace.");
 
-            var data = JsonConvert.SerializeObject(entities);
+            var data = MessagePackSerializer.Serialize(entities);
             _multiplexer.GetDatabase().StringSet($"{keyPrefix}:{key}", data);
         }
 
@@ -97,7 +96,7 @@ namespace NWN.FinalFantasy.Service
             if (string.IsNullOrWhiteSpace(json))
                 return default;
 
-            return JsonConvert.DeserializeObject<T>(json);
+            return MessagePackSerializer.Deserialize<T>(json);
         }
 
         /// <summary>
@@ -117,7 +116,7 @@ namespace NWN.FinalFantasy.Service
             if (string.IsNullOrWhiteSpace(json))
                 return default;
 
-            return JsonConvert.DeserializeObject<EntityList<T>>(json);
+            return MessagePackSerializer.Deserialize<EntityList<T>>(json);
         }
 
         /// <summary>

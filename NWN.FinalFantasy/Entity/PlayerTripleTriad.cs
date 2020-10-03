@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using MessagePack;
 using NWN.FinalFantasy.Service.TripleTriadService;
 
 namespace NWN.FinalFantasy.Entity
 {
+    [MessagePackObject(true)]
     public class PlayerTripleTriad: EntityBase
     {
         public PlayerTripleTriad()

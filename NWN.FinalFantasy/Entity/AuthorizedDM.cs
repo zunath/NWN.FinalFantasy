@@ -1,4 +1,6 @@
-﻿namespace NWN.FinalFantasy.Entity
+﻿using MessagePack;
+
+namespace NWN.FinalFantasy.Entity
 {
     public enum AuthorizationLevel
     {
@@ -7,6 +9,7 @@
         Admin = 3
     }
 
+    [MessagePackObject(true)]
     public class AuthorizedDM: EntityBase
     {
         public string Name { get; set; }

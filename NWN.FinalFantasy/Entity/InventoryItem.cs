@@ -1,5 +1,8 @@
-﻿namespace NWN.FinalFantasy.Entity
+﻿using MessagePack;
+
+namespace NWN.FinalFantasy.Entity
 {
+    [MessagePackObject(true)]
     public class InventoryItem : EntityBase
     {
         public string Name { get; set; }

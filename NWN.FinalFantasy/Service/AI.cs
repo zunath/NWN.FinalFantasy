@@ -41,9 +41,9 @@ namespace NWN.FinalFantasy.Service
         public static async void OnModuleLoad()
         {
             CacheData();
-            Scheduler.ScheduleRepeating(UpdateSharedData, TimeSpan.FromSeconds(0.05d));
-            Scheduler.ScheduleRepeating(ProcessCreatureCommandQueue, TimeSpan.FromSeconds(0.25d));
-            await StartAIThreadAsync();
+            //Scheduler.ScheduleRepeating(UpdateSharedData, TimeSpan.FromSeconds(0.05d));
+            //Scheduler.ScheduleRepeating(ProcessCreatureCommandQueue, TimeSpan.FromSeconds(0.25d));
+            //await StartAIThreadAsync();
         }
 
         /// <summary>
@@ -102,7 +102,7 @@ namespace NWN.FinalFantasy.Service
             stopwatch.Stop();
             if (processedAmount > 0 || skippedAmount > 0)
             {
-                Console.WriteLine($"Processed {processedAmount} commands in queue. Skipped {skippedAmount} commands. (Took {stopwatch.ElapsedMilliseconds}ms)");
+                //Console.WriteLine($"Processed {processedAmount} commands in queue. Skipped {skippedAmount} commands. (Took {stopwatch.ElapsedMilliseconds}ms)");
             }
         }
 

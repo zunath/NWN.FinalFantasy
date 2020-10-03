@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using MessagePack;
 using NWN.FinalFantasy.Core.NWScript.Enum;
 using NWN.FinalFantasy.Enumeration;
 using NWN.FinalFantasy.Service.AbilityService;
 
 namespace NWN.FinalFantasy.Entity
 {
+    [MessagePackObject(true)]
     public class Player: EntityBase
     {
         public Player()
@@ -85,6 +87,7 @@ namespace NWN.FinalFantasy.Entity
         public SeedProgress SeedProgress { get; set; }
     }
 
+    [MessagePackObject(true)]
     public class MapPin
     {
         public int Id { get; set; }
@@ -93,6 +96,7 @@ namespace NWN.FinalFantasy.Entity
         public string Note { get; set; }
     }
 
+    [MessagePackObject(true)]
     public class RoleplayProgress
     {
         public int RPPoints { get; set; }
@@ -100,6 +104,7 @@ namespace NWN.FinalFantasy.Entity
         public ulong SpamMessageCount { get; set; }
     }
 
+    [MessagePackObject(true)]
     public class PlayerSkill
     {
         public int Rank { get; set; }
@@ -107,6 +112,7 @@ namespace NWN.FinalFantasy.Entity
         public bool IsLocked { get; set; }
     }
 
+    [MessagePackObject(true)]
     public class PlayerQuest
     {
         public int CurrentState { get; set; }
@@ -117,6 +123,7 @@ namespace NWN.FinalFantasy.Entity
         public Dictionary<string, int> ItemProgresses { get; set; } = new Dictionary<string, int>();
     }
 
+    [MessagePackObject(true)]
     public class PlayerSettings
     {
         public int? BattleThemeId { get; set; }
@@ -128,6 +135,7 @@ namespace NWN.FinalFantasy.Entity
         }
     }
 
+    [MessagePackObject(true)]
     public class SeedProgress
     {
         public int Rank { get; set; }

@@ -41,9 +41,9 @@ namespace NWN.FinalFantasy.Service
         public static async void OnModuleLoad()
         {
             CacheData();
-            //Scheduler.ScheduleRepeating(UpdateSharedData, TimeSpan.FromSeconds(0.05d));
-            //Scheduler.ScheduleRepeating(ProcessCreatureCommandQueue, TimeSpan.FromSeconds(0.25d));
-            //await StartAIThreadAsync();
+            Scheduler.ScheduleRepeating(UpdateSharedData, TimeSpan.FromSeconds(0.05d));
+            Scheduler.ScheduleRepeating(ProcessCreatureCommandQueue, TimeSpan.FromSeconds(0.25d));
+            await StartAIThreadAsync();
         }
 
         /// <summary>
@@ -52,15 +52,18 @@ namespace NWN.FinalFantasy.Service
         /// </summary>
         private static void UpdateSharedData()
         {
-            _aiDataIterator++;
-            if (_aiDataIterator > AIUpdatables.Count - 1)
+            using (new Profiler($"{nameof(AI)}:{nameof(UpdateSharedData)}"))
             {
-                _aiDataIterator = 0;
-            }
+                _aiDataIterator++;
+                if (_aiDataIterator > AIUpdatables.Count - 1)
+                {
+                    _aiDataIterator = 0;
+                }
 
-            var aiData = AIUpdatables.ElementAt(_aiDataIterator);
-            aiData.CaptureDataMainThread();
-            aiData.WasUpdated = true;
+                var aiData = AIUpdatables.ElementAt(_aiDataIterator);
+                aiData.CaptureDataMainThread();
+                aiData.WasUpdated = true;
+            }
         }
 
         /// <summary>
@@ -68,41 +71,33 @@ namespace NWN.FinalFantasy.Service
         /// </summary>
         private static void ProcessCreatureCommandQueue()
         {
-            var stopwatch = new Stopwatch();
-            stopwatch.Start();
-            const int MaxCommandsPerCycle = 500;
-            var processedAmount = 0;
-            var skippedAmount = 0;
-
-            while (CreatureCommandQueue.TryDequeue(out var command))
+            using (new Profiler($"{nameof(AI)}:{nameof(ProcessCreatureCommandQueue)}"))
             {
-                // Creature is no longer valid.
-                if (!GetIsObjectValid(command.Creature) ||
-                    !Creatures.ContainsKey(command.Creature))
-                {
-                    RemovalQueue.Enqueue(command.Creature);
+                const int MaxCommandsPerCycle = 500;
+                var processedAmount = 0;
 
-                    skippedAmount++;
-                }
-                // Otherwise, process the action.
-                else
+                while (CreatureCommandQueue.TryDequeue(out var command))
                 {
-                    AssignCommand(command.Creature, () =>
+                    // Creature is no longer valid.
+                    if (!GetIsObjectValid(command.Creature) ||
+                        !Creatures.ContainsKey(command.Creature))
                     {
-                        command.Action.Action(command.Creature, command.CalculatedTargets.ToArray());
-                    });
+                        RemovalQueue.Enqueue(command.Creature);
+                    }
+                    // Otherwise, process the action.
+                    else
+                    {
+                        AssignCommand(command.Creature, () =>
+                        {
+                            command.Action.Action(command.Creature, command.CalculatedTargets.ToArray());
+                        });
 
-                    processedAmount++;
+                        processedAmount++;
+                    }
+
+                    if (processedAmount >= MaxCommandsPerCycle)
+                        break;
                 }
-
-                if (processedAmount >= MaxCommandsPerCycle) 
-                    break;
-            }
-
-            stopwatch.Stop();
-            if (processedAmount > 0 || skippedAmount > 0)
-            {
-                //Console.WriteLine($"Processed {processedAmount} commands in queue. Skipped {skippedAmount} commands. (Took {stopwatch.ElapsedMilliseconds}ms)");
             }
         }
 

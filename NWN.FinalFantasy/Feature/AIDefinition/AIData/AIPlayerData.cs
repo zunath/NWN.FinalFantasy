@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 using System.Numerics;
 using NWN.FinalFantasy.Entity;
 using NWN.FinalFantasy.Service;
@@ -28,8 +29,6 @@ namespace NWN.FinalFantasy.Feature.AIDefinition.AIData
         }
 
         private static ConcurrentDictionary<uint, AIPlayer> PlayerData { get; } = new ConcurrentDictionary<uint,AIPlayer>();
-        private static ConcurrentDictionary<uint, HashSet<uint>> PlayersByArea { get; } = new ConcurrentDictionary<uint, HashSet<uint>>();
-
 
         /// <summary>
         /// Loops through all players and retrieves information about them.
@@ -64,15 +63,6 @@ namespace NWN.FinalFantasy.Feature.AIDefinition.AIData
         /// </summary>
         public void ProcessDataAIThread()
         {
-            PlayersByArea.Clear();
-
-            foreach (var (player, data) in PlayerData)
-            {
-                if(!PlayersByArea.ContainsKey(data.Area))
-                    PlayersByArea[data.Area] = new HashSet<uint>();
-
-                PlayersByArea[data.Area].Add(player);
-            }
         }
 
 
@@ -81,18 +71,9 @@ namespace NWN.FinalFantasy.Feature.AIDefinition.AIData
             return PlayerData[player];
         }
 
-        public static HashSet<AIPlayer> GetPlayersInArea(uint area)
+        public static IEnumerable<AIPlayer> GetPlayersInArea(uint area)
         {
-            var result = new HashSet<AIPlayer>();
-            if (PlayersByArea.ContainsKey(area))
-            {
-                foreach (var player in PlayersByArea[area])
-                {
-                    result.Add(PlayerData[player]);
-                }
-            }
-
-            return result;
+            return PlayerData.Where(x => x.Value.Area == area).Select(s => s.Value);
         }
     }
 }

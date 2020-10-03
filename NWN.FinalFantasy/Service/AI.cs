@@ -72,6 +72,8 @@ namespace NWN.FinalFantasy.Service
         /// </summary>
         private static void ProcessCreatureCommandQueue()
         {
+            var stopwatch = new Stopwatch();
+            stopwatch.Start();
             const int MaxCommandsPerCycle = 100;
             var processedAmount = 0;
 
@@ -87,7 +89,7 @@ namespace NWN.FinalFantasy.Service
                 {
                     AssignCommand(command.Creature, () =>
                     {
-                        command.Action.Action(command.CalculatedTargets);
+                        command.Action.Action(command.Creature, command.CalculatedTargets.ToArray());
                     });
                 }
 
@@ -96,9 +98,10 @@ namespace NWN.FinalFantasy.Service
                     break;
             }
 
+            stopwatch.Stop();
             if (processedAmount > 0)
             {
-                Console.WriteLine($"Processed {processedAmount} commands in queue.");
+                Console.WriteLine($"Processed {processedAmount} commands in queue. (Took {stopwatch.ElapsedMilliseconds}ms)");
             }
         }
 
@@ -338,12 +341,14 @@ namespace NWN.FinalFantasy.Service
             // the action is performed.
             foreach (var instruction in instructionSet)
             {
-                if (instruction.Condition.MeetsCondition(creature))
+                var meetsConditions = instruction.Action.Item1.All(condition => condition.MeetsCondition(creature));
+
+                if (meetsConditions)
                 {
                     var targets = instruction.Targets.GetTargets(creature);
                     if (targets.Count > 0)
                     {
-                        CreatureCommandQueue.Enqueue(new AICreatureCommand(creature, targets, instruction.Action));
+                        CreatureCommandQueue.Enqueue(new AICreatureCommand(creature, targets, instruction.Action.Item2));
                     }
                 }
             }

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 using System.Numerics;
 using NWN.FinalFantasy.Service.AIService;
 using static NWN.FinalFantasy.Core.NWScript.NWScript;
@@ -25,7 +26,6 @@ namespace NWN.FinalFantasy.Feature.AIDefinition.AIData
         }
 
         private static ConcurrentDictionary<uint, AICreature> Creatures { get; } = new ConcurrentDictionary<uint, AICreature>();
-        private static ConcurrentDictionary<uint, HashSet<uint>> CreaturesByArea { get; } = new ConcurrentDictionary<uint, HashSet<uint>>();
 
         public void CaptureDataMainThread()
         {
@@ -59,15 +59,6 @@ namespace NWN.FinalFantasy.Feature.AIDefinition.AIData
 
         public void ProcessDataAIThread()
         {
-            CreaturesByArea.Clear();
-
-            foreach (var (creature, data) in Creatures)
-            {
-                if(!CreaturesByArea.ContainsKey(data.Area))
-                    CreaturesByArea[data.Area] = new HashSet<uint>();
-
-                CreaturesByArea[data.Area].Add(creature);
-            }
         }
 
         /// <summary>
@@ -79,6 +70,16 @@ namespace NWN.FinalFantasy.Feature.AIDefinition.AIData
         public static AICreature GetCreature(uint creature)
         {
             return Creatures[creature];
+        }
+
+        /// <summary>
+        /// Retrieves all of the creatures in a specific area.
+        /// </summary>
+        /// <param name="area">The area to search by.</param>
+        /// <returns>An enumerable of AICreature data records.</returns>
+        public static IEnumerable<AICreature> GetCreaturesInArea(uint area)
+        {
+            return Creatures.Where(x => x.Value.Area == area).Select(s => s.Value);
         }
     }
 }

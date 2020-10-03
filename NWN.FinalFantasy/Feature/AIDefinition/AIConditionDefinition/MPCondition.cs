@@ -22,7 +22,7 @@ namespace NWN.FinalFantasy.Feature.AIDefinition.AIConditionDefinition
         public bool MeetsCondition(uint creature)
         {
             var creatureData = AICreatureData.GetCreature(creature);
-            var meetsCondition = (float)creatureData.CurrentMP / (float)creatureData.MaxMP >= _mpThreshold;
+            var meetsCondition = (float)creatureData.CurrentMP / (float)creatureData.MaxMP <= _mpThreshold;
 
             return meetsCondition;
         }

@@ -4,7 +4,8 @@ namespace NWN.FinalFantasy.Service.AIService
 {
     public class AIInstruction
     {
-        public IAITargets Target { get; set; }
+        public IAICondition Condition { get; set; }
+        public IAITargets Targets { get; set; }
         public IAIAction Action { get; set; }
     }
 

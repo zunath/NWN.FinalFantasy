@@ -3,7 +3,6 @@ using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
-using System.Threading;
 using System.Threading.Tasks;
 using NWN.FinalFantasy.Core;
 using NWN.FinalFantasy.Extension;
@@ -17,6 +16,7 @@ namespace NWN.FinalFantasy.Service
         #region Main Thread Data
         
         private static int AIThreadFailures { get; set; }
+        private static int _aiDataIterator;
 
         #endregion
 
@@ -32,8 +32,8 @@ namespace NWN.FinalFantasy.Service
         private static ConcurrentQueue<Tuple<uint, string>> AddQueue { get; } = new ConcurrentQueue<Tuple<uint, string>>();
         private static ConcurrentQueue<uint> RemovalQueue { get; } = new ConcurrentQueue<uint>();
         private static ConcurrentQueue<AICreatureCommand> CreatureCommandQueue { get; } = new ConcurrentQueue<AICreatureCommand>();
-
-        public static ConcurrentBag<uint> Players { get; set; } = new ConcurrentBag<uint>();
+        private static ConcurrentBag<IAIDataUpdatable> AIUpdatables { get; } = new ConcurrentBag<IAIDataUpdatable>();
+        private static ConcurrentBag<IAICreatureUpdatable> CreatureUpdatables { get; } = new ConcurrentBag<IAICreatureUpdatable>();
 
         #endregion
 
@@ -45,18 +45,26 @@ namespace NWN.FinalFantasy.Service
         public static async void OnModuleLoad()
         {
             CacheData();
-            Scheduler.ScheduleRepeating(UpdateSharedData, TimeSpan.FromSeconds(0.25d));
+            Scheduler.ScheduleRepeating(UpdateSharedData, TimeSpan.FromSeconds(0.05d));
             Scheduler.ScheduleRepeating(ProcessCreatureCommandQueue, TimeSpan.FromSeconds(0.25d));
             await StartAIThreadAsync();
         }
 
+        /// <summary>
+        /// Handles updating shared data through a cycle. No more than one data set will refresh per call by design,
+        /// to limit the hit on the main NWN thread.
+        /// </summary>
         private static void UpdateSharedData()
         {
-            Players.Clear();
-            for (var player = GetFirstPC(); GetIsObjectValid(player); player = GetNextPC())
+            _aiDataIterator++;
+            if (_aiDataIterator > AIUpdatables.Count - 1)
             {
-                Players.Add(player);
+                _aiDataIterator = 0;
             }
+
+            var aiData = AIUpdatables.ElementAt(_aiDataIterator);
+            aiData.CaptureDataMainThread();
+            aiData.WasUpdated = true;
         }
 
         /// <summary>
@@ -90,7 +98,7 @@ namespace NWN.FinalFantasy.Service
 
             if (processedAmount > 0)
             {
-                //Console.WriteLine($"Processed {processedAmount} commands in queue.");
+                Console.WriteLine($"Processed {processedAmount} commands in queue.");
             }
         }
 
@@ -116,6 +124,34 @@ namespace NWN.FinalFantasy.Service
                 {
                     InstructionSets[key] = value;
                 }
+            }
+
+            // Do the same for AI updatables
+            classes = Assembly.GetCallingAssembly().GetTypes()
+                .Where(p => typeof(IAIDataUpdatable).IsAssignableFrom(p) && p.IsClass && !p.IsAbstract).ToArray();
+            foreach (var type in classes)
+            {
+                var instance = Activator.CreateInstance(type) as IAIDataUpdatable;
+                if (instance == null)
+                {
+                    throw new NullReferenceException("Unable to activate instance of type: " + type);
+                }
+
+                AIUpdatables.Add(instance);
+            }
+
+            // Do the same for Creature updatables
+            classes = Assembly.GetCallingAssembly().GetTypes()
+                .Where(p => typeof(IAICreatureUpdatable).IsAssignableFrom(p) && p.IsClass && !p.IsAbstract).ToArray();
+            foreach (var type in classes)
+            {
+                var instance = Activator.CreateInstance(type) as IAICreatureUpdatable;
+                if (instance == null)
+                {
+                    throw new NullReferenceException("Unable to activate instance of type: " + type);
+                }
+
+                CreatureUpdatables.Add(instance);
             }
         }
 
@@ -152,8 +188,13 @@ namespace NWN.FinalFantasy.Service
                 instructionSetId = "Generic";
             }
 
-            Console.WriteLine($"Enqueuing: {GetName(creature)}");
             AddQueue.Enqueue(new Tuple<uint, string>(creature, instructionSetId));
+
+            foreach (var updatable  in CreatureUpdatables)
+            {
+                updatable.CreatureAddedMainThread(creature);
+                updatable.WasUpdated = true;
+            }
         }
 
         /// <summary>
@@ -162,7 +203,14 @@ namespace NWN.FinalFantasy.Service
         [NWNEventHandler("crea_death")]
         public static void OnCreatureDeath()
         {
-            RemovalQueue.Enqueue(OBJECT_SELF);
+            var creature = OBJECT_SELF;
+            RemovalQueue.Enqueue(creature);
+
+            foreach (var updatable in CreatureUpdatables)
+            {
+                updatable.CreatureRemovedMainThread(creature);
+                updatable.WasUpdated = true;
+            }
         }
 
         #endregion
@@ -182,14 +230,16 @@ namespace NWN.FinalFantasy.Service
             try
             {
                 Log.Write(LogGroup.AI, "AI Thread Starting", true);
+                var deltaTime = 0.0d;
 
                 while (!_isShuttingDown)
                 {
-                    var deltaTime = stopwatch.Elapsed.TotalSeconds;
+                    ProcessAIData();
                     ProcessCreatureRemovals();
                     ProcessCreatureAdditions();
                     ProcessCreatures(deltaTime);
 
+                    deltaTime = stopwatch.Elapsed.TotalSeconds;
                     stopwatch.Restart();
                 }
 
@@ -204,6 +254,22 @@ namespace NWN.FinalFantasy.Service
                 {
                     Log.Write(LogGroup.AI, $"AI Thread is restarting due to failure...", true);
                     await AILogicAsync();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Handles processing recently updated AI data.
+        /// This can be used to organize data sets on the AI thread rather than the main thread.
+        /// </summary>
+        private static void ProcessAIData()
+        {
+            foreach (var aiData in AIUpdatables)
+            {
+                if (aiData.WasUpdated)
+                {
+                    aiData.ProcessDataAIThread();
+                    aiData.WasUpdated = false;
                 }
             }
         }
@@ -246,14 +312,14 @@ namespace NWN.FinalFantasy.Service
         {
             const double UpdateFrequency = 1.0d;
 
-            Parallel.ForEach(Creatures, async pair =>
+            Parallel.ForEach(Creatures, pair =>
             {
                 var (creature, state) = pair;
                 state.ProcessTime += deltaTime;
 
                 if (state.ProcessTime >= UpdateFrequency)
                 {
-                    await ProcessCreatureAIAsync(creature, state.InstructionSetId);
+                    ProcessCreatureAI(creature, state.InstructionSetId);
                     state.ProcessTime = 0d;
                 }
             });
@@ -264,27 +330,23 @@ namespace NWN.FinalFantasy.Service
         /// </summary>
         /// <param name="creature">The creature to process</param>
         /// <param name="instructionSetId">The instruction set Id to use</param>
-        private static async Task ProcessCreatureAIAsync(uint creature, string instructionSetId)
+        private static void ProcessCreatureAI(uint creature, string instructionSetId)
         {
-            var stopwatch = new Stopwatch();
-            stopwatch.Start();
-
             var instructionSet = InstructionSets[instructionSetId];
 
             // Instructions are processed from top to bottom. As soon as a valid target is determined,
             // the action is performed.
             foreach (var instruction in instructionSet)
             {
-                var targets = await instruction.Target.GetTargetsAsync(creature);
-                if (targets.Count > 0)
+                if (instruction.Condition.MeetsCondition(creature))
                 {
-                    CreatureCommandQueue.Enqueue(new AICreatureCommand(creature, targets, instruction.Action));
+                    var targets = instruction.Targets.GetTargets(creature);
+                    if (targets.Count > 0)
+                    {
+                        CreatureCommandQueue.Enqueue(new AICreatureCommand(creature, targets, instruction.Action));
+                    }
                 }
             }
-
-            stopwatch.Stop();
-
-            //Console.WriteLine($"ProcessCreatureAIAsync on creature {creature} ran in {stopwatch.ElapsedMilliseconds}ms");
         }
 
         #endregion

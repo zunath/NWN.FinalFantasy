@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using NWN.FinalFantasy.Feature.AIDefinition.AIActionDefinition;
+using NWN.FinalFantasy.Feature.AIDefinition.AIConditionDefinition;
 using NWN.FinalFantasy.Feature.AIDefinition.AITargetDefinition;
 
 namespace NWN.FinalFantasy.Service.AIService
@@ -14,7 +15,8 @@ namespace NWN.FinalFantasy.Service.AIService
                 {
                     new AIInstruction
                     {
-                        Target = new NearestTarget(),
+                        Condition = new HPCondition(50f),
+                        Targets = new FirstPlayerTarget(),
                         Action = new AttackAction()
                     }
                 }}

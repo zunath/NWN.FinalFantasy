@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using MessagePack;
 using NWN.FinalFantasy.Enumeration;
 
 namespace NWN.FinalFantasy.Entity
 {
-    [MessagePackObject(true)]
     public class Account: EntityBase
     {
         public Account()
@@ -23,7 +21,6 @@ namespace NWN.FinalFantasy.Entity
         public AchievementProgress AchievementProgress { get; set; }
     }
 
-    [MessagePackObject(true)]
     public class AchievementProgress
     {
         public ulong EnemiesKilled { get; set; }

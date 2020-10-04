@@ -1,9 +1,7 @@
 ﻿using System;
-using MessagePack;
 
 namespace NWN.FinalFantasy.Entity
 {
-    [MessagePackObject(true)]
     public class ServerConfiguration: EntityBase
     {
         public ServerConfiguration()

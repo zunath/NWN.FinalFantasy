@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using MessagePack;
+using Newtonsoft.Json;
 using NWN.FinalFantasy.Core;
 using NWN.FinalFantasy.Entity;
 using StackExchange.Redis;
@@ -64,7 +64,7 @@ namespace NWN.FinalFantasy.Service
                 keyPrefixOverride = _keyPrefixByType[typeof(T)];
             }
 
-            var data = MessagePackSerializer.Serialize(entity);
+            var data = JsonConvert.SerializeObject(entity);
             _multiplexer.GetDatabase().StringSet($"{keyPrefixOverride}:{key}", data);
             _cachedEntities[key] = entity;
         }
@@ -82,8 +82,16 @@ namespace NWN.FinalFantasy.Service
             if(string.IsNullOrWhiteSpace(keyPrefix))
                 throw new ArgumentException($"{nameof(keyPrefix)} cannot be null or whitespace.");
 
-            var data = MessagePackSerializer.Serialize(entities);
-            _multiplexer.GetDatabase().StringSet($"{keyPrefix}:{key}", data);
+            string data;
+            using (new Profiler("Serialization"))
+            {
+                data = JsonConvert.SerializeObject(entities);
+            }
+
+            using (new Profiler("RedisSet"))
+            {
+                _multiplexer.GetDatabase().StringSet($"{keyPrefix}:{key}", data);
+            }
         }
 
         /// <summary>
@@ -107,11 +115,20 @@ namespace NWN.FinalFantasy.Service
             }
             else
             {
-                var json = _multiplexer.GetDatabase().StringGet($"{keyPrefixOverride}:{key}");
-                if (string.IsNullOrWhiteSpace(json))
+                RedisValue data;
+
+                using (new Profiler("RedisGet"))
+                {
+                    data = _multiplexer.GetDatabase().StringGet($"{keyPrefixOverride}:{key}");
+                }
+
+                if (string.IsNullOrWhiteSpace(data))
                     return default;
 
-                return MessagePackSerializer.Deserialize<T>(json);
+                using (new Profiler("Deserialization"))
+                {
+                    return JsonConvert.DeserializeObject<T>(data);
+                }
             }
         }
 
@@ -132,7 +149,7 @@ namespace NWN.FinalFantasy.Service
             if (string.IsNullOrWhiteSpace(json))
                 return default;
 
-            return MessagePackSerializer.Deserialize<EntityList<T>>(json);
+            return JsonConvert.DeserializeObject<EntityList<T>>(json);
         }
 
         /// <summary>

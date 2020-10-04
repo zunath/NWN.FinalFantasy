@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using MessagePack;
+﻿using System.Collections.Generic;
 using NWN.FinalFantasy.Enumeration;
 
 namespace NWN.FinalFantasy.Entity
 {
-    [MessagePackObject(true)]
     public class PlayerHouse: EntityBase
     {
         public PlayerHouse()
@@ -21,7 +18,6 @@ namespace NWN.FinalFantasy.Entity
         public Dictionary<string, PlayerHousePermission> PlayerPermissions { get; set; }
     }
 
-    [MessagePackObject(true)]
     public class PlayerHouseFurniture
     {
         public FurnitureType FurnitureType { get; set; }
@@ -32,7 +28,6 @@ namespace NWN.FinalFantasy.Entity
         public string CustomName { get; set; }
     }
 
-    [MessagePackObject(true)]
     public class PlayerHousePermission
     {
         public bool CanEnter { get; set; }

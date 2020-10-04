@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using MessagePack;
 
 namespace NWN.FinalFantasy.Entity
 {
-    [MessagePackObject(true)]
     public class PlayerStore: EntityBase
     {
         public PlayerStore()
@@ -24,7 +22,6 @@ namespace NWN.FinalFantasy.Entity
         public float TaxRate { get; set; }
     }
 
-    [MessagePackObject(true)]
     public class PlayerStoreItem
     {
         public string Name { get; set; }

@@ -15,7 +15,6 @@ namespace NWN.FinalFantasy.Feature.AIDefinition
             var builder = new AIBuilder()
                 .CreateInstructionSet("Generic")
                 .AddAction(new AttackAction(), new FirstPlayerTarget(), new HPCondition(99))
-                .AddAction(new SitAction(), new SelfTarget(), new SlowCondition())
                 .AddAction(new RandomWalkAction(), new SelfTarget())
                 .AddAction(new SitAction(), new SelfTarget());
 

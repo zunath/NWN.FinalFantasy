@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using MessagePack;
 
 namespace NWN.FinalFantasy.Entity
 {
-    [MessagePackObject(true)]
     public class BugReport: EntityBase
     {
         public Guid? SenderPlayerID { get; set; }

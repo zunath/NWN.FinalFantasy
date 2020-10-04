@@ -18,13 +18,6 @@ namespace NWN.FinalFantasy.Feature
 {
     public static class DebuggingTools
     {
-        [NWNEventHandler("test1")]
-        public static void DebugGiveQuest()
-        {
-            var player = GetLastUsedBy();
-            Quest.AcceptQuest(player, "testQuest");
-        }
-
         [NWNEventHandler("test2")]
         public static void DebugSpawnCreature()
         {
@@ -58,22 +51,6 @@ namespace NWN.FinalFantasy.Feature
             StatusEffect.Apply(player, player, StatusEffectType.Invincible, 30.0f);
         }
 
-        [NWNEventHandler("test8")]
-        public static void MakeIP()
-        {
-            Console.WriteLine("firing");
-
-            var itemprop = ItemPropertyAttackBonus(1);
-
-            Console.WriteLine("Unpacking");
-            var unpacked = Core.NWNX.ItemProperty.UnpackIP(itemprop);
-
-            Console.WriteLine("Packing");
-            var packed = Core.NWNX.ItemProperty.PackIP(unpacked);
-
-            Console.WriteLine("Done");
-        }
-
         [NWNEventHandler("test9")]
         public static void OpenHomePurchaseMenu()
         {
@@ -92,28 +69,9 @@ namespace NWN.FinalFantasy.Feature
         }
 
         [NWNEventHandler("test11")]
-        public static async void ThreadProcessing()
+        public static void DisplayAchievementWindow()
         {
-            var id = Guid.NewGuid().ToString();
-            Console.WriteLine($"thread processing started. ID = {id}");
-            Console.WriteLine($"Thread = {Thread.CurrentThread.ManagedThreadId}");
-            var task1 = Task.Run(() =>
-            {
-                var threadId = Thread.CurrentThread.ManagedThreadId;
-                Console.WriteLine($"Hello from thread: {threadId}");
-
-                Thread.Sleep(10000);
-                Console.WriteLine($"stage 1 thread done thread id = {Thread.CurrentThread.ManagedThreadId}");
-                Thread.Sleep(5000);
-                Console.WriteLine($"stage 2 thread done thread id = {Thread.CurrentThread.ManagedThreadId}");
-                Thread.Sleep(1000);
-                Console.WriteLine($"stage 3 thread done thread id = {Thread.CurrentThread.ManagedThreadId}");
-            });
-
-            await NWTask.WhenAll(task1);
-
-            Console.WriteLine($"thread processing done. ID = {id}");
+            Achievement.DisplayAchievementNotificationWindow(GetLastUsedBy(), "Test Achievement");
         }
-
     }
 }

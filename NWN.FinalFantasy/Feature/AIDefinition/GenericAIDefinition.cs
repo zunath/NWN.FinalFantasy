@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using NWN.FinalFantasy.Feature.AIDefinition.AIActionDefinition;
-using NWN.FinalFantasy.Feature.AIDefinition.AIConditionDefinition;
-using NWN.FinalFantasy.Feature.AIDefinition.AITargetDefinition;
+﻿using System.Collections.Generic;
+using NWN.FinalFantasy.Core.NWScript.Enum;
 using NWN.FinalFantasy.Service.AIService;
 
 namespace NWN.FinalFantasy.Feature.AIDefinition
@@ -14,10 +10,19 @@ namespace NWN.FinalFantasy.Feature.AIDefinition
         {
             var builder = new AIBuilder()
                 .CreateInstructionSet("Generic")
-                .AddAction(new SitAction(), new SelfTarget(), new SlowCondition())
-                .AddAction(new AttackAction(), new FirstPlayerTarget(), new HPCondition(99))
-                .AddAction(new RandomWalkAction(), new SelfTarget())
-                .AddAction(new SitAction(), new SelfTarget());
+                .RandomWalk(condition =>
+                {
+                    condition.HasMovementRate(
+                        MovementRate.DMFast,
+                        MovementRate.Default,
+                        MovementRate.Fast,
+                        MovementRate.Normal,
+                        MovementRate.PC,
+                        MovementRate.Slow,
+                        MovementRate.VeryFast,
+                        MovementRate.VerySlow);
+                })
+                .PlayAnimation(Animation.LoopingSitCross);
 
 
             return builder.Build();

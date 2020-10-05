@@ -558,11 +558,11 @@ namespace NWN.FinalFantasy.Core.NWScript
         ///   Get oCreature's movement rate.
         ///   * Returns 0 if oCreature is invalid.
         /// </summary>
-        public static int GetMovementRate(uint oCreature)
+        public static MovementRate GetMovementRate(uint oCreature)
         {
             Internal.NativeFunctions.StackPushObject(oCreature);
             Internal.NativeFunctions.CallBuiltIn(496);
-            return Internal.NativeFunctions.StackPopInteger();
+            return (MovementRate)Internal.NativeFunctions.StackPopInteger();
         }
 
         /// <summary>

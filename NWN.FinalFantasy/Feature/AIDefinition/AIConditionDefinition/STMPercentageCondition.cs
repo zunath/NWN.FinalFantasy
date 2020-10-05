@@ -3,26 +3,26 @@ using NWN.FinalFantasy.Service.AIService;
 
 namespace NWN.FinalFantasy.Feature.AIDefinition.AIConditionDefinition
 {
-    public class MPCondition : IAICondition
+    public class STMPercentageCondition : IAICondition
     {
-        private readonly float _mpThreshold;
+        private readonly float _stmThreshold;
 
-        public MPCondition(float mpThreshold)
+        public STMPercentageCondition(float stmThreshold)
         {
-            if (mpThreshold > 1f)
+            if (stmThreshold > 1f)
             {
-                _mpThreshold = mpThreshold * 0.01f;
+                _stmThreshold = stmThreshold * 0.01f;
             }
             else
             {
-                _mpThreshold = mpThreshold;
+                _stmThreshold = stmThreshold;
             }
         }
 
         public bool MeetsCondition(uint creature)
         {
             var creatureData = AICreatureData.GetCreature(creature);
-            var meetsCondition = (float)creatureData.CurrentMP / (float)creatureData.MaxMP <= _mpThreshold;
+            var meetsCondition = (float)creatureData.CurrentSTM / (float)creatureData.MaxSTM <= _stmThreshold;
 
             return meetsCondition;
         }

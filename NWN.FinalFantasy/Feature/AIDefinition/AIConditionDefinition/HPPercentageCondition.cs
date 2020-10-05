@@ -3,11 +3,11 @@ using NWN.FinalFantasy.Service.AIService;
 
 namespace NWN.FinalFantasy.Feature.AIDefinition.AIConditionDefinition
 {
-    public class HPCondition: IAICondition
+    public class HPPercentageCondition: IAICondition
     {
         private readonly float _hpThreshold;
 
-        public HPCondition(float hpThreshold)
+        public HPPercentageCondition(float hpThreshold)
         {
             if (hpThreshold > 1f)
             {

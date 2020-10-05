@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using NWN.FinalFantasy.Core.NWNX;
+using NWN.FinalFantasy.Core.NWScript.Enum;
 using NWN.FinalFantasy.Service.AIService;
 using static NWN.FinalFantasy.Core.NWScript.NWScript;
 
@@ -23,6 +25,7 @@ namespace NWN.FinalFantasy.Feature.AIDefinition.AIData
             public Vector3 Position { get; set; }
             public uint Area { get; set; }
             public float Facing { get; set; }
+            public MovementRate MovementRate { get; set; }
         }
 
         private static ConcurrentDictionary<uint, AICreature> Creatures { get; } = new ConcurrentDictionary<uint, AICreature>();
@@ -53,8 +56,11 @@ namespace NWN.FinalFantasy.Feature.AIDefinition.AIData
                 CurrentSTM = 0, // todo: get
                 MaxSTM = 0, // todo: get
                 Position = GetPosition(creature),
-                Facing = GetFacing(creature)
+                Facing = GetFacing(creature),
+                MovementRate = GetMovementRate(creature)
             };
+
+            
         }
 
         public void ProcessDataAIThread()

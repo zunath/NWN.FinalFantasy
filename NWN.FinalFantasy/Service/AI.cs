@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using NWN.FinalFantasy.Core;
+using NWN.FinalFantasy.Core.NWNX;
 using NWN.FinalFantasy.Extension;
 using NWN.FinalFantasy.Service.AIService;
 using static NWN.FinalFantasy.Core.NWScript.NWScript;
@@ -23,8 +25,9 @@ namespace NWN.FinalFantasy.Service
         #region Shared Data (both threads)
 
         private static volatile bool _isShuttingDown;
+        private const int BatchSize = 50;
         private static ConcurrentDictionary<string, AIInstructionSet> InstructionSets { get; } = new ConcurrentDictionary<string, AIInstructionSet>();
-        private static ConcurrentDictionary<uint, AICreatureState> Creatures { get; } = new ConcurrentDictionary<uint, AICreatureState>();
+        private static ConcurrentBag<ConcurrentDictionary<uint, AICreatureState>> Batches { get; } = new ConcurrentBag<ConcurrentDictionary<uint, AICreatureState>>();
         private static ConcurrentQueue<Tuple<uint, string>> AddQueue { get; } = new ConcurrentQueue<Tuple<uint, string>>();
         private static ConcurrentQueue<uint> RemovalQueue { get; } = new ConcurrentQueue<uint>();
         private static ConcurrentQueue<AICreatureCommand> CreatureCommandQueue { get; } = new ConcurrentQueue<AICreatureCommand>();
@@ -44,6 +47,29 @@ namespace NWN.FinalFantasy.Service
             Scheduler.ScheduleRepeating(UpdateSharedData, TimeSpan.FromSeconds(0.5d));
             Scheduler.ScheduleRepeating(ProcessCreatureCommandQueue, TimeSpan.FromSeconds(0.25d));
             await StartAIThreadAsync();
+        }
+
+        /// <summary>
+        /// When a creature's AI is toggled, update that status in the batch list.
+        /// </summary>
+        [NWNEventHandler("dm_ai_aft")]
+        public static void ToggleCreatureAI()
+        {
+            var numberOfTargets = Convert.ToInt32(Events.GetEventData("NUM_TARGETS"));
+
+            for (var x = 1; x <= numberOfTargets; x++)
+            {
+                var target = StringToObject(Events.GetEventData($"TARGET_{x}"));
+                foreach (var batch in Batches)
+                {
+                    if (batch.ContainsKey(target))
+                    {
+                        batch[target].IsEnabled = !batch[target].IsEnabled;
+                    }
+                }
+
+            }
+
         }
 
         /// <summary>
@@ -79,8 +105,7 @@ namespace NWN.FinalFantasy.Service
                 while (CreatureCommandQueue.TryDequeue(out var command))
                 {
                     // Creature is no longer valid.
-                    if (!GetIsObjectValid(command.Creature) ||
-                        !Creatures.ContainsKey(command.Creature))
+                    if (!GetIsObjectValid(command.Creature))
                     {
                         RemovalQueue.Enqueue(command.Creature);
                     }
@@ -236,12 +261,9 @@ namespace NWN.FinalFantasy.Service
                     ProcessAIData();
                     ProcessCreatureRemovals();
                     ProcessCreatureAdditions();
-                    ProcessCreatures(deltaTime);
+                    await ProcessCreaturesAsync(deltaTime);
 
                     deltaTime = stopwatch.Elapsed.TotalSeconds;
-
-                    //if (stopwatch.ElapsedMilliseconds > 0)
-                    //    Console.WriteLine($"AI thread: {stopwatch.ElapsedMilliseconds}ms");
 
                     stopwatch.Restart();
                 }
@@ -284,11 +306,14 @@ namespace NWN.FinalFantasy.Service
         {
             while (RemovalQueue.TryDequeue(out var creature))
             {
-                if (Creatures.ContainsKey(creature))
+                foreach (var batch in Batches)
                 {
-                    while (!Creatures.TryRemove(creature, out _))
+                    if (batch.ContainsKey(creature))
                     {
-                        // Empty on purpose. Keep trying to remove it until finished.
+                        while (batch.TryRemove(creature, out _))
+                        {
+                            // Empty on purpose. Keep trying to remove it until finished.
+                        }
                     }
                 }
             }
@@ -301,31 +326,61 @@ namespace NWN.FinalFantasy.Service
         {
             while (AddQueue.TryDequeue(out var creature))
             {
-                if (!Creatures.ContainsKey(creature.Item1))
+                var foundBatch = false;
+                foreach (var batch in Batches)
                 {
-                    Creatures[creature.Item1] = new AICreatureState(creature.Item2);
+                    if (batch.Count < BatchSize)
+                    {
+                        batch[creature.Item1] = new AICreatureState(creature.Item2);
+                        foundBatch = true;
+                        break;
+                    }
                 }
+
+                // All batches are full. Create a new batch.
+                if (!foundBatch)
+                {
+                    var batch = new ConcurrentDictionary<uint, AICreatureState>
+                    {
+                        [creature.Item1] = new AICreatureState(creature.Item2)
+                    };
+                    Batches.Add(batch);
+                }
+
             }
         }
 
         /// <summary>
         /// Iterates over all creatures and processes their AI.
         /// </summary>
-        private static void ProcessCreatures(double deltaTime)
+        private static async Task ProcessCreaturesAsync(double deltaTime)
         {
             const double UpdateFrequency = 1.0d;
+            var tasks = new List<Task>();
 
-            Parallel.ForEach(Creatures, pair =>
+            foreach (var batch in Batches)
             {
-                var (creature, state) = pair;
-                state.ProcessTime += deltaTime;
-
-                if (state.ProcessTime >= UpdateFrequency)
+                var task = new Task(() =>
                 {
-                    ProcessCreatureAI(creature, state.InstructionSetId);
-                    state.ProcessTime = 0d;
-                }
-            });
+                    foreach (var pair in batch)
+                    {
+                        var (creature, state) = pair;
+                        if (!state.IsEnabled) continue;
+
+                        state.ProcessTime += deltaTime;
+
+                        if (state.ProcessTime >= UpdateFrequency)
+                        {
+                            ProcessCreatureAI(creature, state.InstructionSetId);
+                            state.ProcessTime = 0d;
+                        }
+                    }
+                });
+                task.Start(); 
+                tasks.Add(task);
+            }
+
+            await Task.WhenAll(tasks);
         }
 
         /// <summary>
@@ -343,14 +398,14 @@ namespace NWN.FinalFantasy.Service
             {
                 var meetsConditions = true;
 
-                Parallel.ForEach(instruction.Action.Item1, (condition, state) =>
+                foreach (var condition in instruction.Action.Item1)
                 {
                     if (!condition.MeetsCondition(creature))
                     {
                         meetsConditions = false;
-                        state.Break();
+                        break;
                     }
-                });
+                }
 
                 if (meetsConditions)
                 {

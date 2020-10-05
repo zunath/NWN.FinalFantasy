@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
 using NWN.FinalFantasy.Core;
 using NWN.FinalFantasy.Core.NWNX;
 using NWN.FinalFantasy.Core.NWScript;
@@ -16,13 +18,6 @@ namespace NWN.FinalFantasy.Feature
 {
     public static class DebuggingTools
     {
-        [NWNEventHandler("test1")]
-        public static void DebugGiveQuest()
-        {
-            var player = GetLastUsedBy();
-            Quest.AcceptQuest(player, "testQuest");
-        }
-
         [NWNEventHandler("test2")]
         public static void DebugSpawnCreature()
         {
@@ -56,22 +51,6 @@ namespace NWN.FinalFantasy.Feature
             StatusEffect.Apply(player, player, StatusEffectType.Invincible, 30.0f);
         }
 
-        [NWNEventHandler("test8")]
-        public static void MakeIP()
-        {
-            Console.WriteLine("firing");
-
-            var itemprop = ItemPropertyAttackBonus(1);
-
-            Console.WriteLine("Unpacking");
-            var unpacked = Core.NWNX.ItemProperty.UnpackIP(itemprop);
-
-            Console.WriteLine("Packing");
-            var packed = Core.NWNX.ItemProperty.PackIP(unpacked);
-
-            Console.WriteLine("Done");
-        }
-
         [NWNEventHandler("test9")]
         public static void OpenHomePurchaseMenu()
         {
@@ -90,49 +69,9 @@ namespace NWN.FinalFantasy.Feature
         }
 
         [NWNEventHandler("test11")]
-        public static void SimulateTripleTriad()
+        public static void DisplayAchievementWindow()
         {
-            var player1 = GetFirstPC();
-            var player2 = GetNextPC();
-
-            // Single player mode
-            if (!GetIsObjectValid(player2))
-            {
-                var player = GetLastUsedBy();
-                var deck1 = TripleTriad.BuildRandomDeck(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
-                var deck2 = TripleTriad.BuildRandomDeck(10, 9, 8, 7);
-
-                TripleTriad.StartGame(player, deck1, player, deck2);
-            }
-
-            // Two player mode
-            else
-            {
-                var deck1 = TripleTriad.BuildRandomDeck(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
-                var deck2 = TripleTriad.BuildRandomDeck(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
-
-                TripleTriad.StartGame(player1, deck1, player2, deck2);
-            }
+            Achievement.DisplayAchievementNotificationWindow(GetLastUsedBy(), "Test Achievement");
         }
-
-        [NWNEventHandler("test12")]
-        public static void UseCard()
-        {
-            var player = GetLastUsedBy();
-            if (!GetIsPC(player) || GetIsDM(player)) return;
-
-            var playerId = GetObjectUUID(player);
-            var dbPlayerTripleTriad = DB.Get<PlayerTripleTriad>(playerId) ?? new PlayerTripleTriad();
-
-            foreach (var (cardType, card) in TripleTriad.GetAllAvailableCards())
-            {
-                dbPlayerTripleTriad.AvailableCards[cardType] = DateTime.UtcNow;
-            }
-
-            DB.Set(playerId, dbPlayerTripleTriad);
-
-            SendMessageToPC(player, "All Triple Triad cards received! OMGZ");
-        }
-
     }
 }

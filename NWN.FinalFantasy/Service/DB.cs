@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using Newtonsoft.Json;
 using NWN.FinalFantasy.Core;
 using NWN.FinalFantasy.Entity;
@@ -14,6 +13,7 @@ namespace NWN.FinalFantasy.Service
         private static ApplicationSettings _appSettings;
         private static readonly Dictionary<Type, string> _keyPrefixByType = new Dictionary<Type, string>();
         private static ConnectionMultiplexer _multiplexer;
+        private static readonly Dictionary<string, EntityBase> _cachedEntities = new Dictionary<string, EntityBase>();
 
         [NWNEventHandler("mod_preload")]
         public static void Load()
@@ -21,6 +21,12 @@ namespace NWN.FinalFantasy.Service
             _appSettings = ApplicationSettings.Get();
             _multiplexer = ConnectionMultiplexer.Connect(_appSettings.RedisIPAddress);
             LoadKeyPrefixes();
+
+            // Runs at the end of every main loop. Clears out all data retrieved during this cycle.
+            Entrypoints.OnScriptContextEnd += () =>
+            {
+                _cachedEntities.Clear();
+            };
         }
 
         /// <summary>
@@ -60,6 +66,7 @@ namespace NWN.FinalFantasy.Service
 
             var data = JsonConvert.SerializeObject(entity);
             _multiplexer.GetDatabase().StringSet($"{keyPrefixOverride}:{key}", data);
+            _cachedEntities[key] = entity;
         }
 
         /// <summary>
@@ -75,8 +82,16 @@ namespace NWN.FinalFantasy.Service
             if(string.IsNullOrWhiteSpace(keyPrefix))
                 throw new ArgumentException($"{nameof(keyPrefix)} cannot be null or whitespace.");
 
-            var data = JsonConvert.SerializeObject(entities);
-            _multiplexer.GetDatabase().StringSet($"{keyPrefix}:{key}", data);
+            string data;
+            using (new Profiler("Serialization"))
+            {
+                data = JsonConvert.SerializeObject(entities);
+            }
+
+            using (new Profiler("RedisSet"))
+            {
+                _multiplexer.GetDatabase().StringSet($"{keyPrefix}:{key}", data);
+            }
         }
 
         /// <summary>
@@ -87,17 +102,34 @@ namespace NWN.FinalFantasy.Service
         /// <param name="keyPrefixOverride">If null, the key prefix defined on the entity will be used. Otherwise, this value will be used as the prefix.</param>
         /// <returns>The object stored in the database under the specified key</returns>
         public static T Get<T>(string key, string keyPrefixOverride = null)
+            where T: EntityBase
         {
             if (string.IsNullOrWhiteSpace(keyPrefixOverride))
             {
                 keyPrefixOverride = _keyPrefixByType[typeof(T)];
             }
 
-            var json = _multiplexer.GetDatabase().StringGet($"{keyPrefixOverride}:{key}");
-            if (string.IsNullOrWhiteSpace(json))
-                return default;
+            if (_cachedEntities.ContainsKey(key))
+            {
+                return (T)_cachedEntities[key];
+            }
+            else
+            {
+                RedisValue data;
 
-            return JsonConvert.DeserializeObject<T>(json);
+                using (new Profiler("RedisGet"))
+                {
+                    data = _multiplexer.GetDatabase().StringGet($"{keyPrefixOverride}:{key}");
+                }
+
+                if (string.IsNullOrWhiteSpace(data))
+                    return default;
+
+                using (new Profiler("Deserialization"))
+                {
+                    return JsonConvert.DeserializeObject<T>(data);
+                }
+            }
         }
 
         /// <summary>
@@ -134,7 +166,10 @@ namespace NWN.FinalFantasy.Service
                 keyPrefixOverride = _keyPrefixByType[typeof(T)];
             }
 
-            return _multiplexer.GetDatabase().KeyExists($"{keyPrefixOverride}:{key}");
+            if (_cachedEntities.ContainsKey(key))
+                return true;
+            else
+                return _multiplexer.GetDatabase().KeyExists($"{keyPrefixOverride}:{key}");
         }
 
         /// <summary>
@@ -151,6 +186,7 @@ namespace NWN.FinalFantasy.Service
             }
 
             _multiplexer.GetDatabase().KeyDelete($"{keyPrefixOverride}:{key}");
+            _cachedEntities.Remove(key);
         }
 
         /// <summary>

@@ -2,30 +2,65 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using NWN.FinalFantasy.Core.NWNX;
 using NWN.FinalFantasy.Extension;
+using NWN.FinalFantasy.Service;
 using static NWN.FinalFantasy.Core.NWScript.NWScript;
 
 namespace NWN.FinalFantasy.Core
 {
     public class Entrypoints
     {
+        private class ActionScript
+        {
+            public Action Action { get; set; }
+            public string Name { get; set; }
+        }
+
+        private class ConditionalScript
+        {
+            public ConditionalScriptDelegate Action { get; set; }
+            public string Name { get; set; }
+        }
+
         private const int MaxCharsInScriptName = 16;
         private const int ScriptHandled = 0;
         private const int ScriptNotHandled = -1;
 
         private delegate bool ConditionalScriptDelegate();
 
-        private static Dictionary<string, List<Action>> _scripts;
-        private static Dictionary<string, List<ConditionalScriptDelegate>> _conditionalScripts;
+        private static Dictionary<string, List<ActionScript>> _scripts;
+        private static Dictionary<string, List<ConditionalScript>> _conditionalScripts;
 
-        private static DateTime _last1SecondIntervalCall = DateTime.UtcNow;
+        private static readonly NWTask.TaskRunner _taskRunner = new NWTask.TaskRunner();
+        public static event Action OnScriptContextBegin;
+        public static event Action OnScriptContextEnd;
 
         //
         // This is called once every main loop frame, outside of object context
         //
         public static void OnMainLoop(ulong frame)
         {
-            RunOneSecondPCIntervalEvent();
+            OnScriptContextBegin?.Invoke();
+
+            try
+            {
+                using (new Profiler($"{nameof(Entrypoints)}:TaskRunner"))
+                {
+                    _taskRunner.Process();
+                }
+
+                using (new Profiler($"{nameof(Entrypoints)}:Scheduler.Process()"))
+                {
+                    Scheduler.Process();
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Write(LogGroup.Error, ex.ToMessageAndCompleteStacktrace());
+            }
+
+            OnScriptContextEnd?.Invoke();
         }
 
         //
@@ -52,9 +87,12 @@ namespace NWN.FinalFantasy.Core
         //
         public static void OnStart()
         {
-            Console.WriteLine("Registering scripts...");
-            LoadHandlersFromAssembly();
-            Console.WriteLine("Scripts registered successfully.");
+            using (new Profiler(nameof(OnStart)))
+            {
+                Console.WriteLine("Registering scripts...");
+                LoadHandlersFromAssembly();
+                Console.WriteLine("Scripts registered successfully.");
+            }
         }
 
         //
@@ -64,6 +102,7 @@ namespace NWN.FinalFantasy.Core
         public static void OnModuleLoad()
         {
             Console.WriteLine("OnModuleLoad() called");
+            Scheduler.ScheduleRepeating(RunOneSecondPCIntervalEvent, TimeSpan.FromSeconds(1));
         }
 
         //
@@ -87,8 +126,11 @@ namespace NWN.FinalFantasy.Core
                 var result = true;
                 foreach (var action in _conditionalScripts[script])
                 {
-                    var actionResult = action.Invoke();
-                    if (result) result = actionResult;
+                    using (new Profiler(action.Name))
+                    {
+                        var actionResult = action.Action.Invoke();
+                        if (result) result = actionResult;
+                    }
                 }
 
                 return result ? 1 : 0;
@@ -99,7 +141,10 @@ namespace NWN.FinalFantasy.Core
                 {
                     try
                     {
-                        action();
+                        using (new Profiler(action.Name))
+                        {
+                            action.Action();
+                        }
                     }
                     catch (Exception ex)
                     {
@@ -117,8 +162,8 @@ namespace NWN.FinalFantasy.Core
 
         private static void LoadHandlersFromAssembly()
         {
-            _scripts = new Dictionary<string, List<Action>>();
-            _conditionalScripts = new Dictionary<string, List<ConditionalScriptDelegate>>();
+            _scripts = new Dictionary<string, List<ActionScript>>();
+            _conditionalScripts = new Dictionary<string, List<ConditionalScript>>();
 
             var handlers = Assembly.GetExecutingAssembly()
                 .GetTypes()
@@ -143,9 +188,13 @@ namespace NWN.FinalFantasy.Core
                         var del = (ConditionalScriptDelegate)mi.CreateDelegate(typeof(ConditionalScriptDelegate));
 
                         if (!_conditionalScripts.ContainsKey(script))
-                            _conditionalScripts[script] = new List<ConditionalScriptDelegate>();
+                            _conditionalScripts[script] = new List<ConditionalScript>();
 
-                        _conditionalScripts[script].Add(del);
+                        _conditionalScripts[script].Add(new ConditionalScript
+                        {
+                            Action = del,
+                            Name = del.Method.DeclaringType?.Name + "." + del.Method.Name
+                        });
 
                         Console.WriteLine($"Registered method '{del.Method.Name}' to conditional script: {script}");
                     }
@@ -155,9 +204,13 @@ namespace NWN.FinalFantasy.Core
                         var del = (Action)mi.CreateDelegate(typeof(Action));
 
                         if (!_scripts.ContainsKey(script))
-                            _scripts[script] = new List<Action>();
+                            _scripts[script] = new List<ActionScript>();
 
-                        _scripts[script].Add(del);
+                        _scripts[script].Add(new ActionScript
+                        {
+                            Action = del,
+                            Name = del.Method.DeclaringType?.Name + "." + del.Method.Name
+                        });
 
                         Console.WriteLine($"Registered method '{del.Method.Name}' to script: {script}");
                     }
@@ -173,15 +226,13 @@ namespace NWN.FinalFantasy.Core
         /// </summary>
         private static void RunOneSecondPCIntervalEvent()
         {
-            var now = DateTime.UtcNow;
-            var delta = now - _last1SecondIntervalCall;
-            if (delta.Seconds < 1) return;
-            _last1SecondIntervalCall = now;
-
-            for (var player = GetFirstPC(); GetIsObjectValid(player); player = GetNextPC())
+            using (new Profiler(nameof(RunOneSecondPCIntervalEvent)))
             {
-                Internal.OBJECT_SELF = player;
-                RunScripts("interval_pc_1s");
+                for (var player = GetFirstPC(); GetIsObjectValid(player); player = GetNextPC())
+                {
+                    Internal.OBJECT_SELF = player;
+                    RunScripts("interval_pc_1s");
+                }
             }
         }
     }

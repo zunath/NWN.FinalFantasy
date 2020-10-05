@@ -118,14 +118,30 @@ namespace NWN.FinalFantasy.Service
             middle += WindowMiddleRight;
             bottom += WindowBottomRight;
 
-            Draw(player, top, x, y, anchor, startId++, lifeTime);
+            if (anchor == ScreenAnchor.BottomRight)
+            {
+                Draw(player, bottom, x, y, anchor, startId++, lifeTime);
+            }
+            else
+            {
+                Draw(player, top, x, y, anchor, startId++, lifeTime);
+            }
+            
             
             for (var i = 0; i < height; i++)
             {
                 Draw(player, middle, x, ++y, anchor, startId++, lifeTime);
             }
 
-            Draw(player, bottom, x, ++y, anchor, startId, lifeTime);
+            if (anchor == ScreenAnchor.BottomRight)
+            {
+                Draw(player, top, x, ++y, anchor, startId, lifeTime);
+            }
+            else
+            {
+                Draw(player, bottom, x, ++y, anchor, startId, lifeTime);
+            }
+
         }
 
         private static void Draw(uint player, string message, int x, int y, ScreenAnchor anchor, int id, float lifeTime = 10.0f)

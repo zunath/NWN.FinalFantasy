@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using NWN.FinalFantasy.Service.TripleTriadService;
 
 namespace NWN.FinalFantasy.Entity

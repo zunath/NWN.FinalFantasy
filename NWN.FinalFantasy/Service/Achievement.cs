@@ -70,16 +70,16 @@ namespace NWN.FinalFantasy.Service
         /// <summary>
         /// Displays the achievement notification window with the achievement's name and description.
         /// </summary>
-        private static void DisplayAchievementNotificationWindow(uint player, string name)
+        public static void DisplayAchievementNotificationWindow(uint player, string name)
         {
-            const int WindowX = 2;
-            const int WindowY = 2;
+            const int WindowX = 4;
+            const int WindowY = 4;
             const int WindowWidth = 26;
 
             var centerWindowX = Gui.CenterStringInWindow(name, WindowX, WindowWidth);
-            PostString(player, "Achievement Unlocked", centerWindowX-1, WindowY+1, ScreenAnchor.TopLeft, 10.0f, Gui.ColorWhite, Gui.ColorYellow, _idReservation.StartId,Gui.TextName);
-            PostString(player, " " + name, centerWindowX-1, WindowY+3, ScreenAnchor.TopLeft, 10.0f, Gui.ColorWhite, Gui.ColorYellow, _idReservation.StartId + 1, Gui.TextName);
-            Gui.DrawWindow(player, _idReservation.StartId + 2, ScreenAnchor.TopLeft, WindowX, WindowY, WindowWidth, 4);
+            PostString(player, "Achievement Unlocked", centerWindowX + 2, WindowY+1, ScreenAnchor.TopRight, 10.0f, Gui.ColorWhite, Gui.ColorYellow, _idReservation.StartId,Gui.TextName);
+            PostString(player, " " + name, centerWindowX + 4, WindowY+3, ScreenAnchor.TopRight, 10.0f, Gui.ColorWhite, Gui.ColorYellow, _idReservation.StartId + 1, Gui.TextName);
+            Gui.DrawWindow(player, _idReservation.StartId + 2, ScreenAnchor.TopRight, WindowX, WindowY, WindowWidth, 4);
         }
 
         /// <summary>

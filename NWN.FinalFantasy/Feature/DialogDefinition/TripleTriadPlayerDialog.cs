@@ -223,7 +223,7 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
         {
             var player = GetPC();
             var playerId = GetObjectUUID(player);
-            var dbPlayerTripleTriad = DB.Get<PlayerTripleTriad>(playerId);
+            var dbPlayerTripleTriad = DB.Get<PlayerTripleTriad>(playerId) ?? new PlayerTripleTriad();
             var model = GetDataModel<Model>();
             var card = TripleTriad.GetCardByType(model.SelectedCardType);
             var dateAcquired = dbPlayerTripleTriad.AvailableCards.ContainsKey(model.SelectedCardType)
@@ -243,7 +243,7 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
         {
             var player = GetPC();
             var playerId = GetObjectUUID(player);
-            var dbPlayerTripleTriad = DB.Get<PlayerTripleTriad>(playerId);
+            var dbPlayerTripleTriad = DB.Get<PlayerTripleTriad>(playerId) ?? new PlayerTripleTriad();
             var model = GetDataModel<Model>();
 
             page.Header = "You may have a maximum of 20 decks saved at a time. Decks must contain exactly five cards. \n\nPlease select a deck.";

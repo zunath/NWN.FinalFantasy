@@ -175,6 +175,7 @@ namespace NWN.FinalFantasy.Feature
             Stat.AdjustMaxHP(dbPlayer, player, 10);
             Stat.AdjustMaxSTM(dbPlayer, 10);
             Stat.AdjustBAB(dbPlayer, player, 1);
+            dbPlayer.HP = GetCurrentHitPoints(player);
             dbPlayer.MP = Stat.GetMaxMP(player, dbPlayer);
             dbPlayer.Stamina = Stat.GetMaxStamina(player, dbPlayer);
 

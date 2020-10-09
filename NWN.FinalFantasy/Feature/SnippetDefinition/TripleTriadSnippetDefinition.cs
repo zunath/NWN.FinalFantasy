@@ -27,7 +27,7 @@ namespace NWN.FinalFantasy.Feature.SnippetDefinition
 
             if (levels.Count <= 0)
             {
-                SpeakString("ERROR: Deck levels were not defined! Notify an admin that this conversation is broken.");
+                Log.Write(LogGroup.Error, $"{GetName(player)} tried to start card game with {GetName(OBJECT_SELF)} but no levels were defined.", true);
                 return;
             }
 

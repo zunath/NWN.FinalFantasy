@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using NWN.FinalFantasy.Core;
+using NWN.FinalFantasy.Core.NWNX;
 using static NWN.FinalFantasy.Core.NWScript.NWScript;
 
 namespace NWN.FinalFantasy.Service
@@ -86,9 +87,9 @@ namespace NWN.FinalFantasy.Service
         {
             foreach (var condition in _appearsWhenCommands)
             {
-                var param = GetScriptParam(condition.Key);
-                if (string.IsNullOrWhiteSpace(param)) continue;
+                if (!Util.GetScriptParamIsSet(condition.Key)) continue;
 
+                var param = GetScriptParam(condition.Key);
                 var args = param.Split(' ').ToList();
                 var snippetName = condition.Key;
 
@@ -108,9 +109,9 @@ namespace NWN.FinalFantasy.Service
         {
             foreach (var action in _actionsTakenCommands)
             {
-                var param = GetScriptParam(action.Key);
-                if (string.IsNullOrWhiteSpace(param)) continue;
+                if (!Util.GetScriptParamIsSet(action.Key)) continue;
 
+                var param = GetScriptParam(action.Key);
                 var args = param.Split(' ').ToList();
                 var commandText = action.Key;
 

@@ -1,3 +1,4 @@
+using System;
 using NWN.FinalFantasy.Core.NWNX.Enum;
 
 namespace NWN.FinalFantasy.Core.NWNX
@@ -195,6 +196,21 @@ namespace NWN.FinalFantasy.Core.NWNX
 
             Internal.NativeFunctions.nwnxPushObject(oObject);
             Internal.NativeFunctions.nwnxCallFunction();
+        }
+
+        /// <summary>
+        /// Get if a script param is set
+        /// </summary>
+        /// <param name="paramName">The script parameter name to check</param>
+        /// <returns>true if script param is set, false if not or on error.</returns>
+        public static bool GetScriptParamIsSet(string paramName)
+        {
+            Internal.NativeFunctions.nwnxSetFunction(PLUGIN_NAME, "GetScriptParamIsSet");
+
+            Internal.NativeFunctions.nwnxPushString(paramName);
+            Internal.NativeFunctions.nwnxCallFunction();
+
+            return Convert.ToBoolean(Internal.NativeFunctions.nwnxPopInt());
         }
 
     }

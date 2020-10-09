@@ -456,9 +456,10 @@ namespace NWN.FinalFantasy.Feature
             Events.SubscribeEvent("NWNX_ON_UUID_COLLISION_AFTER", "uuid_coll_aft");
 
             // Resource events
-            Events.SubscribeEvent("NWNX_ON_RESOURCE_ADDED", "resource_added");
-            Events.SubscribeEvent("NWNX_ON_RESOURCE_REMOVED", "resource_removed");
-            Events.SubscribeEvent("NWNX_ON_RESOURCE_MODIFIED", "resource_modified");
+            // NOTE: These events are disabled because they cause NWServer to crash when CTRL+C is pressed on a Docker server.
+            //Events.SubscribeEvent("NWNX_ON_RESOURCE_ADDED", "resource_added");
+            //Events.SubscribeEvent("NWNX_ON_RESOURCE_REMOVED", "resource_removed");
+            //Events.SubscribeEvent("NWNX_ON_RESOURCE_MODIFIED", "resource_modified");
 
             // ELC Events
             Events.SubscribeEvent("NWNX_ON_ELC_VALIDATE_CHARACTER_BEFORE", "elc_validate_bef");

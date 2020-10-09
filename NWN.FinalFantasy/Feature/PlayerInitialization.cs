@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using NWN.FinalFantasy.Core;
+﻿using NWN.FinalFantasy.Core;
 using NWN.FinalFantasy.Core.NWNX;
 using NWN.FinalFantasy.Core.NWScript.Enum;
 using NWN.FinalFantasy.Service;

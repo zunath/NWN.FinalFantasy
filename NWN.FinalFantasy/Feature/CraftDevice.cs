@@ -243,6 +243,7 @@ namespace NWN.FinalFantasy.Feature
                 if (isSuccessful)
                 {
                     CreateItemOnObject(recipe.Resref, player, recipe.Quantity);
+                    ExecuteScript("craft_success", player);
                 }
             }
 

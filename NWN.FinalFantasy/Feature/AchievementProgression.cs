@@ -204,5 +204,63 @@ namespace NWN.FinalFantasy.Feature
                 Achievement.GiveAchievement(player, AchievementType.CompleteQuests10);
             }
         }
+
+        /// <summary>
+        /// Handles the Craft Item line of achievements
+        /// </summary>
+        [NWNEventHandler("craft_success")]
+        public static void CompleteCraftSuccessfully()
+        {
+            var player = OBJECT_SELF;
+            if (!GetIsPC(player) || GetIsDM(player)) return;
+
+            var cdKey = GetPCPublicCDKey(player);
+            var dbAccount = DB.Get<Account>(cdKey);
+
+            dbAccount.AchievementProgress.ItemsCrafted++;
+            DB.Set(cdKey, dbAccount);
+
+            var numberCompleted = dbAccount.AchievementProgress.ItemsCrafted;
+            if (numberCompleted >= 1)
+            {
+                Achievement.GiveAchievement(player, AchievementType.CraftItems1);
+            }
+            if (numberCompleted >= 10)
+            {
+                Achievement.GiveAchievement(player, AchievementType.CraftItems2);
+            }
+            if (numberCompleted >= 50)
+            {
+                Achievement.GiveAchievement(player, AchievementType.CraftItems3);
+            }
+            if (numberCompleted >= 100)
+            {
+                Achievement.GiveAchievement(player, AchievementType.CraftItems4);
+            }
+            if (numberCompleted >= 500)
+            {
+                Achievement.GiveAchievement(player, AchievementType.CraftItems5);
+            }
+            if (numberCompleted >= 1000)
+            {
+                Achievement.GiveAchievement(player, AchievementType.CraftItems6);
+            }
+            if (numberCompleted >= 1500)
+            {
+                Achievement.GiveAchievement(player, AchievementType.CraftItems7);
+            }
+            if (numberCompleted >= 2000)
+            {
+                Achievement.GiveAchievement(player, AchievementType.CraftItems8);
+            }
+            if (numberCompleted >= 3500)
+            {
+                Achievement.GiveAchievement(player, AchievementType.CraftItems9);
+            }
+            if (numberCompleted >= 5000)
+            {
+                Achievement.GiveAchievement(player, AchievementType.CraftItems10);
+            }
+        }
     }
 }

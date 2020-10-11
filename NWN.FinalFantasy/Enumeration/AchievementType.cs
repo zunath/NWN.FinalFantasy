@@ -60,6 +60,26 @@ namespace NWN.FinalFantasy.Enumeration
         CompleteQuests9 = 26,
         [Achievement("Complete Quests X", "Complete 5000 Quests", true)]
         CompleteQuests10 = 27,
+        [Achievement("Craft Items I", "Craft 1 Items", true)]
+        CraftItems1 = 28,
+        [Achievement("Craft Items II", "Craft 10 Items", true)]
+        CraftItems2 = 29,
+        [Achievement("Craft Items III", "Craft 50 Items", true)]
+        CraftItems3 = 30,
+        [Achievement("Craft Items IV", "Craft 100 Items", true)]
+        CraftItems4 = 31,
+        [Achievement("Craft Items V", "Craft 500 Items", true)]
+        CraftItems5 = 32,
+        [Achievement("Craft Items VI", "Craft 1000 Items", true)]
+        CraftItems6 = 33,
+        [Achievement("Craft Items VII", "Craft 1500 Items", true)]
+        CraftItems7 = 34,
+        [Achievement("Craft Items VIII", "Craft 2000 Items", true)]
+        CraftItems8 = 35,
+        [Achievement("Craft Items IX", "Craft 3500 Items", true)]
+        CraftItems9 = 36,
+        [Achievement("Craft Items X", "Craft 5000 Items", true)]
+        CraftItems10 = 37,
     }
 
     public class AchievementAttribute: Attribute

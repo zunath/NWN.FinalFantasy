@@ -27,5 +27,6 @@ namespace NWN.FinalFantasy.Entity
         public ulong PerksLearned { get; set; }
         public ulong SkillsLearned { get; set; }
         public ulong QuestsCompleted { get; set; }
+        public ulong ItemsCrafted { get; set; }
     }
 }

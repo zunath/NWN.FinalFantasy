@@ -50414,154 +50414,11 @@
                     "__struct_id": 0,
                     "NAME": {
                       "type": "cexostring",
-                      "value": "Cargo Barrel"
-                    },
-                    "RESREF": {
-                      "type": "resref",
-                      "value": "_mdrn_pl_placeb"
-                    }
-                  },
-                  {
-                    "__struct_id": 0,
-                    "NAME": {
-                      "type": "cexostring",
-                      "value": "Cargo Crate"
-                    },
-                    "RESREF": {
-                      "type": "resref",
-                      "value": "_mdrn_pl_placec"
-                    }
-                  },
-                  {
-                    "__struct_id": 0,
-                    "NAME": {
-                      "type": "cexostring",
-                      "value": "Climbable Rope"
-                    },
-                    "RESREF": {
-                      "type": "resref",
-                      "value": "_mrdrn_rope"
-                    }
-                  },
-                  {
-                    "__struct_id": 0,
-                    "NAME": {
-                      "type": "cexostring",
-                      "value": "Concealed Door"
-                    },
-                    "RESREF": {
-                      "type": "resref",
-                      "value": "_mdrn_placedoorc"
-                    }
-                  },
-                  {
-                    "__struct_id": 0,
-                    "NAME": {
-                      "type": "cexostring",
-                      "value": "Concealed Entrance"
-                    },
-                    "RESREF": {
-                      "type": "resref",
-                      "value": "_mdrn_placedoora"
-                    }
-                  },
-                  {
-                    "__struct_id": 0,
-                    "NAME": {
-                      "type": "cexostring",
-                      "value": "Concealed Trapdoor"
-                    },
-                    "RESREF": {
-                      "type": "resref",
-                      "value": "_mdrn_placedoord"
-                    }
-                  },
-                  {
-                    "__struct_id": 0,
-                    "NAME": {
-                      "type": "cexostring",
-                      "value": "Concealed Tunnel"
-                    },
-                    "RESREF": {
-                      "type": "resref",
-                      "value": "_mdrn_placedoorb"
-                    }
-                  },
-                  {
-                    "__struct_id": 0,
-                    "NAME": {
-                      "type": "cexostring",
                       "value": "Cooking Fabricator"
                     },
                     "RESREF": {
                       "type": "resref",
                       "value": "cooking_fab"
-                    }
-                  },
-                  {
-                    "__struct_id": 0,
-                    "NAME": {
-                      "type": "cexostring",
-                      "value": "Door Control"
-                    },
-                    "RESREF": {
-                      "type": "resref",
-                      "value": "_mdrn_pl_sffdoor"
-                    }
-                  },
-                  {
-                    "__struct_id": 0,
-                    "NAME": {
-                      "type": "cexostring",
-                      "value": "Door Lever"
-                    },
-                    "RESREF": {
-                      "type": "resref",
-                      "value": "_mdrn_pl_doorlvr"
-                    }
-                  },
-                  {
-                    "__struct_id": 0,
-                    "NAME": {
-                      "type": "cexostring",
-                      "value": "Failed Jump Start Location"
-                    },
-                    "RESREF": {
-                      "type": "resref",
-                      "value": "_mdrn_ot_jump"
-                    }
-                  },
-                  {
-                    "__struct_id": 0,
-                    "NAME": {
-                      "type": "cexostring",
-                      "value": "Fence 1"
-                    },
-                    "RESREF": {
-                      "type": "resref",
-                      "value": "fence002"
-                    }
-                  },
-                  {
-                    "__struct_id": 0,
-                    "NAME": {
-                      "type": "cexostring",
-                      "value": "Fence 2"
-                    },
-                    "RESREF": {
-                      "type": "resref",
-                      "value": "fence2"
-                    }
-                  },
-                  {
-                    "__struct_id": 0,
-                    "NAME": {
-                      "type": "cexostring",
-                      "value": "Gun Turret"
-                    },
-                    "RESREF": {
-                      "type": "resref",
-                      "value": "_mdrn_pl_autogun"
                     }
                   },
                   {
@@ -50584,28 +50441,6 @@
                     "RESREF": {
                       "type": "resref",
                       "value": "jukebox"
-                    }
-                  },
-                  {
-                    "__struct_id": 0,
-                    "NAME": {
-                      "type": "cexostring",
-                      "value": "Jump Placeable"
-                    },
-                    "RESREF": {
-                      "type": "resref",
-                      "value": "_mdrn_placejump"
-                    }
-                  },
-                  {
-                    "__struct_id": 0,
-                    "NAME": {
-                      "type": "cexostring",
-                      "value": "Jump to Creature"
-                    },
-                    "RESREF": {
-                      "type": "resref",
-                      "value": "_mdrn_placejumpm"
                     }
                   },
                   {
@@ -50656,39 +50491,6 @@
                     "__struct_id": 0,
                     "NAME": {
                       "type": "cexostring",
-                      "value": "Persistant Container"
-                    },
-                    "RESREF": {
-                      "type": "resref",
-                      "value": "_mdrn_pl_persist"
-                    }
-                  },
-                  {
-                    "__struct_id": 0,
-                    "NAME": {
-                      "type": "cexostring",
-                      "value": "Pickup Item"
-                    },
-                    "RESREF": {
-                      "type": "resref",
-                      "value": "_mdrn_pl_pickup"
-                    }
-                  },
-                  {
-                    "__struct_id": 0,
-                    "NAME": {
-                      "type": "cexostring",
-                      "value": "Pilot Ship"
-                    },
-                    "RESREF": {
-                      "type": "resref",
-                      "value": "_mdrn_pl_flyship"
-                    }
-                  },
-                  {
-                    "__struct_id": 0,
-                    "NAME": {
-                      "type": "cexostring",
                       "value": "Public Persistent Storage"
                     },
                     "RESREF": {
@@ -50705,50 +50507,6 @@
                     "RESREF": {
                       "type": "resref",
                       "value": "qst_item_collect"
-                    }
-                  },
-                  {
-                    "__struct_id": 0,
-                    "NAME": {
-                      "type": "cexostring",
-                      "value": "Ship Docking Tube"
-                    },
-                    "RESREF": {
-                      "type": "resref",
-                      "value": "_mdrn_dockingbay"
-                    }
-                  },
-                  {
-                    "__struct_id": 0,
-                    "NAME": {
-                      "type": "cexostring",
-                      "value": "Ship Launch Tube"
-                    },
-                    "RESREF": {
-                      "type": "resref",
-                      "value": "_mdrn_launchtube"
-                    }
-                  },
-                  {
-                    "__struct_id": 0,
-                    "NAME": {
-                      "type": "cexostring",
-                      "value": "Stash"
-                    },
-                    "RESREF": {
-                      "type": "resref",
-                      "value": "_mdrn_pl_places"
-                    }
-                  },
-                  {
-                    "__struct_id": 0,
-                    "NAME": {
-                      "type": "cexostring",
-                      "value": "Trapdoor (Usable)"
-                    },
-                    "RESREF": {
-                      "type": "resref",
-                      "value": "_mdrn_placedoor"
                     }
                   },
                   {
@@ -50793,28 +50551,6 @@
                     "RESREF": {
                       "type": "resref",
                       "value": "tt_placemat"
-                    }
-                  },
-                  {
-                    "__struct_id": 0,
-                    "NAME": {
-                      "type": "cexostring",
-                      "value": "Wall 1"
-                    },
-                    "RESREF": {
-                      "type": "resref",
-                      "value": "fence1"
-                    }
-                  },
-                  {
-                    "__struct_id": 0,
-                    "NAME": {
-                      "type": "cexostring",
-                      "value": "Waste Disposal"
-                    },
-                    "RESREF": {
-                      "type": "resref",
-                      "value": "_mdrn_pl_wasteds"
                     }
                   }
                 ]

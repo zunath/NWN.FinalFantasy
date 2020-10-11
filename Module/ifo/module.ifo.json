@@ -104,6 +104,20 @@
           "type": "resref",
           "value": "tt_arena"
         }
+      },
+      {
+        "__struct_id": 6,
+        "Area_Name": {
+          "type": "resref",
+          "value": "spam_area"
+        }
+      },
+      {
+        "__struct_id": 6,
+        "Area_Name": {
+          "type": "resref",
+          "value": "wm_balamb"
+        }
       }
     ]
   },
@@ -135,7 +149,7 @@
   },
   "Mod_Entry_Area": {
     "type": "resref",
-    "value": "ooc_area"
+    "value": "b_garden_int"
   },
   "Mod_Entry_Dir_X": {
     "type": "float",
@@ -147,15 +161,15 @@
   },
   "Mod_Entry_X": {
     "type": "float",
-    "value": 8.0
+    "value": 77.95323181152344
   },
   "Mod_Entry_Y": {
     "type": "float",
-    "value": 6.0
+    "value": 12.50737380981445
   },
   "Mod_Entry_Z": {
     "type": "float",
-    "value": 0.0
+    "value": -10.85810089111328
   },
   "Mod_Expan_List": {
     "type": "list",

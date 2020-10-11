@@ -3184,6 +3184,17 @@
                     "__struct_id": 0,
                     "NAME": {
                       "type": "cexostring",
+                      "value": "Balamb Garden"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "balamb_garden"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
                       "value": "Base, Circular"
                     },
                     "RESREF": {

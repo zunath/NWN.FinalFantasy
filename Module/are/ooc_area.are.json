@@ -87,7 +87,7 @@
   "Name": {
     "type": "cexolocstring",
     "value": {
-      "0": "ooc_area"
+      "0": "* Debug Area"
     }
   },
   "NoRest": {
@@ -333,7 +333,7 @@
   },
   "Version": {
     "type": "dword",
-    "value": 50
+    "value": 51
   },
   "Width": {
     "type": "int",

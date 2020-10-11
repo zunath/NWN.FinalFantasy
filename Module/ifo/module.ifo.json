@@ -11,13 +11,6 @@
         "__struct_id": 6,
         "Area_Name": {
           "type": "resref",
-          "value": "area001"
-        }
-      },
-      {
-        "__struct_id": 6,
-        "Area_Name": {
-          "type": "resref",
           "value": "ooc_area"
         }
       },
@@ -109,14 +102,35 @@
         "__struct_id": 6,
         "Area_Name": {
           "type": "resref",
-          "value": "spam_area"
+          "value": "wm_balamb"
         }
       },
       {
         "__struct_id": 6,
         "Area_Name": {
           "type": "resref",
-          "value": "wm_balamb"
+          "value": "misty_thicket_1"
+        }
+      },
+      {
+        "__struct_id": 6,
+        "Area_Name": {
+          "type": "resref",
+          "value": "misty_thicket_2"
+        }
+      },
+      {
+        "__struct_id": 6,
+        "Area_Name": {
+          "type": "resref",
+          "value": "misty_cave"
+        }
+      },
+      {
+        "__struct_id": 6,
+        "Area_Name": {
+          "type": "resref",
+          "value": "irfitsdwell"
         }
       }
     ]
@@ -149,7 +163,7 @@
   },
   "Mod_Entry_Area": {
     "type": "resref",
-    "value": "b_garden_int"
+    "value": "misty_thicket_1"
   },
   "Mod_Entry_Dir_X": {
     "type": "float",
@@ -161,15 +175,15 @@
   },
   "Mod_Entry_X": {
     "type": "float",
-    "value": 77.95323181152344
+    "value": 103.0220947265625
   },
   "Mod_Entry_Y": {
     "type": "float",
-    "value": 12.50737380981445
+    "value": 35.40093994140625
   },
   "Mod_Entry_Z": {
     "type": "float",
-    "value": -10.85810089111328
+    "value": 4.999999987376214e-007
   },
   "Mod_Expan_List": {
     "type": "list",

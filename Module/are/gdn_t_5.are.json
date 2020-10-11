@@ -87,7 +87,7 @@
   "Name": {
     "type": "cexolocstring",
     "value": {
-      "0": "gdn_t_5"
+      "0": "Balamb Garden - Training Area 5"
     }
   },
   "NoRest": {
@@ -4977,7 +4977,7 @@
   },
   "Version": {
     "type": "dword",
-    "value": 3
+    "value": 4
   },
   "Width": {
     "type": "int",

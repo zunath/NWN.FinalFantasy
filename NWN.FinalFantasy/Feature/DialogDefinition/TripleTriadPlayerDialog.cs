@@ -277,7 +277,7 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
         {
             var player = GetPC();
             var playerId = GetObjectUUID(player);
-            var dbPlayerTripleTriad = DB.Get<PlayerTripleTriad>(playerId);
+            var dbPlayerTripleTriad = DB.Get<PlayerTripleTriad>(playerId) ?? new PlayerTripleTriad();
             var cardId1 = (int)CardType.Invalid;
             var cardId2 = (int)CardType.Invalid;
             var cardId3 = (int)CardType.Invalid;
@@ -309,7 +309,7 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
         {
             var player = GetPC();
             var playerId = GetObjectUUID(player);
-            var dbPlayerTripleTriad = DB.Get<PlayerTripleTriad>(playerId);
+            var dbPlayerTripleTriad = DB.Get<PlayerTripleTriad>(playerId) ?? new PlayerTripleTriad();
             var model = GetDataModel<Model>();
             var deck = dbPlayerTripleTriad.Decks.ContainsKey(model.SelectedDeckId)
                 ? dbPlayerTripleTriad.Decks[model.SelectedDeckId]
@@ -373,7 +373,7 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
         {
             var player = GetPC();
             var playerId = GetObjectUUID(player);
-            var dbPlayerTripleTriad = DB.Get<PlayerTripleTriad>(playerId);
+            var dbPlayerTripleTriad = DB.Get<PlayerTripleTriad>(playerId) ?? new PlayerTripleTriad();
             var model = GetDataModel<Model>();
             var deck = dbPlayerTripleTriad.Decks.ContainsKey(model.SelectedDeckId)
                 ? dbPlayerTripleTriad.Decks[model.SelectedDeckId]
@@ -413,7 +413,7 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
         {
             var player = GetPC();
             var playerId = GetObjectUUID(player);
-            var dbPlayerTripleTriad = DB.Get<PlayerTripleTriad>(playerId);
+            var dbPlayerTripleTriad = DB.Get<PlayerTripleTriad>(playerId) ?? new PlayerTripleTriad();
             var model = GetDataModel<Model>();
             var levels = new HashSet<int>();
 
@@ -455,7 +455,7 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
         {
             var player = GetPC();
             var playerId = GetObjectUUID(player);
-            var dbPlayerTripleTriad = DB.Get<PlayerTripleTriad>(playerId);
+            var dbPlayerTripleTriad = DB.Get<PlayerTripleTriad>(playerId) ?? new PlayerTripleTriad();
             var model = GetDataModel<Model>();
             var cardsAtLevel = TripleTriad.GetAllCardsAtLevel(model.SelectedCardLevel);
 
@@ -503,7 +503,7 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
             {
                 var player = GetPC();
                 var playerId = GetObjectUUID(player);
-                var dbPlayerTripleTriad = DB.Get<PlayerTripleTriad>(playerId);
+                var dbPlayerTripleTriad = DB.Get<PlayerTripleTriad>(playerId) ?? new PlayerTripleTriad();
                 var model = GetDataModel<Model>();
                 var deck = dbPlayerTripleTriad.Decks.ContainsKey(model.SelectedDeckId)
                     ? dbPlayerTripleTriad.Decks[model.SelectedDeckId]

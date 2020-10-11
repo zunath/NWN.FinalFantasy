@@ -16,7 +16,7 @@ namespace NWN.FinalFantasy.Feature
 
             var player = GetEnteringObject();
 
-            SetObjectVisualTransform(player, ObjectVisualTransform.Scale, 0.5f);
+            SetObjectVisualTransform(player, ObjectVisualTransform.Scale, 0.75f);
             var effect = EffectMovementSpeedDecrease(35);
             effect = TagEffect(effect, "WORLD_MAP_EFFECT");
 

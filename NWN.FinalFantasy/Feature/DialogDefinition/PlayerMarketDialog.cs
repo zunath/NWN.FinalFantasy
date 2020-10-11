@@ -100,7 +100,7 @@ namespace NWN.FinalFantasy.Feature.DialogDefinition
         {
             var player = GetPC();
             var playerId = GetObjectUUID(player);
-            var dbPlayerStore = DB.Get<PlayerStore>(playerId);
+            var dbPlayerStore = DB.Get<PlayerStore>(playerId) ?? new PlayerStore();
             var leaseStatus = DateTime.UtcNow > dbPlayerStore.DateLeaseExpires
                 ? ColorToken.Red("EXPIRED")
                 : dbPlayerStore.DateLeaseExpires.ToString("MM/dd/yyyy hh:mm:ss");

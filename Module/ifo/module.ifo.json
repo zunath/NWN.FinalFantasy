@@ -184,7 +184,7 @@
   },
   "Mod_Entry_Area": {
     "type": "resref",
-    "value": "misty_thicket_1"
+    "value": "b_garden_int"
   },
   "Mod_Entry_Dir_X": {
     "type": "float",
@@ -196,15 +196,15 @@
   },
   "Mod_Entry_X": {
     "type": "float",
-    "value": 103.0220947265625
+    "value": 81.40599822998047
   },
   "Mod_Entry_Y": {
     "type": "float",
-    "value": 35.40093994140625
+    "value": 140.2818298339844
   },
   "Mod_Entry_Z": {
     "type": "float",
-    "value": 4.999999987376214e-007
+    "value": -10.85809993743897
   },
   "Mod_Expan_List": {
     "type": "list",

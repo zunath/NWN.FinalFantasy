@@ -50436,6 +50436,17 @@
                     "__struct_id": 0,
                     "NAME": {
                       "type": "cexostring",
+                      "value": "Dormitory Terminal"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "dorm_terminal"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
                       "value": "Home Point"
                     },
                     "RESREF": {

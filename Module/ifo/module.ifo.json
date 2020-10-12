@@ -132,6 +132,27 @@
           "type": "resref",
           "value": "irfitsdwell"
         }
+      },
+      {
+        "__struct_id": 6,
+        "Area_Name": {
+          "type": "resref",
+          "value": "toryann_fissure"
+        }
+      },
+      {
+        "__struct_id": 6,
+        "Area_Name": {
+          "type": "resref",
+          "value": "toryann_b2"
+        }
+      },
+      {
+        "__struct_id": 6,
+        "Area_Name": {
+          "type": "resref",
+          "value": "toryann_b3"
+        }
       }
     ]
   },

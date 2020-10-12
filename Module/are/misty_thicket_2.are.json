@@ -87,7 +87,7 @@
   "Name": {
     "type": "cexolocstring",
     "value": {
-      "0": "Misty Thicket: North"
+      "0": "Misty Thicket - North"
     }
   },
   "NoRest": {
@@ -11169,7 +11169,7 @@
   },
   "Version": {
     "type": "dword",
-    "value": 2
+    "value": 3
   },
   "Width": {
     "type": "int",

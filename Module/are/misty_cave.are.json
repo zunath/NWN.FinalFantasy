@@ -87,7 +87,7 @@
   "Name": {
     "type": "cexolocstring",
     "value": {
-      "0": "Misty Thicket - Ruins"
+      "0": "Misty Thicket: Ruins"
     }
   },
   "NoRest": {
@@ -5321,7 +5321,7 @@
   },
   "Version": {
     "type": "dword",
-    "value": 3
+    "value": 2
   },
   "Width": {
     "type": "int",

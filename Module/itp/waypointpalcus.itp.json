@@ -27,6 +27,17 @@
                       "type": "resref",
                       "value": "spawn_point"
                     }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "trans_wp"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "trans_wp"
+                    }
                   }
                 ]
               },

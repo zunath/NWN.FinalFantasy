@@ -33,6 +33,8 @@ namespace NWN.FinalFantasy.Service
         // Perks with unlock requirements
         private static readonly Dictionary<PerkType, PerkDetail> _perksWithUnlockRequirements = new Dictionary<PerkType, PerkDetail>();
 
+        private static readonly Dictionary<PerkType, int> _perkMaxLevels = new Dictionary<PerkType, int>();
+
         [NWNEventHandler("mod_load")]
         public static void CacheData()
         {
@@ -102,6 +104,9 @@ namespace NWN.FinalFantasy.Service
 
                     // Add to the perks by category cache.
                     _allPerksByCategory[perkDetail.Category].Add(perkType);
+
+                    // Determine the max level for the perk.
+                    _perkMaxLevels[perkType] = perkDetail.PerkLevels.Last().Key;
                 }
             }
 

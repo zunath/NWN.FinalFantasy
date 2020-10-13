@@ -15,6 +15,7 @@ namespace NWN.FinalFantasy.Service
         /// <summary>
         /// Retrieves the effective perk level of a creature.
         /// On NPCs, this will retrieve the "PERK_LEVEL_{perkId}" variable, where {perkId} is replaced with the ID of the perk.
+        /// If this variable is not set, the max level of the perk will be used instead.
         /// On PCs, this will retrieve the perk level, taking into account any skill decay.
         /// </summary>
         /// <param name="creature">The creature whose perk level will be retrieved.</param>
@@ -32,7 +33,8 @@ namespace NWN.FinalFantasy.Service
             // Creatures or DM-possessed creatures
             else
             {
-                return GetLocalInt(creature, $"PERK_LEVEL_{(int) perkType}");
+                var perkLevel = GetLocalInt(creature, $"PERK_LEVEL_{(int) perkType}");
+                return perkLevel > 0 ? perkLevel : _perkMaxLevels[perkType];
             }
         }
 

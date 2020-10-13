@@ -11,6 +11,7 @@ using NWN.FinalFantasy.Entity;
 using NWN.FinalFantasy.Feature.ChatCommandDefinition;
 using NWN.FinalFantasy.Service;
 using static NWN.FinalFantasy.Core.NWScript.NWScript;
+using Dialog = NWN.FinalFantasy.Service.Dialog;
 using Object = NWN.FinalFantasy.Core.NWNX.Object;
 using Player = NWN.FinalFantasy.Core.NWNX.Player;
 
@@ -523,7 +524,15 @@ namespace NWN.FinalFantasy.Feature
                 (user, args) => string.Empty,
                 false);
 
-            // todo: /rest (needs to open menu)
+            ChatCommands["rest"] = new ChatCommandDefinition(
+                "Opens the rest menu.",
+                CommandPermissionType.Player,
+                (user, target, location, args) =>
+                {
+                    Dialog.StartConversation(user, user, nameof(RestMenu));
+                },
+                (user, args) => string.Empty,
+                false);
 
             ChatCommands["rez"] = new ChatCommandDefinition(
                 "Revives you, heals you to full, and restores all MP.",

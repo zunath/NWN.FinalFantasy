@@ -1,5 +1,5 @@
-﻿using NWN.FinalFantasy.Core.NWScript;
-using NWN.FinalFantasy.Entity;
+﻿using NWN.FinalFantasy.Entity;
+using static NWN.FinalFantasy.Core.NWScript.NWScript;
 
 namespace NWN.FinalFantasy.Service.AbilityService
 {
@@ -17,23 +17,46 @@ namespace NWN.FinalFantasy.Service.AbilityService
 
         public string CheckRequirements(uint player)
         {
-            // NPCs and DMs are assumed to be able to activate.
-            if (!NWScript.GetIsPC(player) || NWScript.GetIsDM(player)) return string.Empty;
+            // DMs are assumed to be able to activate.
+            if (GetIsDM(player)) return string.Empty;
 
-            var playerId = NWScript.GetObjectUUID(player);
-            var dbPlayer = DB.Get<Player>(playerId);
+            if (GetIsPC(player))
+            {
+                var playerId = GetObjectUUID(player);
+                var dbPlayer = DB.Get<Player>(playerId);
 
-            if (dbPlayer.Stamina >= _requiredSTM) return string.Empty;
-            return $"Not enough stamina. (Required: {_requiredSTM})";
+                if (dbPlayer.Stamina >= _requiredSTM) return string.Empty;
+                return $"Not enough stamina. (Required: {_requiredSTM})";
+            }
+            else
+            {
+                var stm = GetLocalInt(player, "STAMINA");
+                if (stm >= _requiredSTM) return string.Empty;
+                return $"Not enough stamina. (Required: {_requiredSTM})";
+            }
         }
 
         public void AfterActivationAction(uint player)
         {
-            var playerId = NWScript.GetObjectUUID(player);
-            var dbPlayer = DB.Get<Player>(playerId);
-            Stat.ReduceStamina(dbPlayer, _requiredSTM);
+            if (GetIsDM(player)) return;
 
-            DB.Set(playerId, dbPlayer);
+            if (GetIsPC(player))
+            {
+                var playerId = GetObjectUUID(player);
+                var dbPlayer = DB.Get<Player>(playerId);
+                Stat.ReduceStamina(dbPlayer, _requiredSTM);
+
+                DB.Set(playerId, dbPlayer);
+            }
+            else
+            {
+                var stm = GetLocalInt(player, "STAMINA");
+                stm -= _requiredSTM;
+                if (stm < 0)
+                    stm = 0;
+
+                SetLocalInt(player, "STAMINA", stm);
+            }
         }
     }
 }

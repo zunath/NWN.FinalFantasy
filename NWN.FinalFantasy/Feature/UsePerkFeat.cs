@@ -52,16 +52,16 @@ namespace NWN.FinalFantasy.Feature
                 return;
             }
 
-            Messaging.SendMessageNearbyToPlayers(activator, $"{GetName(activator)} readies {ability.Name}.");
-
             // Weapon abilties are queued for the next time the activator's attack lands on an enemy.
             if (ability.ActivationType == AbilityActivationType.Weapon)
             {
+                Messaging.SendMessageNearbyToPlayers(activator, $"{GetName(activator)} readies {ability.Name}.");
                 QueueWeaponAbility(activator, ability, feat, effectivePerkLevel);
             }
             // All other abilities are funneled through the same process.
-            else 
+            else
             {
+                Messaging.SendMessageNearbyToPlayers(activator, $"{GetName(activator)} begins casting {ability.Name} on {GetName(target)}.");
                 ActivateAbility(activator, target, ability, effectivePerkLevel);
             }
         }

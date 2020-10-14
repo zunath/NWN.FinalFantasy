@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using NWN.FinalFantasy.Core;
 using NWN.FinalFantasy.Core.NWScript.Enum;
@@ -8,8 +9,10 @@ using static NWN.FinalFantasy.Core.NWScript.NWScript;
 
 namespace NWN.FinalFantasy.Feature
 {
-    public class CreatureAI
+    public static class CreatureAI
     {
+        private static readonly Dictionary<uint, HashSet<uint>> _creatureAllies = new Dictionary<uint, HashSet<uint>>();
+
         /// <summary>
         /// This is the primary entry point for creature AI.
         /// </summary>
@@ -30,25 +33,25 @@ namespace NWN.FinalFantasy.Feature
             // Attempt to target the highest enmity creature.
             // If no target can be determined, exit early.
             var target = GetTarget();
-            if (target == OBJECT_INVALID) return;
+            if (!GetIsObjectValid(target)) return;
 
-            // Switch targets if necessary.
-            if (GetIsInCombat(self))
+            // Switch targets if necessary
+            if (target != GetAttackTarget(self) ||
+                GetCurrentAction(self) == ActionType.Invalid)
             {
-                if (target != GetAttackTarget(self))
-                {
-                    AssignCommand(self, () =>
-                    {
-                        ClearAllActions();
-                        ActionAttack(target);
-                    });
-                }
-                
-                // Perk ability usage
+                Console.WriteLine($"{GetName(self)} is attacking {GetName(target)}");
+                ClearAllActions();
+                ActionAttack(target);
+            }
+            // Perk ability usage
+            else
+            {
                 var (feat, featTarget) = DeterminePerkAbility(self, target);
                 if (feat != Feat.Invalid && GetIsObjectValid(featTarget))
                 {
-                    AssignCommand(self, () => ActionUseFeat(feat, featTarget));
+                    Console.WriteLine($"{GetName(self)} is casting {feat} on {GetName(featTarget)}");
+                    ClearAllActions();
+                    ActionUseFeat(feat, featTarget);
                 }
             }
         }
@@ -103,6 +106,7 @@ namespace NWN.FinalFantasy.Feature
         {
             if (!GetHasFeat(feat, creature)) return false;
             if (condition != null && !condition()) return false;
+            if (!GetIsObjectValid(target)) return false;
 
             var effectiveLevel = Perk.GetEffectivePerkLevel(creature, perkType);
             return Ability.CanUseAbility(creature, target, feat, effectiveLevel);
@@ -118,8 +122,10 @@ namespace NWN.FinalFantasy.Feature
             var mpStats = GetAbilityModifier(AbilityType.Intelligence, self) +
                         GetAbilityModifier(AbilityType.Wisdom, self);
             var stmStats = GetAbilityModifier(AbilityType.Constitution, self);
-            var mp = mpStats * 2;
-            var stm = stmStats * 2;
+            var mp = mpStats * 3;
+            var stm = stmStats * 4;
+            if (mp < 0) mp = 0;
+            if (stm < 0) stm = 0;
 
             SetLocalInt(self, "MAX_MP", mp);
             SetLocalInt(self, "MAX_STAMINA", stm);
@@ -149,6 +155,64 @@ namespace NWN.FinalFantasy.Feature
         }
 
         /// <summary>
+        /// When a creature perceives another creature, if the creature is part of the same faction add or remove it from their cache.
+        /// Creatures in this cache will be used for AI decisions.
+        /// </summary>
+        [NWNEventHandler("crea_perception")]
+        public static void OnCreaturePerception()
+        {
+            var self = OBJECT_SELF;
+            var lastPerceived = GetLastPerceived();
+            if (self == lastPerceived) return;
+
+            var isSeen = GetLastPerceptionSeen();
+            var isVanished = GetLastPerceptionVanished();
+
+            if (GetIsPC(lastPerceived)) return;
+            var isSameFaction = GetFactionEqual(self, lastPerceived);
+            if (!isSameFaction) return;
+
+            if (!_creatureAllies.ContainsKey(self))
+                _creatureAllies[self] = new HashSet<uint>();
+
+            // Only make adjustments if the perceived creature is seen or vanished, as opposed to heard or inaudible.
+            if (isSeen)
+            {
+                if (!_creatureAllies[self].Contains(lastPerceived))
+                    _creatureAllies[self].Add(lastPerceived);
+            }
+            else if (isVanished)
+            {
+                if (_creatureAllies[self].Contains(lastPerceived))
+                    _creatureAllies[self].Remove(lastPerceived);
+            }
+        }
+
+        /// <summary>
+        /// When the creature dies or is destroyed, remove it from all caches.
+        /// </summary>
+        [NWNEventHandler("crea_death")]
+        [NWNEventHandler("object_destroyed")]
+        public static void RemoveFromAlliesCache()
+        {
+            var self = OBJECT_SELF;
+            if (!_creatureAllies.ContainsKey(self)) return;
+
+            var allies = _creatureAllies[self];
+
+            foreach (var ally in allies)
+            {
+                if (_creatureAllies.ContainsKey(ally))
+                {
+                    if (_creatureAllies[ally].Contains(self))
+                        _creatureAllies[ally].Remove(self);
+                }
+            }
+
+            _creatureAllies.Remove(self);
+        }
+
+        /// <summary>
         /// Determines which perk ability to use.
         /// </summary>
         /// <param name="self">The creature</param>
@@ -156,9 +220,23 @@ namespace NWN.FinalFantasy.Feature
         /// <returns>A feat and target</returns>
         private static (Feat, uint) DeterminePerkAbility(uint self, uint target)
         {
-            var currentHP = GetCurrentHitPoints(self);
-            var maxHP = GetMaxHitPoints(self);
-            var hpPercentage = ((float)currentHP / (float)maxHP) * 100;
+            static float CalculateAverageHP(uint creature)
+            {
+                var currentHP = GetCurrentHitPoints(creature);
+                var maxHP = GetMaxHitPoints(creature);
+                return ((float)currentHP / (float)maxHP) * 100;
+            }
+
+            var hpPercentage = CalculateAverageHP(self);
+
+            if (!_creatureAllies.TryGetValue(self, out var allies))
+            {
+                allies = new HashSet<uint>();
+            }
+            allies.Add(self);
+
+            var lowestHPAlly = allies.OrderBy(CalculateAverageHP).First();
+            var allyHPPercentage = CalculateAverageHP(lowestHPAlly);
 
             // 1-hour Defensives
             if (CheckIfCanUseFeat(self, self, Feat.Benediction, PerkType.Benediction, () => hpPercentage <= 20f))
@@ -180,19 +258,50 @@ namespace NWN.FinalFantasy.Feature
                 return (Feat.HundredFists, self);
             }
 
+            // Cover
+            if (CheckIfCanUseFeat(self, lowestHPAlly, Feat.Cover4, PerkType.Cover, () => allyHPPercentage <= 60f))
+            {
+                return (Feat.Cover4, self);
+            }
+            if (CheckIfCanUseFeat(self, lowestHPAlly, Feat.Cover3, PerkType.Cover, () => allyHPPercentage <= 60f))
+            {
+                return (Feat.Cover3, self);
+            }
+            if (CheckIfCanUseFeat(self, lowestHPAlly, Feat.Cover2, PerkType.Cover, () => allyHPPercentage <= 60f))
+            {
+                return (Feat.Cover2, self);
+            }
+            if (CheckIfCanUseFeat(self, lowestHPAlly, Feat.Cover1, PerkType.Cover, () => allyHPPercentage <= 60f))
+            {
+                return (Feat.Cover1, self);
+            }
+
             // HP Restoration
             if (CheckIfCanUseFeat(self, self, Feat.Cure3, PerkType.Cure, () => hpPercentage <= 50f))
             {
                 return (Feat.Cure3, self);
             }
+            if (CheckIfCanUseFeat(self, lowestHPAlly, Feat.Cure3, PerkType.Cure, () => allyHPPercentage <= 50f))
+            {
+                return (Feat.Cure3, lowestHPAlly);
+            }
             if (CheckIfCanUseFeat(self, self, Feat.Cure2, PerkType.Cure, () => hpPercentage <= 75f))
             {
                 return (Feat.Cure2, self);
+            }
+            if (CheckIfCanUseFeat(self, lowestHPAlly, Feat.Cure2, PerkType.Cure, () => allyHPPercentage <= 75f))
+            {
+                return (Feat.Cure2, lowestHPAlly);
             }
             if (CheckIfCanUseFeat(self, self, Feat.Cure1, PerkType.Cure, () => hpPercentage <= 80f))
             {
                 return (Feat.Cure1, self);
             }
+            if (CheckIfCanUseFeat(self, lowestHPAlly, Feat.Cure1, PerkType.Cure, () => allyHPPercentage <= 80f))
+            {
+                return (Feat.Cure1, lowestHPAlly);
+            }
+
             if (CheckIfCanUseFeat(self, self, Feat.InnerHealing5, PerkType.InnerHealing, () => hpPercentage <= 50f))
             {
                 return (Feat.InnerHealing5, self);
@@ -213,13 +322,22 @@ namespace NWN.FinalFantasy.Feature
             {
                 return (Feat.InnerHealing1, self);
             }
+
             if (CheckIfCanUseFeat(self, self, Feat.Regen2, PerkType.Regen, () => hpPercentage <= 85f))
             {
                 return (Feat.Regen2, self);
             }
+            if (CheckIfCanUseFeat(self, lowestHPAlly, Feat.Regen2, PerkType.Regen, () => allyHPPercentage <= 85f))
+            {
+                return (Feat.Regen2, lowestHPAlly);
+            }
             if (CheckIfCanUseFeat(self, self, Feat.Regen1, PerkType.Regen, () => hpPercentage <= 90f))
             {
                 return (Feat.Regen1, self);
+            }
+            if (CheckIfCanUseFeat(self, lowestHPAlly, Feat.Regen1, PerkType.Regen, () => allyHPPercentage <= 90f))
+            {
+                return (Feat.Regen1, lowestHPAlly);
             }
 
             // Status Restoration
@@ -277,8 +395,6 @@ namespace NWN.FinalFantasy.Feature
             {
                 return (Feat.BlazeSpikes1, self);
             }
-
-
 
             // Debuffs
             if (CheckIfCanUseFeat(self, target, Feat.Flash2, PerkType.Flash))

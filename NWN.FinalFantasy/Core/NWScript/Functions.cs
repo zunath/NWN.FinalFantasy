@@ -1340,17 +1340,6 @@ namespace NWN.FinalFantasy.Core.NWScript
         }
 
         /// <summary>
-        ///   Destroy oObject (irrevocably).
-        ///   This will not work on modules and areas.
-        /// </summary>
-        public static void DestroyObject(uint oDestroy, float fDelay = 0.0f)
-        {
-            Internal.NativeFunctions.StackPushFloat(fDelay);
-            Internal.NativeFunctions.StackPushObject(oDestroy);
-            Internal.NativeFunctions.CallBuiltIn(241);
-        }
-
-        /// <summary>
         ///   Get the module.
         ///   * Return value on error: OBJECT_INVALID
         /// </summary>
@@ -1491,30 +1480,30 @@ namespace NWN.FinalFantasy.Core.NWScript
         ///   Use this in an OnPerception script to determine whether the object that was
         ///   perceived was heard.
         /// </summary>
-        public static int GetLastPerceptionHeard()
+        public static bool GetLastPerceptionHeard()
         {
             Internal.NativeFunctions.CallBuiltIn(257);
-            return Internal.NativeFunctions.StackPopInteger();
+            return Convert.ToBoolean(Internal.NativeFunctions.StackPopInteger());
         }
 
         /// <summary>
         ///   Use this in an OnPerception script to determine whether the object that was
         ///   perceived has become inaudible.
         /// </summary>
-        public static int GetLastPerceptionInaudible()
+        public static bool GetLastPerceptionInaudible()
         {
             Internal.NativeFunctions.CallBuiltIn(258);
-            return Internal.NativeFunctions.StackPopInteger();
+            return Convert.ToBoolean(Internal.NativeFunctions.StackPopInteger());
         }
 
         /// <summary>
         ///   Use this in an OnPerception script to determine whether the object that was
         ///   perceived was seen.
         /// </summary>
-        public static int GetLastPerceptionSeen()
+        public static bool GetLastPerceptionSeen()
         {
             Internal.NativeFunctions.CallBuiltIn(259);
-            return Internal.NativeFunctions.StackPopInteger();
+            return Convert.ToBoolean(Internal.NativeFunctions.StackPopInteger());
         }
 
         /// <summary>
@@ -1531,10 +1520,10 @@ namespace NWN.FinalFantasy.Core.NWScript
         ///   Use this in an OnPerception script to determine whether the object that was
         ///   perceived has vanished.
         /// </summary>
-        public static int GetLastPerceptionVanished()
+        public static bool GetLastPerceptionVanished()
         {
             Internal.NativeFunctions.CallBuiltIn(261);
-            return Internal.NativeFunctions.StackPopInteger();
+            return Convert.ToBoolean(Internal.NativeFunctions.StackPopInteger());
         }
 
         /// <summary>

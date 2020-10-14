@@ -37,7 +37,10 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                 {
                     var amount = Random.D4(1) + GetAbilityModifier(AbilityType.Wisdom, activator);
 
-                    ApplyEffectToObject(DurationType.Instant, EffectHeal(amount), target);
+                    ApplyEffectToObject(DurationType.Instant, GetRacialType(target) == RacialType.Undead 
+                        ? EffectDamage(amount) 
+                        : EffectHeal(amount), target);
+
                     ApplyEffectToObject(DurationType.Instant, EffectVisualEffect(VisualEffect.Vfx_Imp_Healing_S), target);
 
                     Enmity.ModifyEnmityOnAll(activator, amount);
@@ -58,7 +61,10 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                 {
                     var amount = Random.D6(2) + GetAbilityModifier(AbilityType.Wisdom, activator);
 
-                    ApplyEffectToObject(DurationType.Instant, EffectHeal(amount), target);
+                    ApplyEffectToObject(DurationType.Instant, GetRacialType(target) == RacialType.Undead
+                        ? EffectDamage(amount)
+                        : EffectHeal(amount), target);
+
                     ApplyEffectToObject(DurationType.Instant, EffectVisualEffect(VisualEffect.Vfx_Imp_Healing_S), target);
 
                     Enmity.ModifyEnmityOnAll(activator, amount);
@@ -79,7 +85,10 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                 {
                     var amount = Random.D8(3) + GetAbilityModifier(AbilityType.Wisdom, activator);
 
-                    ApplyEffectToObject(DurationType.Instant, EffectHeal(amount), target);
+                    ApplyEffectToObject(DurationType.Instant, GetRacialType(target) == RacialType.Undead
+                        ? EffectDamage(amount)
+                        : EffectHeal(amount), target);
+
                     ApplyEffectToObject(DurationType.Instant, EffectVisualEffect(VisualEffect.Vfx_Imp_Healing_S), target);
 
                     Enmity.ModifyEnmityOnAll(activator, amount);
@@ -104,7 +113,10 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                     {
                         var amount = Random.D6(2) + bonus;
 
-                        ApplyEffectToObject(DurationType.Instant, EffectHeal(amount), member);
+                        ApplyEffectToObject(DurationType.Instant, GetRacialType(target) == RacialType.Undead
+                            ? EffectDamage(amount)
+                            : EffectHeal(amount), target);
+
                         ApplyEffectToObject(DurationType.Instant, EffectVisualEffect(VisualEffect.Vfx_Imp_Healing_S), member);
 
                         Enmity.ModifyEnmityOnAll(activator, amount);
@@ -131,7 +143,10 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                     {
                         var amount = Random.D8(3) + bonus;
 
-                        ApplyEffectToObject(DurationType.Instant, EffectHeal(amount), member);
+                        ApplyEffectToObject(DurationType.Instant, GetRacialType(target) == RacialType.Undead
+                            ? EffectDamage(amount)
+                            : EffectHeal(amount), target);
+
                         ApplyEffectToObject(DurationType.Instant, EffectVisualEffect(VisualEffect.Vfx_Imp_Healing_S), member);
 
                         Enmity.ModifyEnmityOnAll(activator, amount);

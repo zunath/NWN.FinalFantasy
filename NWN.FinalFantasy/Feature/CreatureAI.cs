@@ -39,7 +39,6 @@ namespace NWN.FinalFantasy.Feature
             if (target != GetAttackTarget(self) ||
                 GetCurrentAction(self) == ActionType.Invalid)
             {
-                Console.WriteLine($"{GetName(self)} is attacking {GetName(target)}");
                 ClearAllActions();
                 ActionAttack(target);
             }
@@ -49,7 +48,6 @@ namespace NWN.FinalFantasy.Feature
                 var (feat, featTarget) = DeterminePerkAbility(self, target);
                 if (feat != Feat.Invalid && GetIsObjectValid(featTarget))
                 {
-                    Console.WriteLine($"{GetName(self)} is casting {feat} on {GetName(featTarget)}");
                     ClearAllActions();
                     ActionUseFeat(feat, featTarget);
                 }
@@ -164,6 +162,7 @@ namespace NWN.FinalFantasy.Feature
             var self = OBJECT_SELF;
             var lastPerceived = GetLastPerceived();
             if (self == lastPerceived) return;
+            if (GetIsDead(lastPerceived)) return;
 
             var isSeen = GetLastPerceptionSeen();
             var isVanished = GetLastPerceptionVanished();
@@ -200,8 +199,10 @@ namespace NWN.FinalFantasy.Feature
 
             var allies = _creatureAllies[self];
 
-            foreach (var ally in allies)
+            //foreach (var ally in allies)
+            for(var index = allies.Count-1; index >= 0; index--)
             {
+                var ally = _creatureAllies.ElementAt(index).Key;
                 if (_creatureAllies.ContainsKey(ally))
                 {
                     if (_creatureAllies[ally].Contains(self))
@@ -237,6 +238,8 @@ namespace NWN.FinalFantasy.Feature
 
             var lowestHPAlly = allies.OrderBy(CalculateAverageHP).First();
             var allyHPPercentage = CalculateAverageHP(lowestHPAlly);
+            var selfRace = GetRacialType(self);
+            var lowestHPAllyRace = GetRacialType(lowestHPAlly);
 
             // 1-hour Defensives
             if (CheckIfCanUseFeat(self, self, Feat.Benediction, PerkType.Benediction, () => hpPercentage <= 20f))
@@ -277,27 +280,27 @@ namespace NWN.FinalFantasy.Feature
             }
 
             // HP Restoration
-            if (CheckIfCanUseFeat(self, self, Feat.Cure3, PerkType.Cure, () => hpPercentage <= 50f))
+            if (CheckIfCanUseFeat(self, self, Feat.Cure3, PerkType.Cure, () => hpPercentage <= 50f && selfRace != RacialType.Undead))
             {
                 return (Feat.Cure3, self);
             }
-            if (CheckIfCanUseFeat(self, lowestHPAlly, Feat.Cure3, PerkType.Cure, () => allyHPPercentage <= 50f))
+            if (CheckIfCanUseFeat(self, lowestHPAlly, Feat.Cure3, PerkType.Cure, () => allyHPPercentage <= 50f && lowestHPAllyRace != RacialType.Undead))
             {
                 return (Feat.Cure3, lowestHPAlly);
             }
-            if (CheckIfCanUseFeat(self, self, Feat.Cure2, PerkType.Cure, () => hpPercentage <= 75f))
+            if (CheckIfCanUseFeat(self, self, Feat.Cure2, PerkType.Cure, () => hpPercentage <= 75f && selfRace != RacialType.Undead))
             {
                 return (Feat.Cure2, self);
             }
-            if (CheckIfCanUseFeat(self, lowestHPAlly, Feat.Cure2, PerkType.Cure, () => allyHPPercentage <= 75f))
+            if (CheckIfCanUseFeat(self, lowestHPAlly, Feat.Cure2, PerkType.Cure, () => allyHPPercentage <= 75f && lowestHPAllyRace != RacialType.Undead))
             {
                 return (Feat.Cure2, lowestHPAlly);
             }
-            if (CheckIfCanUseFeat(self, self, Feat.Cure1, PerkType.Cure, () => hpPercentage <= 80f))
+            if (CheckIfCanUseFeat(self, self, Feat.Cure1, PerkType.Cure, () => hpPercentage <= 80f && selfRace != RacialType.Undead))
             {
                 return (Feat.Cure1, self);
             }
-            if (CheckIfCanUseFeat(self, lowestHPAlly, Feat.Cure1, PerkType.Cure, () => allyHPPercentage <= 80f))
+            if (CheckIfCanUseFeat(self, lowestHPAlly, Feat.Cure1, PerkType.Cure, () => allyHPPercentage <= 80f && lowestHPAllyRace != RacialType.Undead))
             {
                 return (Feat.Cure1, lowestHPAlly);
             }

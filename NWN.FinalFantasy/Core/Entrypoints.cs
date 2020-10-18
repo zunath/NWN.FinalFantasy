@@ -230,8 +230,10 @@ namespace NWN.FinalFantasy.Core
             {
                 for (var player = GetFirstPC(); GetIsObjectValid(player); player = GetNextPC())
                 {
+                    var oldObjectSelf = Internal.OBJECT_SELF;
                     Internal.OBJECT_SELF = player;
                     RunScripts("interval_pc_1s");
+                    Internal.OBJECT_SELF = oldObjectSelf;
                 }
             }
         }

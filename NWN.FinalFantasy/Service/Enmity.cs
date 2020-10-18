@@ -60,6 +60,16 @@ namespace NWN.FinalFantasy.Service
         }
 
         /// <summary>
+        /// When a player leaves, remove them from all enmity tables.
+        /// </summary>
+        [NWNEventHandler("mod_exit")]
+        public static void PlayerExit()
+        {
+            var player = GetExitingObject();
+            RemoveCreatureEnmity(player);
+        }
+
+        /// <summary>
         /// Retrieves a table containing the creatures on a specific enemy's enmity table.
         /// If no creatures are on the enmity table, an empty dictionary will be returned.
         /// </summary>
@@ -71,6 +81,20 @@ namespace NWN.FinalFantasy.Service
                 return new Dictionary<uint, int>();
 
             return _enemyEnmityTables[enemy].ToDictionary(x => x.Key, y => y.Value);
+        }
+
+        /// <summary>
+        /// Retrieves the creature with the highest amount of enmity.
+        /// If this cannot be determined, OBJECT_INVALID will be returned.
+        /// </summary>
+        /// <param name="enemy">The enemy to retrieve the highest target for.</param>
+        /// <returns>The target with the highest enmity</returns>
+        public static uint GetHighestEnmityTarget(uint enemy)
+        {
+            var enmityTable = GetEnmityTable(enemy);
+            var target = enmityTable.Count <= 0 ? OBJECT_INVALID : enmityTable.OrderBy(o => o.Value).First().Key;
+
+            return target;
         }
 
         /// <summary>

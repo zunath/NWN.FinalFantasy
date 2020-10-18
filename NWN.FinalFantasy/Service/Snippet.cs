@@ -90,7 +90,7 @@ namespace NWN.FinalFantasy.Service
                 if (!Util.GetScriptParamIsSet(condition.Key)) continue;
 
                 var param = GetScriptParam(condition.Key);
-                var args = param.Split(' ').ToList();
+                var args = param.Split(' ', StringSplitOptions.RemoveEmptyEntries).ToList();
                 var snippetName = condition.Key;
 
                 // The first command that fails will result in failure.
@@ -112,7 +112,7 @@ namespace NWN.FinalFantasy.Service
                 if (!Util.GetScriptParamIsSet(action.Key)) continue;
 
                 var param = GetScriptParam(action.Key);
-                var args = param.Split(' ').ToList();
+                var args = param.Split(' ', StringSplitOptions.RemoveEmptyEntries).ToList();
                 var commandText = action.Key;
 
                 _actionsTakenCommands[commandText](player, args.ToArray());

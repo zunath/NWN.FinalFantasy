@@ -724,8 +724,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         ///   - nNth
         ///   * Return value on error: OBJECT_INVALID
         /// </summary>
-        public static uint GetNearestObject(uint oTarget = Core.NWScript.NWScript.OBJECT_INVALID, ObjectType nObjectType = ObjectType.All,
-            int nNth = 1)
+        public static uint GetNearestObject(ObjectType nObjectType = ObjectType.All, uint oTarget = OBJECT_INVALID, int nNth = 1)
         {
             Internal.NativeFunctions.StackPushInteger(nNth);
             Internal.NativeFunctions.StackPushObject(oTarget);

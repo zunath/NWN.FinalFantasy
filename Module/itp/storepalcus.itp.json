@@ -9,6 +9,22 @@
           "type": "byte",
           "value": 5
         },
+        "LIST": {
+          "type": "list",
+          "value": [
+            {
+              "__struct_id": 0,
+              "NAME": {
+                "type": "cexostring",
+                "value": "Training Center Store"
+              },
+              "RESREF": {
+                "type": "resref",
+                "value": "gdn_t_shop"
+              }
+            }
+          ]
+        },
         "STRREF": {
           "type": "dword",
           "value": 6789

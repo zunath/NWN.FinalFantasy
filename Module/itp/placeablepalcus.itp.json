@@ -51073,72 +51073,6 @@
                     "__struct_id": 0,
                     "NAME": {
                       "type": "cexostring",
-                      "value": "Chemical Supply"
-                    },
-                    "RESREF": {
-                      "type": "resref",
-                      "value": "_mdrn_st_chem"
-                    }
-                  },
-                  {
-                    "__struct_id": 0,
-                    "NAME": {
-                      "type": "cexostring",
-                      "value": "Electronics Supply"
-                    },
-                    "RESREF": {
-                      "type": "resref",
-                      "value": "_mdrn_st_elec"
-                    }
-                  },
-                  {
-                    "__struct_id": 0,
-                    "NAME": {
-                      "type": "cexostring",
-                      "value": "Mechanical Supply"
-                    },
-                    "RESREF": {
-                      "type": "resref",
-                      "value": "_mdrn_st_mech"
-                    }
-                  },
-                  {
-                    "__struct_id": 0,
-                    "NAME": {
-                      "type": "cexostring",
-                      "value": "Pharmaceutical Supply"
-                    },
-                    "RESREF": {
-                      "type": "resref",
-                      "value": "_mdrn_st_pharm"
-                    }
-                  },
-                  {
-                    "__struct_id": 0,
-                    "NAME": {
-                      "type": "cexostring",
-                      "value": "Scientific Improvisaton Supply"
-                    },
-                    "RESREF": {
-                      "type": "resref",
-                      "value": "_mdrn_supply"
-                    }
-                  },
-                  {
-                    "__struct_id": 0,
-                    "NAME": {
-                      "type": "cexostring",
-                      "value": "Structural Supply"
-                    },
-                    "RESREF": {
-                      "type": "resref",
-                      "value": "_mdrn_st_struct"
-                    }
-                  },
-                  {
-                    "__struct_id": 0,
-                    "NAME": {
-                      "type": "cexostring",
                       "value": "Trap: Crushing Wall"
                     },
                     "RESREF": {
@@ -51397,50 +51331,6 @@
                     "RESREF": {
                       "type": "resref",
                       "value": "bh_trapwallw1"
-                    }
-                  },
-                  {
-                    "__struct_id": 0,
-                    "NAME": {
-                      "type": "cexostring",
-                      "value": "Wealth-Based Blackmarket Store"
-                    },
-                    "RESREF": {
-                      "type": "resref",
-                      "value": "_mdrn_pawnshop"
-                    }
-                  },
-                  {
-                    "__struct_id": 0,
-                    "NAME": {
-                      "type": "cexostring",
-                      "value": "Wealth-Based Blackmarket Store (For Conversations)"
-                    },
-                    "RESREF": {
-                      "type": "resref",
-                      "value": "_mdrn_pawnshop2"
-                    }
-                  },
-                  {
-                    "__struct_id": 0,
-                    "NAME": {
-                      "type": "cexostring",
-                      "value": "Wealth-Based Store"
-                    },
-                    "RESREF": {
-                      "type": "resref",
-                      "value": "_mdrn_store"
-                    }
-                  },
-                  {
-                    "__struct_id": 0,
-                    "NAME": {
-                      "type": "cexostring",
-                      "value": "Wealth-Based Store (For Conversations)"
-                    },
-                    "RESREF": {
-                      "type": "resref",
-                      "value": "_mdrn_store001"
                     }
                   }
                 ]

@@ -153,6 +153,13 @@
           "type": "resref",
           "value": "toryann_b3"
         }
+      },
+      {
+        "__struct_id": 6,
+        "Area_Name": {
+          "type": "resref",
+          "value": "gdn_t_1"
+        }
       }
     ]
   },
@@ -184,7 +191,7 @@
   },
   "Mod_Entry_Area": {
     "type": "resref",
-    "value": "misty_thicket_2"
+    "value": "b_garden_int"
   },
   "Mod_Entry_Dir_X": {
     "type": "float",
@@ -196,15 +203,15 @@
   },
   "Mod_Entry_X": {
     "type": "float",
-    "value": 59.12403869628906
+    "value": 143.0
   },
   "Mod_Entry_Y": {
     "type": "float",
-    "value": 20.00107192993164
+    "value": 83.0
   },
   "Mod_Entry_Z": {
     "type": "float",
-    "value": 4.999999987376214e-007
+    "value": -10.0
   },
   "Mod_Expan_List": {
     "type": "list",
@@ -228,7 +235,21 @@
         "__struct_id": 8,
         "Mod_Hak": {
           "type": "cexostring",
+          "value": "ffo_cc_tile"
+        }
+      },
+      {
+        "__struct_id": 8,
+        "Mod_Hak": {
+          "type": "cexostring",
           "value": "ffo_clothes"
+        }
+      },
+      {
+        "__struct_id": 8,
+        "Mod_Hak": {
+          "type": "cexostring",
+          "value": "ffo_creatures"
         }
       },
       {

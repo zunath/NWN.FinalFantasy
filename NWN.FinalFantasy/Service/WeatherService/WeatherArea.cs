@@ -6,6 +6,7 @@ namespace NWN.FinalFantasy.Service.WeatherService
     public class WeatherArea
     {
         public uint Area { get; set; }
+        public WeatherRegionType Region { get; set; }
         public Skybox OriginalSkybox { get; set; }
         public int OriginalSunFogAmount { get; set; }
         public int OriginalMoonFogAmount { get; set; }
@@ -13,9 +14,10 @@ namespace NWN.FinalFantasy.Service.WeatherService
         public FogColor OriginalMoonFogColor { get; set; }
         public bool IsStorming { get; set; }
 
-        public WeatherArea(uint area)
+        public WeatherArea(uint area, WeatherRegionType region)
         {
             Area = area;
+            Region = region;
             OriginalSkybox = GetSkyBox(area);
             OriginalSunFogAmount = GetFogAmount(FogType.Sun, area);
             OriginalMoonFogAmount = GetFogAmount(FogType.Moon, area);

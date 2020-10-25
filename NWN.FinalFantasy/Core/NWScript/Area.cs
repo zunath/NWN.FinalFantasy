@@ -1,3 +1,4 @@
+using System;
 using System.Numerics;
 using NWN.FinalFantasy.Core.NWScript.Enum;
 using NWN.FinalFantasy.Core.NWScript.Enum.Area;
@@ -250,11 +251,11 @@ namespace NWN.FinalFantasy.Core.NWScript
         /// <summary>
         ///   This will return TRUE if the area is flagged as either interior or underground.
         /// </summary>
-        public static AboveGround GetIsAreaInterior(uint oArea = Core.NWScript.NWScript.OBJECT_INVALID)
+        public static bool GetIsAreaInterior(uint oArea = Core.NWScript.NWScript.OBJECT_INVALID)
         {
             Internal.NativeFunctions.StackPushObject(oArea);
             Internal.NativeFunctions.CallBuiltIn(716);
-            return (AboveGround)Internal.NativeFunctions.StackPopInteger();
+            return Convert.ToBoolean(Internal.NativeFunctions.StackPopInteger());
         }
 
         /// <summary>
@@ -273,11 +274,11 @@ namespace NWN.FinalFantasy.Core.NWScript
         ///   Returns AREA_NATURAL if the area oArea is natural, AREA_ARTIFICIAL otherwise.
         ///   Returns AREA_INVALID, on an error.
         /// </summary>
-        public static Natural GetIsAreaNatural(uint oArea)
+        public static bool GetIsAreaNatural(uint oArea)
         {
             Internal.NativeFunctions.StackPushObject(oArea);
             Internal.NativeFunctions.CallBuiltIn(725);
-            return (Natural)Internal.NativeFunctions.StackPopInteger();
+            return Convert.ToBoolean(Internal.NativeFunctions.StackPopInteger());
         }
 
         /// <summary>

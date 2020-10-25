@@ -536,7 +536,7 @@ namespace NWN.FinalFantasy.Feature
 
             ChatCommands["rez"] = new ChatCommandDefinition(
                 "Revives you, heals you to full, and restores all MP.",
-                CommandPermissionType.DM | CommandPermissionType.Admin,
+                CommandPermissionType.DM | CommandPermissionType.Admin | CommandPermissionType.Player,
                 (user, target, location, args) =>
                 {
                     if (GetIsDead(user))

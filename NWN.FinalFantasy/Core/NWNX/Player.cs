@@ -532,6 +532,68 @@ namespace NWN.FinalFantasy.Core.NWNX
 
             Internal.NativeFunctions.nwnxCallFunction();
         }
+        /// @brief Give a custom journal entry to oPlayer.
+        /// @warning Custom entries are wiped on client enter - they must be reapplied.
+        /// @param oPlayer The player object.
+        /// @param journalEntry The journal entry in the form of a struct.
+        /// @param silentUpdate 0 = Notify player via sound effects and feedback message, 1 = Suppress sound effects and feedback message
+        /// @return a positive number to indicate the new amount of journal entries on the player.
+        /// @note In contrast to conventional nwn journal entries - this method will overwrite entries with the same tag, so the index / count of entries
+        /// will only increase if you add new entries with unique tags
+        public static int AddCustomJournalEntry(uint player, JournalEntry journalEntry, bool isSilentUpdate = false)
+        {
+            Internal.NativeFunctions.nwnxSetFunction(PLUGIN_NAME, "AddCustomJournalEntry");
+            Internal.NativeFunctions.nwnxPushInt(isSilentUpdate ? 1 : 0);
+            Internal.NativeFunctions.nwnxPushInt(journalEntry.TimeOfDay);
+            Internal.NativeFunctions.nwnxPushInt(journalEntry.CalendarDay);
+            Internal.NativeFunctions.nwnxPushInt(journalEntry.Updated);
+            Internal.NativeFunctions.nwnxPushInt(journalEntry.IsQuestDisplayed ? 1 : 0);
+            Internal.NativeFunctions.nwnxPushInt(journalEntry.IsQuestCompleted ? 1 : 0);
+            Internal.NativeFunctions.nwnxPushInt(journalEntry.Priority);
+            Internal.NativeFunctions.nwnxPushInt(journalEntry.State);
+            Internal.NativeFunctions.nwnxPushString(journalEntry.Tag);
+            Internal.NativeFunctions.nwnxPushString(journalEntry.Text);
+            Internal.NativeFunctions.nwnxPushString(journalEntry.Name);
+            Internal.NativeFunctions.nwnxPushObject(player);
+            Internal.NativeFunctions.nwnxCallFunction();
+            return Internal.NativeFunctions.nwnxPopInt();
+        }
+
+
+        /// @brief Returns a struct containing a journal entry that can then be modified.
+        /// @param oPlayer The player object.
+        /// @param questTag The quest tag you wish to get the journal entry for.
+        /// @return a struct containing the journal entry data.
+        /// @note This method will return -1 for the Updated field in the event that no matching journal entry was found,
+        /// only the last matching quest tag will be returned. Eg: If you add 3 journal updates to a player, only the 3rd one will be returned as
+        /// that is the active one that the player currently sees.
+        public static JournalEntry GetJournalEntry(uint player, string questTag)
+        {
+            Internal.NativeFunctions.nwnxSetFunction(PLUGIN_NAME, "GetJournalEntry");
+            var entry = new JournalEntry();
+
+            Internal.NativeFunctions.nwnxPushString(questTag);
+            Internal.NativeFunctions.nwnxPushObject(player);
+            Internal.NativeFunctions.nwnxCallFunction();
+
+            entry.Updated = Internal.NativeFunctions.nwnxPopInt();
+            if(entry.Updated == -1) // -1 set as an indicator to say that the entry was not found
+            {
+                return entry;
+            }
+
+            entry.IsQuestDisplayed = Internal.NativeFunctions.nwnxPopInt() == 1;
+            entry.IsQuestCompleted = Internal.NativeFunctions.nwnxPopInt() == 1;
+            entry.Priority = Internal.NativeFunctions.nwnxPopInt();
+            entry.State = Internal.NativeFunctions.nwnxPopInt();
+            entry.TimeOfDay = Internal.NativeFunctions.nwnxPopInt();
+            entry.CalendarDay = Internal.NativeFunctions.nwnxPopInt();
+            entry.Name = Internal.NativeFunctions.nwnxPopString();
+            entry.Text = Internal.NativeFunctions.nwnxPopString();
+            entry.Tag = questTag;
+            return entry;
+        }
+
 
     }
 }

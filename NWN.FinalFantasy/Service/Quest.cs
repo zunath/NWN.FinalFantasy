@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using NWN.FinalFantasy.Core;
+using NWN.FinalFantasy.Core.NWNX;
 using NWN.FinalFantasy.Enumeration;
 using NWN.FinalFantasy.Extension;
 using NWN.FinalFantasy.Service.QuestService;
 using static NWN.FinalFantasy.Core.NWScript.NWScript;
+using Player = NWN.FinalFantasy.Entity.Player;
 
 namespace NWN.FinalFantasy.Service
 {
@@ -14,7 +16,7 @@ namespace NWN.FinalFantasy.Service
         private static readonly Dictionary<string, QuestDetail> _quests = new Dictionary<string, QuestDetail>();
         private static readonly Dictionary<NPCGroupType, NPCGroupAttribute> _npcGroups = new Dictionary<NPCGroupType, NPCGroupAttribute>();
         private static readonly Dictionary<NPCGroupType, List<string>> _npcsWithKillQuests = new Dictionary<NPCGroupType, List<string>>();
-        
+
         /// <summary>
         /// When the module loads, data is cached to speed up searches later.
         /// </summary>
@@ -75,6 +77,44 @@ namespace NWN.FinalFantasy.Service
                 var npcGroupDetail = npcGroupType.GetAttribute<NPCGroupType, NPCGroupAttribute>();
                 _npcGroups[npcGroupType] = npcGroupDetail;
             }
+        }
+
+        /// <summary>
+        /// When a player enters the module, load their quests.
+        /// </summary>
+        [NWNEventHandler("mod_enter")]
+        public static void LoadPlayerQuests()
+        {
+            var player = GetEnteringObject();
+            if (!GetIsPC(player) || GetIsDM(player)) return;
+
+            var playerId = GetObjectUUID(player);
+            var dbPlayer = DB.Get<Player>(playerId) ?? new Player();
+
+            // Reapply quest journal entries on log-in.
+            // An NWN quirk requires this to be on a short delay because journal entries are wiped on login.
+            DelayCommand(0.5f, () =>
+            {
+                foreach (var (questId, playerQuest) in dbPlayer.Quests)
+                {
+                    var quest = _quests[questId];
+                    var state = quest.States[playerQuest.CurrentState];
+
+                    Core.NWNX.Player.AddCustomJournalEntry(player, new JournalEntry
+                    {
+                        Name = quest.Name,
+                        Text = state.JournalText,
+                        Tag = questId,
+                        State = playerQuest.CurrentState,
+                        Priority = 1,
+                        IsQuestCompleted = false,
+                        IsQuestDisplayed = true,
+                        Updated = 0,
+                        CalendarDay = GetCalendarDay(),
+                        TimeOfDay = GetTimeHour()
+                    }, true);
+                }
+            });
         }
 
         /// <summary>

@@ -1,12 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace NWN.FinalFantasy.Service.QuestService
 {
     public class QuestStateDetail
     {
         private Dictionary<int, IQuestObjective> Objectives { get; } = new Dictionary<int, IQuestObjective>();
+        public string JournalText { get; set; }
+        public QuestStateDetail()
+        {
+            JournalText = string.Empty;
+        }
 
         public void AddObjective(IQuestObjective objective)
         {

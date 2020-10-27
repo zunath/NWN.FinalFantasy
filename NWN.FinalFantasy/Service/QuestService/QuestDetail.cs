@@ -17,7 +17,6 @@ namespace NWN.FinalFantasy.Service.QuestService
     {
         public string QuestId { get; set; }
         public string Name { get; set; }
-        public string JournalTag { get; set; }
         public bool IsRepeatable { get; set; }
         public bool AllowRewardSelection { get; set; }
 
@@ -197,12 +196,13 @@ namespace NWN.FinalFantasy.Service.QuestService
             // By this point, it's assumed the player will accept the quest.
             var playerId = GetObjectUUID(player);
             var dbPlayer = DB.Get<Player>(playerId);
-            var quest = dbPlayer.Quests.ContainsKey(QuestId) ? dbPlayer.Quests[QuestId] : new PlayerQuest();
+            var quest = Quest.GetQuestById(QuestId);
+            var playerQuest = dbPlayer.Quests.ContainsKey(QuestId) ? dbPlayer.Quests[QuestId] : new PlayerQuest();
 
             // Retrieve the first quest state for this quest.
-            quest.CurrentState = 1;
-            quest.DateLastCompleted = null;
-            dbPlayer.Quests[QuestId] = quest;
+            playerQuest.CurrentState = 1;
+            playerQuest.DateLastCompleted = null;
+            dbPlayer.Quests[QuestId] = playerQuest;
             DB.Set(playerId, dbPlayer);
 
             var state = GetState(1);
@@ -212,7 +212,19 @@ namespace NWN.FinalFantasy.Service.QuestService
             }
 
             // Add the journal entry to the player.
-            AddJournalQuestEntry(JournalTag, 1, player, false);
+            Core.NWNX.Player.AddCustomJournalEntry(player, new JournalEntry
+            {
+                Name = quest.Name,
+                Text = state.JournalText,
+                Tag = QuestId,
+                State = playerQuest.CurrentState,
+                Priority = 1,
+                IsQuestCompleted = false,
+                IsQuestDisplayed = true,
+                Updated = 0,
+                CalendarDay = GetCalendarDay(),
+                TimeOfDay = GetTimeHour()
+            });
 
             // Notify them that they've accepted a quest.
             SendMessageToPC(player, "Quest '" + Name + "' accepted. Refer to your journal for more information on this quest.");
@@ -236,10 +248,11 @@ namespace NWN.FinalFantasy.Service.QuestService
             // Retrieve the player's current quest state.
             var playerId = GetObjectUUID(player);
             var dbPlayer = DB.Get<Player>(playerId);
-            var questStatus = dbPlayer.Quests.ContainsKey(QuestId) ? dbPlayer.Quests[QuestId] : new PlayerQuest();
+            var quest = Quest.GetQuestById(QuestId);
+            var playerQuest = dbPlayer.Quests.ContainsKey(QuestId) ? dbPlayer.Quests[QuestId] : new PlayerQuest();
 
             // Can't find a state? Notify the player they haven't accepted the quest.
-            if (questStatus.CurrentState <= 0)
+            if (playerQuest.CurrentState <= 0)
             {
                 SendMessageToPC(player, "You have not accepted this quest yet.");
                 return;
@@ -248,9 +261,9 @@ namespace NWN.FinalFantasy.Service.QuestService
             // If this quest has already been completed, exit early.
             // This is used in case a module builder incorrectly configures a quest.
             // We don't want to risk giving duplicate rewards.
-            if (questStatus.TimesCompleted > 0 && !IsRepeatable) return;
+            if (playerQuest.TimesCompleted > 0 && !IsRepeatable) return;
 
-            var currentState = GetState(questStatus.CurrentState);
+            var currentState = GetState(playerQuest.CurrentState);
 
             // Check quest objectives. If not complete, exit early.
             foreach (var objective in currentState.GetObjectives())
@@ -262,24 +275,36 @@ namespace NWN.FinalFantasy.Service.QuestService
             var lastState = GetStates().Last();
 
             // If this is the last state, the assumption is that it's time to complete the quest.
-            if (questStatus.CurrentState == lastState.Key)
+            if (playerQuest.CurrentState == lastState.Key)
             {
                 RequestRewardSelectionFromPC(player, questSource);
             }
             else
             {
                 // Progress player's quest status to the next state.
-                questStatus.CurrentState++;
-                var nextState = GetState(questStatus.CurrentState);
+                playerQuest.CurrentState++;
+                var nextState = GetState(playerQuest.CurrentState);
 
                 // Update the player's journal
-                AddJournalQuestEntry(JournalTag, questStatus.CurrentState, player, false);
+                Core.NWNX.Player.AddCustomJournalEntry(player, new JournalEntry
+                {
+                    Name = quest.Name,
+                    Text = currentState.JournalText,
+                    Tag = QuestId,
+                    State = playerQuest.CurrentState,
+                    Priority = 1,
+                    IsQuestCompleted = false,
+                    IsQuestDisplayed = true,
+                    Updated = 0,
+                    CalendarDay = GetCalendarDay(),
+                    TimeOfDay = GetTimeHour()
+                });
 
                 // Notify the player they've progressed.
                 SendMessageToPC(player, "Objective for quest '" + Name + "' complete! Check your journal for information on the next objective.");
 
                 // Save changes
-                dbPlayer.Quests[QuestId] = questStatus;
+                dbPlayer.Quests[QuestId] = playerQuest;
                 DB.Set(playerId, dbPlayer);
 
                 // Create any extended data entries for the next state of the quest.
@@ -291,7 +316,7 @@ namespace NWN.FinalFantasy.Service.QuestService
                 // Run any quest-specific code.
                 foreach (var action in OnAdvanceActions)
                 {
-                    action.Invoke(player, questSource, questStatus.CurrentState);
+                    action.Invoke(player, questSource, playerQuest.CurrentState);
                 }
             }
 
@@ -349,7 +374,7 @@ namespace NWN.FinalFantasy.Service.QuestService
             }
 
             SendMessageToPC(player, "Quest '" + Name + "' complete!");
-            RemoveJournalQuestEntry(JournalTag, player, false);
+            RemoveJournalQuestEntry(QuestId, player, false);
 
             Events.SignalEvent("FFO_COMPLETE_QUEST", player);
         }

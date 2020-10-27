@@ -9,12 +9,17 @@ namespace NWN.FinalFantasy.Feature.QuestDefinition
         public Dictionary<string, QuestDetail> BuildQuests()
         {
             var builder = new QuestBuilder()
-                .Create("myQuestId", "Test Quest", "test_quest")
+                .Create("myQuestId", "Test Quest")
                 .AddState()
+                .SetStateJournalText("Go kill some stuff")
                 .AddKillObjective(NPCGroupType.TestGroup, 2)
+
                 .AddState()
+                .SetStateJournalText("go collect some quest items")
                 .AddCollectItemObjective("quest_item", 3)
-                .AddState();
+
+                .AddState()
+                .SetStateJournalText("go talk to the npc");
 
             return builder.Build();
         }

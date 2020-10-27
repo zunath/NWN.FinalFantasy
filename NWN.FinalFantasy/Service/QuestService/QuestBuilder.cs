@@ -18,20 +18,17 @@ namespace NWN.FinalFantasy.Service.QuestService
         /// <param name="name">The name of the quest.</param>
         /// <param name="journalTag">The tag used by the journal entry.</param>
         /// <returns>A QuestBuilder with the configured options.</returns>
-        public QuestBuilder Create(string questId, string name, string journalTag)
+        public QuestBuilder Create(string questId, string name)
         {
             if (string.IsNullOrWhiteSpace(questId))
                 throw new ArgumentException($"{nameof(questId)} cannot be null or whitespace.");
             if (string.IsNullOrWhiteSpace(name))
                 throw new ArgumentException($"{nameof(name)} cannot be null or whitespace.");
-            if (string.IsNullOrWhiteSpace(journalTag))
-                throw new ArgumentException($"{nameof(journalTag)} cannot be null or whitespace.");
 
             _activeQuest = new QuestDetail
             {
                 QuestId = questId,
-                Name = name,
-                JournalTag = journalTag
+                Name = name
             };
 
             _quests[questId] = _activeQuest;
@@ -152,6 +149,17 @@ namespace NWN.FinalFantasy.Service.QuestService
             var index = _activeQuest.States.Count + 1;
             _activeQuest.States[index] = _activeState;
 
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the journal text of this quest state.
+        /// </summary>
+        /// <param name="journalText">The journal text to set.</param>
+        /// <returns>A QuestBuilder with the configured options.</returns>
+        public QuestBuilder SetStateJournalText(string journalText)
+        {
+            _activeState.JournalText = journalText;
             return this;
         }
 

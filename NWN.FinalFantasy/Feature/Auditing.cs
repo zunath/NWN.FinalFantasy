@@ -15,16 +15,14 @@ namespace NWN.FinalFantasy.Feature
         [NWNEventHandler("mod_enter")]
         public static void AuditClientConnection()
         {
-            
-
             var player = GetEnteringObject();
-            string ipAddress = GetPCIPAddress(player);
-            string cdKey = GetPCPublicCDKey(player);
-            string account = GetPCPlayerName(player);
-            string pcName = GetName(player);
+            var ipAddress = GetPCIPAddress(player);
+            var cdKey = GetPCPublicCDKey(player);
+            var account = GetPCPlayerName(player);
+            var pcName = GetName(player);
 
             var log = $"{pcName} - {account} - {cdKey} - {ipAddress}: Connected to server";
-            Log.Write(LogGroup.Connection, log);
+            Log.Write(LogGroup.Connection, log, true);
         }
 
         /// <summary>
@@ -34,13 +32,13 @@ namespace NWN.FinalFantasy.Feature
         public static void AuditClientDisconnection()
         {
             var player = GetEnteringObject();
-            string ipAddress = GetPCIPAddress(player);
-            string cdKey = GetPCPublicCDKey(player);
-            string account = GetPCPlayerName(player);
-            string pcName = GetName(player);
+            var ipAddress = GetPCIPAddress(player);
+            var cdKey = GetPCPublicCDKey(player);
+            var account = GetPCPlayerName(player);
+            var pcName = GetName(player);
 
             var log = $"{pcName} - {account} - {cdKey} - {ipAddress}: Connected to server";
-            Log.Write(LogGroup.Connection, log);
+            Log.Write(LogGroup.Connection, log, true);
         }
 
         /// <summary>

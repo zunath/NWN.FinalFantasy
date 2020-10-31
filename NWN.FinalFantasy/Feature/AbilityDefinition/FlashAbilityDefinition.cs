@@ -31,7 +31,7 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                 .HasImpactAction((activator, target, level) =>
                 {
                     var nth = 1;
-                    var nearby = GetNearestCreature(Type.IsAlive, 1, target, nth);
+                    var nearby = GetNearestCreature(CreatureType.IsAlive, 1, target, nth);
                     while (GetIsObjectValid(nearby))
                     {
                         if (GetDistanceBetween(target, nearby) > 5.0f) break;
@@ -41,7 +41,7 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                         Enmity.ModifyEnmity(activator, nearby, 35);
 
                         nth++;
-                        nearby = GetNearestCreature(Type.IsAlive, 1, target, nth);
+                        nearby = GetNearestCreature(CreatureType.IsAlive, 1, target, nth);
                     }
 
                     ApplyEffectToObject(DurationType.Instant, EffectVisualEffect(VisualEffect.Vfx_Imp_Pdk_Generic_Pulse), activator);
@@ -58,7 +58,7 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                 .HasImpactAction((activator, target, level) =>
                 {
                     var nth = 1;
-                    var nearby = GetNearestCreature(Type.IsAlive, 1, target, nth);
+                    var nearby = GetNearestCreature(CreatureType.IsAlive, 1, target, nth);
                     while (GetIsObjectValid(nearby))
                     {
                         if (GetDistanceBetween(target, nearby) > 5.0f) break;
@@ -68,7 +68,7 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                         Enmity.ModifyEnmity(activator, nearby, 50);
 
                         nth++;
-                        nearby = GetNearestCreature(Type.IsAlive, 1, target, nth);
+                        nearby = GetNearestCreature(CreatureType.IsAlive, 1, target, nth);
                     }
 
                     ApplyEffectToObject(DurationType.Instant, EffectVisualEffect(VisualEffect.Vfx_Imp_Pdk_Generic_Pulse), activator);

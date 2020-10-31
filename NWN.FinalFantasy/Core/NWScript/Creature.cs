@@ -123,12 +123,12 @@ namespace NWN.FinalFantasy.Core.NWScript
         ///   CREATURE_PART_LEFT_HAND
         ///   CREATURE_PART_HEAD
         /// </summary>
-        public static Part GetCreatureBodyPart(Part nPart, uint oCreature = Core.NWScript.NWScript.OBJECT_INVALID)
+        public static CreaturePart GetCreatureBodyPart(CreaturePart nCreaturePart, uint oCreature = Core.NWScript.NWScript.OBJECT_INVALID)
         {
             Internal.NativeFunctions.StackPushObject(oCreature);
-            Internal.NativeFunctions.StackPushInteger((int)nPart);
+            Internal.NativeFunctions.StackPushInteger((int)nCreaturePart);
             Internal.NativeFunctions.CallBuiltIn(792);
-            return (Part)Internal.NativeFunctions.StackPopInteger();
+            return (CreaturePart)Internal.NativeFunctions.StackPopInteger();
         }
 
         /// <summary>
@@ -171,11 +171,11 @@ namespace NWN.FinalFantasy.Core.NWScript
         ///             Note: Only part based creature appearance types are supported.
         ///             i.e. The model types for the playable races ('P') in the appearance.2da
         /// </summary>
-        public static void SetCreatureBodyPart(Part nPart, ModelType nModelNumber, uint oCreature = Core.NWScript.NWScript.OBJECT_INVALID)
+        public static void SetCreatureBodyPart(CreaturePart nCreaturePart, ModelType nModelNumber, uint oCreature = Core.NWScript.NWScript.OBJECT_INVALID)
         {
             Internal.NativeFunctions.StackPushObject(oCreature);
             Internal.NativeFunctions.StackPushInteger((int)nModelNumber);
-            Internal.NativeFunctions.StackPushInteger((int)nPart);
+            Internal.NativeFunctions.StackPushInteger((int)nCreaturePart);
             Internal.NativeFunctions.CallBuiltIn(793);
         }
 
@@ -1030,7 +1030,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         ///   further specify the type of creature that we are looking for.
         ///   * Return value on error: OBJECT_INVALID
         /// </summary>
-        public static uint GetNearestCreatureToLocation(Type nFirstCriteriaType, bool nFirstCriteriaValue,
+        public static uint GetNearestCreatureToLocation(CreatureType nFirstCriteriaType, bool nFirstCriteriaValue,
             Location lLocation, int nNth = 1, int nSecondCriteriaType = -1, int nSecondCriteriaValue = -1,
             int nThirdCriteriaType = -1, int nThirdCriteriaValue = -1)
         {

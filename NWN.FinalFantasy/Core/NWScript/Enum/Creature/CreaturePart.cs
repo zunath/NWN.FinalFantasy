@@ -1,6 +1,6 @@
 namespace NWN.FinalFantasy.Core.NWScript.Enum.Creature
 {
-    public enum Part
+    public enum CreaturePart
     {
         // these constants must match those in the CAPart.2da
         RightFoot,

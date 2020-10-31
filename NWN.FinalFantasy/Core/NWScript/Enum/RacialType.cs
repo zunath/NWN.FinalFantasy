@@ -26,9 +26,9 @@ namespace NWN.FinalFantasy.Core.NWScript.Enum
         Shapechanger = 23,
         Undead = 24,
         Vermin = 25,
-        All = 28, // Oh bioware..
-        Invalid = 28, // yep...
-        Ooze = 29, // oh yep..
-        Plant = 52 // wtf.
+        All = 28, 
+        Invalid = 28, 
+        Ooze = 29, 
+        Plant = 52 
     }
 }

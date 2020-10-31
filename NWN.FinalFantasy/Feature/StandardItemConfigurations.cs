@@ -117,7 +117,7 @@ namespace NWN.FinalFantasy.Feature
             {
                 if (GetItemPropertyType(ip) == ItemPropertyType.OnHitCastSpell)
                 {
-                    if (GetItemPropertySubType(ip) == (int)OnHitCastSpell.ONHIT_UNIQUEPOWER)
+                    if (GetItemPropertySubType(ip) == (int)OnHitCastSpellType.ONHIT_UNIQUEPOWER)
                     {
                         return;
                     }
@@ -125,7 +125,7 @@ namespace NWN.FinalFantasy.Feature
             }
 
             // No item property found. Add it to the item.
-            BiowareXP2.IPSafeAddItemProperty(item, ItemPropertyOnHitCastSpell(OnHitCastSpell.ONHIT_UNIQUEPOWER, 40), 0.0f, AddItemPropertyPolicy.ReplaceExisting, false, false);
+            BiowareXP2.IPSafeAddItemProperty(item, ItemPropertyOnHitCastSpell(OnHitCastSpellType.ONHIT_UNIQUEPOWER, 40), 0.0f, AddItemPropertyPolicy.ReplaceExisting, false, false);
         }
 
         /// <summary>

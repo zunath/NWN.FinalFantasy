@@ -1,7 +1,7 @@
 using System;
 using System.Numerics;
 using NWN.FinalFantasy.Core.NWScript.Enum;
-using Type = NWN.FinalFantasy.Core.NWScript.Enum.Creature.Type;
+using NWN.FinalFantasy.Core.NWScript.Enum.Creature;
 
 
 namespace NWN.FinalFantasy.Core.NWScript
@@ -274,7 +274,7 @@ namespace NWN.FinalFantasy.Core.NWScript
         ///   further specify the type of creature that we are looking for.
         ///   * Return value on error: OBJECT_INVALID
         /// </summary>
-        public static uint GetNearestCreature(Type nFirstCriteriaType, int nFirstCriteriaValue,
+        public static uint GetNearestCreature(CreatureType nFirstCriteriaType, int nFirstCriteriaValue,
             uint oTarget = OBJECT_INVALID, int nNth = 1, int nSecondCriteriaType = -1, int nSecondCriteriaValue = -1,
             int nThirdCriteriaType = -1, int nThirdCriteriaValue = -1)
         {

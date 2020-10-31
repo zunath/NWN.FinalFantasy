@@ -78,7 +78,7 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
             if (!StatusEffect.HasStatusEffect(activator, StatusEffectType.ElementalSpread)) return;
 
             var nth = 1;
-            var nearby = GetNearestCreature(Type.IsAlive, 1, target, nth);
+            var nearby = GetNearestCreature(CreatureType.IsAlive, 1, target, nth);
             while (GetIsObjectValid(nearby))
             {
                 if (target == nearby) continue;
@@ -87,7 +87,7 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                 ApplyThunderEffects(activator, nearby, baseDamage, enmity, stunLength);
 
                 nth++;
-                nearby = GetNearestCreature(Type.IsAlive, 1, target, nth);
+                nearby = GetNearestCreature(CreatureType.IsAlive, 1, target, nth);
             }
 
             StatusEffect.Remove(activator, StatusEffectType.ElementalSpread);

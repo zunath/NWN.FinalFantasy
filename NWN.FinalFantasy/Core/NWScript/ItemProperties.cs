@@ -1147,10 +1147,10 @@ namespace NWN.FinalFantasy.Core.NWScript
         ///   when a successful strike is made, or (when applied to armor) is struck by an opponent.
         ///   - nSpell uses the IP_CONST_ONHIT_CASTSPELL_* constants
         /// </summary>
-        public static ItemProperty ItemPropertyOnHitCastSpell(OnHitCastSpell nSpell, int nLevel)
+        public static ItemProperty ItemPropertyOnHitCastSpell(OnHitCastSpellType nSpellType, int nLevel)
         {
             Internal.NativeFunctions.StackPushInteger(nLevel);
-            Internal.NativeFunctions.StackPushInteger((int)nSpell);
+            Internal.NativeFunctions.StackPushInteger((int)nSpellType);
             Internal.NativeFunctions.CallBuiltIn(733);
             return Internal.NativeFunctions.StackPopGameDefinedStructure((int)EngineStructure.ItemProperty);
         }

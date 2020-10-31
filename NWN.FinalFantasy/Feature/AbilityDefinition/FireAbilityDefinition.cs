@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using NWN.FinalFantasy.Core.NWScript.Enum;
+using NWN.FinalFantasy.Core.NWScript.Enum.Creature;
 using NWN.FinalFantasy.Core.NWScript.Enum.VisualEffect;
 using NWN.FinalFantasy.Enumeration;
 using NWN.FinalFantasy.Service;
 using NWN.FinalFantasy.Service.AbilityService;
 using static NWN.FinalFantasy.Core.NWScript.NWScript;
 using Random = NWN.FinalFantasy.Service.Random;
-using Type = NWN.FinalFantasy.Core.NWScript.Enum.Creature.Type;
 
 namespace NWN.FinalFantasy.Feature.AbilityDefinition
 {
@@ -79,7 +79,7 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
             if (!StatusEffect.HasStatusEffect(activator, StatusEffectType.ElementalSpread)) return;
 
             var nth = 1;
-            var nearby = GetNearestCreature(Type.IsAlive, 1, target, nth);
+            var nearby = GetNearestCreature(CreatureType.IsAlive, 1, target, nth);
             while (GetIsObjectValid(nearby))
             {
                 if (target == nearby) continue;
@@ -88,7 +88,7 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                 ApplyFireEffects(activator, nearby, baseDamage, enmity, burnLength);
 
                 nth++;
-                nearby = GetNearestCreature(Type.IsAlive, 1, target, nth);
+                nearby = GetNearestCreature(CreatureType.IsAlive, 1, target, nth);
             }
 
             StatusEffect.Remove(activator, StatusEffectType.ElementalSpread);

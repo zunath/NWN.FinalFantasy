@@ -1,6 +1,6 @@
 namespace NWN.FinalFantasy.Core.NWScript.Enum.Creature
 {
-    public enum Type
+    public enum CreatureType
     {
         // the thing after CREATURE_TYPE_ should refer to the
         // actual "subtype" in the lists given above.

@@ -118,10 +118,10 @@ namespace NWN.FinalFantasy.Feature
             Events.SubscribeEvent("NWNX_ON_REMOVE_ASSOCIATE_AFTER", "asso_rem_aft");
 
             // Stealth events
-            Events.SubscribeEvent("NWNX_ON_ENTER_STEALTH_BEFORE", "stlent_add_bef");
-            Events.SubscribeEvent("NWNX_ON_ENTER_STEALTH_AFTER", "stlent_add_aft");
-            Events.SubscribeEvent("NWNX_ON_EXIT_STEALTH_BEFORE", "stlex_add_bef");
-            Events.SubscribeEvent("NWNX_ON_EXIT_STEALTH_AFTER", "stlex_add_aft");
+            Events.SubscribeEvent("NWNX_ON_ENTER_STEALTH_BEFORE", "stlent_ent_bef");
+            Events.SubscribeEvent("NWNX_ON_ENTER_STEALTH_AFTER", "stlent_ent_aft");
+            Events.SubscribeEvent("NWNX_ON_EXIT_STEALTH_BEFORE", "stlex_ex_bef");
+            Events.SubscribeEvent("NWNX_ON_EXIT_STEALTH_AFTER", "stlex_ex_aft");
 
             // Examine events
             Events.SubscribeEvent("NWNX_ON_EXAMINE_OBJECT_BEFORE", "examine_bef");

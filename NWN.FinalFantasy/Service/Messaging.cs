@@ -1,5 +1,5 @@
-﻿using static NWN.FinalFantasy.Core.NWScript.NWScript;
-using Type = NWN.FinalFantasy.Core.NWScript.Enum.Creature.Type;
+﻿using NWN.FinalFantasy.Core.NWScript.Enum.Creature;
+using static NWN.FinalFantasy.Core.NWScript.NWScript;
 
 namespace NWN.FinalFantasy.Service
 {
@@ -17,14 +17,14 @@ namespace NWN.FinalFantasy.Service
             SendMessageToPC(sender, message);
 
             int nth = 1;
-            var nearby = GetNearestCreature(Type.PlayerCharacter, 1, sender, nth);
+            var nearby = GetNearestCreature(CreatureType.PlayerCharacter, 1, sender, nth);
             while (GetIsObjectValid(nearby) && GetDistanceBetween(sender, nearby) <= MaxDistance)
             {
                 if (sender == nearby) continue;
 
                 SendMessageToPC(nearby, message);
                 nth++;
-                nearby = GetNearestCreature(Type.PlayerCharacter, 1, sender, nth);
+                nearby = GetNearestCreature(CreatureType.PlayerCharacter, 1, sender, nth);
             }
         }
     }

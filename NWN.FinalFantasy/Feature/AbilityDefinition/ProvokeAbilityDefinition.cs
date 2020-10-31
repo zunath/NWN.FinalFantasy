@@ -44,7 +44,7 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                 .HasImpactAction((activator, target, level) =>
                 {
                     var nth = 1;
-                    var nearby = GetNearestCreature(Type.IsAlive, 1, target, nth);
+                    var nearby = GetNearestCreature(CreatureType.IsAlive, 1, target, nth);
                     while (GetIsObjectValid(nearby))
                     {
                         if (GetDistanceBetween(target, nearby) > 5.0f) break;
@@ -53,7 +53,7 @@ namespace NWN.FinalFantasy.Feature.AbilityDefinition
                         Enmity.ModifyEnmity(activator, nearby, 30);
 
                         nth++;
-                        nearby = GetNearestCreature(Type.IsAlive, 1, target, nth);
+                        nearby = GetNearestCreature(CreatureType.IsAlive, 1, target, nth);
                     }
 
                 });

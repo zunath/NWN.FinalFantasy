@@ -121,5 +121,8 @@
         AutoCraftLeathercrafting = 111,
         AutoCraftAlchemy = 112,
         AutoCraftCooking = 113,
+        SnapShot = 114,
+        ArmShot = 115,
+        EyeShot = 116,
     }
 }

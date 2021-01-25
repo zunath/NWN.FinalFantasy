@@ -1202,6 +1202,9 @@ namespace NWN.FinalFantasy.Core.NWScript.Enum
         Gambit = 1228,
         DarkNebula = 1229,
         Raise = 1230,
-        PropertyTool = 1231
+        PropertyTool = 1231,
+        SnapShot = 1232,
+        ArmShot = 1233,
+        EyeShot = 1234,
     }
 }

@@ -109,6 +109,12 @@ namespace NWN.FinalFantasy.Service.AbilityService
         ShockSpikes = 49,
         [RecastGroup("Deliberate Stab", "Delib. Stab")]
         DeliberateStab = 50,
+        [RecastGroup("Snap Shot", "Snap Shot")]
+        SnapShot = 51,
+        [RecastGroup("Arm Shot", "Arm Shot")]
+        ArmShot = 52,
+        [RecastGroup("Eye Shot", "Eye Shot")]
+        EyeShot = 53,
     }
 
     public class RecastGroupAttribute: Attribute

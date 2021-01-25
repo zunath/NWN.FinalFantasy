@@ -11,6 +11,9 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
         {
             var builder = new PerkBuilder();
             EagleEyeShot(builder);
+            SnapShot(builder);
+            ArmShot(builder);
+            EyeShot(builder);
 
             return builder.Build();
         }
@@ -29,6 +32,42 @@ namespace NWN.FinalFantasy.Feature.PerkDefinition
                 .RequirementQuest("a_snipers_test")
                 .Price(15)
                 .GrantsFeat(Feat.EagleEyeShot);
+        }
+        private static void SnapShot(PerkBuilder builder)
+        {
+            builder.Create(PerkCategoryType.Sniper, PerkType.SnapShot)
+                .Name("Snap Shot")
+                .Description("You take a free action shot.")
+
+                .AddPerkLevel()
+                .Description("Grants the Snap Shot ability.")
+                .RequirementSkill(SkillType.Marksmanship, 5)
+                .Price(3)
+                .GrantsFeat(Feat.SnapShot);
+        }
+        private static void ArmShot(PerkBuilder builder)
+        {
+            builder.Create(PerkCategoryType.Sniper, PerkType.SnapShot)
+                .Name("Arm Shot")
+                .Description("Your next ranged attack will decrease the enemies attack bonus.")
+
+                .AddPerkLevel()
+                .Description("Grants the Eye Shot ability.")
+                .RequirementSkill(SkillType.Marksmanship, 10)
+                .Price(3)
+                .GrantsFeat(Feat.SnapShot);
+        }
+        private static void EyeShot(PerkBuilder builder)
+        {
+            builder.Create(PerkCategoryType.Sniper, PerkType.EyeShot)
+                .Name("Eye Shot")
+                .Description("Your next ranged attack will deal 1.5 times normal damage and decrease the enemies attack bonus.")
+
+                .AddPerkLevel()
+                .Description("Grants the Eye Shot ability.")
+                .RequirementSkill(SkillType.Marksmanship, 25)
+                .Price(4)
+                .GrantsFeat(Feat.SnapShot);
         }
     }
 }
